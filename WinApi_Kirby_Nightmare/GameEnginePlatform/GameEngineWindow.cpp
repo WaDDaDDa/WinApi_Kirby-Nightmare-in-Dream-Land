@@ -33,7 +33,7 @@ void GameEngineWindow::Open(const std::string& _Title, HINSTANCE _hInstance)
     InitInstance();
 }
 
-
+// 등록된 윈도우를 생성하고 띄운다.
 void GameEngineWindow::InitInstance()
 {
     // 윈도우 만드는 함수인
@@ -110,6 +110,7 @@ void GameEngineWindow::MyRegisterClass()
 }
 
 // 메세지 루프를 시작, 업데이트, 엔드로 나누어서 우리가 만들 게임에 적용하기 적합하도록 설계.
+// 함수 포인터를 사용하여 함수를 인자로 받아서 사용할수 있다.
 void GameEngineWindow::MessageLoop(HINSTANCE _Inst, void(*_Start)(HINSTANCE), void(*_Update)(), void(*_End)())
 {
     // 윈도우가 뜨기전에 로딩해야할 이미지나 사운드 등등을 처리하는 단계
