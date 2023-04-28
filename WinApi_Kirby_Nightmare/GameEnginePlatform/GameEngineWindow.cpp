@@ -48,6 +48,8 @@ void GameEngineWindow::InitInstance()
         MsgBoxAssert("윈도우 생성에 실패했습니다.");
         return;
     }
+    // 그리기위한 권한을 GetDC라는 함수를 통해 받아볼수있다.
+    Hdc = GetDC(hWnd);
 
     ShowWindow(hWnd, SW_SHOW);
     UpdateWindow(hWnd);

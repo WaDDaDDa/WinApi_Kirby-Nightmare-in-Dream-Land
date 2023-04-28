@@ -151,13 +151,29 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Player.h">
+    <ClInclude Include="Kirby.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="MainHub.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="MainHubLevel.h">
       <SubType>
       </SubType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Player.cpp">
+    <ClCompile Include="Kirby.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="MainHub.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="MainHubLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>

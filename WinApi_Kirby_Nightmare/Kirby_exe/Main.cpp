@@ -1,7 +1,6 @@
-#include <GameEnginePlatform/GameEngineWindow.h>
-#include <GameEngineCore/GameEngineCore.h>
 #include <iostream>
-
+#include <GameEngineCore/GameEngineCore.h>
+#include <Contents/MainHub.h>
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     _In_opt_ HINSTANCE hPrevInstance,
@@ -9,8 +8,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     _In_ int       nCmdShow)
 {
 
-    GameEngineCore::EngineStart("What", hInstance);
-
+    GameEngineCore::EngineStart<MainHub>("KirbyDream", hInstance);
 
     return 0;
 }
