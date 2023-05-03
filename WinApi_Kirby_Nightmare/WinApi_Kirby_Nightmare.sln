@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Level 1", "Level 1", "{52D5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DOC", "DOC", "{CA42B64F-78CC-4E79-9EDC-6609E70D6384}"
 	ProjectSection(SolutionItems) = preProject
+		DeltaTime.txt = DeltaTime.txt
+		궁금증.txt = 궁금증.txt
 		프로젝트 구성.txt = 프로젝트 구성.txt
 	EndProjectSection
 EndProject

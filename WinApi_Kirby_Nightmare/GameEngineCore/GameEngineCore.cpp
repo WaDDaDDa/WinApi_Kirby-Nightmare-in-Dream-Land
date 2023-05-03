@@ -2,6 +2,7 @@
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEngineBase/GameEngineDebug.h>
 #include "GameEngineLevel.h"
+#include <GameEngineBase/GameEngineTime.h>
 
 // static 변수들의 초기화.
 std::string GameEngineCore::WindowTitle = "";
@@ -30,6 +31,8 @@ void GameEngineCore::CoreStart(HINSTANCE _Inst)
     Process->Start(); 
 }
 // 게임 진행중.
+// 이 업데이트가 한번도는것을 프레임이라고 한다.
+// 한 프레임동안은 절대로 기본적인 셋팅에 변화가 없게하려고 설계의도가 있는것.
 void GameEngineCore::CoreUpdate()
 {
     if (nullptr != NextLevel)
@@ -38,9 +41,13 @@ void GameEngineCore::CoreUpdate()
         NextLevel = nullptr;
     }
 
+    // 프레임의 시간을 측정하기 위해 여기서 Time Update하고 DeltaTime을 받아둔다.
+    GameEngineTime::MainTimer.Update();
+    float Delta = GameEngineTime::MainTimer.GetDeltaTime();
+
     // Level에 있는 상속받은 업데이트하고 Level에 있는 Actor을 업데이트 한다.
-    CurLevel->Update();
-    CurLevel->ActorUpdate();
+    CurLevel->Update(Delta);
+    CurLevel->ActorUpdate(Delta);
     CurLevel->Render();
     CurLevel->ActorRender();
 }

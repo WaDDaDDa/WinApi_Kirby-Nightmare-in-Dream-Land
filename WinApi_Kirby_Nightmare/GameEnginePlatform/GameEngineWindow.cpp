@@ -6,6 +6,7 @@
 HINSTANCE GameEngineWindow::Instance = nullptr;
 // 윈도우창을 한개만 띄울것이기 때문에 MainWindow를 가지도록 선언.
 GameEngineWindow GameEngineWindow::MainWindow;
+bool GameEngineWindow::IsWindowUpdate = true;
 
 GameEngineWindow::GameEngineWindow()
 {
@@ -68,7 +69,8 @@ LRESULT CALLBACK GameEngineWindow::WndProc(HWND _hWnd, UINT message, WPARAM wPar
     }
     break;
     case WM_DESTROY:
-        PostQuitMessage(0);
+        // PostQuitMessage(0);
+        IsWindowUpdate = false;
         break;
     default:
         return DefWindowProc(_hWnd, message, wParam, lParam);
@@ -122,25 +124,53 @@ void GameEngineWindow::MessageLoop(HINSTANCE _Inst, void(*_Start)(HINSTANCE), vo
     }
 
     MSG msg;
-    while (GetMessage(&msg, nullptr, 0, 0))
+
+    while (IsWindowUpdate) // false되면 루프가 종료됨.
     {
-        // 업데이트 단계.
+        // 윈도우에 무슨일이 있는게 아니라 메세지가 있든 없든
+        // 동기함수 _getch()
+        // <= 키가 눌릴때까지 멈춘다
+        // (함수가 제대로 끝날때까지 기다리는 함수들을 동기 함수라고 합니다).
+        // GetMessage는 동기 함수에요. 윈도우의 메세지가 발생할때까지 기다린다.
+        // 비동기 메세지 함수가 있다. 
+        // PeekMessage는 윈도우 메세지가 없으면 0이 리턴되고 그냥 리턴합니다.
+
+        // 프레임과 데드타임이 완성됐다.
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+        {
+            // 메세지가 있을때 업데이트를 하고.
+            if (nullptr != _Update)
+            {
+                _Update();
+            }
+            // 메세지를 처리하고.
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+            continue; // 아래부분의 업데이트는 건너뛴다.
+        }
+
+        // 윈도우 메세지가 없는 시간을 데드타임이라고 합니다.
+        // 게임은 데드타임에 돌아가는게 보통이다.
+        // 게임중에 2가지 종류가 있다. 윈도우를 움직이거나 크기를 줄이면
+        // 화면이 정지하는 게임. 
+        // 내가 그런 윈도우 메세지를 발생시키는 와중에도 게임은 계속 돌아가는 게임있다.
+
+        // 이게 한바뀌가 도는 것을 프레임
+        // FPS
+        // 초당 화면이 그려지는 횟수
+        // 하드웨어와도 연결이 있다.
         if (nullptr != _Update)
         {
+            // 메세지가 없어도 업데이트를 한다.
             _Update();
         }
 
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
     }
 
-    // 마무리 단계
     if (nullptr != _End)
     {
         _End();
     }
-
-
     // (int)msg.wParam;
 
     return;

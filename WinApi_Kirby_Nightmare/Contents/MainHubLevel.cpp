@@ -22,12 +22,12 @@ void MainHubLevel::Start()
 
 	// 자기 임의대로 만들겠다는 것이고 xxxxx
 	// Player* NewPlayer = new Player();
-
+	// 객체가 create될때 모든것을 준비한다.
 	CreateActor<Kirby>();
 }
 
 
-void MainHubLevel::Update()
+void MainHubLevel::Update(float _Delta)
 {
 }
 void MainHubLevel::Render()

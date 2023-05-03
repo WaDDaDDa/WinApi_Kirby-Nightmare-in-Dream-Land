@@ -17,7 +17,7 @@ public:
 	virtual void Start() {}
 
 	// 행동한고.
-	virtual void Update() {}
+	virtual void Update(float _Delta) {}
 
 	// 그려지고.
 	virtual void Render() {}

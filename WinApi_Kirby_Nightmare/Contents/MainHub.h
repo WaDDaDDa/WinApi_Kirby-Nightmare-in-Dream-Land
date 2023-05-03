@@ -18,7 +18,7 @@ private:
     void Start() override;
 
     // 행동한고.
-    void Update() override;
+    void Update(float _Delta) override;
 
     // 그려지고.
     void Render() override;

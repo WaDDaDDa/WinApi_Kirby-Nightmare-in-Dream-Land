@@ -23,7 +23,7 @@ void MainHub::Start()
 }
 
 // Çàµ¿.
-void MainHub::Update()
+void MainHub::Update(float _Delta)
 {
 }
 
