@@ -27,7 +27,10 @@ void Kirby::Start()
 
 		FilePath.GetCurrentPath();
 
-		ResourcesManager::GetInst().TextureLoad("Player_Idle.Bmp");
+		FilePath.MoveParentToExistsChild("Resource");
+		FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Kirby\\Kirby.Bmp");
+	
+		ResourcesManager::GetInst().TextureLoad(FilePath.GetStringPath());
 	}
 
 	SetPos({ 200, 200 });
@@ -47,16 +50,26 @@ void Kirby::Render()
 
 	// 그리기위한 핸들이 필요함.
 	HDC WindowDC = GameEngineWindow::MainWindow.GetHDC();
+	GameEngineTexture* FindTexture = ResourcesManager::GetInst().FindTexture("Kirby.Bmp");
+	HDC ImageDC = FindTexture->GetImageDC();
 
-	// 
-	Rectangle(WindowDC,
+	// 특정 DC에 연결된 색상을
+	// 특정 DC에 고속복사하는 함수입니다.
+
+	BitBlt(WindowDC,
 		GetPos().iX() - GetScale().ihX(),
 		GetPos().iY() - GetScale().ihY(),
 		GetPos().iX() + GetScale().ihX(),
-		GetPos().iY() + GetScale().ihY()
-	);
+		GetPos().iY() + GetScale().ihY(),
+		ImageDC, 0, 0, SRCCOPY);
 
-	// 그려야죠?
+	//Rectangle(WindowDC,
+	//	GetPos().iX() - GetScale().ihX(),
+	//	GetPos().iY() - GetScale().ihY(),
+	//	GetPos().iX() + GetScale().ihX(),
+	//	GetPos().iY() + GetScale().ihY()
+	//);
+
 }
 
 void Kirby::Release()

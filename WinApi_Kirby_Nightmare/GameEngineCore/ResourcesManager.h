@@ -1,15 +1,13 @@
 #pragma once
 #include <string>
-
-// 게임에 관한 모든 리소스는 해당 객체에서 직접 로드해주고 언로드해주는 방식이 제일 좋다.
-// 리소스가 이미 로드되어있으면 건너뛰고 없으면 로드한다.
-// 레벨이 바뀌게 된다면 모든 리소스를 전부 언로드하고 다시 있어야할 리소스들만 로드하는 방식.
-
-// 또는 레벨이 바뀌어도 쓰이게될 리소스는 언로드하지않고 유지한채 로드하는 방법도있는데
-// 하기나름이다. 고민을 해볼것.
-
+#include <map>
+#include <GameEngineBase/GameEnginePath.h>
 
 // 설명 : 선생님이 마지막으로 알려주는 싱글톤
+// 싱글톤이 뭐지?
+// 싱글톤은 갱스오브포라는 1990대 프로그래머 집단이
+// 대다수의 프로그래머가 비슷한 규격의 코딩을 하는것을 정리하고 이름을 붙인것을 
+// 디자인 패턴이라고 하는데 그중에서 하나의 패턴명
 // 보통 UML과 함께 배우는것이 좋다.
 // 생성 구분에 해당
 // 생성 객체를 생성하는 방법을 
@@ -59,17 +57,14 @@ public:
 	// 파일명이 곧 찾기위한 이름이 된다.
 	void TextureLoad(const std::string& _Path)
 	{
-		// _Path 파일명
-
-		// TextureLoad();
+		GameEnginePath LoadPath = _Path;
+		TextureLoad(LoadPath.GetFileName(), _Path);
 	}
 
-	void TextureLoad(const std::string& _Name, const std::string& _Path)
-	{
+	void TextureLoad(const std::string& _Name, const std::string& _Path);
 
-	}
+	GameEngineTexture* FindTexture(const std::string& _Name);
 
-	GameEngineTexture* FindTexture(const std::string& _Image);
 	bool IsLoadTexture(const std::string& _Image);
 
 
@@ -85,6 +80,6 @@ private:
 	ResourcesManager();
 	~ResourcesManager();
 
-
+	std::map<std::string, GameEngineTexture*> AllTexture;
 };
 
