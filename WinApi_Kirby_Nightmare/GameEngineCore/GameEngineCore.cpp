@@ -39,6 +39,7 @@ void GameEngineCore::CoreUpdate()
     {
         CurLevel = NextLevel;
         NextLevel = nullptr;
+        GameEngineTime::MainTimer.Reset();
     }
 
     // 프레임의 시간을 측정하기 위해 여기서 Time Update하고 DeltaTime을 받아둔다.

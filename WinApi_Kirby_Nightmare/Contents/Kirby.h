@@ -7,10 +7,10 @@ public:
     Kirby();
     ~Kirby();
 
-    Kirby& operator=(const Kirby& _Other) = delete;
-    Kirby& operator=(const Kirby&& _Other) = delete;
     Kirby(const Kirby& _Other) = delete;
-    Kirby(const Kirby&& _Other) = delete;
+    Kirby(Kirby&& _Other) = delete;
+    Kirby& operator=(const Kirby& _Other) = delete;
+    Kirby& operator=(Kirby&& _Other) = delete;
 
 protected:
 

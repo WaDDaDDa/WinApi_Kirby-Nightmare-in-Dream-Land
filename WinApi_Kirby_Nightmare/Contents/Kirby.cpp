@@ -1,9 +1,10 @@
 #include "Kirby.h"
+#include <Windows.h>
+#include <GameEngineBase/GameEngineTime.h>
+#include <GameEngineBase/GameEnginePath.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEnginePlatform/GameEngineWindowTexture.h>
 #include <GameEngineCore/ResourcesManager.h>
-#include <GameEngineBase/GameEngineTime.h>
-#include <GameEngineBase/GameEnginePath.h>
 
 Kirby::Kirby()
 {
@@ -19,7 +20,8 @@ Kirby::~Kirby()
 void Kirby::Start()
 {
 	// 로딩 되어있지 않다면 로드하고, 로딩 되어 있다면 다시 로드하지 않는다.
-	bool IsResource = ResourcesManager::GetInst().IsLoadTexture("Player_Idle.Bmp");
+	// 중복 로드하면 릭이 계속 생긴다.
+	bool IsResource = ResourcesManager::GetInst().IsLoadTexture("Kirby.Bmp");
 	if (false == IsResource)
 	{
 		// 무조건 자동으로 현재 실행중인 위치가 된다.
