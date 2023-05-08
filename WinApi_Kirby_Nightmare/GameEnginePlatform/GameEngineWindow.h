@@ -1,6 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include <string>
+#include <GameEnginePlatform/GameEngineWindowTexture.h>
 
 // 설명 :
 class GameEngineWindow
@@ -29,6 +30,18 @@ public:
 		return Hdc;
 	}
 
+	GameEngineWindowTexture* GetBackBuffer()
+	{
+		return BackBuffer;
+	}
+
+	float4 GetScale()
+	{
+		return Scale;
+	}
+
+	void SetPosAndScale(const float4& _Pos, const float4& _Scale);
+
 protected:
 
 private:
@@ -39,8 +52,13 @@ private:
 	HDC Hdc = nullptr;
 	static bool IsWindowUpdate; // 윈도우가 종료되기 위한 변수.
 
+	// 윈도우가 생성될때 가지는 Texture. 이것이 가지는 이미지가 변경될때마다 출력되는 이미지가 달라짐.
+	GameEngineWindowTexture* BackBuffer = nullptr;
+	float4 Scale;
+
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	void InitInstance();
 	void MyRegisterClass();
+
 };
 

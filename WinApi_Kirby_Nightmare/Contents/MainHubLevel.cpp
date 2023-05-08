@@ -1,5 +1,10 @@
 #include "MainHubLevel.h"
+#include <GameEngineCore/GameEngineCore.h>
+#include <GameEngineCore/ResourcesManager.h>
+
+// Contents
 #include "Kirby.h"
+#include "Stage.h"
 
 MainHubLevel::MainHubLevel()
 {
@@ -23,6 +28,9 @@ void MainHubLevel::Start()
 	// 자기 임의대로 만들겠다는 것이고 xxxxx
 	// Player* NewPlayer = new Player();
 	// 객체가 create될때 모든것을 준비한다.
+	Stage* CurStage = CreateActor<Stage>();
+	CurStage->Init("StageTest.Bmp");
+
 	CreateActor<Kirby>();
 }
 

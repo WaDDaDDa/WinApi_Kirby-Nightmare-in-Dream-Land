@@ -2,21 +2,34 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="MainHub.h" />
-    <ClInclude Include="Kirby.h" />
     <ClInclude Include="MainHubLevel.h">
       <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Kirby.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>Global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainHub.cpp" />
-    <ClCompile Include="Kirby.cpp" />
     <ClCompile Include="MainHubLevel.cpp">
       <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Kirby.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
       <UniqueIdentifier>{f8eaafc6-499d-4f41-ac38-dccd46e2df7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Global">
+      <UniqueIdentifier>{8096eb9f-2489-46c6-94d1-ca2fb34d8d6e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

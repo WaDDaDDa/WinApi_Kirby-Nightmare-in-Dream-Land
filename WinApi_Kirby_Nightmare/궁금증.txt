@@ -5,4 +5,5 @@
 
 2.  std::filesystem의 기능들을 살펴보자.
 
-3.  
+3.  GameEngineWindow에서 생성한 Hdc를 GameEngineWindowTexture에 CreateRes로 받아줫는데
+	윈도우에 어떠한 그림을 그리는 권한을 받은것이다.

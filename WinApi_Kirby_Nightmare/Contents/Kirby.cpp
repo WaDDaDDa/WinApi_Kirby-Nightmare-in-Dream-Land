@@ -1,6 +1,6 @@
 #include "Kirby.h"
 #include <GameEnginePlatform/GameEngineWindow.h>
-#include <GameEngineCore/GameEngineTexture.h>
+#include <GameEnginePlatform/GameEngineWindowTexture.h>
 #include <GameEngineCore/ResourcesManager.h>
 #include <GameEngineBase/GameEngineTime.h>
 #include <GameEngineBase/GameEnginePath.h>
@@ -50,7 +50,7 @@ void Kirby::Render()
 
 	// 그리기위한 핸들이 필요함.
 	HDC WindowDC = GameEngineWindow::MainWindow.GetHDC();
-	GameEngineTexture* FindTexture = ResourcesManager::GetInst().FindTexture("Kirby.Bmp");
+	GameEngineWindowTexture* FindTexture = ResourcesManager::GetInst().FindTexture("Kirby.Bmp");
 	HDC ImageDC = FindTexture->GetImageDC();
 
 	// 특정 DC에 연결된 색상을

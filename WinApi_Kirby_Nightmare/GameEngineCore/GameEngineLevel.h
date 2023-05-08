@@ -25,7 +25,7 @@ public:
 
 
     template<typename ActorType>
-    void CreateActor(int _Order = 0)
+    ActorType* CreateActor(int _Order = 0)
     {
         // map에서 map[] 오퍼레이터가 있다.  의미는 map[first]의 값을 리턴해달라.
         // 리턴할 first인 노드가 없다면 만들어서 리턴하라는 의미이다.
@@ -33,6 +33,12 @@ public:
         GameEngineActor* NewActor = new ActorType();
         ActorInit(NewActor);
         GroupList.push_back(NewActor);
+
+        // GameEnigneActor가 최상위 Actor이고 ActorType은 그 하위이다.
+        // GameEngineActor포인터로 new ActorType을 받은건 업캐스팅 한것이지만.
+        // 리턴 값은 ActorType*이기때문에 GameEngineActor를 그대로 리턴할수 없다.
+        // 따라서 Dynamic_cast를 통한 다운캐스팅으로 GameEngineActor*를 ActorType*로 리턴할수있다.
+        return dynamic_cast<ActorType*>(NewActor);
     }
 
 protected:

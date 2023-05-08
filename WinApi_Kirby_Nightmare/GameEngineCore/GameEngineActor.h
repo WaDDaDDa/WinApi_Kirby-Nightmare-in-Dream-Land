@@ -1,6 +1,6 @@
 #pragma once
-#include <GameEngineCore/GameEngineObject.h>
 #include <GameEngineBase/GameEngineMath.h>
+#include "GameEngineObject.h"
 
 // 화면안에 존재하는 모든 것.  좌표가 있다면 엑터로 표현.
 class GameEngineActor : public GameEngineObject
@@ -42,8 +42,8 @@ public:
 protected:
 
 private:
-	float4 Pos;
-	float4 Scale; // <= 크기는 액터한테 필요 없습니다.
+	float4 Pos = float4::ZERO;
+	float4 Scale = float4::ZERO; // <= 크기는 액터한테 필요 없습니다.
 
 };
 

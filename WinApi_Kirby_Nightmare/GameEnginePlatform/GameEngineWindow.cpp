@@ -14,6 +14,11 @@ GameEngineWindow::GameEngineWindow()
 
 GameEngineWindow::~GameEngineWindow()
 {
+    if (nullptr != BackBuffer)
+    {
+        delete BackBuffer;
+        BackBuffer = nullptr;
+    }
 }
 
 void GameEngineWindow::Open(const std::string& _Title, HINSTANCE _hInstance)
@@ -51,6 +56,10 @@ void GameEngineWindow::InitInstance()
     }
     // 그리기위한 권한을 GetDC라는 함수를 통해 받아볼수있다.
     Hdc = GetDC(hWnd);
+
+    // 윈도우가 생성될때 GameEngineWindowTexture또한 생성되어 Hdc를 받아준다.
+    BackBuffer = new GameEngineWindowTexture();
+    BackBuffer->ResCreate(Hdc);
 
     ShowWindow(hWnd, SW_SHOW);
     UpdateWindow(hWnd);
@@ -174,4 +183,22 @@ void GameEngineWindow::MessageLoop(HINSTANCE _Inst, void(*_Start)(HINSTANCE), vo
     // (int)msg.wParam;
 
     return;
+}
+
+// 윈도우의 타이틀바 혹은 테두리의 크기를 고려한 윈도우 크기를 만들수있게 해주는 함수.
+// 윈도우 타이틀바 등에도 크기가 있는데 그냥 윈도우를 생성하게 된다면 그모든것을 포함한 크기를 설정하게 되므로 
+// 원하는 해상도 배율이 안나오는 상황이 생기는 것을 방지하기 위함.
+void GameEngineWindow::SetPosAndScale(const float4& _Pos, const float4& _Scale)
+{
+    // Window에서 LP 포인터라는 뜻 Long Pointer
+    Scale = _Scale;
+
+    //                200           200
+    RECT Rc = { 0, 0, _Scale.iX(), _Scale.iY() };
+
+
+    AdjustWindowRect(&Rc, WS_OVERLAPPEDWINDOW, FALSE);
+
+    //                          100        100         500          500
+    SetWindowPos(hWnd, nullptr, _Pos.iX(), _Pos.iY(), Rc.right - Rc.left, Rc.bottom - Rc.top, SWP_NOZORDER);
 }

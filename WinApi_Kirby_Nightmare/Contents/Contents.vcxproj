@@ -167,6 +167,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Stage.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Kirby.cpp">
@@ -178,6 +182,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="MainHubLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
       <SubType>
       </SubType>
     </ClCompile>
