@@ -1,7 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include <string>
-#include <GameEnginePlatform/GameEngineWindowTexture.h>
+#include "GameEngineWindowTexture.h"
 
 // 설명 :
 class GameEngineWindow
@@ -25,14 +25,9 @@ public:
 
 	static void MessageLoop(HINSTANCE _Inst, void(*_Start)(HINSTANCE), void(*_Update)(), void(*_End)());
 
-	inline HDC GetHDC()
+	HDC GetHDC()
 	{
 		return Hdc;
-	}
-
-	GameEngineWindowTexture* GetBackBuffer()
-	{
-		return BackBuffer;
 	}
 
 	float4 GetScale()
@@ -40,21 +35,41 @@ public:
 		return Scale;
 	}
 
+	GameEngineWindowTexture* GetWindowBuffer()
+	{
+		return WindowBuffer;
+	}
+
+	GameEngineWindowTexture* GetBackBuffer()
+	{
+		return BackBuffer;
+	}
+
 	void SetPosAndScale(const float4& _Pos, const float4& _Scale);
+
+	static void WindowLoopOff()
+	{
+		IsWindowUpdate = false;
+	}
+
+	void DoubleBuffering();
 
 protected:
 
 private:
+	static bool IsWindowUpdate; // 윈도우가 종료되기 위한 변수.
 	// HInstance를 전역 멤버변수로 가진다.
 	static HINSTANCE Instance;
 	std::string Title = "";
 	HWND hWnd = nullptr;
 	HDC Hdc = nullptr;
-	static bool IsWindowUpdate; // 윈도우가 종료되기 위한 변수.
 
 	// 윈도우가 생성될때 가지는 Texture. 이것이 가지는 이미지가 변경될때마다 출력되는 이미지가 달라짐.
-	GameEngineWindowTexture* BackBuffer = nullptr;
 	float4 Scale;
+
+	GameEngineWindowTexture* WindowBuffer = nullptr;
+
+	GameEngineWindowTexture* BackBuffer = nullptr;
 
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	void InitInstance();

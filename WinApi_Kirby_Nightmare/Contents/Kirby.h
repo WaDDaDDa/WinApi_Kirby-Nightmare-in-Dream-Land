@@ -8,9 +8,9 @@ public:
     ~Kirby();
 
     Kirby(const Kirby& _Other) = delete;
-    Kirby(Kirby&& _Other) = delete;
+    Kirby(Kirby&& _Other) noexcept = delete;
     Kirby& operator=(const Kirby& _Other) = delete;
-    Kirby& operator=(Kirby&& _Other) = delete;
+    Kirby& operator=(Kirby&& _Other) noexcept = delete;
 
 protected:
 

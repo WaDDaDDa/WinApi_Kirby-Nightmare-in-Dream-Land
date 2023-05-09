@@ -25,7 +25,10 @@ public:
 	void ResCreate(HDC  _ImageDC)
 	{
 		ImageDC = _ImageDC;
+		ScaleCheck();
 	}
+
+	void ResCreate(const float4& _Scale);
 
 	// 내가 가진 이미지를 그려낼때 요구하는 핸들을 얻는다.
 	HDC GetImageDC()
@@ -39,6 +42,9 @@ public:
 	void BitCopy(GameEngineWindowTexture* _CopyTexture, const float4& Pos, const float4& Scale);
 	// 크기를 인자로 받지않아도 사용할수있게 만든 형.
 	void BitCopy(GameEngineWindowTexture* _CopyTexture, const float4& Pos);
+
+	void TransCopy(GameEngineWindowTexture* _CopyTexture, const float4& _Pos, const float4& _Scale,
+					const float4& _OtherPos, const float4& _OtherScale, int _TransColor = RGB(255, 0, 255));
 
 protected:
 

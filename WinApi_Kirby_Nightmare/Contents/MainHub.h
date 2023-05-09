@@ -7,10 +7,10 @@ public:
     MainHub();
     ~MainHub();
 
-    MainHub& operator=(const MainHub& _Other) = delete;
-    MainHub& operator=(const MainHub&& _Other) = delete;
     MainHub(const MainHub& _Other) = delete;
-    MainHub(const MainHub&& _Other) = delete;
+    MainHub(MainHub&& _Other) noexcept = delete;
+    MainHub& operator=(const MainHub& _Other) = delete;
+    MainHub& operator=(MainHub&& _Other) noexcept = delete;
 
 protected:
 

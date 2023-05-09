@@ -32,8 +32,7 @@ void MainHubLevel::Start()
 	CurStage->Init("StageTest.Bmp");
 
 	CreateActor<Kirby>();
-	CreateActor<Kirby>();
-	CreateActor<Kirby>();
+
 }
 
 

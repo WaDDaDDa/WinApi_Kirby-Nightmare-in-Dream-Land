@@ -1,8 +1,8 @@
 #include "GameEngineCore.h"
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEngineBase/GameEngineDebug.h>
-#include "GameEngineLevel.h"
 #include <GameEngineBase/GameEngineTime.h>
+#include "GameEngineLevel.h"
 
 // static 변수들의 초기화.
 std::string GameEngineCore::WindowTitle = "";
@@ -48,8 +48,12 @@ void GameEngineCore::CoreUpdate()
 
     // Level에 있는 상속받은 업데이트하고 Level에 있는 Actor을 업데이트 한다.
     CurLevel->Update(Delta);
+
     CurLevel->ActorUpdate(Delta);
     CurLevel->Render();
+
+    GameEngineWindow::MainWindow.DoubleBuffering();
+
     CurLevel->ActorRender();
 }
 // 게임 끝날때 정리.

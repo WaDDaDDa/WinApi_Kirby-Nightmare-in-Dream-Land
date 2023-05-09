@@ -6,6 +6,7 @@
 #include <GameEnginePlatform/GameEngineWindowTexture.h>
 #include <GameEngineCore/ResourcesManager.h>
 
+
 Kirby::Kirby()
 {
 
@@ -35,6 +36,8 @@ void Kirby::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.GetStringPath());
 	}
 
+	CreateRenderer("Kirby.Bmp");
+
 	SetPos({ 200, 200 });
 	SetScale({ 100, 100 });
 }
@@ -51,27 +54,10 @@ void Kirby::Render()
 	//SetScale({ 100, 100 });
 
 	// 그리기위한 핸들이 필요함.
-	HDC WindowDC = GameEngineWindow::MainWindow.GetHDC();
+	GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
 	GameEngineWindowTexture* FindTexture = ResourcesManager::GetInst().FindTexture("Kirby.Bmp");
-	HDC ImageDC = FindTexture->GetImageDC();
-
-	// 특정 DC에 연결된 색상을
-	// 특정 DC에 고속복사하는 함수입니다.
-
-	BitBlt(WindowDC,
-		GetPos().iX() - GetScale().ihX(),
-		GetPos().iY() - GetScale().ihY(),
-		GetPos().iX() + GetScale().ihX(),
-		GetPos().iY() + GetScale().ihY(),
-		ImageDC, 0, 0, SRCCOPY);
-
-	//Rectangle(WindowDC,
-	//	GetPos().iX() - GetScale().ihX(),
-	//	GetPos().iY() - GetScale().ihY(),
-	//	GetPos().iX() + GetScale().ihX(),
-	//	GetPos().iY() + GetScale().ihY()
-	//);
-
+	//                                             출력될 크기                  이미지 자체의 크기
+	BackBuffer->TransCopy(FindTexture, GetPos(), { 50, 50 }, { 0,0 }, FindTexture->GetScale());
 }
 
 void Kirby::Release()

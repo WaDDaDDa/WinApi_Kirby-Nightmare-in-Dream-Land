@@ -26,7 +26,7 @@ public:
 		return static_cast<int>(Y);
 	}
 
-	// half
+	// half int 캐스팅 리턴
 	inline int ihX() const
 	{
 		return static_cast<int>(X * 0.5f);
@@ -37,11 +37,67 @@ public:
 		return static_cast<int>(Y * 0.5f);
 	}
 
+	// half float리턴
+	inline float hX() const
+	{
+		return X * 0.5f;
+	}
+
+	inline float hY() const
+	{
+		return Y * 0.5f;
+	}
+
+	inline float4 Half() const
+	{
+		return { hX(), hY(), Z, W };
+	}
+
+	float4 operator+(const float4& _Other)
+	{
+		float4 ReturnValue;
+
+		ReturnValue.X = X + _Other.X;
+		ReturnValue.Y = Y + _Other.Y;
+		ReturnValue.Z = Z + _Other.Z;
+
+		return ReturnValue;
+	}
+
+	float4 operator*(const float _Value)
+	{
+		float4 ReturnValue;
+
+		ReturnValue.X = X * _Value;
+		ReturnValue.Y = Y * _Value;
+		ReturnValue.Z = Z * _Value;
+
+		return ReturnValue;
+	}
+
 	float4& operator+=(const float4& _Other)
 	{
 		X += _Other.X;
 		Y += _Other.Y;
 		Z += _Other.Z;
+
+		return *this;
+	}
+
+	float4& operator*=(const float4& _Other)
+	{
+		X *= _Other.X;
+		Y *= _Other.Y;
+		Z *= _Other.Z;
+
+		return *this;
+	}
+
+	float4& operator*=(const float _Value)
+	{
+		X *= _Value;
+		Y *= _Value;
+		Z *= _Value;
 
 		return *this;
 	}

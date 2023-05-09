@@ -7,10 +7,10 @@ public:
     MainHubLevel();
     ~MainHubLevel();
 
-    MainHubLevel& operator=(const MainHubLevel& _Other) = delete;
-    MainHubLevel& operator=(const MainHubLevel&& _Other) = delete;
     MainHubLevel(const MainHubLevel& _Other) = delete;
-    MainHubLevel(const MainHubLevel&& _Other) = delete;
+    MainHubLevel(MainHubLevel&& _Other) noexcept = delete;
+    MainHubLevel& operator=(const MainHubLevel& _Other) = delete;
+    MainHubLevel& operator=(MainHubLevel&& _Other) noexcept = delete;
 
 protected:
 

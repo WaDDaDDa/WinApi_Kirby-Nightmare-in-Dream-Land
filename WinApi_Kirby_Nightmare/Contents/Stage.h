@@ -8,10 +8,10 @@ public:
     Stage();
     ~Stage();
 
-    Stage& operator=(const Stage& _Other) = delete;
-    Stage& operator=(const Stage&& _Other) = delete;
     Stage(const Stage& _Other) = delete;
-    Stage(const Stage&& _Other) = delete;
+    Stage(Stage&& _Other) noexcept = delete;
+    Stage& operator=(const Stage& _Other) = delete;
+    Stage& operator=(Stage&& _Other) noexcept = delete;
 
     void Init(const std::string& _FileName);
 

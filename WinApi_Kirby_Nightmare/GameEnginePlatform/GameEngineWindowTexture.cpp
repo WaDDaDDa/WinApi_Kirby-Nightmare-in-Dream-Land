@@ -1,13 +1,16 @@
 #include "GameEngineWindowTexture.h"
 #include <Windows.h>
 #include <GameEngineBase/GameEngineDebug.h>
+#include "GameEngineWindow.h"
 
 GameEngineWindowTexture::GameEngineWindowTexture()
 {
+
 }
 
 GameEngineWindowTexture::~GameEngineWindowTexture()
 {
+
 }
 
 // 리소스 로드
@@ -35,6 +38,26 @@ void GameEngineWindowTexture::ResLoad(const std::string& _Path)
 	// 사실 이미 만들어지자마자 내부에 1,1 이미지와 연결되어있고
 	// 내가 로드한 이미지를 그 1,1짜리를 밀어내고 교체하는 작업을 하는데.
 	// 이 함수의 리턴값이 기존에 연결되어있던 애를 리턴해주는것.
+	OldBitMap = static_cast<HBITMAP>(SelectObject(ImageDC, BitMap));
+
+	ScaleCheck();
+}
+
+void GameEngineWindowTexture::ResCreate(const float4& _Scale)
+{
+	// 그냥 비어있는 검정색 이미지를 하나 만드는 함수.
+	HANDLE ImageHandle = CreateCompatibleBitmap(GameEngineWindow::MainWindow.GetHDC(), _Scale.iX(), _Scale.iY());
+
+	if (nullptr == ImageHandle)
+	{
+		MsgBoxAssert("이미지 생성에 실패했습니다.");
+		return;
+	}
+	
+	BitMap = static_cast<HBITMAP>(ImageHandle);
+
+	ImageDC = CreateCompatibleDC(nullptr);
+	
 	OldBitMap = static_cast<HBITMAP>(SelectObject(ImageDC, BitMap));
 
 	ScaleCheck();
@@ -86,3 +109,24 @@ void GameEngineWindowTexture::BitCopy(GameEngineWindowTexture* _CopyTexture, con
 	BitCopy(_CopyTexture, _Pos, _CopyTexture->GetScale());
 }
 
+// BitBlit 기능으로는 이미지를 확대하거나 축소하여 사용함에 있어서 적합하지 않음으로 TransparentBlt 함수를 이용
+void GameEngineWindowTexture::TransCopy(GameEngineWindowTexture* _CopyTexture, const float4& _Pos,
+	const float4& _Scale, const float4& _OtherPos, const float4& _OtherScale, int _TransColor/* = RGB(255, 0, 255)*/)
+{
+	HDC CopyImageDC = _CopyTexture->GetImageDC();
+	
+	// 
+	TransparentBlt(ImageDC,
+		_Pos.iX() - _Scale.ihX(), // 그려질 위치의 X
+		_Pos.iY() - _Scale.ihY(), // 그려질 위치의 Y
+		_Scale.iX(), 
+		_Scale.iY(),
+		CopyImageDC,
+		_OtherPos.iX(), // 카피하려는 이미지의 왼쪽위 x
+		_OtherPos.iY(), // 카피하려는 이미지의 왼쪽위 y
+		_OtherScale.iX(), // 그부분부터 사이즈  x
+		_OtherScale.iY(), // 그부분부터 사이즈  y
+		_TransColor // 출력되지 않기를 원하는 색상을 출력하지 않음.
+	);
+
+}

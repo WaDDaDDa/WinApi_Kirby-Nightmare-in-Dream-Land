@@ -19,6 +19,12 @@ GameEngineWindow::~GameEngineWindow()
         delete BackBuffer;
         BackBuffer = nullptr;
     }
+
+    if (nullptr != WindowBuffer)
+    {
+        delete WindowBuffer;
+        WindowBuffer = nullptr;
+    }
 }
 
 void GameEngineWindow::Open(const std::string& _Title, HINSTANCE _hInstance)
@@ -58,12 +64,21 @@ void GameEngineWindow::InitInstance()
     Hdc = GetDC(hWnd);
 
     // 윈도우가 생성될때 GameEngineWindowTexture또한 생성되어 Hdc를 받아준다.
+    // 윈도우에 출력되게될 이미지
+    WindowBuffer = new GameEngineWindowTexture();
+    WindowBuffer->ResCreate(Hdc);
+
+    // 더블 퍼버링을 하기위한 이미지. 한번에 윈도우에 출력시키기위해 출력할 이미지를 미리 그려놓은 캔버스.
     BackBuffer = new GameEngineWindowTexture();
-    BackBuffer->ResCreate(Hdc);
+    BackBuffer->ResCreate(WindowBuffer->GetScale());
 
     ShowWindow(hWnd, SW_SHOW);
     UpdateWindow(hWnd);
+}
 
+void GameEngineWindow::DoubleBuffering()
+{
+    WindowBuffer->BitCopy(BackBuffer, Scale.Half(), BackBuffer->GetScale());
 }
 
 LRESULT CALLBACK GameEngineWindow::WndProc(HWND _hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -192,6 +207,14 @@ void GameEngineWindow::SetPosAndScale(const float4& _Pos, const float4& _Scale)
 {
     // Window에서 LP 포인터라는 뜻 Long Pointer
     Scale = _Scale;
+
+    // BackBuffer가 이미존재하면 지우고 다시 생성한다.
+    if (nullptr != BackBuffer)
+    {
+        delete BackBuffer;
+        BackBuffer = new GameEngineWindowTexture();
+        BackBuffer->ResCreate(Scale);
+    }
 
     //                200           200
     RECT Rc = { 0, 0, _Scale.iX(), _Scale.iY() };

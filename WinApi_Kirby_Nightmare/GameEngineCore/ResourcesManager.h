@@ -29,31 +29,6 @@ public:
 		return Inst;
 	}
 
-	//static ResourcesManager* GetInst()
-	//{
-	//	if (nullptr == Inst)
-	//	{
-	//		Inst = new ResourcesManager();
-	//	}
-	//	return Inst;
-	//}
-
-	//static void ResetInst() 
-	//{
-	//	if (nullptr != Inst)
-	//	{
-	//		delete Inst;
-	//  Inst = new ResourcesManager();
-	//}
-
-	//static void Destroy() 
-	//{
-	//	if (nullptr != Inst)
-	//	{
-	//		delete Inst;
-	//	}
-	//}
-
 	// 파일명이 곧 찾기위한 이름이 된다.
 	GameEngineWindowTexture* TextureLoad(const std::string& _Path)
 	{

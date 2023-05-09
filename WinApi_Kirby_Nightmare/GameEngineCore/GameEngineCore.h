@@ -13,18 +13,16 @@ class CoreProcess : public GameEngineObject
 };
 
 
-class GameEngineLevel;
 // 컨텐츠 그자체를 알면 안되지만 관리를 하는것을 도와줄수는 있다.
+class GameEngineLevel;
 class GameEngineCore
 {
 public:
-    GameEngineCore();
-    ~GameEngineCore();
 
-    GameEngineCore& operator=(const GameEngineCore& _Other) = delete;
-    GameEngineCore& operator=(const GameEngineCore&& _Other) = delete;
-    GameEngineCore(const GameEngineCore& _Other) = delete;
-    GameEngineCore(const GameEngineCore&& _Other) = delete;
+	GameEngineCore(const GameEngineCore& _Other) = delete;
+	GameEngineCore(GameEngineCore&& _Other) noexcept = delete;
+	GameEngineCore& operator=(const GameEngineCore& _Other) = delete;
+	GameEngineCore& operator=(GameEngineCore&& _Other) noexcept = delete;
 
 	// template로 CoreProcessType을 지정하고 지정한 프로세스를 시작하는 원리.
 	template<typename CoreProcessType>
@@ -112,5 +110,8 @@ private:
 
 	static GameEngineLevel* CurLevel;
 	static GameEngineLevel* NextLevel;
+
+	GameEngineCore();
+	~GameEngineCore();
 };
 
