@@ -46,7 +46,13 @@ public:
 		return Scale;
 	}
 
-	GameEngineRenderer* CreateRenderer(const std::string& _ImageName);
+	template<typename EnumType>
+	GameEngineRenderer* CreateRenderer(const std::string& _ImageName, EnumType _Order)
+	{
+		return CreateRenderer(_ImageName, static_cast<int>(_Order));
+	}
+
+	GameEngineRenderer* CreateRenderer(const std::string& _ImageName, int _Order);
 
 	GameEngineLevel* GetLevel()
 	{
@@ -60,9 +66,10 @@ private:
 	float4 Scale = float4::ZERO; // <= 크기는 액터한테 필요 없습니다.
 
 	GameEngineLevel* Level;
-
+	
 	std::list<GameEngineRenderer*> AllRenderer;
 
-	void PushMainCameraRenderer(GameEngineRenderer*);
+	// void PushMainCameraRenderer(GameEngineRenderer*);
+
 };
 

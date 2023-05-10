@@ -1,5 +1,4 @@
 #pragma once
-
 #include <GameEngineBase/GameEngineDebug.h>
 #include <GameEngineBase/GameEngineString.h>
 #include <Windows.h>
@@ -53,17 +52,6 @@ public:
 
 		// make_pair는 map에 들어갈 페어를 만드는 함수. 페어를 먼저 만들고 insert해야함.
 		AllLevel.insert(std::make_pair(Upper, NewLevel));
-
-		/* insert함수의 반환값을 정확히 받아서 사용하는 방식.
-		
-		std::pair<std::map<std::string, class GameEngineLevel*>::iterator, bool> Pair 
-			= AllLevel.insert(std::make_pair(_Title, nullptr));
-
-		if (false == Pair.second)  Pair.second가 bool값으로 중복인지 아닌지를 판단하는 값임.
-		{
-			MsgBoxAssert("이미 존재하는 이름의 레벨을 또 만들려고 했습니다" + _Title);
-			return;
-		}*/
 
 	}
 

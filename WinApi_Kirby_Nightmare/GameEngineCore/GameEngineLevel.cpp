@@ -39,10 +39,11 @@ GameEngineLevel::~GameEngineLevel()
 }
 
 
-void GameEngineLevel::ActorInit(GameEngineActor* _Actor)
+void GameEngineLevel::ActorInit(GameEngineActor* _Actor, int _Order)
 {
 	// Actor의 준비물실행
 	_Actor->Level = this;
+	_Actor->SetOrder(_Order);
 	_Actor->Start();
 }
 
@@ -62,6 +63,8 @@ void GameEngineLevel::ActorUpdate(float _Delta)
 
 void GameEngineLevel::ActorRender()
 {
+	MainCamera->Render();
+
 	//Actor들의 렌더.
 	for (const std::pair<int, std::list<GameEngineActor*>>& _Pair : AllActors)
 	{

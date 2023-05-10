@@ -18,6 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DOC", "DOC", "{CA42B64F-78C
 	ProjectSection(SolutionItems) = preProject
 		DeltaTime.txt = DeltaTime.txt
 		궁금증.txt = 궁금증.txt
+		순서.txt = 순서.txt
 		프로젝트 구성.txt = 프로젝트 구성.txt
 	EndProjectSection
 EndProject

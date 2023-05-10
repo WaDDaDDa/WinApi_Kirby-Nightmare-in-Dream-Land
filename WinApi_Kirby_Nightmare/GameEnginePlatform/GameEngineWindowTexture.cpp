@@ -3,6 +3,8 @@
 #include <GameEngineBase/GameEngineDebug.h>
 #include "GameEngineWindow.h"
 
+#pragma comment(lib, "msimg32.lib")
+
 GameEngineWindowTexture::GameEngineWindowTexture()
 {
 

@@ -50,11 +50,12 @@ void GameEngineCore::CoreUpdate()
     CurLevel->Update(Delta);
 
     CurLevel->ActorUpdate(Delta);
-    CurLevel->Render();
 
+    GameEngineWindow::MainWindow.ClearBackBuffer();
+    CurLevel->ActorRender();
+    CurLevel->Render();
     GameEngineWindow::MainWindow.DoubleBuffering();
 
-    CurLevel->ActorRender();
 }
 // 게임 끝날때 정리.
 void GameEngineCore::CoreEnd()

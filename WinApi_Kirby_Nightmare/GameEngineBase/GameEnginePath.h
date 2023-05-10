@@ -29,6 +29,8 @@ public:
 		return Path.string();
 	}
 
+	std::string PlusFilePath(const std::string& _ChildPath);
+
 protected:
 
 private:

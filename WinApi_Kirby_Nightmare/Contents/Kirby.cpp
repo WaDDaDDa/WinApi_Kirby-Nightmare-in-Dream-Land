@@ -5,6 +5,10 @@
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEnginePlatform/GameEngineWindowTexture.h>
 #include <GameEngineCore/ResourcesManager.h>
+#include "ContentsEnum.h"
+#include <GameEngineCore/GameEngineRenderer.h>
+#include <GameEngineCore/GameEngineLevel.h>
+#include <GameEngineCore/GameEngineCamera.h>
 
 
 Kirby::Kirby()
@@ -29,23 +33,53 @@ void Kirby::Start()
 		GameEnginePath FilePath;
 
 		FilePath.GetCurrentPath();
-
 		FilePath.MoveParentToExistsChild("Resource");
-		FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Kirby\\Kirby.Bmp");
-	
-		ResourcesManager::GetInst().TextureLoad(FilePath.GetStringPath());
+		// 경로 까지만.
+		FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Kirby\\");
+
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Kirby.Bmp"));
 	}
 
-	CreateRenderer("Kirby.Bmp");
+	GameEngineRenderer* PlayerRender = CreateRenderer("Kirby.Bmp", RenderOrder::Play);
+	PlayerRender->SetRenderScale({ 50, 50 });
+	PlayerRender->SetTexture("Kirby.Bmp");
 
-	SetPos({ 200, 200 });
-	SetScale({ 100, 100 });
+	float4 WinScale = GameEngineWindow::MainWindow.GetScale();
+	float4 PlayerPos = WinScale.Half() + float4({ -100, 80});
+
+	SetPos(PlayerPos);
 }
 
 void Kirby::Update(float _Delta)
 {
-	// 시간 * 이동속도만큼을 계산해서 이동거리를 표현하게 된다.
-	AddPos({ 50.0f * _Delta, 0.0f });
+	float Speed = 200.0f;
+
+	float4 MovePos = float4::ZERO;
+
+	if (0 != GetAsyncKeyState('A'))
+	{
+		MovePos = { -Speed * _Delta, 0.0f };
+	}
+
+	if (0 != GetAsyncKeyState('D'))
+	{
+		MovePos = { Speed * _Delta, 0.0f };
+	}
+
+	if (0 != GetAsyncKeyState('W'))
+	{
+		MovePos = { 0.0f, -Speed * _Delta };
+	}
+
+	if (0 != GetAsyncKeyState('S'))
+	{
+		MovePos = { 0.0f, Speed * _Delta };
+	}
+
+	// 플레이어 이동
+	AddPos(MovePos);
+	// 카메라의이동   플레이어가 움직이면 카메라도 이동한다.
+	GetLevel()->GetMainCamera()->AddPos(MovePos);
 }
 
 void Kirby::Render()
@@ -53,11 +87,11 @@ void Kirby::Render()
 	//SetPos({ 200, 200 });
 	//SetScale({ 100, 100 });
 
-	// 그리기위한 핸들이 필요함.
-	GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
-	GameEngineWindowTexture* FindTexture = ResourcesManager::GetInst().FindTexture("Kirby.Bmp");
-	//                                             출력될 크기                  이미지 자체의 크기
-	BackBuffer->TransCopy(FindTexture, GetPos(), { 50, 50 }, { 0,0 }, FindTexture->GetScale());
+	////그리기위한 핸들이 필요함.
+	//GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
+	//GameEngineWindowTexture* FindTexture = ResourcesManager::GetInst().FindTexture("Kirby.Bmp");
+	////                                             출력될 크기                  이미지 자체의 크기
+	//BackBuffer->TransCopy(FindTexture, GetPos(), { 50, 50 }, { 0,0 }, FindTexture->GetScale());
 }
 
 void Kirby::Release()

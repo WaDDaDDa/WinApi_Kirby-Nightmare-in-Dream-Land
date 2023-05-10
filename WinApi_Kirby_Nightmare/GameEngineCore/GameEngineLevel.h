@@ -27,6 +27,12 @@ public:
     GameEngineLevel& operator=(GameEngineLevel&& _Other) noexcept = delete;
 
 
+    template<typename ActorType, typename EnumType>
+    ActorType* CreateActor(EnumType _Order)
+    {
+        return CreateActor<ActorType>(static_cast<int>(_Order));
+    }
+
     template<typename ActorType>
     ActorType* CreateActor(int _Order = 0)
     {
@@ -34,7 +40,7 @@ public:
         // 리턴할 first인 노드가 없다면 만들어서 리턴하라는 의미이다.
         std::list<GameEngineActor*>& GroupList = AllActors[_Order];
         GameEngineActor* NewActor = new ActorType();
-        ActorInit(NewActor);
+        ActorInit(NewActor, _Order);
         GroupList.push_back(NewActor);
 
         // GameEnigneActor가 최상위 Actor이고 ActorType은 그 하위이다.
@@ -42,6 +48,11 @@ public:
         // 리턴 값은 ActorType*이기때문에 GameEngineActor를 그대로 리턴할수 없다.
         // 따라서 Dynamic_cast를 통한 다운캐스팅으로 GameEngineActor*를 ActorType*로 리턴할수있다.
         return dynamic_cast<ActorType*>(NewActor);
+    }
+
+    GameEngineCamera* GetMainCamera()
+    {
+        return MainCamera;
     }
 
 protected:
@@ -52,7 +63,7 @@ private:
 
 	std::map<int, std::list<GameEngineActor*>> AllActors;
 
-	void ActorInit(GameEngineActor* _Actor);
+	void ActorInit(GameEngineActor* _Actor, int _Order);
 
 	void ActorUpdate(float _Delta);
 	void ActorRender();

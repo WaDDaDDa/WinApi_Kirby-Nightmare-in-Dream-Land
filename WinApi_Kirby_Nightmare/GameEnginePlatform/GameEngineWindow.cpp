@@ -27,6 +27,11 @@ GameEngineWindow::~GameEngineWindow()
     }
 }
 
+void GameEngineWindow::ClearBackBuffer()
+{
+    Rectangle(BackBuffer->GetImageDC(), 0, 0, BackBuffer->GetScale().iX(), BackBuffer->GetScale().iY());
+}
+
 void GameEngineWindow::Open(const std::string& _Title, HINSTANCE _hInstance)
 {
     // 공통의 instance를 사용하므로 static으로 선언된 변수를 사용.

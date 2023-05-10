@@ -54,6 +54,8 @@ public:
 
 	void DoubleBuffering();
 
+	void ClearBackBuffer();
+
 protected:
 
 private:
