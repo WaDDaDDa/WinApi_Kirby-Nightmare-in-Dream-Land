@@ -57,6 +57,11 @@ void GameEngineLevel::ActorUpdate(float _Delta)
 
 		for (GameEngineActor* _Actor : Group)
 		{
+			if (false == _Actor->IsUpdate())
+			{
+				continue;
+			}
+			_Actor->AddLiveTime(_Delta);
 			_Actor->Update(_Delta);
 		}
 	}

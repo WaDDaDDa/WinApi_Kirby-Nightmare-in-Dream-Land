@@ -54,8 +54,11 @@ void Kirby::Start()
 void Kirby::Update(float _Delta)
 {
 	float Speed = 200.0f;
+	float4 PlayerPos = GetPos();
+	float4 CameraPos = GetLevel()->GetMainCamera()->GetPos();
 
 	float4 MovePos = float4::ZERO;
+
 
 	if (0 != GetAsyncKeyState('A'))
 	{
@@ -87,8 +90,19 @@ void Kirby::Update(float _Delta)
 	}
 	// 플레이어 이동
 	AddPos(MovePos);
+	PlayerPos = GetPos();
 	// 카메라의이동   플레이어가 움직이면 카메라도 이동한다.
-	GetLevel()->GetMainCamera()->AddPos(MovePos);
+	//GetLevel()->GetMainCamera()->AddPos(MovePos.Half());
+	if (720 < PlayerPos.iX() - CameraPos.iX() || 0 > PlayerPos.iX() - CameraPos.iX())
+	{
+		GetLevel()->GetMainCamera()->AddPos({MovePos.X, 0});
+	}
+
+	if (0 < CameraPos.iY() - PlayerPos.iY() || -480 > CameraPos.iY() - PlayerPos.iY())
+	{
+		GetLevel()->GetMainCamera()->AddPos({ 0, MovePos.Y });
+	}
+	
 }
 
 void Kirby::Render()

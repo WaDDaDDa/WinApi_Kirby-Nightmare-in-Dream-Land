@@ -20,7 +20,8 @@ void Bullet::Update(float _Delta)
 {
 	AddPos(Dir * _Delta * Speed);
 
-	if (1.0f < GetLiveTime())
+	// 1초뒤 데스
+	if (3.0f < GetLiveTime())
 	{
 		Renderer->Death();
 	}

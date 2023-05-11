@@ -4,6 +4,8 @@
 // virtual로 선언된 함수들을 사용할수있고 안할수도있는 제안을 받는다.
 class GameEngineObject
 {
+
+	friend class GameEngineLevel;
 public:
     GameEngineObject();
     ~GameEngineObject();

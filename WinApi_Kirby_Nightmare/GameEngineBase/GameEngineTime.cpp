@@ -35,6 +35,6 @@ void GameEngineTime::Update()
 	// 하지만 느려서 정확성을 아주 신경쓰는 경우가 아니면 사용하지 않을 예정.
 	// 8바이트 실수형                  사이값        /          셀수있는 시간
 	DoubleDelta = static_cast<double>(Tick) / static_cast<double>(Count.QuadPart);
-	FloatDelta = static_cast<float>(DoubleDelta);
 	Prev.QuadPart = Cur.QuadPart; // 한번 1Tick에 대한 시간을 구한후에 리셋해준것이다.
+	FloatDelta = static_cast<float>(DoubleDelta);
 }

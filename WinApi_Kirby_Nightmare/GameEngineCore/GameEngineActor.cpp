@@ -49,7 +49,6 @@ void GameEngineActor::ActorRelease()
 			continue;
 		}
 
-
 		if (nullptr == Renderer)
 		{
 			MsgBoxAssert("nullptr인 액터가 레벨의 리스트에 들어가 있었습니다.");
