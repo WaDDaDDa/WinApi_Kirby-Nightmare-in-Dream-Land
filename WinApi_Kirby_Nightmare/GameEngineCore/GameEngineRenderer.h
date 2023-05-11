@@ -47,13 +47,15 @@ public:
 
 	void SetRenderScaleToTexture();
 
+	bool IsDeath() override;
+
 protected:
 
 private:
 	// 렌더러는 텍스쳐를 알고있다.
-	GameEngineWindowTexture* Texture;
+	GameEngineWindowTexture* Texture = nullptr;
 	// 렌더 하게될 엑터를 알고있다.
-	GameEngineActor* Master;
+	GameEngineActor* Master = nullptr;
 
 	float4 RenderPos;
 	float4 RenderScale;

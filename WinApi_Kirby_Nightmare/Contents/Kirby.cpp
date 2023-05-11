@@ -9,6 +9,7 @@
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineCamera.h>
+#include "Bullet.h"
 
 
 Kirby::Kirby()
@@ -76,6 +77,14 @@ void Kirby::Update(float _Delta)
 		MovePos = { 0.0f, Speed * _Delta };
 	}
 
+	if (0 != GetAsyncKeyState('F'))
+	{
+		Bullet* NewBullet = GetLevel()->CreateActor<Bullet>();
+		NewBullet->Renderer->SetTexture("Kirby.Bmp");
+		// 방향을 표현하는 xy는 크기가 1이어야 합니다.
+		NewBullet->SetDir(float4::RIGHT);
+		NewBullet->SetPos(GetPos());
+	}
 	// 플레이어 이동
 	AddPos(MovePos);
 	// 카메라의이동   플레이어가 움직이면 카메라도 이동한다.

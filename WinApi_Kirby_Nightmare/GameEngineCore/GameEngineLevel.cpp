@@ -1,5 +1,6 @@
 #include "GameEngineLevel.h"
 #include "GameEngineCamera.h"
+#include <GameEngineBase/GameEngineDebug.h>
 
 GameEngineLevel::GameEngineLevel()
 {
@@ -73,6 +74,47 @@ void GameEngineLevel::ActorRender()
 		for (GameEngineActor* _Actor : Group)
 		{
 			_Actor->Render();
+		}
+	}
+}
+
+// 레벨에서 엑터를 관리하고 있기때문에 엑터를 지우는것도 레벨에서 관리한다.
+void GameEngineLevel::ActorRelease()
+{
+	MainCamera->Release();
+
+	std::map<int, std::list<GameEngineActor*>>::iterator GroupStartIter = AllActors.begin();
+	std::map<int, std::list<GameEngineActor*>>::iterator GroupEndIter = AllActors.end();
+
+	for (; GroupStartIter != GroupEndIter; ++GroupStartIter)
+	{
+		std::list<GameEngineActor*>& Group = GroupStartIter->second;
+
+		std::list<GameEngineActor*>::iterator ObjectStartIter = Group.begin();
+		std::list<GameEngineActor*>::iterator ObjectEndIter = Group.end();
+
+		for (; ObjectStartIter != ObjectEndIter; )
+		{
+			GameEngineActor* Actor = *ObjectStartIter;
+			if (false == Actor->IsDeath())
+			{
+				//Actor->ActorRelease(); //여기서 문제가 생긴다.
+				++ObjectStartIter;
+				continue;
+			}
+
+			if (nullptr == Actor)
+			{
+				MsgBoxAssert("nullptr인 액터가 레벨의 리스트에 들어가 있었습니다.");
+				continue;
+			}
+
+			delete Actor;
+			Actor = nullptr;
+
+			//                      i
+			// [s] [a] [a]     [a] [e]
+			ObjectStartIter = Group.erase(ObjectStartIter);
 		}
 	}
 }

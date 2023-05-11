@@ -55,3 +55,9 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera)
 	// 카메라의 위치가 출력에 관여하는것 = 이동에 따른 카메라의 이동을 표현하기 위함.
 
 }
+
+bool GameEngineRenderer::IsDeath()
+{
+	// 랜더의 주체가되는 객체가 죽었다면 그것또한 렌더에게는 죽음이다.
+	return true == GameEngineObject::IsDeath() || Master->IsDeath();
+}

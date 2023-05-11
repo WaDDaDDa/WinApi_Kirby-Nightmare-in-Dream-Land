@@ -45,7 +45,7 @@ public:
 		return true == IsUpdateValue && false == IsDeathValue; // Death인상태이면 업데이트 하면안됨.
 	}
 	// 죽었는지를 확인.
-	bool IsDeath()
+	virtual bool IsDeath()
 	{
 		return IsDeathValue;
 	}
@@ -53,6 +53,16 @@ public:
 	void SetOrder(int _Order)
 	{
 		Order = _Order;
+	}
+
+	float GetLiveTime()
+	{
+		return LiveTime;
+	}
+
+	void ResetLiveTime()
+	{
+		LiveTime = 0.0f;
 	}
 
 protected:
@@ -63,5 +73,12 @@ private:
 	bool IsUpdateValue = true; // 이걸 false로 만들면 됩니다.
 	bool IsDeathValue = false; // 아예 메모리에서 날려버리고 싶어.
 
+	float LiveTime = 0.0f;
+
+	void AddLiveTime(float _DeltaTime)
+	{
+		LiveTime += _DeltaTime;
+	}
+	
 };
 

@@ -31,19 +31,22 @@ public:
 		Pos += _Pos;
 	}
 
-	void SetScale(const float4& _Scale)
-	{
-		Scale = _Scale;
-	}
-
 	float4 GetPos()
 	{
 		return Pos;
 	}
 
-	float4 GetScale()
+	// 이미지가 비어있는 렌더러를 생성하는 함수.
+	// 이미지가 비어있기 때문에 출력시키려면 SetTexture를 통해 이미지를 연결시켜주어야 한다.
+	template<typename EnumType>
+	GameEngineRenderer* CreateRenderer(EnumType _Order)
 	{
-		return Scale;
+		return CreateRenderer("", static_cast<int>(_Order));
+	}
+
+	GameEngineRenderer* CreateRenderer(int _Order = 0)
+	{
+		return CreateRenderer("", static_cast<int>(_Order));
 	}
 
 	template<typename EnumType>
@@ -63,7 +66,6 @@ protected:
 
 private:
 	float4 Pos = float4::ZERO;
-	float4 Scale = float4::ZERO; // <= 크기는 액터한테 필요 없습니다.
 
 	GameEngineLevel* Level;
 	
@@ -71,5 +73,6 @@ private:
 
 	// void PushMainCameraRenderer(GameEngineRenderer*);
 
+	void ActorRelease();
 };
 
