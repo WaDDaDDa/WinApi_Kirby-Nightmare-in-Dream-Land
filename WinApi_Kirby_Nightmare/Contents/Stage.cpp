@@ -16,7 +16,7 @@ Stage::~Stage()
 
 void Stage::Start()
 {
-	SetPos({ 1860, 240 });
+	SetPos({ 1200, 340 });
 }
 
 

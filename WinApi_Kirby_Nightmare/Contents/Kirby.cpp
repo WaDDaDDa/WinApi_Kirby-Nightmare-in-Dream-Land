@@ -40,14 +40,15 @@ void Kirby::Start()
 		FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Kirby\\");
 
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Kirby.Bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Bullet.Bmp"));
 	}
 
 	GameEngineRenderer* PlayerRender = CreateRenderer("Kirby.Bmp", RenderOrder::Play);
-	PlayerRender->SetRenderScale({ 50, 50 });
+	PlayerRender->SetRenderScale({ 58, 50 });
 	PlayerRender->SetTexture("Kirby.Bmp");
 
 	float4 WinScale = GameEngineWindow::MainWindow.GetScale();
-	float4 PlayerPos = WinScale.Half() + float4({ -100, 80});
+	float4 PlayerPos = WinScale.Half() + float4({ -250, 130});
 
 	SetPos(PlayerPos);
 
@@ -55,7 +56,7 @@ void Kirby::Start()
 
 void Kirby::Update(float _Delta)
 {
-	float Speed = 1000.0f;
+	float Speed = 300.0f;
 	float4 PlayerPos = GetPos();
 	float4 CameraPos = GetLevel()->GetMainCamera()->GetPos();
 
@@ -85,7 +86,7 @@ void Kirby::Update(float _Delta)
 	if (true == GameEngineInput::IsDown('F'))
 	{
 		Bullet* NewBullet = GetLevel()->CreateActor<Bullet>();
-		NewBullet->Renderer->SetTexture("Kirby.Bmp");
+		NewBullet->Renderer->SetTexture("Bullet.Bmp");
 		// 방향을 표현하는 xy는 크기가 1이어야 합니다.
 		NewBullet->SetDir(float4::RIGHT);
 		NewBullet->SetPos(GetPos());
@@ -95,22 +96,22 @@ void Kirby::Update(float _Delta)
 	PlayerPos = GetPos();
 	// 카메라의이동   플레이어가 움직이면 카메라도 이동한다.
 
-	if (MovePos != float4::ZERO)
-	{
-		GetLevel()->GetMainCamera()->AddPos(MovePos);
+	//if (MovePos != float4::ZERO)
+	//{
+	//	GetLevel()->GetMainCamera()->AddPos(MovePos);
 
-	}
+	//}
 
 	// 윈도우 화면창 범위를 넘기려하면 카메라가 움직인다.
-	//if (720 < PlayerPos.iX() - CameraPos.iX() || 0 > PlayerPos.iX() - CameraPos.iX())
-	//{
-	//	GetLevel()->GetMainCamera()->AddPos({MovePos.X, 0});
-	//}
+	if (720 < PlayerPos.iX() - CameraPos.iX() || 0 > PlayerPos.iX() - CameraPos.iX())
+	{
+		GetLevel()->GetMainCamera()->AddPos({MovePos.X, 0});
+	}
 
-	//if (0 < CameraPos.iY() - PlayerPos.iY() || -480 > CameraPos.iY() - PlayerPos.iY())
-	//{
-	//	GetLevel()->GetMainCamera()->AddPos({ 0, MovePos.Y });
-	//}
+	if (0 < CameraPos.iY() - PlayerPos.iY() || -480 > CameraPos.iY() - PlayerPos.iY())
+	{
+		GetLevel()->GetMainCamera()->AddPos({ 0, MovePos.Y });
+	}
 	
 }
 

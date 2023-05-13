@@ -23,7 +23,7 @@ void MainHub::Start()
 	GameEngineCore::CreateLevel<MainHubLevel>("MainHubLevel");
 
 	// 이 레벨이 화면에 보여라.
-	GameEngineCore::ChangeLevel("TitleLevel");
+	GameEngineCore::ChangeLevel("MainHubLevel");
 }
 
 // 행동.

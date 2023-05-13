@@ -36,7 +36,7 @@ void MainHubLevel::Start()
 	BackGround* CurBackGround = CreateActor<BackGround>();
 	CurBackGround->Init("TestBackGround.Bmp");
 	Stage* CurStage = CreateActor<Stage>();
-	CurStage->Init("StageTest.Bmp");
+	CurStage->Init("TestStage1.Bmp");
 
 	LevelPlayer = CreateActor<Kirby>();
 
