@@ -20,7 +20,7 @@ BackGround::~BackGround()
 
 void BackGround::Start()
 {
-	SetPos({ 440, 220 });
+	SetPos({ 440, 240 });
 }
 
 
