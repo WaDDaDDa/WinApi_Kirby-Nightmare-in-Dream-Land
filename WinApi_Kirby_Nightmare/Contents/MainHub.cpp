@@ -1,6 +1,7 @@
 #include "MainHub.h"
 #include "MainHubLevel.h"
 #include <GameEnginePlatform/GameEngineWindow.h>
+#include "TitleLevel.h"
 
 
 MainHub::MainHub()
@@ -18,10 +19,11 @@ void MainHub::Start()
 {
 	// GBA의 해상도 240x160에 3배율한 720x480을 내 기본 해상도로 할 예정.
 	GameEngineWindow::MainWindow.SetPosAndScale({ 100, 100 }, { 720, 480 });
+	GameEngineCore::CreateLevel<TitleLevel>("TitleLevel");
 	GameEngineCore::CreateLevel<MainHubLevel>("MainHubLevel");
 
 	// 이 레벨이 화면에 보여라.
-	GameEngineCore::ChangeLevel("MainHubLevel");
+	GameEngineCore::ChangeLevel("TitleLevel");
 }
 
 // 행동.

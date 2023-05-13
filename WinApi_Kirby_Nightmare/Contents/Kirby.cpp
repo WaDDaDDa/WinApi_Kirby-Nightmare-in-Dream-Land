@@ -10,7 +10,7 @@
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineCamera.h>
 #include "Bullet.h"
-
+#include <GameEnginePlatform/GameEngineInput.h>
 
 Kirby::Kirby()
 {
@@ -53,29 +53,29 @@ void Kirby::Start()
 
 void Kirby::Update(float _Delta)
 {
-	float Speed = 200.0f;
+	float Speed = 1000.0f;
 	float4 PlayerPos = GetPos();
 	float4 CameraPos = GetLevel()->GetMainCamera()->GetPos();
 
 	float4 MovePos = float4::ZERO;
 
 
-	if (0 != GetAsyncKeyState('A'))
+	if (true == GameEngineInput::IsPress('A'))
 	{
 		MovePos = { -Speed * _Delta, 0.0f };
 	}
 
-	if (0 != GetAsyncKeyState('D'))
+	if (true == GameEngineInput::IsPress('D'))
 	{
 		MovePos = { Speed * _Delta, 0.0f };
 	}
 
-	if (0 != GetAsyncKeyState('W'))
+	if (true == GameEngineInput::IsPress('W'))
 	{
 		MovePos = { 0.0f, -Speed * _Delta };
 	}
 
-	if (0 != GetAsyncKeyState('S'))
+	if (true == GameEngineInput::IsPress('S'))
 	{
 		MovePos = { 0.0f, Speed * _Delta };
 	}

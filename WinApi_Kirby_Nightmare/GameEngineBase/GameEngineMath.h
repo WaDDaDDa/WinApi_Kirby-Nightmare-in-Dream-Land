@@ -58,6 +58,17 @@ public:
 		return { hX(), hY(), Z, W };
 	}
 
+	float4 operator-()
+	{
+		float4 ReturnValue = *this;
+
+		ReturnValue.X = -ReturnValue.X;
+		ReturnValue.Y = -ReturnValue.Y;
+		ReturnValue.Z = -ReturnValue.Z;
+		return ReturnValue;
+	}
+
+
 	float4 operator-(const float4& _Other)
 	{
 		float4 ReturnValue;

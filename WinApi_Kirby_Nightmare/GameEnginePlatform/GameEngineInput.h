@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <map>
 #include <string>
+#include <GameEngineBase/GameEngineMath.h>
 
 // 설명 :
 class GameEngineInput
@@ -9,13 +10,11 @@ class GameEngineInput
 private:
 	class GameEngineKey
 	{
-		// 키가 눌렷을때 한번
+		friend GameEngineInput;
+
 		bool Down = false;
-		// 눌렸을때와 눌리고있는중 을 체크
 		bool Press = false;
-		// 키가 떼졌을때 한번
 		bool Up = false;
-		// 키가 떼졌을때와 아무것도 눌리고있지 않을때
 		bool Free = true;
 
 		// 의미가 없다고 봐요.
@@ -23,13 +22,43 @@ private:
 
 		int Key = -1;
 
-		// 키가 눌렸는지를 체크한다. true면 눌림.
 		bool KeyCheck()
 		{
 			return 0 != GetAsyncKeyState(Key);
 		}
 
+		void Reset()
+		{
+			if (true == Press)
+			{
+				Down = false;
+				Press = false;
+				Up = true;
+				Free = true;
+			}
+			else if (true == Up)
+			{
+				Down = false;
+				Press = false;
+				Up = false;
+				Free = true;
+			}
+		}
+
 		void Update(float _DeltaTime);
+
+	public:
+		GameEngineKey()
+			: Key(-1)
+		{
+
+		}
+
+		GameEngineKey(int _Key)
+			: Key(_Key)
+		{
+
+		}
 	};
 
 public:
@@ -43,9 +72,20 @@ public:
 	GameEngineInput& operator=(const GameEngineInput& _Other) = delete;
 	GameEngineInput& operator=(GameEngineInput&& _Other) noexcept = delete;
 
+	static float4 MousePos();
+
+	static void InputInit();
+	static void Update(float _DeltaTime);
+	static void Reset();
+
+	static bool IsDown(int _Key);
+	static bool IsUp(int _Key);
+	static bool IsPress(int _Key);
+	static bool IsFree(int _Key);
+
 protected:
 
 private:
-	static std::map<std::string, GameEngineKey> AllKeys;
+	static std::map<int, GameEngineKey> AllKeys;
 };
 

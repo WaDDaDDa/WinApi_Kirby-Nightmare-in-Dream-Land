@@ -20,6 +20,9 @@
     <ClInclude Include="Bullet.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="TitleLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainHub.cpp" />
@@ -37,6 +40,9 @@
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleLevel.cpp">
+      <Filter>Level</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

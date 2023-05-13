@@ -3,6 +3,7 @@
 #include <GameEngineBase/GameEngineDebug.h>
 #include <GameEngineBase/GameEngineTime.h>
 #include "GameEngineLevel.h"
+#include <GameEnginePlatform/GameEngineInput.h>
 
 // static 변수들의 초기화.
 std::string GameEngineCore::WindowTitle = "";
@@ -26,6 +27,7 @@ void GameEngineCore::CoreStart(HINSTANCE _Inst)
 {
     // 엔진쪽에 준비를 다 해고
     GameEngineWindow::MainWindow.Open(WindowTitle, _Inst);
+    GameEngineInput::InputInit();
 
     // 유저의 준비를 해준다. 준비된 컨텐츠의 실행.
     Process->Start(); 
@@ -37,7 +39,15 @@ void GameEngineCore::CoreUpdate()
 {
     if (nullptr != NextLevel)
     {
+        if (nullptr != CurLevel)
+        {
+            CurLevel->LevelEnd(NextLevel);
+        }
+
+        NextLevel->LevelStart(CurLevel);
+
         CurLevel = NextLevel;
+
         NextLevel = nullptr;
         GameEngineTime::MainTimer.Reset();
     }
@@ -45,6 +55,16 @@ void GameEngineCore::CoreUpdate()
     // 프레임의 시간을 측정하기 위해 여기서 Time Update하고 DeltaTime을 받아둔다.
     GameEngineTime::MainTimer.Update();
     float Delta = GameEngineTime::MainTimer.GetDeltaTime();
+
+    // 윈도우에 포커스가 있지않으면 키입력 받지않겟다. 
+    if (true == GameEngineWindow::IsFocus())
+    {
+        GameEngineInput::Update(Delta);
+    }
+    else
+    {
+        GameEngineInput::Reset();
+    }
 
     // Level에 있는 상속받은 업데이트하고 Level에 있는 Actor을 업데이트 한다.
     CurLevel->Update(Delta);

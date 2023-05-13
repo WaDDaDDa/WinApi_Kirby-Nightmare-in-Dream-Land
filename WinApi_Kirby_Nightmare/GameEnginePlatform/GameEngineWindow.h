@@ -56,11 +56,17 @@ public:
 
 	void ClearBackBuffer();
 
+	static bool IsFocus()
+	{
+		return IsFocusValue;
+	}
+
 protected:
 
 private:
 	static bool IsWindowUpdate; // 윈도우가 종료되기 위한 변수.
 	// HInstance를 전역 멤버변수로 가진다.
+	static bool IsFocusValue;
 	static HINSTANCE Instance;
 	std::string Title = "";
 	HWND hWnd = nullptr;

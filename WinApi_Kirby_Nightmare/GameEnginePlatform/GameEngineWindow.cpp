@@ -7,6 +7,7 @@ HINSTANCE GameEngineWindow::Instance = nullptr;
 // 윈도우창을 한개만 띄울것이기 때문에 MainWindow를 가지도록 선언.
 GameEngineWindow GameEngineWindow::MainWindow;
 bool GameEngineWindow::IsWindowUpdate = true;
+bool GameEngineWindow::IsFocusValue = false;
 
 GameEngineWindow::GameEngineWindow()
 {
@@ -90,6 +91,16 @@ LRESULT CALLBACK GameEngineWindow::WndProc(HWND _hWnd, UINT message, WPARAM wPar
 {
     switch (message)
     {
+    case WM_SETFOCUS:
+    {
+        IsFocusValue = true;
+        return DefWindowProc(_hWnd, message, wParam, lParam);
+    }
+    case WM_KILLFOCUS:
+    {
+        IsFocusValue = false;
+        return DefWindowProc(_hWnd, message, wParam, lParam);
+    }
     case WM_PAINT:
     {
         PAINTSTRUCT ps;

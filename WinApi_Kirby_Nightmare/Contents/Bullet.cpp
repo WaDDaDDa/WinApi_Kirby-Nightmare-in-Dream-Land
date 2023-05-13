@@ -23,7 +23,11 @@ void Bullet::Update(float _Delta)
 	// 1초뒤 데스
 	if (3.0f < GetLiveTime())
 	{
-		Renderer->Death();
+		if (nullptr != Renderer)
+		{
+			Renderer->Death();
+			Renderer = nullptr;
+		}
 	}
 
 }

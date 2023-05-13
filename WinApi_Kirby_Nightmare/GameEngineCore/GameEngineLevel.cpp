@@ -78,6 +78,11 @@ void GameEngineLevel::ActorRender()
 
 		for (GameEngineActor* _Actor : Group)
 		{
+			if (false == _Actor->IsUpdate())
+			{
+				continue;
+			}
+
 			_Actor->Render();
 		}
 	}
@@ -103,7 +108,7 @@ void GameEngineLevel::ActorRelease()
 			GameEngineActor* Actor = *ObjectStartIter;
 			if (false == Actor->IsDeath())
 			{
-				//Actor->ActorRelease(); //여기서 문제가 생긴다.
+				Actor->ActorRelease(); //여기서 문제가 생긴다.
 				++ObjectStartIter;
 				continue;
 			}
