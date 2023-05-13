@@ -138,5 +138,10 @@ public:
 		return *this;
 	}
 
+	bool operator!=(const float4& _Other)
+	{
+		return X != _Other.X || Y != _Other.Y || Z != _Other.Z;
+	}
+
 };
 

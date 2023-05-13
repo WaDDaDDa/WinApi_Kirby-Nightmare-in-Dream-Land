@@ -11,6 +11,7 @@
 #include <GameEngineCore/GameEngineCamera.h>
 #include "Bullet.h"
 #include <GameEnginePlatform/GameEngineInput.h>
+#include "BackGround.h"
 
 Kirby::Kirby()
 {
@@ -49,6 +50,7 @@ void Kirby::Start()
 	float4 PlayerPos = WinScale.Half() + float4({ -100, 80});
 
 	SetPos(PlayerPos);
+
 }
 
 void Kirby::Update(float _Delta)
@@ -57,7 +59,7 @@ void Kirby::Update(float _Delta)
 	float4 PlayerPos = GetPos();
 	float4 CameraPos = GetLevel()->GetMainCamera()->GetPos();
 
-	float4 MovePos = float4::ZERO;
+	MovePos = float4::ZERO;
 
 
 	if (true == GameEngineInput::IsPress('A'))
@@ -80,7 +82,7 @@ void Kirby::Update(float _Delta)
 		MovePos = { 0.0f, Speed * _Delta };
 	}
 
-	if (0 != GetAsyncKeyState('F'))
+	if (true == GameEngineInput::IsDown('F'))
 	{
 		Bullet* NewBullet = GetLevel()->CreateActor<Bullet>();
 		NewBullet->Renderer->SetTexture("Kirby.Bmp");
@@ -92,16 +94,23 @@ void Kirby::Update(float _Delta)
 	AddPos(MovePos);
 	PlayerPos = GetPos();
 	// 카메라의이동   플레이어가 움직이면 카메라도 이동한다.
-	//GetLevel()->GetMainCamera()->AddPos(MovePos.Half());
-	if (720 < PlayerPos.iX() - CameraPos.iX() || 0 > PlayerPos.iX() - CameraPos.iX())
+
+	if (MovePos != float4::ZERO)
 	{
-		GetLevel()->GetMainCamera()->AddPos({MovePos.X, 0});
+		GetLevel()->GetMainCamera()->AddPos(MovePos);
+
 	}
 
-	if (0 < CameraPos.iY() - PlayerPos.iY() || -480 > CameraPos.iY() - PlayerPos.iY())
-	{
-		GetLevel()->GetMainCamera()->AddPos({ 0, MovePos.Y });
-	}
+	// 윈도우 화면창 범위를 넘기려하면 카메라가 움직인다.
+	//if (720 < PlayerPos.iX() - CameraPos.iX() || 0 > PlayerPos.iX() - CameraPos.iX())
+	//{
+	//	GetLevel()->GetMainCamera()->AddPos({MovePos.X, 0});
+	//}
+
+	//if (0 < CameraPos.iY() - PlayerPos.iY() || -480 > CameraPos.iY() - PlayerPos.iY())
+	//{
+	//	GetLevel()->GetMainCamera()->AddPos({ 0, MovePos.Y });
+	//}
 	
 }
 

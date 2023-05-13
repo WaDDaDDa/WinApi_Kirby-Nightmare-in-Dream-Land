@@ -3,6 +3,10 @@
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEngineCore/GameEngineRenderer.h>
 #include "ContentsEnum.h"
+#include <GameEngineCore/GameEngineCamera.h>
+#include <GameEngineCore/GameEngineLevel.h>
+#include <GameEngineBase/GameEngineMath.h>
+#include "Kirby.h"
 
 #pragma comment(lib, "msimg32.lib")
 
@@ -16,11 +20,20 @@ BackGround::~BackGround()
 
 void BackGround::Start()
 {
-	SetPos({ 1860, 240 });
+	SetPos({ 440, 220 });
 }
 
 
-void BackGround::Update(float _Delta) {
+void BackGround::Update(float _Delta) 
+{
+	float4 CurCameraPos = GetLevel()->GetMainCamera()->GetPos();
+	if (PrevCameraPos != CurCameraPos)
+	{
+		// 카메라의 움직임을 받아야한다.
+		float4 MovePos = CurCameraPos - PrevCameraPos;
+		AddPos(MovePos);
+		PrevCameraPos = CurCameraPos;
+	}
 }
 void BackGround::Render()
 {
@@ -50,7 +63,7 @@ void BackGround::Init(const std::string& _FileName)
 
 		float4 Scale = Text->GetScale();
 
-		Scale.X *= 12.0f;
+		Scale.X *= 2.5f;
 		Scale.Y *= 3.0f;
 
 		GameEngineRenderer* Render = CreateRenderer(_FileName, RenderOrder::BackGround);

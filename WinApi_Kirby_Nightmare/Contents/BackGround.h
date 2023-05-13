@@ -26,7 +26,7 @@ private:
     void Render() override;
     void Release() override;
 
-
+    float4 PrevCameraPos = { 0,0 };
 
 };
 
