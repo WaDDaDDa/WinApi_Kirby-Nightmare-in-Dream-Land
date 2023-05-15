@@ -45,7 +45,7 @@ private:
 
 	void PushRenderer(GameEngineRenderer* _Renderer, int _Order);
 
-	void Render();
+	void Render(float _Delta);
 
 	void Release();
 };

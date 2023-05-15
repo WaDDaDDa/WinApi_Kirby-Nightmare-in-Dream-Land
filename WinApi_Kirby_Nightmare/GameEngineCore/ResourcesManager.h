@@ -13,6 +13,7 @@
 // 생성 객체를 생성하는 방법을 
 // 패턴 소양 정도로만 알고있으면 됩니다.
 // 이 프로그램에서 이 객체가 1개만 있었으면 좋겠다.
+class GameEngineSprite;
 class GameEngineWindowTexture;
 class ResourcesManager
 {
@@ -42,6 +43,17 @@ public:
 
 	bool IsLoadTexture(const std::string& _Image);
 
+	GameEngineSprite* FindSprite(const std::string& _Name);
+
+	GameEngineSprite* CreateSpriteSheet(const std::string& _TexturePath, int _XCount, int _YCount)
+	{
+		GameEnginePath Path = _TexturePath;
+
+		return CreateSpriteSheet(Path.GetFileName(), _TexturePath, _XCount, _YCount);
+	}
+
+	GameEngineSprite* CreateSpriteSheet(const std::string& _SpriteName, const std::string& _TexturePath, int _XCount, int _YCount);
+
 
 protected:
 
@@ -56,5 +68,7 @@ private:
 	~ResourcesManager();
 
 	std::map<std::string, GameEngineWindowTexture*> AllTexture;
+
+	std::map<std::string, GameEngineSprite*> AllSprite;
 };
 

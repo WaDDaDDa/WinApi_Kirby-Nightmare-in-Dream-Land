@@ -1,6 +1,7 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
 
+class GameEngineRenderer;
 class Kirby : public GameEngineActor
 {
 public:
@@ -11,6 +12,8 @@ public:
     Kirby(Kirby&& _Other) noexcept = delete;
     Kirby& operator=(const Kirby& _Other) = delete;
     Kirby& operator=(Kirby&& _Other) noexcept = delete;
+
+    GameEngineRenderer* MainRenderer = nullptr;
 
     float4 GetMovePos()
     {

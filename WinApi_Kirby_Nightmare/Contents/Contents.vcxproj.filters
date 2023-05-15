@@ -8,9 +8,6 @@
     <ClInclude Include="Kirby.h">
       <Filter>Global</Filter>
     </ClInclude>
-    <ClInclude Include="Stage.h">
-      <Filter>Global</Filter>
-    </ClInclude>
     <ClInclude Include="ContentsEnum.h">
       <Filter>Global</Filter>
     </ClInclude>
@@ -22,6 +19,9 @@
     </ClInclude>
     <ClInclude Include="TitleLevel.h">
       <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>Global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
