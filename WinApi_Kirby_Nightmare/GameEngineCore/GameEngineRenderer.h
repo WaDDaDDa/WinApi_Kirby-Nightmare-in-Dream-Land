@@ -79,6 +79,7 @@ private:
 	// true이면 셋팅한 크기로 이미지를 출력
 	// false이면 이미지 크기그대로 출력
 	bool ScaleCheck = false;
+	// 이미지 배율
 	float ScaleRatio = 1.0f;
 	void Render(GameEngineCamera* _Camera, float _DeltaTime);
 

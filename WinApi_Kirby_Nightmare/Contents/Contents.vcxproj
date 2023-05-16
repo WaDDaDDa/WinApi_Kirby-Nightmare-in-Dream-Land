@@ -201,6 +201,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Kirby_State.cpp" />
     <ClCompile Include="MainHub.cpp">
       <SubType>
       </SubType>

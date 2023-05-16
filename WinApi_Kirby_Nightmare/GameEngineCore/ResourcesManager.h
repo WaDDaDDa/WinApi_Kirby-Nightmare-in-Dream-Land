@@ -54,6 +54,7 @@ public:
 
 	GameEngineSprite* CreateSpriteSheet(const std::string& _SpriteName, const std::string& _TexturePath, int _XCount, int _YCount);
 
+	GameEngineSprite* CreateSpriteFolder(const std::string& _SpriteName, const std::string& _Path);
 
 protected:
 
