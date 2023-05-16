@@ -54,7 +54,7 @@ void BackGround::Init(const std::string& _FileName)
 	{
 
 		GameEnginePath FilePath;
-		FilePath.GetCurrentPath();
+		FilePath.SetCurrentPath();
 
 		FilePath.MoveParentToExistsChild("Resource");
 		FilePath.MoveChild("Resource\\\\Kirby_Nightmare_in_Dream_Land\\Backgrounds\\" + _FileName);

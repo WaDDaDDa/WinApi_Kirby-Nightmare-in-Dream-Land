@@ -3,6 +3,7 @@
 
 GameEnginePath::GameEnginePath()
 {
+	SetCurrentPath();
 }
 
 GameEnginePath::GameEnginePath(const std::string& _path)
@@ -21,7 +22,7 @@ std::string GameEnginePath::GetFileName()
 	return Path.filename().string();
 }
 
-void GameEnginePath::GetCurrentPath()
+void GameEnginePath::SetCurrentPath()
 {
 	// 현재 경로를 Path에 저장.
 	Path = std::filesystem::current_path();
@@ -88,4 +89,9 @@ std::string GameEnginePath::PlusFilePath(const std::string& _ChildPath)
 	}
 
 	return CheckPath.string();
+}
+
+bool GameEnginePath::IsDirectory()
+{
+	return std::filesystem::is_directory(Path);
 }

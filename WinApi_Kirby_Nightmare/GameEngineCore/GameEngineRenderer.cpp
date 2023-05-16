@@ -55,7 +55,10 @@ void GameEngineRenderer::SetTexture(const std::string& _Name)
 // 렌더 스케일을 이미지 그대로의 크기로 바꾸고 ScaleCheck를 False로 한다.
 void GameEngineRenderer::SetRenderScaleToTexture()
 {
-	RenderScale = Texture->GetScale();
+	if (nullptr != Texture)
+	{
+		RenderScale = Texture->GetScale();
+	}
 	ScaleCheck = false;
 }
 
@@ -89,6 +92,12 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _DeltaTime)
 		Texture = SpriteInfo.BaseTexture;
 		SetCopyPos(SpriteInfo.RenderPos);
 		SetCopyScale(SpriteInfo.RenderScale);
+
+		if (false == ScaleCheck)
+		{
+			SetRenderScale(SpriteInfo.RenderScale * ScaleRatio);
+		}
+
 	}
 
 	if (nullptr == Texture)

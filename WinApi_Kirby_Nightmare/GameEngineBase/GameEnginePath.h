@@ -12,14 +12,14 @@ public:
 	~GameEnginePath();
 
 	// delete Function
-	GameEnginePath(const GameEnginePath& _Other) = delete;
-	GameEnginePath(GameEnginePath&& _Other) noexcept = delete;
-	GameEnginePath& operator=(const GameEnginePath& _Other) = delete;
-	GameEnginePath& operator=(GameEnginePath&& _Other) noexcept = delete;
+	//GameEnginePath(const GameEnginePath& _Other) = delete;
+	//GameEnginePath(GameEnginePath&& _Other) noexcept = delete;
+	//GameEnginePath& operator=(const GameEnginePath& _Other) = delete;
+	//GameEnginePath& operator=(GameEnginePath&& _Other) noexcept = delete;
 
 	std::string GetFileName();
 
-	void GetCurrentPath();
+	void SetCurrentPath();
 	void MoveParent();
 	void MoveParentToExistsChild(const std::string& _ChildPath);
 	void MoveChild(const std::string& _ChildPath);
@@ -31,10 +31,12 @@ public:
 
 	std::string PlusFilePath(const std::string& _ChildPath);
 
+	bool IsDirectory();
+
 protected:
+	std::filesystem::path Path;
 
 private:
-	std::filesystem::path Path;
 
 	// std::string Path;
 };
