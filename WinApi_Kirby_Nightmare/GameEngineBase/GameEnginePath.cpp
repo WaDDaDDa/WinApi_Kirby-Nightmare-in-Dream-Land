@@ -28,7 +28,6 @@ void GameEnginePath::SetCurrentPath()
 	Path = std::filesystem::current_path();
 }
 
-
 void GameEnginePath::MoveParent()
 {
 	// 한단계위의 경로를 Path에 저장.
