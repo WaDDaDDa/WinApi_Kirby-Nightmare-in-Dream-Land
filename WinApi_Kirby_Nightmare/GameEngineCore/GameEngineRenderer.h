@@ -3,6 +3,7 @@
 #include <GameEngineBase/GameEngineMath.h>
 #include <string>
 #include <map>
+#include <vector>
 
 // Ό³Έν :
 class GameEngineWindowTexture;
@@ -92,7 +93,7 @@ private:
 		size_t StartFrame = -1;
 		size_t EndFrame = -1;
 		float CurInter = 0.0f;
-		float Inter = 0.1f;
+		std::vector<float> Inters;
 		bool Loop = true;
 	};
 

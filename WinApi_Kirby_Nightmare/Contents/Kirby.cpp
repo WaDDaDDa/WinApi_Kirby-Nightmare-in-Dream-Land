@@ -62,7 +62,8 @@ void Kirby::Start()
 	MainRenderer->SetScaleRatio(2.0f);
 
 	{ // LeftAnimation 생성
-		MainRenderer->CreateAnimation("Left_Idle", "KirbyLeft_Idel.bmp", 0, 1, 1.0f, true);
+		MainRenderer->CreateAnimation("Left_Idle", "KirbyLeft_Idel.bmp", 0, 1, 0.2f, true);
+		MainRenderer->FindAnimation("Left_Idle")->Inters[1] = 0.5f;
 		MainRenderer->CreateAnimation("Left_Walk", "KirbyLeft_Walk.bmp", 0, 9, 0.1f, true);
 		MainRenderer->CreateAnimation("Left_Jump", "KirbyLeft_Jump.bmp", 0, 9, 0.1f, true);
 		MainRenderer->CreateAnimation("Left_Run", "KirbyLeft_Run.bmp", 0, 7, 0.1f, true);  // 8은 브레이크모션 9는 벽충돌
@@ -70,7 +71,7 @@ void Kirby::Start()
 	}
 
 	{ // RightAnimation 생성
-		MainRenderer->CreateAnimation("Right_Idle", "KirbyRight_Idel.bmp", 0, 1, 1.0f, true);
+		MainRenderer->CreateAnimation("Right_Idle", "KirbyRight_Idel.bmp", 0, 1, 0.2f, true);
 		MainRenderer->CreateAnimation("Right_Walk", "KirbyRight_Walk.bmp", 0, 9, 0.1f, true);
 		MainRenderer->CreateAnimation("Right_Jump", "KirbyRight_Jump.bmp", 0, 9, 0.1f, true);
 		MainRenderer->CreateAnimation("Right_Run", "KirbyRight_Run.bmp", 0, 7, 0.1f, true); // 8은 브레이크모션 9는 벽충돌
@@ -105,9 +106,9 @@ void Kirby::StateUpdate(float _Delta)
 	case KirbyState::Jump:
 		return JumpUpdate(_Delta);
 	case KirbyState::Run:
-		return JumpUpdate(_Delta);
+		return RunUpdate(_Delta);
 	case KirbyState::Fly:
-		return JumpUpdate(_Delta);
+		return FlyUpdate(_Delta);
 	default:
 		break;
 	}
