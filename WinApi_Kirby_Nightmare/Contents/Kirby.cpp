@@ -33,8 +33,6 @@ void Kirby::Start()
 	{
 		// 무조건 자동으로 현재 실행중인 위치가 된다.
 		GameEnginePath FilePath;
-
-		FilePath.SetCurrentPath();
 		FilePath.MoveParentToExistsChild("Resource");
 		// 경로 까지만.
 		FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Kirby\\");
@@ -47,99 +45,61 @@ void Kirby::Start()
 	}
 
 	MainRenderer = CreateRenderer("Kirby.bmp",RenderOrder::Play);
-	MainRenderer->SetRenderScale({ 58, 50 });
+	//MainRenderer->SetRenderScale({ 64, 64 });  // 없으면 기본 이미지 크기 그대로 출력
 
 	MainRenderer->CreateAnimation("Idle", "KirbyIdel.bmp", 0 , 1, 1.0f, true);
 	MainRenderer->CreateAnimation("run", "KirbyWalk.bmp", 0, 9, 0.1f, true);
 	MainRenderer->ChangeAnimation("Idle");
 
 	float4 WinScale = GameEngineWindow::MainWindow.GetScale();
+	// PlayerPos 는 static 멤버 변수 선언후 초기 위치를 선언하고 시작할수있을듯.
 	float4 PlayerPos = WinScale.Half() + float4({ -250, 130});
 
 	SetPos(PlayerPos);
+
+	ChangeState(KirbyState::Idle);
 
 }
 
 void Kirby::Update(float _Delta)
 {
-	float Speed = 300.0f;
-	float4 PlayerPos = GetPos();
-	float4 CameraPos = GetLevel()->GetMainCamera()->GetPos();
+	StateUpdate(_Delta);
+}
 
-	MovePos = float4::ZERO;
-
-
-	if (true == GameEngineInput::IsPress('A'))
+void Kirby::StateUpdate(float _Delta)
+{
+	switch (State)
 	{
-		MovePos = { -Speed * _Delta, 0.0f };
-	}
-
-	if (true == GameEngineInput::IsPress('D'))
-	{
-		MovePos = { Speed * _Delta, 0.0f };
-	}
-
-	if (true == GameEngineInput::IsPress('W'))
-	{
-		MovePos = { 0.0f, -Speed * _Delta };
-	}
-
-	if (true == GameEngineInput::IsPress('S'))
-	{
-		MovePos = { 0.0f, Speed * _Delta };
-	}
-
-	if (MovePos.X != 0.0f || MovePos.Y != 0.0f)
-	{
-		MainRenderer->ChangeAnimation("run");
-	}
-	else
-	{
-		MainRenderer->ChangeAnimation("Idle");
-	}
-
-	if (true == GameEngineInput::IsDown('F'))
-	{
-		Bullet* NewBullet = GetLevel()->CreateActor<Bullet>();
-		NewBullet->Renderer->SetTexture("TestMonster1.Bmp");
-		// 방향을 표현하는 xy는 크기가 1이어야 합니다.
-		NewBullet->SetDir(float4::RIGHT);
-		NewBullet->SetPos(GetPos());
-	}
-	// 플레이어 이동
-	AddPos(MovePos);
-	PlayerPos = GetPos();
-	// 카메라의이동   플레이어가 움직이면 카메라도 이동한다.
-
-	//if (MovePos != float4::ZERO)
-	//{
-	//	GetLevel()->GetMainCamera()->AddPos(MovePos);
-	//}
-
-	// 윈도우 화면창 범위를 넘기려하면 카메라가 움직인다.
-	if (420 < PlayerPos.iX() - CameraPos.iX() || 20 > PlayerPos.iX() - CameraPos.iX())
-	{
-		GetLevel()->GetMainCamera()->AddPos({MovePos.X, 0});
-	}
-
-	if (0 < CameraPos.iY() - PlayerPos.iY() || -480 > CameraPos.iY() - PlayerPos.iY())
-	{
-		GetLevel()->GetMainCamera()->AddPos({ 0, MovePos.Y });
+	case KirbyState::Idle:
+		return IdleUpdate(_Delta);
+	case KirbyState::Run:
+		return RunUpdate(_Delta);
+	case KirbyState::Shoot:
+		return ShootUpdate(_Delta);
+	default:
+		break;
 	}
 }
 
-void Kirby::Render()
+void Kirby::ChangeState(KirbyState _State)
 {
-	//SetPos({ 200, 200 });
-	//SetScale({ 100, 100 });
+	if (_State != State)
+	{
+		switch (_State)
+		{
+		case KirbyState::Idle:
+			IdleStart();
+			break;
+		case KirbyState::Run:
+			RunStart();
+			break;
+		case KirbyState::Shoot:
+			ShootStart();
+			break;
+		default:
+			break;
+		}
+	}
 
-	////그리기위한 핸들이 필요함.
-	//GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
-	//GameEngineWindowTexture* FindTexture = ResourcesManager::GetInst().FindTexture("Kirby.Bmp");
-	////                                             출력될 크기                  이미지 자체의 크기
-	//BackBuffer->TransCopy(FindTexture, GetPos(), { 50, 50 }, { 0,0 }, FindTexture->GetScale());
-}
-
-void Kirby::Release()
-{
+	State = _State;
 }
