@@ -5,7 +5,7 @@ enum class KirbyState
 {
     Idle,
     Run,
-    Shoot,
+    Jump,
     Max, // 일반적으로 사용하지 않는 값.
 };
 
@@ -41,11 +41,11 @@ protected:
 
     void IdleStart();
     void RunStart();
-    void ShootStart();
+    void JumpStart();
 
     void IdleUpdate(float _Delta);
     void RunUpdate(float _Delta);
-    void ShootUpdate(float _Delta);
+    void JumpUpdate(float _Delta);
 
     void ChangeState(KirbyState _State);
 

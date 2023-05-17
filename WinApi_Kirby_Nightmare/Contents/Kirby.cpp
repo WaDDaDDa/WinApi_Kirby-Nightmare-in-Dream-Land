@@ -39,6 +39,7 @@ void Kirby::Start()
 			FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Kirby\\Right\\");
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Idel.bmp"), 2, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Walk.bmp"), 5, 2);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Jump.bmp"), 5, 2);
 		}
 
 		{ // LeftAnimation 実特
@@ -46,20 +47,24 @@ void Kirby::Start()
 			FilePath.MoveChild("Left\\");
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Idel.bmp"), 2, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Walk.bmp"), 5, 2);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Jump.bmp"), 5, 2);
 		}
 
 	}
 
 	MainRenderer = CreateRenderer(RenderOrder::Play);
+	MainRenderer->SetScaleRatio(2.0f);
 
 	{ // RightAnimation 持失
 		MainRenderer->CreateAnimation("Right_Idle", "KirbyRight_Idel.bmp", 0, 1, 1.0f, true);
 		MainRenderer->CreateAnimation("Right_Walk", "KirbyRight_Walk.bmp", 0, 9, 0.1f, true);
+		MainRenderer->CreateAnimation("Right_Jump", "KirbyRight_Jump.bmp", 0, 9, 0.1f, true);
 	}
 
 	{ // LeftAnimation 持失
 		MainRenderer->CreateAnimation("Left_Idle", "KirbyLeft_Idel.bmp", 0, 1, 1.0f, true);
 		MainRenderer->CreateAnimation("Left_Walk", "KirbyLeft_Walk.bmp", 0, 9, 0.1f, true);
+		MainRenderer->CreateAnimation("Left_Jump", "KirbyLeft_Jump.bmp", 0, 9, 0.1f, true);
 	}
 
 	MainRenderer->ChangeAnimation("Right_Idle");
@@ -87,8 +92,8 @@ void Kirby::StateUpdate(float _Delta)
 		return IdleUpdate(_Delta);
 	case KirbyState::Run:
 		return RunUpdate(_Delta);
-	case KirbyState::Shoot:
-		return ShootUpdate(_Delta);
+	case KirbyState::Jump:
+		return JumpUpdate(_Delta);
 	default:
 		break;
 	}
@@ -106,8 +111,8 @@ void Kirby::ChangeState(KirbyState _State)
 		case KirbyState::Run:
 			RunStart();
 			break;
-		case KirbyState::Shoot:
-			ShootStart();
+		case KirbyState::Jump:
+			JumpStart();
 			break;
 		default:
 			break;
@@ -120,7 +125,7 @@ void Kirby::ChangeState(KirbyState _State)
 
 void Kirby::DirCheck()
 {
-	KirbyDir CheckDir = KirbyDir::Left;
+	KirbyDir CheckDir = KirbyDir::Max;
 
 	if (true == GameEngineInput::IsDown('A'))
 	{

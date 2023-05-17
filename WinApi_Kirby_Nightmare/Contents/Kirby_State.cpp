@@ -19,9 +19,9 @@ void Kirby::RunStart()
 }
 
 
-void Kirby::ShootStart()
+void Kirby::JumpStart()
 {
-	ChangeAnimationState("Shoot");
+	ChangeAnimationState("Jump");
 }
 
 
@@ -41,7 +41,7 @@ void Kirby::IdleUpdate(float _Delta)
 
 	if (true == GameEngineInput::IsDown('F'))
 	{
-		ChangeState(KirbyState::Shoot);
+		ChangeState(KirbyState::Jump);
 		return;
 	}
 
@@ -60,12 +60,11 @@ void Kirby::RunUpdate(float _Delta)
 	MovePos = float4::ZERO;
 
 
-	if (true == GameEngineInput::IsPress('A'))
+	if (true == GameEngineInput::IsPress('A') && Dir == KirbyDir::Left)
 	{
 		MovePos = { -Speed * _Delta, 0.0f };
 	}
-
-	if (true == GameEngineInput::IsPress('D'))
+	else if (true == GameEngineInput::IsPress('D') && Dir == KirbyDir::Right)
 	{
 		MovePos = { Speed * _Delta, 0.0f };
 	}
@@ -79,7 +78,6 @@ void Kirby::RunUpdate(float _Delta)
 	{
 		MovePos = { 0.0f, Speed * _Delta };
 	}
-
 
 	if (MovePos == float4::ZERO)
 	{
@@ -110,14 +108,10 @@ void Kirby::RunUpdate(float _Delta)
 
 }
 
-void Kirby::ShootUpdate(float _Delta)
+void Kirby::JumpUpdate(float _Delta)
 {
-
-	Bullet* NewBullet = GetLevel()->CreateActor<Bullet>();
-	NewBullet->Renderer->SetTexture("TestMonster1.Bmp");
-	// 방향을 표현하는 xy는 크기가 1이어야 합니다.
-	NewBullet->SetDir(float4::RIGHT);
-	NewBullet->SetPos(GetPos());
-	ChangeState(KirbyState::Idle);
-
+	if (true == GameEngineInput::IsDown('F'))
+	{
+		ChangeState(KirbyState::Idle);
+	}
 }
