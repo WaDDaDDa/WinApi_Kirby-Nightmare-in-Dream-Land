@@ -10,18 +10,18 @@
 // Start는 렌더할 이미지 애니메이션을 먼저 등록해주는 단계.
 void Kirby::IdleStart()
 {
-	MainRenderer->ChangeAnimation("Idle");
+	ChangeAnimationState("Idle");
 }
 
 void Kirby::RunStart()
 {
-	MainRenderer->ChangeAnimation("Run");
+	ChangeAnimationState("Idle");
 }
 
 
 void Kirby::ShootStart()
 {
-	MainRenderer->ChangeAnimation("Idle");
+	ChangeAnimationState("Shoot");
 }
 
 
@@ -34,6 +34,7 @@ void Kirby::IdleUpdate(float _Delta)
 		|| true == GameEngineInput::IsDown('S')
 		|| true == GameEngineInput::IsDown('D'))
 	{
+		DirCheck();
 		ChangeState(KirbyState::Run);
 		return;
 	}
@@ -50,6 +51,8 @@ void Kirby::IdleUpdate(float _Delta)
 
 void Kirby::RunUpdate(float _Delta)
 {
+	DirCheck();
+
 	float Speed = 300.0f;
 	float4 PlayerPos = GetPos();
 	float4 CameraPos = GetLevel()->GetMainCamera()->GetPos();
@@ -80,6 +83,7 @@ void Kirby::RunUpdate(float _Delta)
 
 	if (MovePos == float4::ZERO)
 	{
+		DirCheck();
 		ChangeState(KirbyState::Idle);
 	}
 

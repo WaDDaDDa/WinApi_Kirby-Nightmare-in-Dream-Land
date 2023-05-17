@@ -34,6 +34,7 @@ void GameEnginePath::MoveParent()
 	Path = Path.parent_path();
 }
 
+// 인자에 해당하는 파일경로직전까지 나간다.
 // 인자에 찾고자하는 파일이름을 넣어서 상위폴더에서부터 찾으면서 없으면 또 상위폴더로 계속 이동.
 void GameEnginePath::MoveParentToExistsChild(const std::string& _ChildPath)
 {

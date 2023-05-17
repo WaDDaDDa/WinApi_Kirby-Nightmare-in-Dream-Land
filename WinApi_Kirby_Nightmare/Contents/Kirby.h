@@ -9,6 +9,13 @@ enum class KirbyState
     Max, // 일반적으로 사용하지 않는 값.
 };
 
+enum class KirbyDir
+{
+    Right,
+    Left,
+    Max,
+};
+
 class GameEngineRenderer;
 class Kirby : public GameEngineActor
 {
@@ -43,6 +50,13 @@ protected:
     void ChangeState(KirbyState _State);
 
     KirbyState State = KirbyState::Max;
+
+    KirbyDir Dir = KirbyDir::Right;
+    std::string CurState = "";
+
+    void DirCheck();
+
+    void ChangeAnimationState(const std::string& _StateName);
 
 private:
     float4 MovePos = float4::ZERO;

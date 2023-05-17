@@ -28,28 +28,41 @@ void Kirby::Start()
 {
 	// 로딩 되어있지 않다면 로드하고, 로딩 되어 있다면 다시 로드하지 않는다.
 	// 중복 로드하면 릭이 계속 생긴다.
-	bool IsResource = ResourcesManager::GetInst().IsLoadTexture("Kirby.bmp");
+	bool IsResource = ResourcesManager::GetInst().IsLoadTexture("KirbyIdel.bmp");
 	if (false == IsResource)
 	{
 		// 무조건 자동으로 현재 실행중인 위치가 된다.
 		GameEnginePath FilePath;
 		FilePath.MoveParentToExistsChild("Resource");
 		// 경로 까지만.
-		FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Kirby\\");
+		{ // RinghtAnimation 셋팅
+			FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Kirby\\Right\\");
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Idel.bmp"), 2, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Walk.bmp"), 5, 2);
+		}
 
-		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyIdel.bmp"), 2, 1);
-		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyWalk.bmp"), 10, 1);
+		{ // LeftAnimation 셋팅
+			FilePath.MoveParentToExistsChild("Right");
+			FilePath.MoveChild("Left\\");
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Idel.bmp"), 2, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Walk.bmp"), 5, 2);
+		}
 
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Kirby.bmp"));
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("TestMonster1.Bmp"));
 	}
 
-	MainRenderer = CreateRenderer("Kirby.bmp",RenderOrder::Play);
-	//MainRenderer->SetRenderScale({ 64, 64 });  // 없으면 기본 이미지 크기 그대로 출력
+	MainRenderer = CreateRenderer(RenderOrder::Play);
 
-	MainRenderer->CreateAnimation("Idle", "KirbyIdel.bmp", 0 , 1, 1.0f, true);
-	MainRenderer->CreateAnimation("run", "KirbyWalk.bmp", 0, 9, 0.1f, true);
-	MainRenderer->ChangeAnimation("Idle");
+	{ // RightAnimation 생성
+		MainRenderer->CreateAnimation("Right_Idle", "KirbyRight_Idel.bmp", 0, 1, 1.0f, true);
+		MainRenderer->CreateAnimation("Right_Walk", "KirbyRight_Walk.bmp", 0, 9, 0.1f, true);
+	}
+
+	{ // LeftAnimation 생성
+		MainRenderer->CreateAnimation("Left_Idle", "KirbyLeft_Idel.bmp", 0, 1, 1.0f, true);
+		MainRenderer->CreateAnimation("Left_Walk", "KirbyLeft_Walk.bmp", 0, 9, 0.1f, true);
+	}
+
+	MainRenderer->ChangeAnimation("Right_Idle");
 
 	float4 WinScale = GameEngineWindow::MainWindow.GetScale();
 	// PlayerPos 는 static 멤버 변수 선언후 초기 위치를 선언하고 시작할수있을듯.
@@ -102,4 +115,58 @@ void Kirby::ChangeState(KirbyState _State)
 	}
 
 	State = _State;
+}
+
+
+void Kirby::DirCheck()
+{
+	KirbyDir CheckDir = KirbyDir::Left;
+
+	if (true == GameEngineInput::IsDown('A'))
+	{
+		CheckDir = KirbyDir::Left;
+	}
+	else if (true == GameEngineInput::IsDown('D'))
+	{
+		CheckDir = KirbyDir::Right;
+	}
+
+	bool ChangeDir = false;
+
+	if (CheckDir != KirbyDir::Max)
+	{
+		Dir = CheckDir;
+		ChangeDir = true;
+	}
+
+	if (CheckDir != KirbyDir::Max && true == ChangeDir)
+	{
+		ChangeAnimationState(CurState);
+	}
+}
+
+void Kirby::ChangeAnimationState(const std::string& _StateName)
+{
+	// "Idle"
+	// _StateName
+
+	std::string AnimationName;
+
+	switch (Dir)
+	{
+	case KirbyDir::Right:
+		AnimationName = "Right_";
+		break;
+	case KirbyDir::Left:
+		AnimationName = "Left_";
+		break;
+	default:
+		break;
+	}
+
+	AnimationName += _StateName;
+
+	CurState = _StateName;
+
+	MainRenderer->ChangeAnimation(AnimationName);
 }
