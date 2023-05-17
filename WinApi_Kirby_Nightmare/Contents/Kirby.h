@@ -4,8 +4,10 @@
 enum class KirbyState
 {
     Idle,
-    Run,
+    Walk,
     Jump,
+    Run,
+    Fly,
     Max, // 일반적으로 사용하지 않는 값.
 };
 
@@ -13,7 +15,6 @@ enum class KirbyDir
 {
     Right,
     Left,
-    Max,
 };
 
 class GameEngineRenderer;
@@ -40,12 +41,16 @@ protected:
     void StateUpdate(float _Delta);
 
     void IdleStart();
-    void RunStart();
+    void WalkStart();
     void JumpStart();
+    void RunStart();
+    void FlyStart();
 
     void IdleUpdate(float _Delta);
-    void RunUpdate(float _Delta);
+    void WalkUpdate(float _Delta);
     void JumpUpdate(float _Delta);
+    void RunUpdate(float _Delta);
+    void FlyUpdate(float _Delta);
 
     void ChangeState(KirbyState _State);
 

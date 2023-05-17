@@ -13,15 +13,25 @@ void Kirby::IdleStart()
 	ChangeAnimationState("Idle");
 }
 
-void Kirby::RunStart()
+void Kirby::WalkStart()
 {
-	ChangeAnimationState("Idle");
+	ChangeAnimationState("Walk");
 }
 
 
 void Kirby::JumpStart()
 {
 	ChangeAnimationState("Jump");
+}
+
+void Kirby::RunStart()
+{
+	ChangeAnimationState("Run");
+}
+
+void Kirby::FlyStart()
+{
+	ChangeAnimationState("Fly");
 }
 
 
@@ -35,7 +45,7 @@ void Kirby::IdleUpdate(float _Delta)
 		|| true == GameEngineInput::IsDown('D'))
 	{
 		DirCheck();
-		ChangeState(KirbyState::Run);
+		ChangeState(KirbyState::Walk);
 		return;
 	}
 
@@ -45,11 +55,23 @@ void Kirby::IdleUpdate(float _Delta)
 		return;
 	}
 
+	if (true == GameEngineInput::IsDown('Z'))
+	{
+		ChangeState(KirbyState::Run);
+		return;
+	}
+
+	if (true == GameEngineInput::IsDown('X'))
+	{
+		ChangeState(KirbyState::Fly);
+		return;
+	}
+
 }
 
 
 
-void Kirby::RunUpdate(float _Delta)
+void Kirby::WalkUpdate(float _Delta)
 {
 	DirCheck();
 
@@ -110,7 +132,53 @@ void Kirby::RunUpdate(float _Delta)
 
 void Kirby::JumpUpdate(float _Delta)
 {
+	if (true == GameEngineInput::IsDown('A')
+		|| true == GameEngineInput::IsDown('W')
+		|| true == GameEngineInput::IsDown('S')
+		|| true == GameEngineInput::IsDown('D'))
+	{
+		DirCheck();
+		ChangeState(KirbyState::Walk);
+		return;
+	}
+
 	if (true == GameEngineInput::IsDown('F'))
+	{
+		ChangeState(KirbyState::Idle);
+	}
+}
+
+void Kirby::RunUpdate(float _Delta)
+{
+	if (true == GameEngineInput::IsDown('A')
+		|| true == GameEngineInput::IsDown('W')
+		|| true == GameEngineInput::IsDown('S')
+		|| true == GameEngineInput::IsDown('D'))
+	{
+		DirCheck();
+		ChangeState(KirbyState::Walk);
+		return;
+	}
+
+	if (true == GameEngineInput::IsDown('Z'))
+	{
+		ChangeState(KirbyState::Idle);
+	}
+}
+
+void Kirby::FlyUpdate(float _Delta)
+{
+	if (true == GameEngineInput::IsDown('A')
+		|| true == GameEngineInput::IsDown('W')
+		|| true == GameEngineInput::IsDown('S')
+		|| true == GameEngineInput::IsDown('D'))
+	{
+		DirCheck();
+		ChangeState(KirbyState::Walk);
+		return;
+	}
+
+	if (true == GameEngineInput::IsDown('X'))
 	{
 		ChangeState(KirbyState::Idle);
 	}

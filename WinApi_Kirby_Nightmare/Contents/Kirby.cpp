@@ -34,37 +34,47 @@ void Kirby::Start()
 		// 무조건 자동으로 현재 실행중인 위치가 된다.
 		GameEnginePath FilePath;
 		FilePath.MoveParentToExistsChild("Resource");
-		// 경로 까지만.
-		{ // RinghtAnimation 셋팅
-			FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Kirby\\Right\\");
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Idel.bmp"), 2, 1);
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Walk.bmp"), 5, 2);
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Jump.bmp"), 5, 2);
-		}
-
+		
 		{ // LeftAnimation 셋팅
-			FilePath.MoveParentToExistsChild("Right");
-			FilePath.MoveChild("Left\\");
+			FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Kirby\\Left\\");
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Idel.bmp"), 2, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Walk.bmp"), 5, 2);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Jump.bmp"), 5, 2);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Run.bmp"), 5, 2);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Fly.bmp"), 4, 2);
 		}
+		// 경로 까지만.
+		{ // RinghtAnimation 셋팅
+			FilePath.MoveParentToExistsChild("Right");
+			FilePath.MoveChild("Right\\");
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Idel.bmp"), 2, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Walk.bmp"), 5, 2);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Jump.bmp"), 5, 2);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Run.bmp"), 5, 2);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Fly.bmp"), 4, 2);
+		}
+
+
 
 	}
 
 	MainRenderer = CreateRenderer(RenderOrder::Play);
 	MainRenderer->SetScaleRatio(2.0f);
 
-	{ // RightAnimation 생성
-		MainRenderer->CreateAnimation("Right_Idle", "KirbyRight_Idel.bmp", 0, 1, 1.0f, true);
-		MainRenderer->CreateAnimation("Right_Walk", "KirbyRight_Walk.bmp", 0, 9, 0.1f, true);
-		MainRenderer->CreateAnimation("Right_Jump", "KirbyRight_Jump.bmp", 0, 9, 0.1f, true);
-	}
-
 	{ // LeftAnimation 생성
 		MainRenderer->CreateAnimation("Left_Idle", "KirbyLeft_Idel.bmp", 0, 1, 1.0f, true);
 		MainRenderer->CreateAnimation("Left_Walk", "KirbyLeft_Walk.bmp", 0, 9, 0.1f, true);
 		MainRenderer->CreateAnimation("Left_Jump", "KirbyLeft_Jump.bmp", 0, 9, 0.1f, true);
+		MainRenderer->CreateAnimation("Left_Run", "KirbyLeft_Run.bmp", 0, 7, 0.1f, true);  // 8은 브레이크모션 9는 벽충돌
+		MainRenderer->CreateAnimation("Left_Fly", "KirbyLeft_Fly.bmp", 0, 7, 0.1f, true);
+	}
+
+	{ // RightAnimation 생성
+		MainRenderer->CreateAnimation("Right_Idle", "KirbyRight_Idel.bmp", 0, 1, 1.0f, true);
+		MainRenderer->CreateAnimation("Right_Walk", "KirbyRight_Walk.bmp", 0, 9, 0.1f, true);
+		MainRenderer->CreateAnimation("Right_Jump", "KirbyRight_Jump.bmp", 0, 9, 0.1f, true);
+		MainRenderer->CreateAnimation("Right_Run", "KirbyRight_Run.bmp", 0, 7, 0.1f, true); // 8은 브레이크모션 9는 벽충돌
+		MainRenderer->CreateAnimation("Right_Fly", "KirbyRight_Fly.bmp", 0, 7, 0.1f, true);
 	}
 
 	MainRenderer->ChangeAnimation("Right_Idle");
@@ -90,9 +100,13 @@ void Kirby::StateUpdate(float _Delta)
 	{
 	case KirbyState::Idle:
 		return IdleUpdate(_Delta);
-	case KirbyState::Run:
-		return RunUpdate(_Delta);
+	case KirbyState::Walk:
+		return WalkUpdate(_Delta);
 	case KirbyState::Jump:
+		return JumpUpdate(_Delta);
+	case KirbyState::Run:
+		return JumpUpdate(_Delta);
+	case KirbyState::Fly:
 		return JumpUpdate(_Delta);
 	default:
 		break;
@@ -108,11 +122,17 @@ void Kirby::ChangeState(KirbyState _State)
 		case KirbyState::Idle:
 			IdleStart();
 			break;
-		case KirbyState::Run:
-			RunStart();
+		case KirbyState::Walk:
+			WalkStart();
 			break;
 		case KirbyState::Jump:
 			JumpStart();
+			break;
+		case KirbyState::Run:
+			RunStart();
+			break;
+		case KirbyState::Fly:
+			FlyStart();
 			break;
 		default:
 			break;
