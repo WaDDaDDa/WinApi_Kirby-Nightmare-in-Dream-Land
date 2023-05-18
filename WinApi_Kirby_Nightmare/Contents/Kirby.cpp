@@ -23,6 +23,7 @@ Kirby::~Kirby()
 
 }
 
+Kirby* Kirby::MainPlayer = nullptr;
 
 void Kirby::Start()
 {
@@ -43,7 +44,6 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Run.bmp"), 5, 2);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Fly.bmp"), 4, 2);
 		}
-		// 경로 까지만.
 		{ // RinghtAnimation 셋팅
 			FilePath.MoveParentToExistsChild("Right");
 			FilePath.MoveChild("Right\\");
@@ -53,9 +53,6 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Run.bmp"), 5, 2);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Fly.bmp"), 4, 2);
 		}
-
-
-
 	}
 
 	MainRenderer = CreateRenderer(RenderOrder::Play);
@@ -77,22 +74,17 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Right_Run", "KirbyRight_Run.bmp", 0, 7, 0.1f, true); // 8은 브레이크모션 9는 벽충돌
 		MainRenderer->CreateAnimation("Right_Fly", "KirbyRight_Fly.bmp", 0, 7, 0.1f, true);
 	}
-
-	MainRenderer->ChangeAnimation("Right_Idle");
-
-	float4 WinScale = GameEngineWindow::MainWindow.GetScale();
 	// PlayerPos 는 static 멤버 변수 선언후 초기 위치를 선언하고 시작할수있을듯.
-	float4 PlayerPos = WinScale.Half() + float4({ -250, 130});
-
-	SetPos(PlayerPos);
-
 	ChangeState(KirbyState::Idle);
-
 }
 
 void Kirby::Update(float _Delta)
 {
+	Gravity(_Delta);
+
 	StateUpdate(_Delta);
+
+	CameraFocus();
 }
 
 void Kirby::StateUpdate(float _Delta)
@@ -197,4 +189,16 @@ void Kirby::ChangeAnimationState(const std::string& _StateName)
 	CurState = _StateName;
 
 	MainRenderer->ChangeAnimation(AnimationName);
+}
+
+void Kirby::CameraFocus()
+{
+	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
+	GetLevel()->GetMainCamera()->SetPos(GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
+}
+
+
+void Kirby::LevelStart()
+{
+	MainPlayer = this;
 }

@@ -1,5 +1,5 @@
 #pragma once
-#include <GameEngineCore/GameEngineActor.h>
+#include "GravityActor.h"
 
 enum class KirbyState
 {
@@ -18,8 +18,11 @@ enum class KirbyDir
 };
 
 class GameEngineRenderer;
-class Kirby : public GameEngineActor
+class Kirby : public GravityActor
 {
+private:
+    static Kirby* MainPlayer;
+
 public:
     Kirby();
     ~Kirby();
@@ -60,8 +63,14 @@ protected:
     std::string CurState = "";
 
     void DirCheck();
+    void CameraFocus();
 
     void ChangeAnimationState(const std::string& _StateName);
+
+    static Kirby* GetMainPlayer()
+    {
+        return MainPlayer;
+    }
 
 private:
     float4 MovePos = float4::ZERO;
@@ -69,6 +78,6 @@ private:
     void Start() override;
     void Update(float _Delta) override;
 
-
+    void LevelStart() override;
 };
 

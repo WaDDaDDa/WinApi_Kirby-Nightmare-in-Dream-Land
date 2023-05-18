@@ -4,8 +4,9 @@
 // virtual로 선언된 함수들을 사용할수있고 안할수도있는 제안을 받는다.
 class GameEngineObject
 {
-
 	friend class GameEngineLevel;
+	friend class GameEngineCore;
+
 public:
     GameEngineObject();
     ~GameEngineObject();
@@ -77,6 +78,7 @@ private:
 
 	float LiveTime = 0.0f;
 
+	// 몇초동안 있엇나, 몇초뒤에 ~~를해라 등에 이용하기 위한 LiveTime값
 	void AddLiveTime(float _DeltaTime)
 	{
 		LiveTime += _DeltaTime;

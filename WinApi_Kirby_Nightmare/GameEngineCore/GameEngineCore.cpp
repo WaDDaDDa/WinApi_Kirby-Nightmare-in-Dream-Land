@@ -42,9 +42,11 @@ void GameEngineCore::CoreUpdate()
         if (nullptr != CurLevel)
         {
             CurLevel->LevelEnd(NextLevel);
+            CurLevel->ActorLevelEnd();
         }
 
         NextLevel->LevelStart(CurLevel);
+        NextLevel->ActorLevelStart();
 
         CurLevel = NextLevel;
 
@@ -66,7 +68,9 @@ void GameEngineCore::CoreUpdate()
         GameEngineInput::Reset();
     }
 
-    // Level에 있는 상속받은 업데이트하고 Level에 있는 Actor을 업데이트 한다.
+ 
+    CurLevel->AddLiveTime(Delta);
+
     CurLevel->Update(Delta);
 
     CurLevel->ActorUpdate(Delta);

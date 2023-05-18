@@ -75,6 +75,8 @@ void Stage::Init(const std::string& _FileName)
 		GameEngineRenderer* Render = CreateRenderer(_FileName, RenderOrder::BackGround);
 
 		Render->SetRenderScale(Scale);
+
+		SetPos({ Scale.hX(), Scale.hY() });
 	}
 
 }

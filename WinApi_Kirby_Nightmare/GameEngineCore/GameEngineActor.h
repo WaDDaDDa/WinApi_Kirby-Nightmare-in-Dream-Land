@@ -63,6 +63,8 @@ public:
 	}
 
 protected:
+	virtual void LevelStart() {}
+	virtual void LevelEnd() {}
 
 private:
 	float4 Pos = float4::ZERO;

@@ -66,7 +66,6 @@ void Kirby::IdleUpdate(float _Delta)
 		ChangeState(KirbyState::Fly);
 		return;
 	}
-
 }
 
 
@@ -75,7 +74,7 @@ void Kirby::WalkUpdate(float _Delta)
 {
 	DirCheck();
 
-	float Speed = 300.0f;
+	float Speed = 500.0f;
 	float4 PlayerPos = GetPos();
 	float4 CameraPos = GetLevel()->GetMainCamera()->GetPos();
 
@@ -118,15 +117,15 @@ void Kirby::WalkUpdate(float _Delta)
 	//}
 
 	// 윈도우 화면창 범위를 넘기려하면 카메라가 움직인다.
-	if (420 < PlayerPos.iX() - CameraPos.iX() || 20 > PlayerPos.iX() - CameraPos.iX())
-	{
-		GetLevel()->GetMainCamera()->AddPos({ MovePos.X, 0 });
-	}
+	//if (420 < PlayerPos.iX() - CameraPos.iX() || 20 > PlayerPos.iX() - CameraPos.iX())
+	//{
+	//	GetLevel()->GetMainCamera()->AddPos({ MovePos.X, 0 });
+	//}
 
-	if (0 < CameraPos.iY() - PlayerPos.iY() || -480 > CameraPos.iY() - PlayerPos.iY())
-	{
-		GetLevel()->GetMainCamera()->AddPos({ 0, MovePos.Y });
-	}
+	//if (0 < CameraPos.iY() - PlayerPos.iY() || -480 > CameraPos.iY() - PlayerPos.iY())
+	//{
+	//	GetLevel()->GetMainCamera()->AddPos({ 0, MovePos.Y });
+	//}
 
 }
 

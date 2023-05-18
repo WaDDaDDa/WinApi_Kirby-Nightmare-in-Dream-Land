@@ -67,6 +67,10 @@ private:
 
 	void ActorInit(GameEngineActor* _Actor, int _Order);
 
+    // 레벨에서 엑터가 레벨이 시작되고 끝났음을 안다.
+    void ActorLevelStart();
+    void ActorLevelEnd();
+
 	void ActorUpdate(float _Delta);
 	void ActorRender(float _Delta);
     void ActorRelease();

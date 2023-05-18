@@ -23,6 +23,7 @@
     <ClInclude Include="Stage.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="GravityActor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainHub.cpp" />
@@ -47,6 +48,7 @@
     <ClCompile Include="Kirby_State.cpp">
       <Filter>Global</Filter>
     </ClCompile>
+    <ClCompile Include="GravityActor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
