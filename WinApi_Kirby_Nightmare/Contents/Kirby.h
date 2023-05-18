@@ -39,6 +39,11 @@ public:
         return MovePos;
     }
 
+    static Kirby* GetMainPlayer()
+    {
+        return MainPlayer;
+    }
+
 protected:
     // 클래스로 만들어도 된다. 행동과 랜더.
     void StateUpdate(float _Delta);
@@ -67,10 +72,6 @@ protected:
 
     void ChangeAnimationState(const std::string& _StateName);
 
-    static Kirby* GetMainPlayer()
-    {
-        return MainPlayer;
-    }
 
 private:
     float4 MovePos = float4::ZERO;

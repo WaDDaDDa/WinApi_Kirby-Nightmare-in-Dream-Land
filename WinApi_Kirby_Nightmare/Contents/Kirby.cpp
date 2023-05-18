@@ -12,6 +12,7 @@
 #include "Bullet.h"
 #include <GameEnginePlatform/GameEngineInput.h>
 #include "BackGround.h"
+#include "Monster.h"
 
 Kirby::Kirby()
 {
