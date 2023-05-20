@@ -58,7 +58,7 @@ void Kirby::Start()
 	}
 
 	MainRenderer = CreateRenderer(RenderOrder::Play);
-	MainRenderer->SetScaleRatio(1.0f);
+	MainRenderer->SetScaleRatio(2.0f);
 
 	{ // LeftAnimation »ý¼º
 		MainRenderer->CreateAnimation("Left_Idle", "KirbyLeft_Idel.bmp", 0, 1, 0.2f, true);

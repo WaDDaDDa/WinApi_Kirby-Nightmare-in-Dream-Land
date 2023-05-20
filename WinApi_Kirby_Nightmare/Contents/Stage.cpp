@@ -78,10 +78,6 @@ void Stage::Init(const std::string& _FileName, const std::string& _DebugFileName
 
 	float4 Scale = Texture->GetScale();
 
-	Scale.X *= 2.4f;
-	Scale.Y *= 2.4f;
-
-
 	Renderer->SetTexture(_FileName);
 	Renderer->SetRenderScale(Scale);
 
