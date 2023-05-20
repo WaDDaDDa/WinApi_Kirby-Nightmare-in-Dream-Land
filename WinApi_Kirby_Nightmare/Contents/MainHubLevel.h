@@ -23,5 +23,6 @@ private:
     void Release() override;
 
     class Kirby* LevelPlayer = nullptr;
+    class Stage* StagePtr = nullptr;
 };
 

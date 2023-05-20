@@ -23,20 +23,22 @@ MainHubLevel::~MainHubLevel()
 
 void MainHubLevel::Start()
 {
-	// 플레이 레벨이 만들어졌다.
-	// 이 레벨에는 뭐가 있어야지?
-	// 플레이어 만들고
-	// 맵만들고
-	// 몬스터 만들고
-	// 액터
+	 //이미지가 로드되지않았다면 로드하고 로드 되었다면 로드안하기 위함.
+	if (false == ResourcesManager::GetInst().IsLoadTexture("TestBackGround.Bmp"))
+	{
+		GameEnginePath FilePath;
+		FilePath.MoveParentToExistsChild("Resource");
 
-	// 자기 임의대로 만들겠다는 것이고 xxxxx
-	// Player* NewPlayer = new Player();
-	// 객체가 create될때 모든것을 준비한다.
+		GameEnginePath FolderPath = FilePath;
+
+		FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Stages\\");
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("StageTestPixel.bmp"));
+	}
+
 	BackGround* CurBackGround = CreateActor<BackGround>();
 	CurBackGround->Init("TestBackGround.Bmp");
-	Stage* CurStage = CreateActor<Stage>();
-	CurStage->Init("TestStage1.Bmp");
+	StagePtr = CreateActor<Stage>();
+	StagePtr->Init("TestStage1.Bmp", "StageTestPixel.bmp");
 
 	LevelPlayer = CreateActor<Kirby>();
 
@@ -49,6 +51,12 @@ void MainHubLevel::Update(float _Delta)
 	{
 		GameEngineCore::ChangeLevel("TitleLevel");
 	}
+
+	if (true == GameEngineInput::IsDown('J'))
+	{
+		StagePtr->SwitchRender();
+	}
+
 }
 void MainHubLevel::Render()
 {
@@ -64,7 +72,9 @@ void MainHubLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
 	}
 
-	float4 WinScale = GameEngineWindow::MainWindow.GetScale();
+	LevelPlayer->SetGroundTexture("StageTestPixel.bmp");
+
+	//float4 WinScale = GameEngineWindow::MainWindow.GetScale();
 	//LevelPlayer->SetPos(WinScale.Half());
 	// 0 0
 	// x y

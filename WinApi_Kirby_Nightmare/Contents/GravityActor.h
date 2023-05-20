@@ -14,7 +14,10 @@ public:
 
     void Gravity(float _Delta);
 
-  
+    void GravityReset()
+    {
+        GravityVector = float4::ZERO;
+    }
 
     void GravityOff()
     {
@@ -22,6 +25,8 @@ public:
     }
 
     void SetGroundTexture(const std::string& _GroundTextureName);
+
+    int GetGroundColor(unsigned int _DefaultColor = RGB(255, 255, 255), float4 _Pos = float4::ZERO);
 
 protected:
 
@@ -31,7 +36,7 @@ private:
 
     bool IsGravity = true;
 
-    float GravityPower = 0.01f;
+    float GravityPower = 1.0f;
 
     float4 GravityVector = float4::ZERO;
 

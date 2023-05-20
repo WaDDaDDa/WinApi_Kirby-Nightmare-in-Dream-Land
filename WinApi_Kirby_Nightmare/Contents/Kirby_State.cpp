@@ -39,6 +39,26 @@ void Kirby::FlyStart()
 // 업데이트는 실제 행동을 행하는 단계.
 void Kirby::IdleUpdate(float _Delta)
 {
+
+	{
+		unsigned int Color = GetGroundColor(RGB(255, 255, 255));
+		if (RGB(255, 255, 255) == Color)
+		{
+			Gravity(_Delta);
+		}
+		else
+		{
+			unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
+
+			while (CheckColor != RGB(255, 255, 255))
+			{
+				CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
+				AddPos(float4::UP);
+			}
+			GravityReset();
+		}
+	}
+
 	if (true == GameEngineInput::IsDown('A')
 		|| true == GameEngineInput::IsDown('W')
 		|| true == GameEngineInput::IsDown('S')
@@ -72,6 +92,31 @@ void Kirby::IdleUpdate(float _Delta)
 
 void Kirby::WalkUpdate(float _Delta)
 {
+
+	// 중력 적용 
+	{
+		unsigned int Color = GetGroundColor(RGB(255, 255, 255));
+		if (RGB(255, 255, 255) == Color)
+		{
+			Gravity(_Delta);
+		}
+		else
+		{
+			unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
+
+			while (CheckColor != RGB(255, 255, 255))
+			{
+				CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
+				AddPos(float4::UP);
+			}
+
+
+			GravityReset();
+		}
+
+	}
+
+
 	DirCheck();
 
 	float Speed = 500.0f;
@@ -105,7 +150,7 @@ void Kirby::WalkUpdate(float _Delta)
 		DirCheck();
 		ChangeState(KirbyState::Idle);
 	}
-
+	float4 CheckPos = float4::ZERO;
 	// 플레이어 이동
 	AddPos(MovePos);
 	PlayerPos = GetPos();
@@ -127,6 +172,15 @@ void Kirby::WalkUpdate(float _Delta)
 	//	GetLevel()->GetMainCamera()->AddPos({ 0, MovePos.Y });
 	//}
 
+	{
+		unsigned int Color = GetGroundColor(RGB(255, 255, 255), CheckPos);
+
+		if (Color == RGB(255, 255, 255))
+		{
+			AddPos(MovePos);
+			GetLevel()->GetMainCamera()->AddPos(MovePos);
+		}
+	}
 }
 
 void Kirby::JumpUpdate(float _Delta)

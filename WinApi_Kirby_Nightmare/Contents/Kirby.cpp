@@ -14,6 +14,8 @@
 #include "BackGround.h"
 #include "Monster.h"
 
+Kirby* Kirby::MainPlayer = nullptr;
+
 Kirby::Kirby()
 {
 
@@ -24,7 +26,6 @@ Kirby::~Kirby()
 
 }
 
-Kirby* Kirby::MainPlayer = nullptr;
 
 void Kirby::Start()
 {
@@ -57,7 +58,7 @@ void Kirby::Start()
 	}
 
 	MainRenderer = CreateRenderer(RenderOrder::Play);
-	MainRenderer->SetScaleRatio(2.0f);
+	MainRenderer->SetScaleRatio(1.0f);
 
 	{ // LeftAnimation »ý¼º
 		MainRenderer->CreateAnimation("Left_Idle", "KirbyLeft_Idel.bmp", 0, 1, 0.2f, true);
@@ -81,7 +82,7 @@ void Kirby::Start()
 
 void Kirby::Update(float _Delta)
 {
-	Gravity(_Delta);
+	// Gravity(_Delta);
 
 	StateUpdate(_Delta);
 

@@ -33,6 +33,8 @@ public:
 
 	bool IsDirectory();
 
+	static std::string GetParentString(const std::string& _ChildPath);
+
 protected:
 	std::filesystem::path Path;
 

@@ -132,3 +132,30 @@ void GameEngineWindowTexture::TransCopy(GameEngineWindowTexture* _CopyTexture, c
 	);
 
 }
+
+
+unsigned int GameEngineWindowTexture::GetColor(unsigned int _DefaultColor, float4 _Pos)
+{
+	// 이미지 밖으로 나가면 기본 컬러로 DefaultColor로 하겠다.
+	if (0 > _Pos.iX())
+	{
+		return _DefaultColor;
+	}
+
+	if (0 > _Pos.iY())
+	{
+		return _DefaultColor;
+	}
+
+	if (GetScale().iX() <= _Pos.iX())
+	{
+		return _DefaultColor;
+	}
+
+	if (GetScale().iX() <= _Pos.iY())
+	{
+		return _DefaultColor;
+	}
+
+	return GetPixel(ImageDC, _Pos.iX(), _Pos.iY());
+}

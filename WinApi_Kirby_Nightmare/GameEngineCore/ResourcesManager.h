@@ -56,6 +56,10 @@ public:
 
 	GameEngineSprite* CreateSpriteFolder(const std::string& _SpriteName, const std::string& _Path);
 
+	// 따로있는 이미지를 스프라이트로 만드는 과정
+	void TextureFileLoad(const std::string& _FileName, const std::string& _Path);
+	void SpriteFileLoad(const std::string& _FileName, const std::string& _Path, int _XCount, int _YCount);
+
 protected:
 
 private:
