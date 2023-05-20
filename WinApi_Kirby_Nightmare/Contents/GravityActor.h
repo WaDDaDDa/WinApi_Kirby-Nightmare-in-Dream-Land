@@ -23,6 +23,10 @@ public:
     {
         IsGravity = false;
     }
+    float4 GetGravityVector()
+    {
+        return GravityVector;
+    }
 
     void SetGroundTexture(const std::string& _GroundTextureName);
 

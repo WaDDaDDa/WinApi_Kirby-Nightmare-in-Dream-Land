@@ -95,9 +95,9 @@ void Kirby::WalkUpdate(float _Delta)
 		MovePos = { Speed * _Delta, 0.0f };
 	}
 
-	if (true == GameEngineInput::IsDown('W'))
+	if (true == GameEngineInput::IsDown('F'))
 	{
-		MovePos = { 0.0f, -Speed * _Delta };
+		ChangeState(KirbyState::Jump);
 	}
 
 	if (true == GameEngineInput::IsPress('S'))
@@ -121,20 +121,31 @@ void Kirby::WalkUpdate(float _Delta)
 
 void Kirby::JumpUpdate(float _Delta)
 {
-	if (true == GameEngineInput::IsDown('A')
-		|| true == GameEngineInput::IsDown('W')
-		|| true == GameEngineInput::IsDown('S')
-		|| true == GameEngineInput::IsDown('D'))
+	//GroundCheck(_Delta);
+	if (1.0f <= GetLiveTime())
 	{
-		DirCheck();
-		ChangeState(KirbyState::Walk);
+		ChangeState(KirbyState::Idle);
+		ResetLiveTime();
+		MovePos = float4::ZERO;
 		return;
 	}
 
-	if (true == GameEngineInput::IsDown('F'))
+	if (true == GameEngineInput::IsPress('A') && Dir == KirbyDir::Left)
 	{
-		ChangeState(KirbyState::Idle);
+		CheckPos = { -24.0f, -24.0f };
+
+		MovePos = { -Speed * _Delta, 0.0f };
 	}
+	else if (true == GameEngineInput::IsPress('D') && Dir == KirbyDir::Right)
+	{
+		CheckPos = { 24.0f, -24.0f };
+
+		MovePos = { Speed * _Delta, 0.0f };
+	}
+
+	MovePos = {  0.0f , - Speed * _Delta, };
+
+	AddPos(MovePos);
 }
 
 void Kirby::RunUpdate(float _Delta)
