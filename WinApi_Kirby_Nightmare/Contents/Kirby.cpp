@@ -59,6 +59,7 @@ void Kirby::Start()
 
 	MainRenderer = CreateRenderer(RenderOrder::Play);
 	MainRenderer->SetScaleRatio(3.0f);
+	SetPos(float4{360,360});
 
 	{ // LeftAnimation »ý¼º
 		MainRenderer->CreateAnimation("Left_Idle", "KirbyLeft_Idel.bmp", 0, 1, 0.2f, true);
@@ -196,7 +197,22 @@ void Kirby::ChangeAnimationState(const std::string& _StateName)
 void Kirby::CameraFocus()
 {
 	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
-	GetLevel()->GetMainCamera()->SetPos(GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
+
+	int CameraRangeX = GetLevel()->GetMainCamera()->GetPos().iX();
+	int CameraRangeY = GetLevel()->GetMainCamera()->GetPos().iY();
+
+	int PlayerX = GetPos().iX();
+	int PlayerY = GetPos().iY();
+
+	if (420 < PlayerX - CameraRangeX || 200 > PlayerX - CameraRangeX)
+	{
+		GetLevel()->GetMainCamera()->AddPos({ MovePos.X, 0 });
+	}
+
+	if (0 < CameraRangeY - PlayerY || -480 > CameraRangeY - PlayerY)
+	{
+		GetLevel()->GetMainCamera()->AddPos({ 0, MovePos.Y });
+	}
 }
 
 

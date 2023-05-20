@@ -28,6 +28,8 @@ public:
 
     int GetGroundColor(unsigned int _DefaultColor = RGB(255, 255, 255), float4 _Pos = float4::ZERO);
 
+    void GroundCheck(float _Delta);
+
 protected:
 
 private:
