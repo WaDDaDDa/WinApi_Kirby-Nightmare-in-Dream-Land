@@ -6,6 +6,8 @@ enum class KirbyState
     Idle,
     Walk,
     Jump,
+    JumpTurn,
+    Falling,
     Run,
     Fly,
     Max, // 일반적으로 사용하지 않는 값.
@@ -44,6 +46,8 @@ public:
         return MainPlayer;
     }
 
+    unsigned int GetWallCheck();
+
 protected:
     // 클래스로 만들어도 된다. 행동과 랜더.
     void StateUpdate(float _Delta);
@@ -51,12 +55,14 @@ protected:
     void IdleStart();
     void WalkStart();
     void JumpStart();
+  
     void RunStart();
     void FlyStart();
 
     void IdleUpdate(float _Delta);
     void WalkUpdate(float _Delta);
     void JumpUpdate(float _Delta);
+
     void RunUpdate(float _Delta);
     void FlyUpdate(float _Delta);
 
@@ -66,6 +72,7 @@ protected:
 
     KirbyDir Dir = KirbyDir::Right;
     std::string CurState = "";
+    std::string PrevState = "";
 
     void DirCheck();
     void CameraFocus();
@@ -77,7 +84,9 @@ private:
     float4 MovePos = float4::ZERO;
     float4 CheckPos = float4::ZERO;
 
+
     float Speed = 300.0f;
+    float JumpPower = 500.0f;
 
     void Start() override;
     void Update(float _Delta) override;
