@@ -119,7 +119,7 @@ void Kirby::WalkUpdate(float _Delta)
 
 	DirCheck();
 
-	float Speed = 500.0f;
+	float Speed = 300.0f;
 	float4 PlayerPos = GetPos();
 	float4 CameraPos = GetLevel()->GetMainCamera()->GetPos();
 
@@ -152,8 +152,8 @@ void Kirby::WalkUpdate(float _Delta)
 	}
 	float4 CheckPos = float4::ZERO;
 	// 플레이어 이동
-	AddPos(MovePos);
-	PlayerPos = GetPos();
+	//AddPos(MovePos);
+	//PlayerPos = GetPos();
 	// 카메라의이동   플레이어가 움직이면 카메라도 이동한다.
 
 	//if (MovePos != float4::ZERO)
