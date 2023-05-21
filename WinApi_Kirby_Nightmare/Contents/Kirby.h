@@ -50,6 +50,8 @@ public:
 
     unsigned int GetWallCheck();
 
+    void Movement(float _Delta);
+
 protected:
     // 클래스로 만들어도 된다. 행동과 랜더.
     void StateUpdate(float _Delta);
@@ -87,7 +89,7 @@ private:
 
 
     float Speed = 300.0f;
-    float JumpPower = 500.0f;
+    float JumpPower = 700.0f;
 
     void Start() override;
     void Update(float _Delta) override;

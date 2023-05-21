@@ -95,8 +95,6 @@ void Kirby::Start()
 
 void Kirby::Update(float _Delta)
 {
-	// Gravity(_Delta);
-	//GravityOff();
 	StateUpdate(_Delta);
 
 	CameraFocus();
@@ -182,9 +180,6 @@ void Kirby::DirCheck()
 
 void Kirby::ChangeAnimationState(const std::string& _StateName)
 {
-	// "Idle"
-	// _StateName
-
 	std::string AnimationName;
 
 	switch (Dir)
@@ -241,4 +236,35 @@ unsigned int Kirby::GetWallCheck()
 {
 	unsigned int WallColor = GetGroundColor(RGB(255, 255, 255), CheckPos);
 	return WallColor;
+}
+
+void Kirby::Movement(float _Delta)
+{
+	if (true == GameEngineInput::IsPress('A') && Dir == KirbyDir::Left)
+	{
+		CameraFocus();
+		CheckPos = { -24.0f, -24.0f };
+		MovePos = { -Speed * _Delta, 0.0f };
+
+		// º®ÆÇÁ¤
+		if (GetWallCheck() != RGB(255, 255, 255))
+		{
+			return;
+		}
+		AddPos(MovePos);
+
+	}
+	else if (true == GameEngineInput::IsPress('D') && Dir == KirbyDir::Right)
+	{
+		CameraFocus();
+		CheckPos = { 24.0f, -24.0f };
+
+		MovePos = { Speed * _Delta, 0.0f };
+		if (GetWallCheck() != RGB(255, 255, 255))
+		{
+			MovePos.X *= 0;
+			AddPos(MovePos);
+		}
+		AddPos(MovePos);
+	}
 }

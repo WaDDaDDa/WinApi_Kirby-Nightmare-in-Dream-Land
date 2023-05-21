@@ -104,20 +104,20 @@ void Kirby::WalkUpdate(float _Delta)
 
 		MovePos = { Speed * _Delta, 0.0f };
 	}
-
+	// 점프
 	if (true == GameEngineInput::IsDown('F'))
 	{
+		MovePos = float4::ZERO;
 		ChangeState(KirbyState::Jump);
 		ResetLiveTime();
 		return;
 	}
-
+	// 대기
 	if (MovePos == float4::ZERO)
 	{
-		DirCheck();
 		ChangeState(KirbyState::Idle);
 	}
-
+	// 벽판정
 	if (GetWallCheck() != RGB(255, 255, 255))
 	{
 		return;
@@ -136,7 +136,7 @@ void Kirby::JumpUpdate(float _Delta)
 	MovePos = { 0.0f , -JumpPower * _Delta, };
 
 	AddPos(MovePos);
-
+	// 애니메이션 출력 변경
 	if (GetLiveTime() >= 0.8f)
 	{
 		ChangeAnimationState("JumpTurn");
@@ -144,34 +144,16 @@ void Kirby::JumpUpdate(float _Delta)
 	}
 
 	// 점프중 이동
-	if (true == GameEngineInput::IsPress('A') && Dir == KirbyDir::Left)
-	{
-		CameraFocus();
-		CheckPos = { -24.0f, -24.0f };
+	Movement(_Delta);
 
-		MovePos = { -Speed * _Delta, 0.0f };
-		if (GetWallCheck() != RGB(255, 255, 255))
-		{
-			return;
-		}
-		AddPos(MovePos);
-		
-	}
-	else if (true == GameEngineInput::IsPress('D') && Dir == KirbyDir::Right)
+	if (true == GameEngineInput::IsDown('F'))
 	{
-		CameraFocus();
-		CheckPos = { 24.0f, -24.0f };
-
-		MovePos = { Speed * _Delta, 0.0f };
-		if (GetWallCheck() != RGB(255, 255, 255))
-		{
-			MovePos.X *= 0;
-			AddPos(MovePos);
-		}
-		AddPos(MovePos);
-		
+		ChangeState(KirbyState::Fly);
+		ResetLiveTime();
+		return;
 	}
 
+	// 땅에 닿으면 기본상태.
 	unsigned int Color = GetGroundColor(RGB(255, 255, 255));
 	if (RGB(255, 255, 255) != Color)
 	{
@@ -204,18 +186,15 @@ void Kirby::RunUpdate(float _Delta)
 
 void Kirby::FlyUpdate(float _Delta)
 {
-	if (true == GameEngineInput::IsDown('A')
-		|| true == GameEngineInput::IsDown('W')
-		|| true == GameEngineInput::IsDown('S')
-		|| true == GameEngineInput::IsDown('D'))
-	{
-		DirCheck();
-		ChangeState(KirbyState::Walk);
-		return;
-	}
+	DirCheck();
+	GroundCheck(_Delta);
 
-	if (true == GameEngineInput::IsDown('X'))
+	if (true == GameEngineInput::IsPress('F'))
 	{
-		ChangeState(KirbyState::Idle);
+		GravityReset();
+		MovePos = { 0.0f , -200 * _Delta, };
+		AddPos(MovePos);
 	}
+	Movement(_Delta);
+
 }
