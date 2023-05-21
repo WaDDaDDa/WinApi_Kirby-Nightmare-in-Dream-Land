@@ -18,7 +18,6 @@ void Kirby::WalkStart()
 	ChangeAnimationState("Walk");
 }
 
-
 void Kirby::JumpStart()
 {
 	ChangeAnimationState("Jump");
@@ -41,14 +40,23 @@ void Kirby::IdleUpdate(float _Delta)
 {
 	GroundCheck(_Delta);
 
-
 	if (true == GameEngineInput::IsPress('A')
-		|| true == GameEngineInput::IsPress('W')
-		|| true == GameEngineInput::IsPress('S')
 		|| true == GameEngineInput::IsPress('D'))
 	{
 		DirCheck();
 		ChangeState(KirbyState::Walk);
+		return;
+	}
+
+	if (true == GameEngineInput::IsPress('S'))
+	{
+		ChangeAnimationState("UnderIdle");
+		return;
+	}
+
+	if (true == GameEngineInput::IsUp('S'))
+	{
+		ChangeAnimationState("Idle");
 		return;
 	}
 
@@ -104,11 +112,6 @@ void Kirby::WalkUpdate(float _Delta)
 		return;
 	}
 
-	if (true == GameEngineInput::IsPress('S'))
-	{
-		
-	}
-
 	if (MovePos == float4::ZERO)
 	{
 		DirCheck();
@@ -133,6 +136,12 @@ void Kirby::JumpUpdate(float _Delta)
 	MovePos = { 0.0f , -JumpPower * _Delta, };
 
 	AddPos(MovePos);
+
+	if (GetLiveTime() >= 0.8f)
+	{
+		ChangeAnimationState("JumpTurn");
+		ResetLiveTime();
+	}
 
 	// 점프중 이동
 	if (true == GameEngineInput::IsPress('A') && Dir == KirbyDir::Left)
@@ -167,6 +176,7 @@ void Kirby::JumpUpdate(float _Delta)
 	if (RGB(255, 255, 255) != Color)
 	{
 		CameraFocus();
+		GravityReset();
 		ChangeState(KirbyState::Idle);
 		return;
 	}

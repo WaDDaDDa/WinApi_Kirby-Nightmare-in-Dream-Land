@@ -1,23 +1,25 @@
 #pragma once
 #include "GravityActor.h"
 
+
 enum class KirbyState
 {
     Idle,
     Walk,
     Jump,
-    JumpTurn,
     Falling,
     Run,
     Fly,
     Max, // 일반적으로 사용하지 않는 값.
 };
 
+
 enum class KirbyDir
 {
     Right,
     Left,
 };
+
 
 class GameEngineRenderer;
 class Kirby : public GravityActor
