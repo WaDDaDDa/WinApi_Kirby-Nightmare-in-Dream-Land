@@ -7,7 +7,9 @@ enum class KirbyState
     Idle,
     Walk,
     Jump,
+    JumpTurn,
     Falling,
+    FallingEnd,
     Run,
     Fly,
     Max, // 일반적으로 사용하지 않는 값.
@@ -59,14 +61,18 @@ protected:
     void IdleStart();
     void WalkStart();
     void JumpStart();
-  
+    void JumpTurnStart();
+    void FallingStart();
+    void FallingEndStart();
     void RunStart();
     void FlyStart();
 
     void IdleUpdate(float _Delta);
     void WalkUpdate(float _Delta);
     void JumpUpdate(float _Delta);
-
+    void JumpTurnUpdate(float _Delta);
+    void FallingUpdate(float _Delta);
+    void FallingEndUpdate(float _Delta);
     void RunUpdate(float _Delta);
     void FlyUpdate(float _Delta);
 

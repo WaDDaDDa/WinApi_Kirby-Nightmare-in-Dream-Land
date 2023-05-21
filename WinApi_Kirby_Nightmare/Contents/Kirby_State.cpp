@@ -22,7 +22,18 @@ void Kirby::JumpStart()
 {
 	ChangeAnimationState("Jump");
 }
-
+void Kirby::JumpTurnStart()
+{
+	ChangeAnimationState("JumpTurn");
+}
+void Kirby::FallingStart()
+{
+	ChangeAnimationState("Falling");
+}
+void Kirby::FallingEndStart()
+{
+	ChangeAnimationState("FallingEnd");
+}
 void Kirby::RunStart()
 {
 	ChangeAnimationState("Run");
@@ -147,8 +158,10 @@ void Kirby::JumpUpdate(float _Delta)
 	// 애니메이션 출력 변경
 	if (GetLiveTime() >= 0.8f)
 	{
-		ChangeAnimationState("JumpTurn");
+		ChangeState(KirbyState::JumpTurn);
+		//ChangeAnimationState("JumpTurn");
 		ResetLiveTime();
+		return;
 	}
 
 	// 점프중 이동
@@ -172,6 +185,39 @@ void Kirby::JumpUpdate(float _Delta)
 	}
 }
 
+void Kirby::JumpTurnUpdate(float _Delta)
+{
+	DirCheck();
+	GroundCheck(_Delta);
+
+	Movement(_Delta);
+
+	if (GetLiveTime() >= 0.4f)
+	{
+		ChangeState(KirbyState::Falling);
+		//ChangeAnimationState("JumpTurn");
+		ResetLiveTime();
+		return;
+	}
+
+	if (true == GameEngineInput::IsDown('F'))
+	{
+		ChangeState(KirbyState::Fly);
+		ResetLiveTime();
+		return;
+	}
+
+}
+
+void Kirby::FallingUpdate(float _Delta)
+{
+
+}
+
+void Kirby::FallingEndUpdate(float _Delta)
+{
+
+}
 
 void Kirby::RunUpdate(float _Delta)
 {
