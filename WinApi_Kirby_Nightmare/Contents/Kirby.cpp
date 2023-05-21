@@ -59,20 +59,28 @@ void Kirby::Start()
 
 	MainRenderer = CreateRenderer(RenderOrder::Play);
 	MainRenderer->SetScaleRatio(3.0f);
+	SetPos(float4{360,360});
 
 	{ // LeftAnimation 생성
 		MainRenderer->CreateAnimation("Left_Idle", "KirbyLeft_Idel.bmp", 0, 1, 0.2f, true);
 		MainRenderer->FindAnimation("Left_Idle")->Inters[1] = 0.5f;
 		MainRenderer->CreateAnimation("Left_Walk", "KirbyLeft_Walk.bmp", 0, 9, 0.1f, true);
-		MainRenderer->CreateAnimation("Left_Jump", "KirbyLeft_Jump.bmp", 0, 9, 0.1f, true);
+		MainRenderer->CreateAnimation("Left_Jump", "KirbyLeft_Jump.bmp", 0, 0, 1.0f, true);
+		MainRenderer->CreateAnimation("Left_JumpTurn", "KirbyLeft_Jump.bmp", 1, 7, 0.1f, true);
+		MainRenderer->CreateAnimation("Left_Falling", "KirbyLeft_Jump.bmp", 8, 9, 1.0f, true);
+		MainRenderer->FindAnimation("Left_Falling")->Inters[1] = 0.1f;
 		MainRenderer->CreateAnimation("Left_Run", "KirbyLeft_Run.bmp", 0, 7, 0.1f, true);  // 8은 브레이크모션 9는 벽충돌
 		MainRenderer->CreateAnimation("Left_Fly", "KirbyLeft_Fly.bmp", 0, 7, 0.1f, true);
 	}
 
 	{ // RightAnimation 생성
 		MainRenderer->CreateAnimation("Right_Idle", "KirbyRight_Idel.bmp", 0, 1, 0.2f, true);
-		MainRenderer->CreateAnimation("Right_Walk", "KirbyRight_Walk.bmp", 0, 9, 0.1f, true);
-		MainRenderer->CreateAnimation("Right_Jump", "KirbyRight_Jump.bmp", 0, 9, 0.1f, true);
+		MainRenderer->CreateAnimation("Right_Walk", "KirbyRight_Walk.bmp", 0, 9, 0.05f, true);
+		MainRenderer->CreateAnimation("Right_Jump", "KirbyRight_Jump.bmp", 0, 0, 1.0f, true);
+		MainRenderer->CreateAnimation("Right_JumpTurn", "KirbyRight_Jump.bmp", 1, 7, 0.1f, true);
+		MainRenderer->CreateAnimation("Right_Falling", "KirbyRight_Jump.bmp", 8, 8, 1.0f, true);
+		MainRenderer->CreateAnimation("Right_FallingEnd", "KirbyRight_Jump.bmp", 9, 9, 0.1f, true);
+		
 		MainRenderer->CreateAnimation("Right_Run", "KirbyRight_Run.bmp", 0, 7, 0.1f, true); // 8은 브레이크모션 9는 벽충돌
 		MainRenderer->CreateAnimation("Right_Fly", "KirbyRight_Fly.bmp", 0, 7, 0.1f, true);
 	}
@@ -174,6 +182,8 @@ void Kirby::ChangeAnimationState(const std::string& _StateName)
 
 	std::string AnimationName;
 
+	PrevState = CurState;
+
 	switch (Dir)
 	{
 	case KirbyDir::Right:
@@ -196,11 +206,36 @@ void Kirby::ChangeAnimationState(const std::string& _StateName)
 void Kirby::CameraFocus()
 {
 	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
-	GetLevel()->GetMainCamera()->SetPos(GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
+
+	int CameraRangeX = GetLevel()->GetMainCamera()->GetPos().iX();
+	int CameraRangeY = GetLevel()->GetMainCamera()->GetPos().iY();
+
+	int PlayerX = GetPos().iX();
+	int PlayerY = GetPos().iY();
+
+	if (420 < PlayerX - CameraRangeX || 200 > PlayerX - CameraRangeX)
+	{
+		GetLevel()->GetMainCamera()->AddPos({ MovePos.X, 0});
+	}
+
+	if (-100 < CameraRangeY - PlayerY)
+	{
+		GetLevel()->GetMainCamera()->AddPos({ 0, MovePos.Y });
+	}
+	else if (-380 > CameraRangeY - PlayerY)
+	{
+		GetLevel()->GetMainCamera()->AddPos(GetGravityVector());
+	}
 }
 
 
 void Kirby::LevelStart()
 {
 	MainPlayer = this;
+}
+
+unsigned int Kirby::GetWallCheck()
+{
+	unsigned int WallColor = GetGroundColor(RGB(255, 255, 255), CheckPos);
+	return WallColor;
 }

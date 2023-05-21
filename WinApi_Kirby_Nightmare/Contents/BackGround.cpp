@@ -62,7 +62,7 @@ void BackGround::Init(const std::string& _FileName)
 
 		float4 Scale = Text->GetScale();
 
-		Scale.X *= 2.5f;
+		Scale.X *= 3.0f;
 		Scale.Y *= 3.0f;
 
 		GameEngineRenderer* Render = CreateRenderer(_FileName, RenderOrder::BackGround);

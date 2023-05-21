@@ -23,10 +23,16 @@ public:
     {
         IsGravity = false;
     }
+    float4 GetGravityVector()
+    {
+        return GravityVector;
+    }
 
     void SetGroundTexture(const std::string& _GroundTextureName);
 
     int GetGroundColor(unsigned int _DefaultColor = RGB(255, 255, 255), float4 _Pos = float4::ZERO);
+
+    void GroundCheck(float _Delta);
 
 protected:
 

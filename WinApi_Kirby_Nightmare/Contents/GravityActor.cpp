@@ -49,3 +49,23 @@ int GravityActor::GetGroundColor(unsigned int _DefaultColor /*= RGB(255, 255, 25
 
 	return GroundTexture->GetColor(_DefaultColor, GetPos() + _Pos);
 }
+
+void GravityActor::GroundCheck(float _Delta)
+{
+	unsigned int Color = GetGroundColor(RGB(255, 255, 255));
+	if (RGB(255, 255, 255) == Color)
+	{
+		Gravity(_Delta);
+	}
+	else
+	{
+		unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
+
+		while (CheckColor != RGB(255, 255, 255))
+		{
+			CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
+			AddPos(float4::UP);
+		}
+		GravityReset();
+	}
+}

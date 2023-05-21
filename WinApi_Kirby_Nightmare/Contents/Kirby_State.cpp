@@ -39,30 +39,13 @@ void Kirby::FlyStart()
 // 업데이트는 실제 행동을 행하는 단계.
 void Kirby::IdleUpdate(float _Delta)
 {
+	GroundCheck(_Delta);
 
-	{
-		unsigned int Color = GetGroundColor(RGB(255, 255, 255));
-		if (RGB(255, 255, 255) == Color)
-		{
-			Gravity(_Delta);
-		}
-		else
-		{
-			unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
 
-			while (CheckColor != RGB(255, 255, 255))
-			{
-				CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
-				AddPos(float4::UP);
-			}
-			GravityReset();
-		}
-	}
-
-	if (true == GameEngineInput::IsDown('A')
-		|| true == GameEngineInput::IsDown('W')
-		|| true == GameEngineInput::IsDown('S')
-		|| true == GameEngineInput::IsDown('D'))
+	if (true == GameEngineInput::IsPress('A')
+		|| true == GameEngineInput::IsPress('W')
+		|| true == GameEngineInput::IsPress('S')
+		|| true == GameEngineInput::IsPress('D'))
 	{
 		DirCheck();
 		ChangeState(KirbyState::Walk);
@@ -72,6 +55,7 @@ void Kirby::IdleUpdate(float _Delta)
 	if (true == GameEngineInput::IsDown('F'))
 	{
 		ChangeState(KirbyState::Jump);
+		ResetLiveTime();
 		return;
 	}
 
@@ -94,55 +78,35 @@ void Kirby::WalkUpdate(float _Delta)
 {
 
 	// 중력 적용 
-	{
-		unsigned int Color = GetGroundColor(RGB(255, 255, 255));
-		if (RGB(255, 255, 255) == Color)
-		{
-			Gravity(_Delta);
-		}
-		else
-		{
-			unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
-
-			while (CheckColor != RGB(255, 255, 255))
-			{
-				CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
-				AddPos(float4::UP);
-			}
-
-
-			GravityReset();
-		}
-
-	}
-
+	GroundCheck(_Delta);
 
 	DirCheck();
 
-	float Speed = 300.0f;
-	float4 PlayerPos = GetPos();
-	float4 CameraPos = GetLevel()->GetMainCamera()->GetPos();
-
 	MovePos = float4::ZERO;
-
 
 	if (true == GameEngineInput::IsPress('A') && Dir == KirbyDir::Left)
 	{
+		CheckPos = { -24.0f, -24.0f };
+
 		MovePos = { -Speed * _Delta, 0.0f };
 	}
 	else if (true == GameEngineInput::IsPress('D') && Dir == KirbyDir::Right)
 	{
+		CheckPos = { 24.0f, -24.0f };
+
 		MovePos = { Speed * _Delta, 0.0f };
 	}
 
-	if (true == GameEngineInput::IsPress('W'))
+	if (true == GameEngineInput::IsDown('F'))
 	{
-		MovePos = { 0.0f, -Speed * _Delta };
+		ChangeState(KirbyState::Jump);
+		ResetLiveTime();
+		return;
 	}
 
 	if (true == GameEngineInput::IsPress('S'))
 	{
-		MovePos = { 0.0f, Speed * _Delta };
+		
 	}
 
 	if (MovePos == float4::ZERO)
@@ -150,56 +114,76 @@ void Kirby::WalkUpdate(float _Delta)
 		DirCheck();
 		ChangeState(KirbyState::Idle);
 	}
-	float4 CheckPos = float4::ZERO;
-	// 플레이어 이동
-	//AddPos(MovePos);
-	//PlayerPos = GetPos();
-	// 카메라의이동   플레이어가 움직이면 카메라도 이동한다.
 
-	//if (MovePos != float4::ZERO)
-	//{
-	//	GetLevel()->GetMainCamera()->AddPos(MovePos);
-	//}
-
-	// 윈도우 화면창 범위를 넘기려하면 카메라가 움직인다.
-	//if (420 < PlayerPos.iX() - CameraPos.iX() || 20 > PlayerPos.iX() - CameraPos.iX())
-	//{
-	//	GetLevel()->GetMainCamera()->AddPos({ MovePos.X, 0 });
-	//}
-
-	//if (0 < CameraPos.iY() - PlayerPos.iY() || -480 > CameraPos.iY() - PlayerPos.iY())
-	//{
-	//	GetLevel()->GetMainCamera()->AddPos({ 0, MovePos.Y });
-	//}
-
+	if (GetWallCheck() != RGB(255, 255, 255))
 	{
-		unsigned int Color = GetGroundColor(RGB(255, 255, 255), CheckPos);
-
-		if (Color == RGB(255, 255, 255))
-		{
-			AddPos(MovePos);
-			GetLevel()->GetMainCamera()->AddPos(MovePos);
-		}
-	}
-}
-
-void Kirby::JumpUpdate(float _Delta)
-{
-	if (true == GameEngineInput::IsDown('A')
-		|| true == GameEngineInput::IsDown('W')
-		|| true == GameEngineInput::IsDown('S')
-		|| true == GameEngineInput::IsDown('D'))
-	{
-		DirCheck();
-		ChangeState(KirbyState::Walk);
 		return;
 	}
 
-	if (true == GameEngineInput::IsDown('F'))
-	{
-		ChangeState(KirbyState::Idle);
-	}
+	AddPos(MovePos);
 }
+// 점프 뛰고 점프 최고점찍으면 JumpTurn애니메이션 출력해주고 
+// 떨어질때 Falling애니메이션 출력해주고 
+// 땅에 닿을때 뿌직애니메이션.
+void Kirby::JumpUpdate(float _Delta)
+{
+	DirCheck();
+	GroundCheck(_Delta);
+	static bool Value = false;
+	// 일단은 시간으로 제어함. 
+	if (1.5f <= GetLiveTime() && Value == false)
+	{
+		/*ChangeState(KirbyState::JumpTurn);*/
+		ChangeAnimationState("JumpTurn");
+		//ResetLiveTime();
+		MovePos = float4::ZERO;
+		Value = true;
+		return;
+	}
+
+	if (2.5f <= GetLiveTime())
+	{
+		/*ChangeState(KirbyState::JumpTurn);*/
+		ChangeAnimationState("Falling");
+		
+		MovePos = float4::ZERO;
+		//ChangeState(KirbyState::Idle);
+		//ResetLiveTime();
+		return;
+	}
+
+
+
+	if (true == GameEngineInput::IsPress('A') && Dir == KirbyDir::Left)
+	{
+		CheckPos = { -24.0f, -24.0f };
+
+		MovePos = { -Speed * _Delta, 0.0f };
+		if (GetWallCheck() != RGB(255, 255, 255))
+		{
+			return;
+		}
+		AddPos(MovePos);
+		CameraFocus();
+	}
+	else if (true == GameEngineInput::IsPress('D') && Dir == KirbyDir::Right)
+	{
+		CheckPos = { 24.0f, -24.0f };
+
+		MovePos = { Speed * _Delta, 0.0f };
+		if (GetWallCheck() != RGB(255, 255, 255))
+		{
+			return;
+		}
+		AddPos(MovePos);
+		CameraFocus();
+	}
+
+	MovePos = {  0.0f , -JumpPower * _Delta, };
+
+	AddPos(MovePos);
+}
+
 
 void Kirby::RunUpdate(float _Delta)
 {

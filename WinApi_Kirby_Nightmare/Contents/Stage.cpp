@@ -16,8 +16,6 @@ Stage::~Stage()
 
 void Stage::Start()
 {
-	SetPos({ 1200, 340 });
-
 	Renderer = CreateRenderer(RenderOrder::Stage);
 
 	DebugRenderer = CreateRenderer(RenderOrder::Stage);
