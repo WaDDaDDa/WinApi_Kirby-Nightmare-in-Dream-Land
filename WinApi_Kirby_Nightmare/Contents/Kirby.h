@@ -72,7 +72,6 @@ protected:
 
     KirbyDir Dir = KirbyDir::Right;
     std::string CurState = "";
-    std::string PrevState = "";
 
     void DirCheck();
     void CameraFocus();

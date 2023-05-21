@@ -182,8 +182,6 @@ void Kirby::ChangeAnimationState(const std::string& _StateName)
 
 	std::string AnimationName;
 
-	PrevState = CurState;
-
 	switch (Dir)
 	{
 	case KirbyDir::Right:
