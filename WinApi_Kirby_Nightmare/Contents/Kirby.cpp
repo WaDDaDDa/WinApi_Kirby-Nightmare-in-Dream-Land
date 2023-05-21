@@ -60,7 +60,7 @@ void Kirby::Start()
 	}
 
 	MainRenderer = CreateRenderer(RenderOrder::Play);
-	MainRenderer->SetScaleRatio(3.0f);
+	MainRenderer->SetScaleRatio(4.0f);
 	SetPos(float4{360,360});
 
 	{ // LeftAnimation 생성
@@ -211,16 +211,16 @@ void Kirby::CameraFocus()
 	int PlayerX = GetPos().iX();
 	int PlayerY = GetPos().iY();
 
-	if (420 < PlayerX - CameraRangeX || 200 > PlayerX - CameraRangeX)
+	if (650 < PlayerX - CameraRangeX || 250 > PlayerX - CameraRangeX)
 	{
 		GetLevel()->GetMainCamera()->AddPos({ MovePos.X, 0});
 	}
 
-	if (-100 < CameraRangeY - PlayerY)
+	if (-200 < CameraRangeY - PlayerY)
 	{
 		GetLevel()->GetMainCamera()->AddPos({ 0, MovePos.Y });
 	}
-	else if (-380 > CameraRangeY - PlayerY)
+	else if (-450 > CameraRangeY - PlayerY)
 	{
 		GetLevel()->GetMainCamera()->AddPos(GetGravityVector());
 	}
@@ -243,7 +243,7 @@ void Kirby::Movement(float _Delta)
 	if (true == GameEngineInput::IsPress('A') && Dir == KirbyDir::Left)
 	{
 		CameraFocus();
-		CheckPos = { -24.0f, -24.0f };
+		CheckPos = { -40.0f, -40.0f };
 		MovePos = { -Speed * _Delta, 0.0f };
 
 		// 벽판정
@@ -257,7 +257,7 @@ void Kirby::Movement(float _Delta)
 	else if (true == GameEngineInput::IsPress('D') && Dir == KirbyDir::Right)
 	{
 		CameraFocus();
-		CheckPos = { 24.0f, -24.0f };
+		CheckPos = { 40.0f, -40.0f };
 
 		MovePos = { Speed * _Delta, 0.0f };
 		if (GetWallCheck() != RGB(255, 255, 255))

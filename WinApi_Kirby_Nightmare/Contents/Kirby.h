@@ -88,8 +88,8 @@ private:
     float4 CheckPos = float4::ZERO;
 
 
-    float Speed = 300.0f;
-    float JumpPower = 700.0f;
+    float Speed = 400.0f;
+    float JumpPower = 500.0f;
 
     void Start() override;
     void Update(float _Delta) override;

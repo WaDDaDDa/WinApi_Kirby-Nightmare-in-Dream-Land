@@ -17,8 +17,8 @@ MainHub::~MainHub()
 // 준비물.
 void MainHub::Start()
 {
-	// GBA의 해상도 240x160에 3배율한 720x480을 내 기본 해상도로 할 예정.
-	GameEngineWindow::MainWindow.SetPosAndScale({ 100, 100 }, { 720, 480 });
+	// GBA의 해상도 240x160에 4배율한 960x640을 내 기본 해상도로 할 예정.
+	GameEngineWindow::MainWindow.SetPosAndScale({ 0, 0 }, { 960, 600 });
 	GameEngineCore::CreateLevel<TitleLevel>("TitleLevel");
 	GameEngineCore::CreateLevel<MainHubLevel>("MainHubLevel");
 

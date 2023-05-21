@@ -94,13 +94,13 @@ void Kirby::WalkUpdate(float _Delta)
 
 	if (true == GameEngineInput::IsPress('A') && Dir == KirbyDir::Left)
 	{
-		CheckPos = { -24.0f, -24.0f };
+		CheckPos = { -40.0f, -40.0f };
 
 		MovePos = { -Speed * _Delta, 0.0f };
 	}
 	else if (true == GameEngineInput::IsPress('D') && Dir == KirbyDir::Right)
 	{
-		CheckPos = { 24.0f, -24.0f };
+		CheckPos = { 40.0f, -40.0f };
 
 		MovePos = { Speed * _Delta, 0.0f };
 	}
@@ -122,7 +122,6 @@ void Kirby::WalkUpdate(float _Delta)
 	{
 		return;
 	}
-
 	AddPos(MovePos);
 }
 // 점프 뛰고 점프 최고점찍으면 JumpTurn애니메이션 출력해주고 
@@ -132,6 +131,15 @@ void Kirby::JumpUpdate(float _Delta)
 {
 	DirCheck();
 	GroundCheck(_Delta);
+
+	// 머리위 체크
+	float4 UpCheck = { 0 , -64 };
+	unsigned int ColorCheck = GetGroundColor(RGB(255, 255, 255), UpCheck);
+	if (ColorCheck != RGB(255, 255, 255))
+	{
+		// 체인지 폴링
+		return;
+	}
 
 	MovePos = { 0.0f , -JumpPower * _Delta, };
 
@@ -162,7 +170,6 @@ void Kirby::JumpUpdate(float _Delta)
 		ChangeState(KirbyState::Idle);
 		return;
 	}
-
 }
 
 
@@ -188,6 +195,13 @@ void Kirby::FlyUpdate(float _Delta)
 {
 	DirCheck();
 	GroundCheck(_Delta);
+
+	float4 UpCheck = { 0 , -80 };
+	unsigned int ColorCheck = GetGroundColor(RGB(255, 255, 255), UpCheck);
+	if (ColorCheck != RGB(255, 255, 255))
+	{
+		return;
+	}
 
 	if (true == GameEngineInput::IsPress('F'))
 	{
