@@ -51,10 +51,16 @@ void Kirby::IdleUpdate(float _Delta)
 {
 	GroundCheck(_Delta);
 
+	unsigned int Color = GetGroundColor(RGB(255, 255, 255));
+	if (RGB(255, 255, 255) == Color)
+	{
+		ChangeState(KirbyState::Falling);
+		return;
+	}
+
 	if (true == GameEngineInput::IsPress('A')
 		|| true == GameEngineInput::IsPress('D'))
 	{
-		DirCheck();
 		ChangeState(KirbyState::Walk);
 		return;
 	}
@@ -74,7 +80,6 @@ void Kirby::IdleUpdate(float _Delta)
 	if (true == GameEngineInput::IsDown('F'))
 	{
 		ChangeState(KirbyState::Jump);
-		ResetLiveTime();
 		return;
 	}
 
@@ -84,56 +89,38 @@ void Kirby::IdleUpdate(float _Delta)
 		return;
 	}
 
-	if (true == GameEngineInput::IsDown('X'))
-	{
-		ChangeState(KirbyState::Fly);
-		return;
-	}
+
 }
 
 
 
 void Kirby::WalkUpdate(float _Delta)
 {
-
-	// 중력 적용 
 	GroundCheck(_Delta);
 
 	DirCheck();
 
-	MovePos = float4::ZERO;
+	Movement(_Delta);
 
-	if (true == GameEngineInput::IsPress('A') && Dir == KirbyDir::Left)
-	{
-		CheckPos = { -40.0f, -40.0f };
-
-		MovePos = { -Speed * _Delta, 0.0f };
-	}
-	else if (true == GameEngineInput::IsPress('D') && Dir == KirbyDir::Right)
-	{
-		CheckPos = { 40.0f, -40.0f };
-
-		MovePos = { Speed * _Delta, 0.0f };
-	}
 	// 점프
 	if (true == GameEngineInput::IsDown('F'))
 	{
 		MovePos = float4::ZERO;
 		ChangeState(KirbyState::Jump);
-		ResetLiveTime();
 		return;
 	}
 	// 대기
-	if (MovePos == float4::ZERO)
+	if (true == GameEngineInput::IsFree('A') && true == GameEngineInput::IsFree('D'))
 	{
 		ChangeState(KirbyState::Idle);
 	}
-	// 벽판정
-	if (GetWallCheck() != RGB(255, 255, 255))
+
+	unsigned int Color = GetGroundColor(RGB(255, 255, 255));
+	if (RGB(255, 255, 255) == Color)
 	{
+		ChangeState(KirbyState::Falling);
 		return;
 	}
-	AddPos(MovePos);
 }
 // 점프 뛰고 점프 최고점찍으면 JumpTurn애니메이션 출력해주고 
 // 떨어질때 Falling애니메이션 출력해주고 
@@ -149,6 +136,7 @@ void Kirby::JumpUpdate(float _Delta)
 	if (ColorCheck != RGB(255, 255, 255))
 	{
 		// 체인지 폴링
+		ChangeState(KirbyState::Falling);
 		return;
 	}
 
@@ -156,11 +144,9 @@ void Kirby::JumpUpdate(float _Delta)
 
 	AddPos(MovePos);
 	// 애니메이션 출력 변경
-	if (GetLiveTime() >= 0.8f)
+	if (GetLiveTime() >= 0.6f)
 	{
 		ChangeState(KirbyState::JumpTurn);
-		//ChangeAnimationState("JumpTurn");
-		ResetLiveTime();
 		return;
 	}
 
@@ -170,7 +156,6 @@ void Kirby::JumpUpdate(float _Delta)
 	if (true == GameEngineInput::IsDown('F'))
 	{
 		ChangeState(KirbyState::Fly);
-		ResetLiveTime();
 		return;
 	}
 
@@ -188,48 +173,75 @@ void Kirby::JumpUpdate(float _Delta)
 void Kirby::JumpTurnUpdate(float _Delta)
 {
 	DirCheck();
-	GroundCheck(_Delta);
-
 	Movement(_Delta);
+	GravityReset();
 
-	if (GetLiveTime() >= 0.4f)
+	if (GetLiveTime() >= 0.2f)
 	{
 		ChangeState(KirbyState::Falling);
-		//ChangeAnimationState("JumpTurn");
-		ResetLiveTime();
+		
 		return;
 	}
 
 	if (true == GameEngineInput::IsDown('F'))
 	{
 		ChangeState(KirbyState::Fly);
-		ResetLiveTime();
 		return;
 	}
-
 }
 
 void Kirby::FallingUpdate(float _Delta)
 {
+	DirCheck();
+	GroundCheck(_Delta);
+
+	Movement(_Delta);
+
+	if (true == GameEngineInput::IsDown('F'))
+	{
+		ChangeState(KirbyState::Fly);
+		return;
+	}
+
+	// 땅에 닿으면 기본상태.
+	unsigned int Color = GetGroundColor(RGB(255, 255, 255));
+	if (RGB(255, 255, 255) != Color)
+	{
+		CameraFocus();
+		GravityReset();
+		ChangeState(KirbyState::FallingEnd);
+		return;
+	}
 
 }
 
 void Kirby::FallingEndUpdate(float _Delta)
 {
+	if (GetLiveTime() >= 0.1f)
+	{
+		ChangeState(KirbyState::Idle);
+		return;
+	}
+
+	if (true == GameEngineInput::IsPress('A')
+		|| true == GameEngineInput::IsPress('S')
+		|| true == GameEngineInput::IsPress('D'))
+	{
+		ChangeState(KirbyState::Idle);
+		return;
+	}
+
+	if (true == GameEngineInput::IsDown('F'))
+	{
+		MovePos = float4::ZERO;
+		ChangeState(KirbyState::Jump);
+		return;
+	}
 
 }
 
 void Kirby::RunUpdate(float _Delta)
 {
-	if (true == GameEngineInput::IsDown('A')
-		|| true == GameEngineInput::IsDown('W')
-		|| true == GameEngineInput::IsDown('S')
-		|| true == GameEngineInput::IsDown('D'))
-	{
-		DirCheck();
-		ChangeState(KirbyState::Walk);
-		return;
-	}
 
 	if (true == GameEngineInput::IsDown('Z'))
 	{
@@ -256,5 +268,11 @@ void Kirby::FlyUpdate(float _Delta)
 		AddPos(MovePos);
 	}
 	Movement(_Delta);
+
+	if (true == GameEngineInput::IsPress('X'))
+	{
+		ChangeState(KirbyState::Idle);
+		return;
+	}
 
 }

@@ -69,7 +69,7 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Left_UnderIdle", "KirbyLeft_UnderIdel.bmp", 0, 1, 0.2f, true);
 		MainRenderer->CreateAnimation("Left_Walk", "KirbyLeft_Walk.bmp", 0, 9, 0.05f, true);
 		MainRenderer->CreateAnimation("Left_Jump", "KirbyLeft_Jump.bmp", 0, 0, 0.1f, true);
-		MainRenderer->CreateAnimation("Left_JumpTurn", "KirbyLeft_Jump.bmp", 1, 7, 0.1f, true);
+		MainRenderer->CreateAnimation("Left_JumpTurn", "KirbyLeft_Jump.bmp", 1, 7, 0.03f, true);
 		MainRenderer->CreateAnimation("Left_Falling", "KirbyLeft_Jump.bmp", 8, 8, 1.0f, true);
 		MainRenderer->CreateAnimation("Left_FallingEnd", "KirbyLeft_Jump.bmp", 9, 9, 0.1f, true);
 		MainRenderer->CreateAnimation("Left_Run", "KirbyLeft_Run.bmp", 0, 7, 0.1f, true);  // 8은 브레이크모션 9는 벽충돌
@@ -81,7 +81,7 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Right_UnderIdle", "KirbyRight_UnderIdel.bmp", 0, 1, 0.2f, true);
 		MainRenderer->CreateAnimation("Right_Walk", "KirbyRight_Walk.bmp", 0, 9, 0.05f, true);
 		MainRenderer->CreateAnimation("Right_Jump", "KirbyRight_Jump.bmp", 0, 0, 0.1f, true);
-		MainRenderer->CreateAnimation("Right_JumpTurn", "KirbyRight_Jump.bmp", 1, 7, 0.1f, true);
+		MainRenderer->CreateAnimation("Right_JumpTurn", "KirbyRight_Jump.bmp", 1, 7, 0.03f, true);
 		MainRenderer->CreateAnimation("Right_Falling", "KirbyRight_Jump.bmp", 8, 8, 1.0f, true);
 		MainRenderer->CreateAnimation("Right_FallingEnd", "KirbyRight_Jump.bmp", 9, 9, 0.1f, true);
 		MainRenderer->CreateAnimation("Right_Run", "KirbyRight_Run.bmp", 0, 7, 0.1f, true); // 8은 브레이크모션 9는 벽충돌
@@ -157,6 +157,8 @@ void Kirby::ChangeState(KirbyState _State)
 			break;
 		}
 	}
+
+	ResetLiveTime();
 
 	State = _State;
 }
@@ -265,7 +267,6 @@ void Kirby::Movement(float _Delta)
 			return;
 		}
 		AddPos(MovePos);
-
 	}
 	else if (true == GameEngineInput::IsPress('D') && Dir == KirbyDir::Right)
 	{
