@@ -44,6 +44,10 @@ void Kirby::FlyStart()
 	ChangeAnimationState("Fly");
 }
 
+void Kirby::BreathInStart()
+{
+	ChangeAnimationState("BreathIn");
+}
 
 // IsDown으로 키를 받아서 State를 체인지하게 되면 
 // 업데이트는 실제 행동을 행하는 단계.
@@ -129,7 +133,6 @@ void Kirby::JumpUpdate(float _Delta)
 {
 	DirCheck();
 	GroundCheck(_Delta);
-
 	// 머리위 체크
 	float4 UpCheck = { 0 , -64 };
 	unsigned int ColorCheck = GetGroundColor(RGB(255, 255, 255), UpCheck);
@@ -155,7 +158,7 @@ void Kirby::JumpUpdate(float _Delta)
 
 	if (true == GameEngineInput::IsDown('F'))
 	{
-		ChangeState(KirbyState::Fly);
+		ChangeState(KirbyState::BreathIn);
 		return;
 	}
 
@@ -185,7 +188,7 @@ void Kirby::JumpTurnUpdate(float _Delta)
 
 	if (true == GameEngineInput::IsDown('F'))
 	{
-		ChangeState(KirbyState::Fly);
+		ChangeState(KirbyState::BreathIn);
 		return;
 	}
 }
@@ -199,7 +202,7 @@ void Kirby::FallingUpdate(float _Delta)
 
 	if (true == GameEngineInput::IsDown('F'))
 	{
-		ChangeState(KirbyState::Fly);
+		ChangeState(KirbyState::BreathIn);
 		return;
 	}
 
@@ -251,6 +254,7 @@ void Kirby::RunUpdate(float _Delta)
 
 void Kirby::FlyUpdate(float _Delta)
 {
+	CameraFocus();
 	DirCheck();
 	GroundCheck(_Delta);
 
@@ -274,5 +278,20 @@ void Kirby::FlyUpdate(float _Delta)
 		ChangeState(KirbyState::Idle);
 		return;
 	}
+}
 
+void Kirby::BreathInUpdate(float _Delta)
+{
+	DirCheck();
+	MovePos = { 0.0f , -JumpPower / 10 * _Delta, };
+	AddPos(MovePos);
+	Movement(_Delta);
+	CameraFocus();
+
+	if (GetLiveTime() >= 0.2f)
+	{
+		ChangeState(KirbyState::Fly);
+		GravityReset();
+		return;
+	}
 }

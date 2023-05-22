@@ -46,6 +46,7 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Jump.bmp"), 5, 2);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Run.bmp"), 5, 2);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Fly.bmp"), 4, 2);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_BreathIn.bmp"), 5, 1);
 		}
 		{ // RinghtAnimation 셋팅
 			FilePath.MoveParentToExistsChild("Right");
@@ -56,6 +57,7 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Jump.bmp"), 5, 2);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Run.bmp"), 5, 2);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Fly.bmp"), 4, 2);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_BreathIn.bmp"), 5, 1);
 		}
 	}
 
@@ -74,6 +76,9 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Left_FallingEnd", "KirbyLeft_Jump.bmp", 9, 9, 0.1f, true);
 		MainRenderer->CreateAnimation("Left_Run", "KirbyLeft_Run.bmp", 0, 7, 0.1f, true);  // 8은 브레이크모션 9는 벽충돌
 		MainRenderer->CreateAnimation("Left_Fly", "KirbyLeft_Fly.bmp", 0, 7, 0.1f, true);
+		MainRenderer->CreateAnimation("Left_BreathIn", "KirbyLeft_BreathIn.bmp", 0, 4, 0.05f, true);
+		MainRenderer->FindAnimation("Left_BreathIn")->Inters[2] = 0.1f;
+		MainRenderer->FindAnimation("Left_BreathIn")->Inters[3] = 0.1f;
 	}
 
 	{ // RightAnimation 생성
@@ -86,6 +91,9 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Right_FallingEnd", "KirbyRight_Jump.bmp", 9, 9, 0.1f, true);
 		MainRenderer->CreateAnimation("Right_Run", "KirbyRight_Run.bmp", 0, 7, 0.1f, true); // 8은 브레이크모션 9는 벽충돌
 		MainRenderer->CreateAnimation("Right_Fly", "KirbyRight_Fly.bmp", 0, 7, 0.1f, true);
+		MainRenderer->CreateAnimation("Right_BreathIn", "KirbyRight_BreathIn.bmp", 0, 4, 0.05f, true);
+		MainRenderer->FindAnimation("Right_BreathIn")->Inters[2] = 0.1f;
+		MainRenderer->FindAnimation("Right_BreathIn")->Inters[3] = 0.1f;
 	}
 	// PlayerPos 는 static 멤버 변수 선언후 초기 위치를 선언하고 시작할수있을듯.
 	ChangeState(KirbyState::Idle);
@@ -118,6 +126,8 @@ void Kirby::StateUpdate(float _Delta)
 		return RunUpdate(_Delta);
 	case KirbyState::Fly:
 		return FlyUpdate(_Delta);
+	case KirbyState::BreathIn:
+		return BreathInUpdate(_Delta);
 	default:
 		break;
 	}
@@ -152,6 +162,9 @@ void Kirby::ChangeState(KirbyState _State)
 			break;
 		case KirbyState::Fly:
 			FlyStart();
+			break;
+		case KirbyState::BreathIn:
+			BreathInStart();
 			break;
 		default:
 			break;

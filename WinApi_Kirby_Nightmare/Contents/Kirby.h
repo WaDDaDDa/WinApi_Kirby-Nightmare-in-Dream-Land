@@ -12,6 +12,7 @@ enum class KirbyState
     FallingEnd,
     Run,
     Fly,
+    BreathIn,
     Max, // 일반적으로 사용하지 않는 값.
 };
 
@@ -66,6 +67,7 @@ protected:
     void FallingEndStart();
     void RunStart();
     void FlyStart();
+    void BreathInStart();
 
     void IdleUpdate(float _Delta);
     void WalkUpdate(float _Delta);
@@ -75,6 +77,7 @@ protected:
     void FallingEndUpdate(float _Delta);
     void RunUpdate(float _Delta);
     void FlyUpdate(float _Delta);
+    void BreathInUpdate(float _Delta);
 
     void ChangeState(KirbyState _State);
 
