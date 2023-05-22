@@ -288,7 +288,7 @@ void Kirby::BreathInUpdate(float _Delta)
 	Movement(_Delta);
 	CameraFocus();
 
-	if (GetLiveTime() >= 0.2f)
+	if (GetLiveTime() >= 0.35f)
 	{
 		ChangeState(KirbyState::Fly);
 		GravityReset();

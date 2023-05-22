@@ -77,8 +77,8 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Left_Run", "KirbyLeft_Run.bmp", 0, 7, 0.1f, true);  // 8은 브레이크모션 9는 벽충돌
 		MainRenderer->CreateAnimation("Left_Fly", "KirbyLeft_Fly.bmp", 0, 7, 0.1f, true);
 		MainRenderer->CreateAnimation("Left_BreathIn", "KirbyLeft_BreathIn.bmp", 0, 4, 0.05f, true);
-		MainRenderer->FindAnimation("Left_BreathIn")->Inters[2] = 0.1f;
 		MainRenderer->FindAnimation("Left_BreathIn")->Inters[3] = 0.1f;
+		MainRenderer->FindAnimation("Left_BreathIn")->Inters[4] = 0.1f;
 	}
 
 	{ // RightAnimation 생성

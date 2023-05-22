@@ -68,30 +68,35 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _DeltaTime)
 {
 	if (nullptr != CurAnimation)
 	{
+		// 1. 현재 프레임의 Inter가 0이되기 전에는
 		CurAnimation->CurInter -= _DeltaTime;
+		// 4. 현재 프레임의 Inter가 0보다 작거나 같아지면 
 		if (0.0f >= CurAnimation->CurInter)
 		{
-			CurAnimation->CurInter
-				= CurAnimation->Inters[CurAnimation->CurFrame];
-
+			// 5. 현재프레임을 다음프레임으로 바꾼다.
 			++CurAnimation->CurFrame;
 
+			// 현재 애니메이션의 마지막 프레임번호 - 시작프레임 번호 가 현재의 프레임 번호 보다 작다면
 			if (CurAnimation->CurFrame > abs(static_cast<int>(CurAnimation->EndFrame - CurAnimation->StartFrame)))
 			{
+				// 현재 프레임이 루프라면 처음부터 시작하도록 0으로.
 				if (true == CurAnimation->Loop)
 				{
 					CurAnimation->CurFrame = 0;
 				}
-				else
+				else // 그게 아니면 이전 프레임으로 바꿔서 한다.
 				{
 					--CurAnimation->CurFrame;
 				}
 			}
+			CurAnimation->CurInter
+				= CurAnimation->Inters[CurAnimation->CurFrame];
 
 		}
 
+		// 2. 6. 현재 애니메이션의 프레임의 정보들을 얻어서
 		size_t Frame = CurAnimation->Frames[CurAnimation->CurFrame];
-
+		
 		Sprite = CurAnimation->Sprite;
 		const GameEngineSprite::Sprite& SpriteInfo = Sprite->GetSprite(Frame);
 		Texture = SpriteInfo.BaseTexture;
@@ -111,6 +116,7 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _DeltaTime)
 
 	GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
 
+	// 3. 7. 출력한다.
 	BackBuffer->TransCopy(Texture, Master->GetPos() + RenderPos - _Camera->GetPos(), RenderScale, CopyPos, CopyScale);
 	// BackBuffer->TransCopy(출력할 이미지, 출력될 엑터의 위치 + 출력될 이미지의 위치 - 카메라의 위치,
 	//                          출력될 크기, 출력할 이미지의 시작점, 출력할 이미지의 끝점);
