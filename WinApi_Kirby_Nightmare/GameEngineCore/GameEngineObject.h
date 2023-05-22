@@ -9,7 +9,7 @@ class GameEngineObject
 
 public:
     GameEngineObject();
-    ~GameEngineObject();
+	virtual ~GameEngineObject();
 
 	GameEngineObject(const GameEngineObject& _Other) = delete;
 	GameEngineObject(GameEngineObject&& _Other) noexcept = delete;
@@ -53,11 +53,6 @@ public:
 		return IsDeathValue;
 	}
 
-	void SetOrder(int _Order)
-	{
-		Order = _Order;
-	}
-
 	float GetLiveTime()
 	{
 		return LiveTime;
@@ -67,6 +62,17 @@ public:
 	{
 		LiveTime = 0.0f;
 	}
+
+	virtual void SetOrder(int _Order)
+	{
+		Order = _Order;
+	}
+
+	int GetOrder()
+	{
+		return Order;
+	}
+
 
 protected:
 

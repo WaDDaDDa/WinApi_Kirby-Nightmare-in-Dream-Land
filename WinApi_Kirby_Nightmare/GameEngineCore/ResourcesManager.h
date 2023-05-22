@@ -3,16 +3,6 @@
 #include <map>
 #include <GameEngineBase/GameEnginePath.h>
 
-// 설명 : 선생님이 마지막으로 알려주는 싱글톤
-// 싱글톤이 뭐지?
-// 싱글톤은 갱스오브포라는 1990대 프로그래머 집단이
-// 대다수의 프로그래머가 비슷한 규격의 코딩을 하는것을 정리하고 이름을 붙인것을 
-// 디자인 패턴이라고 하는데 그중에서 하나의 패턴명
-// 보통 UML과 함께 배우는것이 좋다.
-// 생성 구분에 해당
-// 생성 객체를 생성하는 방법을 
-// 패턴 소양 정도로만 알고있으면 됩니다.
-// 이 프로그램에서 이 객체가 1개만 있었으면 좋겠다.
 class GameEngineSprite;
 class GameEngineWindowTexture;
 class ResourcesManager
@@ -41,8 +31,6 @@ public:
 
 	GameEngineWindowTexture* FindTexture(const std::string& _Name);
 
-	bool IsLoadTexture(const std::string& _Image);
-
 	GameEngineSprite* FindSprite(const std::string& _Name);
 
 	GameEngineSprite* CreateSpriteSheet(const std::string& _TexturePath, int _XCount, int _YCount)
@@ -59,7 +47,7 @@ public:
 	// 따로있는 이미지를 스프라이트로 만드는 과정
 	void TextureFileLoad(const std::string& _FileName, const std::string& _Path);
 	void SpriteFileLoad(const std::string& _FileName, const std::string& _Path, int _XCount, int _YCount);
-
+	bool IsLoadTexture(const std::string& _Image);
 protected:
 
 private:

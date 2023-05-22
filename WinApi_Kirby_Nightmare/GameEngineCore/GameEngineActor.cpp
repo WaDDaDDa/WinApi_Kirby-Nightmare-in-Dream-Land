@@ -21,9 +21,9 @@ GameEngineRenderer* GameEngineActor::CreateRenderer(const std::string& _ImageNam
 {
 	GameEngineRenderer* NewRenderer = new GameEngineRenderer();
 
-	GetLevel()->MainCamera->PushRenderer(NewRenderer, _Order);
-
 	NewRenderer->Master = this;
+	NewRenderer->Start();
+	NewRenderer->SetOrder(_Order);
 	// 이미지가 비어있는 랜더러가 아니면 세팅될 이미지를 세팅해주면 된다.
 	if ("" != _ImageName)
 	{

@@ -68,9 +68,7 @@ void GameEngineCore::CoreUpdate()
         GameEngineInput::Reset();
     }
 
- 
     CurLevel->AddLiveTime(Delta);
-
     CurLevel->Update(Delta);
 
     CurLevel->ActorUpdate(Delta);

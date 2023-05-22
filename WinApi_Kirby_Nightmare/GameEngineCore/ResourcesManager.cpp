@@ -5,13 +5,7 @@
 #include <GameEngineBase/GameEngineDebug.h>
 #include <GameEngineBase/GameEngineDirectory.h>
 
-
 ResourcesManager ResourcesManager::Inst;
-
-// 포인터로 싱글톤을하면 delete 할수있는 장점? 이있는데 그럴거면 뭐하러 싱글톤하냐?
-// ResourcesManager* ResourcesManager::Inst = new ResourcesManager();
-// ResourcesManager* ResourcesManager::Inst;
-
 
 bool ResourcesManager::IsLoadTexture(const std::string& _Name)
 {
@@ -171,12 +165,7 @@ void ResourcesManager::SpriteFileLoad(const std::string& _FileName, const std::s
 
 	GameEnginePath FilePath;
 
-	// _Path
-	// "BBB\\CCC\\DDD"
-	// "BBB\\CCC\\DDD\\FFF"
 	std::string ParentPath = GameEnginePath::GetParentString(_Path);
-	// ParentPath
-	// "BBB"
 
 	FilePath.MoveParentToExistsChild(ParentPath);
 	FilePath.MoveChild(_Path);

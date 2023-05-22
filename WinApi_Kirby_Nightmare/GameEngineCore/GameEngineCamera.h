@@ -9,6 +9,7 @@ class GameEngineCamera
 {
 	friend class GameEngineActor;
 	friend class GameEngineLevel;
+	friend class GameEngineRenderer;
 
 public:
 	// constrcuter destructer

@@ -73,8 +73,6 @@ private:
 	
 	std::list<GameEngineRenderer*> AllRenderer;
 
-	// void PushMainCameraRenderer(GameEngineRenderer*);
-
 	void ActorRelease();
 };
 

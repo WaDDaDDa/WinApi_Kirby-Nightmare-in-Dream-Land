@@ -13,7 +13,7 @@ class GameEngineSprite;
 class GameEngineRenderer : public GameEngineObject
 {
 	friend class GameEngineActor;
-	friend class GameEngineCamera;
+	friend GameEngineCamera;
 public:
 	// constrcuter destructer
 	GameEngineRenderer();
@@ -59,12 +59,13 @@ public:
 
 	bool IsDeath() override;
 
-
+	void SetOrder(int _Order) override;
 
 protected:
+	void Start() override;
 
 private:
-
+	GameEngineCamera* Camera = nullptr;
 	GameEngineSprite* Sprite = nullptr;
 	// 렌더러는 텍스쳐를 알고있다.
 	GameEngineWindowTexture* Texture = nullptr;
@@ -93,6 +94,7 @@ private:
 		size_t StartFrame = -1;
 		size_t EndFrame = -1;
 		float CurInter = 0.0f;
+		std::vector<size_t> Frames;
 		std::vector<float> Inters;
 		bool Loop = true;
 	};
