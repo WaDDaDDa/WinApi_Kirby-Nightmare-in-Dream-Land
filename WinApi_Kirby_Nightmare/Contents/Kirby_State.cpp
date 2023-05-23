@@ -100,10 +100,9 @@ void Kirby::IdleUpdate(float _Delta)
 
 void Kirby::WalkUpdate(float _Delta)
 {
-	GroundCheck(_Delta);
-
 	DirCheck();
 
+	GroundCheck(_Delta);
 	Movement(_Delta);
 
 	// มกวม
@@ -271,6 +270,7 @@ void Kirby::FlyUpdate(float _Delta)
 		MovePos = { 0.0f , -200 * _Delta, };
 		AddPos(MovePos);
 	}
+
 	Movement(_Delta);
 
 	if (true == GameEngineInput::IsPress('X'))

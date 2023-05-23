@@ -32,13 +32,13 @@ void MainHubLevel::Start()
 		GameEnginePath FolderPath = FilePath;
 
 		FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Stages\\");
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Level2_Debug.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Level3_Debug.bmp"));
 	}
 
 	BackGround* CurBackGround = CreateActor<BackGround>();
 	CurBackGround->Init("TestBackGround.Bmp");
 	StagePtr = CreateActor<Stage>();
-	StagePtr->Init("Level2.Bmp", "Level2_Debug.bmp");
+	StagePtr->Init("Level3.Bmp", "Level3_Debug.bmp");
 
 	LevelPlayer = CreateActor<Kirby>();
 
@@ -55,6 +55,7 @@ void MainHubLevel::Update(float _Delta)
 	if (true == GameEngineInput::IsDown('J'))
 	{
 		StagePtr->SwitchRender();
+		AllCollisionRnderChange();
 	}
 
 }
@@ -72,7 +73,7 @@ void MainHubLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
 	}
 
-	LevelPlayer->SetGroundTexture("Level2_Debug.bmp");
+	LevelPlayer->SetGroundTexture("Level3_Debug.bmp");
 
 	//float4 WinScale = GameEngineWindow::MainWindow.GetScale();
 	//LevelPlayer->SetPos(WinScale.Half());

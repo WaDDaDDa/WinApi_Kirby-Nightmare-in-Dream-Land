@@ -12,8 +12,10 @@
 // 이 모든것을 준비해야하는 것이 레벨이다.
 // 화면 혹은 장면을 표현. ex)타이틀 장면, 플레이 장면, 엔딩 장면
 class GameEngineCamera;
+class GameEngineCollision;
 class GameEngineLevel : public GameEngineObject
 {
+    friend class GameEngineCollision;
     friend class GameEngineActor;
     friend class GameEngineCore; //GameEngineCore에게는 나의기능을 쓸수있게 하겠다.
 
@@ -55,6 +57,8 @@ public:
         return MainCamera;
     }
 
+    void AllCollisionRnderChange();
+
 protected:
     virtual void LevelStart(GameEngineLevel* _PrevLevel) {}
     virtual void LevelEnd(GameEngineLevel* _NextLevel) {}
@@ -64,6 +68,7 @@ private:
     GameEngineCamera* UICamera;
 
 	std::map<int, std::list<GameEngineActor*>> AllActors;
+	std::map<int, std::list<GameEngineCollision*>> AllCollision;
 
 	void ActorInit(GameEngineActor* _Actor, int _Order);
 

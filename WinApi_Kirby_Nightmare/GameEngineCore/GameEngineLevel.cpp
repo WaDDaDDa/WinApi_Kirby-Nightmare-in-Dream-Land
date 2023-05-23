@@ -1,6 +1,7 @@
 #include "GameEngineLevel.h"
 #include "GameEngineCamera.h"
 #include <GameEngineBase/GameEngineDebug.h>
+#include "GameEngineCollision.h"
 
 GameEngineLevel::GameEngineLevel()
 {
@@ -73,6 +74,21 @@ void GameEngineLevel::ActorRender(float _Delta)
 {
 	MainCamera->Render(_Delta);
 
+	for (const std::pair<int, std::list<GameEngineCollision*>>& Pair : AllCollision)
+	{
+		const std::list < GameEngineCollision*>& Group = Pair.second;
+
+		for (GameEngineCollision* Collision : Group)
+		{
+			if (false == Collision->IsRenderValue())
+			{
+				continue;
+			}
+			Collision->DebugRender();
+		}
+
+	}
+
 	//Actor들의 렌더.
 	for (const std::pair<int, std::list<GameEngineActor*>>& _Pair : AllActors)
 	{
@@ -95,38 +111,67 @@ void GameEngineLevel::ActorRelease()
 {
 	MainCamera->Release();
 
-	std::map<int, std::list<GameEngineActor*>>::iterator GroupStartIter = AllActors.begin();
-	std::map<int, std::list<GameEngineActor*>>::iterator GroupEndIter = AllActors.end();
-
-	for (; GroupStartIter != GroupEndIter; ++GroupStartIter)
+	// 콜리전의 릴리즈
 	{
-		std::list<GameEngineActor*>& Group = GroupStartIter->second;
+		std::map<int, std::list<GameEngineCollision*>>::iterator GroupStartIter = AllCollision.begin();
+		std::map<int, std::list<GameEngineCollision*>>::iterator GroupEndIter = AllCollision.end();
 
-		std::list<GameEngineActor*>::iterator ObjectStartIter = Group.begin();
-		std::list<GameEngineActor*>::iterator ObjectEndIter = Group.end();
-
-		for (; ObjectStartIter != ObjectEndIter; )
+		for (; GroupStartIter != GroupEndIter; ++GroupStartIter)
 		{
-			GameEngineActor* Actor = *ObjectStartIter;
-			if (false == Actor->IsDeath())
+			std::list<GameEngineCollision*>& Group = GroupStartIter->second;
+
+			std::list<GameEngineCollision*>::iterator ObjectStartIter = Group.begin();
+			std::list<GameEngineCollision*>::iterator ObjectEndIter = Group.end();
+
+			for (; ObjectStartIter != ObjectEndIter; )
 			{
-				Actor->ActorRelease(); //여기서 문제가 생긴다.
-				++ObjectStartIter;
-				continue;
-			}
+				GameEngineCollision* Object = *ObjectStartIter;
+				if (false == Object->IsDeath())
+				{
+					++ObjectStartIter;
+					continue;
+				}
 
-			if (nullptr == Actor)
+				ObjectStartIter = Group.erase(ObjectStartIter);
+
+			}
+		}
+	}
+	// 액터의 릴리즈
+	{
+		std::map<int, std::list<GameEngineActor*>>::iterator GroupStartIter = AllActors.begin();
+		std::map<int, std::list<GameEngineActor*>>::iterator GroupEndIter = AllActors.end();
+
+		for (; GroupStartIter != GroupEndIter; ++GroupStartIter)
+		{
+			std::list<GameEngineActor*>& Group = GroupStartIter->second;
+
+			std::list<GameEngineActor*>::iterator ObjectStartIter = Group.begin();
+			std::list<GameEngineActor*>::iterator ObjectEndIter = Group.end();
+
+			for (; ObjectStartIter != ObjectEndIter; )
 			{
-				MsgBoxAssert("nullptr인 액터가 레벨의 리스트에 들어가 있었습니다.");
-				continue;
+				GameEngineActor* Actor = *ObjectStartIter;
+				if (false == Actor->IsDeath())
+				{
+					Actor->ActorRelease(); //여기서 문제가 생긴다.
+					++ObjectStartIter;
+					continue;
+				}
+
+				if (nullptr == Actor)
+				{
+					MsgBoxAssert("nullptr인 액터가 레벨의 리스트에 들어가 있었습니다.");
+					continue;
+				}
+
+				delete Actor;
+				Actor = nullptr;
+
+				//                      i
+				// [s] [a] [a]     [a] [e]
+				ObjectStartIter = Group.erase(ObjectStartIter);
 			}
-
-			delete Actor;
-			Actor = nullptr;
-
-			//                      i
-			// [s] [a] [a]     [a] [e]
-			ObjectStartIter = Group.erase(ObjectStartIter);
 		}
 	}
 }
@@ -153,6 +198,31 @@ void GameEngineLevel::ActorLevelEnd()
 		for (GameEngineActor* _Actor : Group)
 		{
 			_Actor->LevelEnd();
+		}
+	}
+}
+
+void GameEngineLevel::AllCollisionRnderChange()
+{
+	static bool CheckValue = false;
+	for (const std::pair<int, std::list<GameEngineCollision*>>& Pair : AllCollision)
+	{
+		const std::list<GameEngineCollision*>& Group = Pair.second;
+
+		for (GameEngineCollision* Col : Group)
+		{
+			if (true == CheckValue)
+			{
+				Col->RenderOff();
+				CheckValue = false;
+				return;
+			}
+			else if (false == CheckValue)
+			{
+				Col->RenderOn();
+				CheckValue = true;
+				return;
+			}
 		}
 	}
 }

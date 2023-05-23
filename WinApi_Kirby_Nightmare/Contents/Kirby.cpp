@@ -13,6 +13,7 @@
 #include <GameEnginePlatform/GameEngineInput.h>
 #include "BackGround.h"
 #include "Monster.h"
+#include <GameEngineCore/GameEngineCollision.h>
 
 Kirby* Kirby::MainPlayer = nullptr;
 
@@ -95,12 +96,39 @@ void Kirby::Start()
 		MainRenderer->FindAnimation("Right_BreathIn")->Inters[2] = 0.1f;
 		MainRenderer->FindAnimation("Right_BreathIn")->Inters[3] = 0.1f;
 	}
+
+	{ // 충돌체 설정
+		BodyCollsion = CreateCollision(CollisionOrder::PlayerBody);
+		BodyCollsion->SetCollisionScale({ 60, 60 });
+		BodyCollsion->SetCollisionPos({ 0, -40 });
+		BodyCollsion->SetCollisionType(CollisionType::CirCle);
+	}
+
 	// PlayerPos 는 static 멤버 변수 선언후 초기 위치를 선언하고 시작할수있을듯.
 	ChangeState(KirbyState::Idle);
 }
 
 void Kirby::Update(float _Delta)
 {
+	// 충돌함수 사용방법.
+	//std::vector<GameEngineCollision*> _Col;
+	//if (true == BodyCollsion->Collision(CollisionOrder::MonsterBody, _Col
+	//	, CollisionType::CirCle // 나를 사각형으로 봐줘
+	//	, CollisionType::CirCle // 상대도 사각형으로 봐줘
+	//))
+	//{
+	//	for (size_t i = 0; i < _Col.size(); i++)
+	//	{
+	//		GameEngineCollision* Collison = _Col[i];
+
+	//		GameEngineActor* Actor = Collison->GetActor();
+
+	//		Actor->Death();
+	//	}
+	//	// 나는 몬스터랑 충돌한거야.
+	//}
+
+
 	StateUpdate(_Delta);
 
 	CameraFocus();
@@ -271,7 +299,7 @@ void Kirby::Movement(float _Delta)
 	if (true == GameEngineInput::IsPress('A') && Dir == KirbyDir::Left)
 	{
 		CameraFocus();
-		CheckPos = { -40.0f, -40.0f };
+		CheckPos = { -10.0f, -40.0f };
 		MovePos = { -Speed * _Delta, 0.0f };
 
 		// 벽판정

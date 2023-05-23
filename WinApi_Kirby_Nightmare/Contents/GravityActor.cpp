@@ -27,9 +27,6 @@ void GravityActor::Gravity(float _Delta)
 	AddPos(GravityVector);
 }
 
-
-
-
 void GravityActor::SetGroundTexture(const std::string& _GroundTextureName)
 {
 	GroundTexture = ResourcesManager::GetInst().FindTexture(_GroundTextureName);

@@ -1,5 +1,5 @@
 #pragma once
-#include "GameEngineObject.h"
+#include "GameEngineActorSubObject.h"
 #include <GameEngineBase/GameEngineMath.h>
 #include <string>
 #include <map>
@@ -10,9 +10,9 @@ class GameEngineWindowTexture;
 class GameEngineActor;
 class GameEngineCamera;
 class GameEngineSprite;
-class GameEngineRenderer : public GameEngineObject
+class GameEngineRenderer : public GameEngineActorSubObject
 {
-	friend class GameEngineActor;
+	friend GameEngineActor;
 	friend GameEngineCamera;
 public:
 	// constrcuter destructer
@@ -57,8 +57,6 @@ public:
 
 	void SetRenderScaleToTexture();
 
-	bool IsDeath() override;
-
 	void SetOrder(int _Order) override;
 
 protected:
@@ -69,8 +67,6 @@ private:
 	GameEngineSprite* Sprite = nullptr;
 	// 렌더러는 텍스쳐를 알고있다.
 	GameEngineWindowTexture* Texture = nullptr;
-	// 렌더 하게될 엑터를 알고있다.
-	GameEngineActor* Master = nullptr;
 
 	float4 RenderPos;
 	float4 RenderScale;

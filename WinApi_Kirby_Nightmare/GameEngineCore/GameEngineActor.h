@@ -6,7 +6,7 @@
 
 class GameEngineLevel;
 class GameEngineRenderer;
-
+class GameEngineCollision;
 // 화면안에 존재하는 모든 것.  좌표가 있다면 엑터로 표현.
 class GameEngineActor : public GameEngineObject
 {
@@ -57,6 +57,14 @@ public:
 
 	GameEngineRenderer* CreateRenderer(const std::string& _ImageName, int _Order);
 
+	template<typename EnumType>
+	GameEngineCollision* CreateCollision(EnumType _Order)
+	{
+		return CreateCollision(static_cast<int>(_Order));
+	}
+
+	GameEngineCollision* CreateCollision(int _Order = 0);
+
 	GameEngineLevel* GetLevel()
 	{
 		return Level;
@@ -72,6 +80,7 @@ private:
 	GameEngineLevel* Level;
 	
 	std::list<GameEngineRenderer*> AllRenderer;
+	std::list<GameEngineCollision*> AllCollision;
 
 	void ActorRelease();
 };

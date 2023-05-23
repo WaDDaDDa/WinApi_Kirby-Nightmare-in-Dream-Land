@@ -1,5 +1,7 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
+#include <GameEngineCore/GameEngineCollision.h>
+#include "ContentsEnum.h"
 
 class GravityActor : public GameEngineActor
 {
@@ -35,6 +37,7 @@ public:
     void GroundCheck(float _Delta);
 
 protected:
+
 
 private:
 

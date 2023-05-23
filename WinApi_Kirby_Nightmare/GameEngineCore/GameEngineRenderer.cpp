@@ -91,7 +91,6 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _DeltaTime)
 			}
 			CurAnimation->CurInter
 				= CurAnimation->Inters[CurAnimation->CurFrame];
-
 		}
 
 		// 2. 6. 현재 애니메이션의 프레임의 정보들을 얻어서
@@ -117,7 +116,7 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _DeltaTime)
 	GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
 
 	// 3. 7. 출력한다.
-	BackBuffer->TransCopy(Texture, Master->GetPos() + RenderPos - _Camera->GetPos(), RenderScale, CopyPos, CopyScale);
+	BackBuffer->TransCopy(Texture, GetActor()->GetPos() + RenderPos - _Camera->GetPos(), RenderScale, CopyPos, CopyScale);
 	// BackBuffer->TransCopy(출력할 이미지, 출력될 엑터의 위치 + 출력될 이미지의 위치 - 카메라의 위치,
 	//                          출력될 크기, 출력할 이미지의 시작점, 출력할 이미지의 끝점);
 
@@ -125,11 +124,6 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _DeltaTime)
 
 }
 
-bool GameEngineRenderer::IsDeath()
-{
-	// 랜더의 주체가되는 객체가 죽었다면 그것또한 렌더에게는 죽음이다.
-	return true == GameEngineObject::IsDeath() || Master->IsDeath();
-}
 
 GameEngineRenderer::Animation* GameEngineRenderer::FindAnimation(const std::string& _AniamtionName)
 {
@@ -239,7 +233,7 @@ void GameEngineRenderer::ChangeAnimation(const std::string& _AniamtionName, bool
 
 void GameEngineRenderer::Start()
 {
-	Camera = Master->GetLevel()->GetMainCamera();
+	Camera = GetActor()->GetLevel()->GetMainCamera();
 }
 
 void GameEngineRenderer::SetOrder(int _Order)

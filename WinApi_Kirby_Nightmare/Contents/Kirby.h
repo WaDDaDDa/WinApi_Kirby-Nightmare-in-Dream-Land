@@ -1,7 +1,6 @@
 #pragma once
 #include "GravityActor.h"
 
-
 enum class KirbyState
 {
     Idle,
@@ -16,13 +15,11 @@ enum class KirbyState
     Max, // 일반적으로 사용하지 않는 값.
 };
 
-
 enum class KirbyDir
 {
     Right,
     Left,
 };
-
 
 class GameEngineRenderer;
 class Kirby : public GravityActor
@@ -88,14 +85,15 @@ protected:
 
     void DirCheck();
     void CameraFocus();
-
     void ChangeAnimationState(const std::string& _StateName);
 
+    GameEngineCollision* BodyCollsion = nullptr;
 
 private:
     float4 MovePos = float4::ZERO;
     float4 CheckPos = float4::ZERO;
-
+    float4 CollisionPos = float4{ 0 , -40 };
+    float4 CollisionScale = float4{ 80, 80 };
 
     float Speed = 400.0f;
     float JumpPower = 800.0f;
