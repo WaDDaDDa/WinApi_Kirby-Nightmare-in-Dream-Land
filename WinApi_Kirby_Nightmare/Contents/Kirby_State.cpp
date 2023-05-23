@@ -55,8 +55,12 @@ void Kirby::IdleUpdate(float _Delta)
 {
 	GroundCheck(_Delta);
 
+
 	unsigned int Color = GetGroundColor(RGB(255, 255, 255));
-	if (RGB(255, 255, 255) == Color)
+	unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), LeftCheck);
+	unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), RightCheck);
+
+	if ((RGB(255, 255, 255) == Color && LeftColor == RGB(255, 255, 255) && RightColor == RGB(255, 255, 255)))
 	{
 		ChangeState(KirbyState::Falling);
 		return;
@@ -104,7 +108,7 @@ void Kirby::WalkUpdate(float _Delta)
 
 	GroundCheck(_Delta);
 	Movement(_Delta);
-
+	static float Deley = 0;
 	// 점프
 	if (true == GameEngineInput::IsDown('F'))
 	{
@@ -117,13 +121,20 @@ void Kirby::WalkUpdate(float _Delta)
 	{
 		ChangeState(KirbyState::Idle);
 	}
-
 	unsigned int Color = GetGroundColor(RGB(255, 255, 255));
-	if (RGB(255, 255, 255) == Color)
-	{
-		ChangeState(KirbyState::Falling);
-		return;
-	}
+	unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), LeftCheck);
+	unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), RightCheck);
+
+	//if ((RGB(255, 255, 255) == Color && LeftColor == RGB(255, 255, 255) && RightColor == RGB(255, 255, 255)))
+	//{
+	//	Deley += _Delta;
+	//	if (Deley <= 10.5f)
+	//	{
+	//		ChangeState(KirbyState::Falling);
+	//	}
+	//	return;
+	//}
+
 }
 // 점프 뛰고 점프 최고점찍으면 JumpTurn애니메이션 출력해주고 
 // 떨어질때 Falling애니메이션 출력해주고 
@@ -161,15 +172,7 @@ void Kirby::JumpUpdate(float _Delta)
 		return;
 	}
 
-	// 땅에 닿으면 기본상태.
-	unsigned int Color = GetGroundColor(RGB(255, 255, 255));
-	if (RGB(255, 255, 255) != Color)
-	{
-		CameraFocus();
-		GravityReset();
-		ChangeState(KirbyState::Idle);
-		return;
-	}
+
 }
 
 void Kirby::JumpTurnUpdate(float _Delta)
@@ -207,7 +210,11 @@ void Kirby::FallingUpdate(float _Delta)
 
 	// 땅에 닿으면 기본상태.
 	unsigned int Color = GetGroundColor(RGB(255, 255, 255));
-	if (RGB(255, 255, 255) != Color)
+	unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), LeftCheck);
+	unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), RightCheck);
+
+	if ((RGB(255, 255, 255) != Color || LeftColor != RGB(255, 255, 255) || RightColor != RGB(255, 255, 255)))
+
 	{
 		CameraFocus();
 		GravityReset();

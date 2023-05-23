@@ -299,7 +299,7 @@ void Kirby::Movement(float _Delta)
 	if (true == GameEngineInput::IsPress('A') && Dir == KirbyDir::Left)
 	{
 		CameraFocus();
-		CheckPos = { -10.0f, -40.0f };
+		CheckPos = { -40.0f, -40.0f };
 		MovePos = { -Speed * _Delta, 0.0f };
 
 		// º®ÆÇÁ¤

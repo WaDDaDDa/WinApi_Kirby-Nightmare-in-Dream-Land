@@ -36,6 +36,9 @@ public:
 
     void GroundCheck(float _Delta);
 
+    float4 LeftCheck = float4{ -30 , 0 };
+    float4 RightCheck = float4{ 30 , 0 };
+
 protected:
 
 
@@ -48,6 +51,7 @@ private:
     float GravityPower = 2.0f;
 
     float4 GravityVector = float4::ZERO;
+
 
 };
 
