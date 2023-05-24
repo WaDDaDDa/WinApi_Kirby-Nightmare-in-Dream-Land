@@ -4,6 +4,7 @@
 #include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEngineCore/GameEngineCamera.h>
+#include "UIManager.h"
 
 
 // Contents
@@ -41,6 +42,7 @@ void MainHubLevel::Start()
 	StagePtr->Init("Level3.Bmp", "Level3_Debug.bmp");
 
 	LevelPlayer = CreateActor<Kirby>();
+	CreateActor<UIManager>();
 
 }
 

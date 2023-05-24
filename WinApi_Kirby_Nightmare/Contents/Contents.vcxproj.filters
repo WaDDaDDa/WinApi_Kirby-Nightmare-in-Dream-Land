@@ -27,6 +27,7 @@
     <ClInclude Include="Monster.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="UIManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainHub.cpp" />
@@ -55,6 +56,7 @@
     <ClCompile Include="Monster.cpp">
       <Filter>Global</Filter>
     </ClCompile>
+    <ClCompile Include="UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
