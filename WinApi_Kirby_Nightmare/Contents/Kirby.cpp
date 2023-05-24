@@ -49,6 +49,7 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Run.bmp"), 5, 2);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Fly.bmp"), 4, 2);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_BreathIn.bmp"), 5, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Attack.bmp"), 6, 1);
 		}
 		{ // RinghtAnimation 셋팅
 			FilePath.MoveParentToExistsChild("Right");
@@ -61,6 +62,7 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Run.bmp"), 5, 2);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Fly.bmp"), 4, 2);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_BreathIn.bmp"), 5, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Attack.bmp"), 6, 1);
 		}
 	}
 
@@ -84,6 +86,8 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Left_BreathIn", "KirbyLeft_BreathIn.bmp", 0, 4, 0.05f, true);
 		MainRenderer->FindAnimation("Left_BreathIn")->Inters[3] = 0.1f;
 		MainRenderer->FindAnimation("Left_BreathIn")->Inters[4] = 0.1f;
+		MainRenderer->CreateAnimation("Left_AttackStart", "KirbyLeft_Attack.bmp", 0, 2, 0.1f, true);
+		MainRenderer->CreateAnimation("Left_Attack", "KirbyLeft_Attack.bmp", 3, 4, 0.05f, true);
 	}
 
 	{ // RightAnimation 생성
@@ -99,8 +103,10 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Right_Run", "KirbyRight_Run.bmp", 0, 7, 0.1f, true); // 8은 브레이크모션 9는 벽충돌
 		MainRenderer->CreateAnimation("Right_Fly", "KirbyRight_Fly.bmp", 0, 7, 0.1f, true);
 		MainRenderer->CreateAnimation("Right_BreathIn", "KirbyRight_BreathIn.bmp", 0, 4, 0.05f, true);
-		MainRenderer->FindAnimation("Right_BreathIn")->Inters[2] = 0.1f;
 		MainRenderer->FindAnimation("Right_BreathIn")->Inters[3] = 0.1f;
+		MainRenderer->FindAnimation("Right_BreathIn")->Inters[4] = 0.1f;
+		MainRenderer->CreateAnimation("Right_AttackStart", "KirbyRight_Attack.bmp", 0, 2, 0.1f, true);
+		MainRenderer->CreateAnimation("Right_Attack", "KirbyRight_Attack.bmp", 3, 4, 0.05f, true);
 	}
 
 	{ // 충돌체 설정
@@ -180,6 +186,10 @@ void Kirby::StateUpdate(float _Delta)
 		return FlyUpdate(_Delta);
 	case KirbyState::BreathIn:
 		return BreathInUpdate(_Delta);
+	case KirbyState::AttackStart:
+		return AttackStartUpdate(_Delta);
+	case KirbyState::Attack:
+		return AttackUpdate(_Delta);
 	default:
 		break;
 	}
@@ -223,6 +233,12 @@ void Kirby::ChangeState(KirbyState _State)
 			break;
 		case KirbyState::BreathIn:
 			BreathInStart();
+			break;
+		case KirbyState::AttackStart:
+			AttackStartStart();
+			break;
+		case KirbyState::Attack:
+			AttackStart();
 			break;
 		default:
 			break;
@@ -311,7 +327,6 @@ void Kirby::CameraFocus()
 		GetLevel()->GetMainCamera()->AddPos(GetGravityVector());
 	}
 }
-
 
 void Kirby::LevelStart()
 {

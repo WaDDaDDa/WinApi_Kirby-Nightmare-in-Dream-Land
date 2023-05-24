@@ -59,6 +59,16 @@ void Kirby::BreathInStart()
 	ChangeAnimationState("BreathIn");
 }
 
+void Kirby::AttackStartStart()
+{
+	ChangeAnimationState("AttackStart");
+}
+
+void Kirby::AttackStart()
+{
+	ChangeAnimationState("Attack");
+}
+
 // IsDown으로 키를 받아서 State를 체인지하게 되면 
 // 업데이트는 실제 행동을 행하는 단계.
 void Kirby::IdleUpdate(float _Delta)
@@ -96,7 +106,8 @@ void Kirby::IdleUpdate(float _Delta)
 
 	if (true == GameEngineInput::IsDown('Z'))
 	{
-		ChangeState(KirbyState::Run);
+		MovePos = float4::ZERO;
+		ChangeState(KirbyState::AttackStart);
 		return;
 	}
 }
@@ -173,6 +184,14 @@ void Kirby::WalkUpdate(float _Delta)
 		ChangeState(KirbyState::Jump);
 		return;
 	}
+	// 공격
+	if (true == GameEngineInput::IsDown('Z'))
+	{
+		MovePos = float4::ZERO;
+		ChangeState(KirbyState::AttackStart);
+		return;
+	}
+
 	// 대기
 	if (true == GameEngineInput::IsFree('A') && true == GameEngineInput::IsFree('D'))
 	{
@@ -203,6 +222,15 @@ void Kirby::JumpUpdate(float _Delta)
 	{
 		// 체인지 폴링
 		ChangeState(KirbyState::Falling);
+		return;
+	}
+
+	// 공격
+	if (true == GameEngineInput::IsDown('Z'))
+	{
+		GravityReset();
+		MovePos *= 0.8f;
+		ChangeState(KirbyState::AttackStart);
 		return;
 	}
 
@@ -261,6 +289,14 @@ void Kirby::FallingUpdate(float _Delta)
 		return;
 	}
 
+	// 공격
+	if (true == GameEngineInput::IsDown('Z'))
+	{
+		MovePos = float4::ZERO;
+		ChangeState(KirbyState::AttackStart);
+		return;
+	}
+
 	// 땅에 닿으면 기본상태.
 	unsigned int Color = GetGroundColor(RGB(255, 255, 255));
 	unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), LeftCheck);
@@ -269,6 +305,7 @@ void Kirby::FallingUpdate(float _Delta)
 	if ((RGB(255, 255, 255) != Color || LeftColor != RGB(255, 255, 255) || RightColor != RGB(255, 255, 255)))
 
 	{
+		MovePos = float4::ZERO;
 		CameraFocus();
 		GravityReset();
 		ChangeState(KirbyState::FallingEnd);
@@ -351,7 +388,59 @@ void Kirby::BreathInUpdate(float _Delta)
 	if (GetLiveTime() >= 0.35f)
 	{
 		ChangeState(KirbyState::Fly);
-		GravityReset();
 		return;
 	}
+}
+
+void Kirby::AttackStartUpdate(float _Delta)
+{
+	GroundCheck(_Delta);
+
+	if (Dir == KirbyDir::Left)
+	{
+		CameraFocus();
+		CheckPos = { -40.0f, -40.0f };
+		// 벽판정
+		if (GetWallCheck() != RGB(255, 255, 255))
+		{
+			MovePos.X *= 0;
+		}
+		AddPos(MovePos);
+	}
+	else if (Dir == KirbyDir::Right)
+	{
+		CameraFocus();
+		CheckPos = { 40.0f, -40.0f };
+
+		if (GetWallCheck() != RGB(255, 255, 255))
+		{
+			MovePos.X *= 0;
+		}
+		AddPos(MovePos);
+	}
+
+	if (GetLiveTime() >= 0.3f)
+	{
+		ChangeState(KirbyState::Attack);
+		return;
+	}
+
+	if (true == GameEngineInput::IsUp('Z'))
+	{
+		ChangeState(KirbyState::Idle);
+		return;
+	}
+	
+}
+
+void Kirby::AttackUpdate(float _Delta)
+{
+	GroundCheck(_Delta);
+
+	if (true == GameEngineInput::IsUp('Z'))
+	{
+		ChangeState(KirbyState::Idle);
+		return;
+	}
+	
 }

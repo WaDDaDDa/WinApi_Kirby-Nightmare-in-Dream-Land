@@ -14,6 +14,8 @@ enum class KirbyState
     Run,
     Fly,
     BreathIn,
+    AttackStart,
+    Attack,
     Max, // 일반적으로 사용하지 않는 값.
 };
 
@@ -69,6 +71,8 @@ protected:
     void RunStart();
     void FlyStart();
     void BreathInStart();
+    void AttackStartStart();
+    void AttackStart();
 
     void IdleUpdate(float _Delta);
     void DownIdleUpdate(float _Delta);
@@ -81,6 +85,8 @@ protected:
     void RunUpdate(float _Delta);
     void FlyUpdate(float _Delta);
     void BreathInUpdate(float _Delta);
+    void AttackStartUpdate(float _Delta);
+    void AttackUpdate(float _Delta);
 
     void ChangeState(KirbyState _State);
 
