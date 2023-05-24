@@ -13,6 +13,16 @@ void Kirby::IdleStart()
 	ChangeAnimationState("Idle");
 }
 
+void Kirby::DownIdleStart()
+{
+	ChangeAnimationState("DownIdle");
+}
+
+void Kirby::TackleStart()
+{
+	ChangeAnimationState("Tackle");
+}
+
 void Kirby::WalkStart()
 {
 	ChangeAnimationState("Walk");
@@ -55,7 +65,6 @@ void Kirby::IdleUpdate(float _Delta)
 {
 	GroundCheck(_Delta);
 
-
 	unsigned int Color = GetGroundColor(RGB(255, 255, 255));
 	unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), LeftCheck);
 	unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), RightCheck);
@@ -75,13 +84,7 @@ void Kirby::IdleUpdate(float _Delta)
 
 	if (true == GameEngineInput::IsPress('S'))
 	{
-		ChangeAnimationState("UnderIdle");
-		return;
-	}
-
-	if (true == GameEngineInput::IsUp('S'))
-	{
-		ChangeAnimationState("Idle");
+		ChangeState(KirbyState::DownIdle);
 		return;
 	}
 
@@ -98,7 +101,63 @@ void Kirby::IdleUpdate(float _Delta)
 	}
 }
 
+void Kirby::DownIdleUpdate(float _Delta)
+{
+	if (true == GameEngineInput::IsPress('A')
+		|| true == GameEngineInput::IsPress('D'))
+	{
+		ChangeState(KirbyState::Walk);
+		return;
+	}
 
+	if (true == GameEngineInput::IsUp('S'))
+	{
+		ChangeState(KirbyState::Idle);
+		return;
+	}
+
+	if (true == GameEngineInput::IsDown('F'))
+	{
+		ChangeState(KirbyState::Tackle);
+		return;
+	}
+}
+
+void Kirby::TackleUpdate(float _Delta)
+{
+	GroundCheck(_Delta);
+	
+	if (GetLiveTime() >= 0.6f)
+	{
+		ChangeState(KirbyState::Idle);
+		return;
+	}
+
+	float4 TackleSpeed = { 1.0f , 0.0f };
+	if (KirbyDir::Left == Dir)
+	{
+		CheckPos = { -40.0f, -40.0f };
+		if (GetWallCheck() != RGB(255, 255, 255))
+		{
+			MovePos.X *= 0;
+			AddPos(MovePos);
+			return;
+		}
+		AddPos(-TackleSpeed);
+	}
+	else if (KirbyDir::Right == Dir)
+	{
+		CheckPos = { 40.0f, -40.0f };
+		if (GetWallCheck() != RGB(255, 255, 255))
+		{
+			MovePos.X *= 0;
+			AddPos(MovePos);
+			return;
+		}
+		AddPos(TackleSpeed);
+	}
+	CameraFocus();
+}
 
 void Kirby::WalkUpdate(float _Delta)
 {
@@ -125,9 +184,7 @@ void Kirby::WalkUpdate(float _Delta)
 
 	if ((RGB(255, 255, 255) == Color && LeftColor == RGB(255, 255, 255) && RightColor == RGB(255, 255, 255)))
 	{
-
-			ChangeState(KirbyState::Falling);
-
+		ChangeState(KirbyState::Falling);
 		return;
 	}
 

@@ -42,7 +42,8 @@ void Kirby::Start()
 		{ // LeftAnimation 셋팅
 			FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Kirby\\Left\\");
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Idel.bmp"), 2, 1);
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_UnderIdel.bmp"), 2, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_DownIdel.bmp"), 2, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Tackle.bmp"), 2, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Walk.bmp"), 5, 2);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Jump.bmp"), 5, 2);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Run.bmp"), 5, 2);
@@ -53,7 +54,8 @@ void Kirby::Start()
 			FilePath.MoveParentToExistsChild("Right");
 			FilePath.MoveChild("Right\\");
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Idel.bmp"), 2, 1);
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_UnderIdel.bmp"), 2, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_DownIdel.bmp"), 2, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Tackle.bmp"), 2, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Walk.bmp"), 5, 2);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Jump.bmp"), 5, 2);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Run.bmp"), 5, 2);
@@ -69,7 +71,9 @@ void Kirby::Start()
 	{ // LeftAnimation 생성
 		MainRenderer->CreateAnimation("Left_Idle", "KirbyLeft_Idel.bmp", 0, 1, 0.2f, true);
 		MainRenderer->FindAnimation  ("Left_Idle")->Inters[1] = 0.5f;
-		MainRenderer->CreateAnimation("Left_UnderIdle", "KirbyLeft_UnderIdel.bmp", 0, 1, 0.2f, true);
+		MainRenderer->CreateAnimation("Left_DownIdle", "KirbyLeft_DownIdel.bmp", 0, 1, 0.2f, true);
+		MainRenderer->CreateAnimation("Left_Tackle", "KirbyLeft_Tackle.bmp", 0, 1, 0.1f, true);
+		MainRenderer->FindAnimation("Left_Tackle")->Inters[0] = 0.5f;
 		MainRenderer->CreateAnimation("Left_Walk", "KirbyLeft_Walk.bmp", 0, 9, 0.05f, true);
 		MainRenderer->CreateAnimation("Left_Jump", "KirbyLeft_Jump.bmp", 0, 0, 0.1f, true);
 		MainRenderer->CreateAnimation("Left_JumpTurn", "KirbyLeft_Jump.bmp", 1, 7, 0.03f, true);
@@ -84,7 +88,9 @@ void Kirby::Start()
 
 	{ // RightAnimation 생성
 		MainRenderer->CreateAnimation("Right_Idle", "KirbyRight_Idel.bmp", 0, 1, 0.2f, true);
-		MainRenderer->CreateAnimation("Right_UnderIdle", "KirbyRight_UnderIdel.bmp", 0, 1, 0.2f, true);
+		MainRenderer->CreateAnimation("Right_DownIdle", "KirbyRight_DownIdel.bmp", 0, 1, 0.2f, true);
+		MainRenderer->CreateAnimation("Right_Tackle", "KirbyRight_Tackle.bmp", 0, 1, 0.1f, true);
+		MainRenderer->FindAnimation("Right_Tackle")->Inters[0] = 0.5f;
 		MainRenderer->CreateAnimation("Right_Walk", "KirbyRight_Walk.bmp", 0, 9, 0.05f, true);
 		MainRenderer->CreateAnimation("Right_Jump", "KirbyRight_Jump.bmp", 0, 0, 0.1f, true);
 		MainRenderer->CreateAnimation("Right_JumpTurn", "KirbyRight_Jump.bmp", 1, 7, 0.03f, true);
@@ -154,6 +160,10 @@ void Kirby::StateUpdate(float _Delta)
 	{
 	case KirbyState::Idle:
 		return IdleUpdate(_Delta);
+	case KirbyState::DownIdle:
+		return DownIdleUpdate(_Delta);
+	case KirbyState::Tackle:
+		return TackleUpdate(_Delta);
 	case KirbyState::Walk:
 		return WalkUpdate(_Delta);
 	case KirbyState::Jump:
@@ -183,6 +193,12 @@ void Kirby::ChangeState(KirbyState _State)
 		{
 		case KirbyState::Idle:
 			IdleStart();
+			break;
+		case KirbyState::DownIdle:
+			DownIdleStart();
+			break;
+		case KirbyState::Tackle:
+			TackleStart();
 			break;
 		case KirbyState::Walk:
 			WalkStart();
@@ -319,6 +335,8 @@ void Kirby::Movement(float _Delta)
 		// 벽판정
 		if (GetWallCheck() != RGB(255, 255, 255))
 		{
+			MovePos.X *= 0;
+			AddPos(MovePos);
 			return;
 		}
 		AddPos(MovePos);

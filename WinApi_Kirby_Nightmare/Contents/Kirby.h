@@ -4,6 +4,8 @@
 enum class KirbyState
 {
     Idle,
+    DownIdle,
+    Tackle,
     Walk,
     Jump,
     JumpTurn,
@@ -57,6 +59,8 @@ protected:
     void StateUpdate(float _Delta);
 
     void IdleStart();
+    void DownIdleStart();
+    void TackleStart();
     void WalkStart();
     void JumpStart();
     void JumpTurnStart();
@@ -67,6 +71,8 @@ protected:
     void BreathInStart();
 
     void IdleUpdate(float _Delta);
+    void DownIdleUpdate(float _Delta);
+    void TackleUpdate(float _Delta);
     void WalkUpdate(float _Delta);
     void JumpUpdate(float _Delta);
     void JumpTurnUpdate(float _Delta);
