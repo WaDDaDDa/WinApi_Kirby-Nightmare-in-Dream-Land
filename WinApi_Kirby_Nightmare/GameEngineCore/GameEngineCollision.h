@@ -148,26 +148,11 @@ public:
 		ColType = _ColType;
 	}
 
-	void RenderOn()
-	{
-		RenderValue = true;
-	}
-
-	void RenderOff()
-	{
-		RenderValue = false;
-	}
-	bool IsRenderValue()
-	{
-		return RenderValue;
-	}
-
 protected:
 
 private:
 	CollisionType ColType = CollisionType::Rect;
 
-	static bool RenderValue;
 	float4 CollisionPos;
 	float4 CollisionScale;
 

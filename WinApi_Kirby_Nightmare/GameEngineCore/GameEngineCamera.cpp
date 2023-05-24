@@ -37,7 +37,7 @@ void GameEngineCamera::Render(float _Delta)
 				continue;
 			}
 			// ·»´õ·¯ÀÇ ·»´õ
-			Render->Render(this, _Delta);
+			Render->Render(_Delta);
 		}
 	}
 }

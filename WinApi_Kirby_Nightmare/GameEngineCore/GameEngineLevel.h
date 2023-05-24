@@ -57,7 +57,15 @@ public:
         return MainCamera;
     }
 
-    void AllCollisionRnderChange();
+    GameEngineCamera* GetUICamera()
+    {
+        return UICamera;
+    }
+
+    static void CollisionDebugRenderSwitch()
+    {
+        IsCollisionDebugRender = !IsCollisionDebugRender;
+    }
 
 protected:
     virtual void LevelStart(GameEngineLevel* _PrevLevel) {}
@@ -66,6 +74,8 @@ protected:
 private:
     GameEngineCamera* MainCamera;
     GameEngineCamera* UICamera;
+
+    static bool IsCollisionDebugRender;
 
 	std::map<int, std::list<GameEngineActor*>> AllActors;
 	std::map<int, std::list<GameEngineCollision*>> AllCollision;

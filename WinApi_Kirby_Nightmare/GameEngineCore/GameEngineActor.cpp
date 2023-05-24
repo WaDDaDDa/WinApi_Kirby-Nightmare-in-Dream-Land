@@ -24,12 +24,31 @@ GameEngineActor::~GameEngineActor()
 	}
 }
 
+// Main카메라에 의해 출력될 랜더 세팅
 GameEngineRenderer* GameEngineActor::CreateRenderer(const std::string& _ImageName, int _Order)
 {
 	GameEngineRenderer* NewRenderer = new GameEngineRenderer();
 
 	NewRenderer->Master = this;
-	NewRenderer->Start();
+	NewRenderer->MainCameraSetting();
+	NewRenderer->SetOrder(_Order);
+
+	if (_ImageName != "")
+	{
+		NewRenderer->SetTexture(_ImageName);
+	}
+	AllRenderer.push_back(NewRenderer);
+
+	return NewRenderer;
+}
+
+// UI 카메라에 의해 출력될 렌더 세팅.
+GameEngineRenderer* GameEngineActor::CreateUIRenderer(const std::string& _ImageName, int _Order)
+{
+	GameEngineRenderer* NewRenderer = new GameEngineRenderer();
+
+	NewRenderer->Master = this;
+	NewRenderer->UICameraSetting();
 	NewRenderer->SetOrder(_Order);
 	// 이미지가 비어있는 랜더러가 아니면 세팅될 이미지를 세팅해주면 된다.
 	if ("" != _ImageName)

@@ -55,7 +55,7 @@ void MainHubLevel::Update(float _Delta)
 	if (true == GameEngineInput::IsDown('J'))
 	{
 		StagePtr->SwitchRender();
-		AllCollisionRnderChange();
+		CollisionDebugRenderSwitch();
 	}
 
 }

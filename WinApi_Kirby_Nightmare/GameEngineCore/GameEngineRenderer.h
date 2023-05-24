@@ -79,7 +79,7 @@ private:
 	bool ScaleCheck = false;
 	// 이미지 배율
 	float ScaleRatio = 1.0f;
-	void Render(GameEngineCamera* _Camera, float _DeltaTime);
+	void Render(float _DeltaTime);
 
 private:
 	class Animation
@@ -116,6 +116,8 @@ public:
 
 	void ChangeAnimation(const std::string& _AniamtionName, bool _ForceChange = false);
 
+	void MainCameraSetting();
+	void UICameraSetting();
 
 	std::map<std::string, Animation> AllAnimation;
 	Animation* CurAnimation = nullptr;

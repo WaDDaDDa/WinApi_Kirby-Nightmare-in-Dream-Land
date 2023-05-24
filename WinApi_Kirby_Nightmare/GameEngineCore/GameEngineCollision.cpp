@@ -8,8 +8,6 @@
 
 bool (*GameEngineCollision::CollisionFunction[static_cast<int>(CollisionType::Max)][static_cast<int>(CollisionType::Max)])(GameEngineCollision* _Left, GameEngineCollision* _Right) = { nullptr };
 
-bool GameEngineCollision::RenderValue = false;
-
 bool GameEngineCollision::PointToPoint(GameEngineCollision* _Left, GameEngineCollision* _Right)
 {
 	MsgBoxAssert("충돌체크함수를 만들지 않았습니다.");

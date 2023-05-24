@@ -64,7 +64,7 @@ void GameEngineRenderer::SetRenderScaleToTexture()
 	ScaleCheck = false;
 }
 
-void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _DeltaTime)
+void GameEngineRenderer::Render(float _DeltaTime)
 {
 	if (nullptr != CurAnimation)
 	{
@@ -116,7 +116,7 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _DeltaTime)
 	GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
 
 	// 3. 7. 출력한다.
-	BackBuffer->TransCopy(Texture, GetActor()->GetPos() + RenderPos - _Camera->GetPos(), RenderScale, CopyPos, CopyScale);
+	BackBuffer->TransCopy(Texture, GetActor()->GetPos() + RenderPos - Camera->GetPos(), RenderScale, CopyPos, CopyScale);
 	// BackBuffer->TransCopy(출력할 이미지, 출력될 엑터의 위치 + 출력될 이미지의 위치 - 카메라의 위치,
 	//                          출력될 크기, 출력할 이미지의 시작점, 출력할 이미지의 끝점);
 
@@ -231,9 +231,19 @@ void GameEngineRenderer::ChangeAnimation(const std::string& _AniamtionName, bool
 }
 
 
-void GameEngineRenderer::Start()
+void GameEngineRenderer::MainCameraSetting()
 {
 	Camera = GetActor()->GetLevel()->GetMainCamera();
+}
+
+void GameEngineRenderer::UICameraSetting()
+{
+	Camera = GetActor()->GetLevel()->GetUICamera();
+}
+
+void GameEngineRenderer::Start()
+{
+
 }
 
 void GameEngineRenderer::SetOrder(int _Order)

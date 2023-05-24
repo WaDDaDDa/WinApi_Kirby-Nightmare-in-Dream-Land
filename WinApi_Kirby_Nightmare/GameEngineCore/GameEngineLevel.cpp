@@ -3,6 +3,8 @@
 #include <GameEngineBase/GameEngineDebug.h>
 #include "GameEngineCollision.h"
 
+bool GameEngineLevel::IsCollisionDebugRender = false;
+
 GameEngineLevel::GameEngineLevel()
 {
 	MainCamera = new GameEngineCamera();
@@ -74,20 +76,7 @@ void GameEngineLevel::ActorRender(float _Delta)
 {
 	MainCamera->Render(_Delta);
 
-	for (const std::pair<int, std::list<GameEngineCollision*>>& Pair : AllCollision)
-	{
-		const std::list < GameEngineCollision*>& Group = Pair.second;
-
-		for (GameEngineCollision* Collision : Group)
-		{
-			if (false == Collision->IsRenderValue())
-			{
-				continue;
-			}
-			Collision->DebugRender();
-		}
-
-	}
+	UICamera->Render(_Delta);
 
 	//ActorµÈ¿« ∑ª¥ı.
 	for (const std::pair<int, std::list<GameEngineActor*>>& _Pair : AllActors)
@@ -102,6 +91,20 @@ void GameEngineLevel::ActorRender(float _Delta)
 			}
 
 			_Actor->Render();
+		}
+	}
+
+	if (true == IsCollisionDebugRender)
+	{
+		for (const std::pair<int, std::list<GameEngineCollision*>>& Pair : AllCollision)
+		{
+			const std::list < GameEngineCollision*>& Group = Pair.second;
+
+			for (GameEngineCollision* Collision : Group)
+			{
+				Collision->DebugRender();
+			}
+
 		}
 	}
 }
@@ -198,31 +201,6 @@ void GameEngineLevel::ActorLevelEnd()
 		for (GameEngineActor* _Actor : Group)
 		{
 			_Actor->LevelEnd();
-		}
-	}
-}
-
-void GameEngineLevel::AllCollisionRnderChange()
-{
-	static bool CheckValue = false;
-	for (const std::pair<int, std::list<GameEngineCollision*>>& Pair : AllCollision)
-	{
-		const std::list<GameEngineCollision*>& Group = Pair.second;
-
-		for (GameEngineCollision* Col : Group)
-		{
-			if (true == CheckValue)
-			{
-				Col->RenderOff();
-				CheckValue = false;
-				return;
-			}
-			else if (false == CheckValue)
-			{
-				Col->RenderOn();
-				CheckValue = true;
-				return;
-			}
 		}
 	}
 }
