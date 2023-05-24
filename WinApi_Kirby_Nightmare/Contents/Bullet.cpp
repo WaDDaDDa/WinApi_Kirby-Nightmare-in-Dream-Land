@@ -31,8 +31,3 @@ void Bullet::Update(float _Delta)
 	}
 
 }
-
-void Bullet::Render()
-{
-
-}

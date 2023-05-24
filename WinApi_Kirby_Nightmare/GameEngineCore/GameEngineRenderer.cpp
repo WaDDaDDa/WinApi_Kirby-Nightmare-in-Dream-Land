@@ -68,6 +68,12 @@ void GameEngineRenderer::Render(float _DeltaTime)
 {
 	if (nullptr != CurAnimation)
 	{
+
+		if (true == CurAnimation->Loop)
+		{
+			CurAnimation->IsEnd = false;
+		}
+
 		// 1. 현재 프레임의 Inter가 0이되기 전에는
 		CurAnimation->CurInter -= _DeltaTime;
 		// 4. 현재 프레임의 Inter가 0보다 작거나 같아지면 
@@ -79,6 +85,7 @@ void GameEngineRenderer::Render(float _DeltaTime)
 			// 현재 애니메이션의 마지막 프레임번호 - 시작프레임 번호 가 현재의 프레임 번호 보다 작다면
 			if (CurAnimation->CurFrame > abs(static_cast<int>(CurAnimation->EndFrame - CurAnimation->StartFrame)))
 			{
+				CurAnimation->IsEnd = true;
 				// 현재 프레임이 루프라면 처음부터 시작하도록 0으로.
 				if (true == CurAnimation->Loop)
 				{
@@ -222,6 +229,7 @@ void GameEngineRenderer::ChangeAnimation(const std::string& _AniamtionName, bool
 	//애니메이션 바꾸고 처음부터 애니메이션 실행
 	CurAnimation->CurInter = CurAnimation->Inters[0];
 	CurAnimation->CurFrame = 0;
+	CurAnimation->IsEnd = false;
 
 	if (nullptr == CurAnimation)
 	{

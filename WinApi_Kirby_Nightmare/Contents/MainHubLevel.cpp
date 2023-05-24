@@ -61,9 +61,8 @@ void MainHubLevel::Update(float _Delta)
 	}
 
 }
-void MainHubLevel::Render()
-{
-}
+
+
 void MainHubLevel::Release()
 {
 }

@@ -32,7 +32,7 @@ void MainHub::Update(float _Delta)
 }
 
 // 그려지고.
-void MainHub::Render()
+void MainHub::Render(float _Delta)
 {
 }
 

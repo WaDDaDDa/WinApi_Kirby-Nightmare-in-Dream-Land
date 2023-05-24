@@ -35,10 +35,7 @@ void BackGround::Update(float _Delta)
 		PrevCameraPos = CurCameraPos;
 	}
 }
-void BackGround::Render()
-{
 
-}
 
 void BackGround::Release()
 {

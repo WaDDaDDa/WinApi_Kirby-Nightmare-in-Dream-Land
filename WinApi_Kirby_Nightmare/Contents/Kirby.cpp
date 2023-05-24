@@ -128,6 +128,20 @@ void Kirby::Update(float _Delta)
 	//	// 나는 몬스터랑 충돌한거야.
 	//}
 
+	// 줌 인 아웃 기능
+	if (true == GameEngineInput::IsPress('L'))
+	{
+		GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(1.0f * _Delta);
+
+		// Monster::AllMonsterDeath();
+	}
+
+	if (true == GameEngineInput::IsPress('Y'))
+	{
+		GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(-1.0f * _Delta);
+		// GameEngineLevel::CollisionDebugRenderSwitch();
+	}
+
 
 	StateUpdate(_Delta);
 
@@ -323,3 +337,14 @@ void Kirby::Movement(float _Delta)
 		AddPos(MovePos);
 	}
 }
+// 텍스트 출력해서 확인하는 방법.
+//void Player::Render(float _Delta)
+//{
+//	std::string Text = "";
+//
+//	Text += std::to_string(TestValue);
+//
+//	HDC dc = GameEngineWindow::MainWindow.GetBackBuffer()->GetImageDC();
+//
+//	TextOutA(dc, 2, 3, Text.c_str(), Text.size());
+//}

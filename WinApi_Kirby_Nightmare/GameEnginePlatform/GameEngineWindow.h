@@ -61,6 +61,16 @@ public:
 		return IsFocusValue;
 	}
 
+	void SetDoubleBufferingCopyScaleRatio(float _Ratio)
+	{
+		CopyRatio = _Ratio;
+	}
+
+	void AddDoubleBufferingCopyScaleRatio(float _Ratio)
+	{
+		CopyRatio += _Ratio;
+	}
+
 protected:
 
 private:
@@ -71,6 +81,8 @@ private:
 	std::string Title = "";
 	HWND hWnd = nullptr;
 	HDC Hdc = nullptr;
+
+	float CopyRatio = 1.0f;
 
 	// 윈도우가 생성될때 가지는 Texture. 이것이 가지는 이미지가 변경될때마다 출력되는 이미지가 달라짐.
 	float4 Scale;

@@ -84,7 +84,12 @@ void GameEngineWindow::InitInstance()
 
 void GameEngineWindow::DoubleBuffering()
 {
-    WindowBuffer->BitCopy(BackBuffer, Scale.Half(), BackBuffer->GetScale());
+    float4 CopyLeftTop = float4::ZERO;
+    float4 CopyRightBot = BackBuffer->GetScale();
+
+    WindowBuffer->TransCopy(BackBuffer, Scale.Half()
+                           ,BackBuffer->GetScale() * CopyRatio
+                           ,CopyLeftTop, CopyRightBot);
 }
 
 LRESULT CALLBACK GameEngineWindow::WndProc(HWND _hWnd, UINT message, WPARAM wParam, LPARAM lParam)

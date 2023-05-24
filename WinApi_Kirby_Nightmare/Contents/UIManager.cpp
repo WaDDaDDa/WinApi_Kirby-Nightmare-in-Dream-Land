@@ -27,7 +27,7 @@ void UIManager::Start()
 	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyIcon.bmp"), 4, 7);
 
 	UIRenderer = CreateUIRenderer(RenderOrder::Play);
-	UIRenderer->CreateAnimation("NormalKirby", "KirbyIcon.bmp", 0, 0, 0.2f, true);
+	UIRenderer->CreateAnimation("NormalKirby", "KirbyIcon.bmp", 0, 0, 0.2f, false);
 
 	UIRenderer->SetRenderPos({ 50, 600 });
 	UIRenderer->SetRenderScale({ 180, 180 });
