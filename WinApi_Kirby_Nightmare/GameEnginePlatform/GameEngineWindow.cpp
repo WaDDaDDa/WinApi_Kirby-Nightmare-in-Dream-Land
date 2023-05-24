@@ -86,7 +86,7 @@ void GameEngineWindow::DoubleBuffering()
 {
     float4 CopyLeftTop = float4::ZERO;
     float4 CopyRightBot = BackBuffer->GetScale();
-
+    // CopyRatio값이 변하면 화면 줌 아웃이 된다.
     WindowBuffer->TransCopy(BackBuffer, Scale.Half()
                            ,BackBuffer->GetScale() * CopyRatio
                            ,CopyLeftTop, CopyRightBot);

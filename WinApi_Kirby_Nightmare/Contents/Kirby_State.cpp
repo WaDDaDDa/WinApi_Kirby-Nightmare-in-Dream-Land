@@ -96,8 +96,6 @@ void Kirby::IdleUpdate(float _Delta)
 		ChangeState(KirbyState::Run);
 		return;
 	}
-
-
 }
 
 
@@ -121,19 +119,17 @@ void Kirby::WalkUpdate(float _Delta)
 	{
 		ChangeState(KirbyState::Idle);
 	}
-	unsigned int Color = GetGroundColor(RGB(255, 255, 255));
-	unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), LeftCheck);
-	unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), RightCheck);
+	unsigned int Color = GetGroundColor(RGB(255, 255, 255), float4::DOWN);
+	unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), float4::DOWN + LeftCheck);
+	unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), float4::DOWN + RightCheck);
 
-	//if ((RGB(255, 255, 255) == Color && LeftColor == RGB(255, 255, 255) && RightColor == RGB(255, 255, 255)))
-	//{
-	//	Deley += _Delta;
-	//	if (Deley <= 10.5f)
-	//	{
-	//		ChangeState(KirbyState::Falling);
-	//	}
-	//	return;
-	//}
+	if ((RGB(255, 255, 255) == Color && LeftColor == RGB(255, 255, 255) && RightColor == RGB(255, 255, 255)))
+	{
+
+			ChangeState(KirbyState::Falling);
+
+		return;
+	}
 
 }
 // 점프 뛰고 점프 최고점찍으면 JumpTurn애니메이션 출력해주고 
