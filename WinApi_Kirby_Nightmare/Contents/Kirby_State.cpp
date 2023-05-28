@@ -30,7 +30,7 @@ void Kirby::WalkStart()
 
 void Kirby::JumpStart()
 {
-	SetGravityVector(float4::UP);
+	SetGravityVector(float4::UP * 2.0f);
 	ChangeAnimationState("Jump");
 }
 void Kirby::JumpTurnStart()
@@ -239,12 +239,12 @@ void Kirby::JumpUpdate(float _Delta)
 	//AddPos(MovePos);
 	
 	// 애니메이션 출력 변경
-	if (GetLiveTime() >= 0.6f)
+	if (GetGravityVector().iY() >= float4::ZERO.iY())
 	{
 		ChangeState(KirbyState::JumpTurn);
 		return;
 	}
-
+	float4 Vet = GetGravityVector();
 	// 점프중 이동
 	Movement(_Delta);
 
