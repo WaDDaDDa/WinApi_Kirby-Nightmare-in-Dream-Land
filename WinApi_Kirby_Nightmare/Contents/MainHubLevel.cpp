@@ -12,6 +12,8 @@
 #include "Kirby.h"
 #include "Stage.h"
 #include "BackGround.h"
+#include "Monster.h"
+#include "WaddleDee.h"
 
 MainHubLevel::MainHubLevel()
 {
@@ -25,6 +27,7 @@ MainHubLevel::~MainHubLevel()
 
 void MainHubLevel::Start()
 {
+	GetMainCamera()->SetPos(float4{ 0, -100 });
 	GameEngineSound::SetGlobalVolume(SoundVolume);
 	 //이미지가 로드되지않았다면 로드하고 로드 되었다면 로드안하기 위함.
 	if (false == ResourcesManager::GetInst().IsLoadTexture("TestBackGround.Bmp"))
@@ -35,7 +38,7 @@ void MainHubLevel::Start()
 		GameEnginePath FolderPath = FilePath;
 
 		FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Stages\\");
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Level3_Debug.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Level1_Debug.bmp"));
 	}
 
 	if (nullptr == GameEngineSound::FindSound("04Vegetable_Valley.mp3"))
@@ -51,7 +54,8 @@ void MainHubLevel::Start()
 	BackGround* CurBackGround = CreateActor<BackGround>();
 	CurBackGround->Init("TestBackGround.Bmp");
 	StagePtr = CreateActor<Stage>();
-	StagePtr->Init("Level3.Bmp", "Level3_Debug.bmp");
+	StagePtr->Init("Level1.Bmp", "Level1_Debug.bmp");
+
 
 	LevelPlayer = CreateActor<Kirby>();
 	CreateActor<UIManager>();
@@ -65,6 +69,11 @@ void MainHubLevel::Update(float _Delta)
 	{
 		GameEngineCore::ChangeLevel("TitleLevel");
 		
+	}
+
+	if (true == GameEngineInput::IsDown('M'))
+	{
+		CreateActor<WaddleDee>();
 	}
 
 	if (true == GameEngineInput::IsDown('J'))
@@ -87,7 +96,7 @@ void MainHubLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
 	}
 
-	LevelPlayer->SetGroundTexture("Level3_Debug.bmp");
+	LevelPlayer->SetGroundTexture("Level1_Debug.bmp");
 
 	BGMPlayer = GameEngineSound::SoundPlay("04Vegetable_Valley.mp3");
 

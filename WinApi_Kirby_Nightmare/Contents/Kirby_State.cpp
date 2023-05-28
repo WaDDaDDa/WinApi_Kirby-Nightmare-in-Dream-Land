@@ -30,7 +30,7 @@ void Kirby::WalkStart()
 
 void Kirby::JumpStart()
 {
-	SetGravityVector(float4::UP * 2.0f);
+	SetGravityVector(float4::UP * 1.6f);
 	ChangeAnimationState("Jump");
 }
 void Kirby::JumpTurnStart()

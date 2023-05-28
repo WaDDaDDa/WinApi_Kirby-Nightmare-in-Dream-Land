@@ -111,8 +111,8 @@ void Kirby::Start()
 
 	{ // 충돌체 설정
 		BodyCollsion = CreateCollision(CollisionOrder::PlayerBody);
-		BodyCollsion->SetCollisionScale({ 60, 60 });
-		BodyCollsion->SetCollisionPos({ 0, -40 });
+		BodyCollsion->SetCollisionScale(CollisionScale);
+		BodyCollsion->SetCollisionPos(CollisionPos);
 		BodyCollsion->SetCollisionType(CollisionType::CirCle);
 	}
 
@@ -123,22 +123,23 @@ void Kirby::Start()
 void Kirby::Update(float _Delta)
 {
 	// 충돌함수 사용방법.
-	//std::vector<GameEngineCollision*> _Col;
-	//if (true == BodyCollsion->Collision(CollisionOrder::MonsterBody, _Col
-	//	, CollisionType::CirCle // 나를 사각형으로 봐줘
-	//	, CollisionType::CirCle // 상대도 사각형으로 봐줘
-	//))
-	//{
-	//	for (size_t i = 0; i < _Col.size(); i++)
-	//	{
-	//		GameEngineCollision* Collison = _Col[i];
+	std::vector<GameEngineCollision*> _Col;
 
-	//		GameEngineActor* Actor = Collison->GetActor();
+	if (true == BodyCollsion->Collision(CollisionOrder::MonsterBody
+		, _Col
+		, CollisionType::CirCle // 나를 사각형으로 봐줘
+		, CollisionType::CirCle // 상대도 사각형으로 봐줘
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
 
-	//		Actor->Death();
-	//	}
-	//	// 나는 몬스터랑 충돌한거야.
-	//}
+			GameEngineActor* Actor = Collison->GetActor();
+
+			//Actor->Death();
+		}
+	}
 
 	// 줌 인 아웃 기능
 	if (true == GameEngineInput::IsPress('L'))

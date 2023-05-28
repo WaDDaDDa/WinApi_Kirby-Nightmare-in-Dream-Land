@@ -29,4 +29,3 @@ private:
 
     float SoundVolume = 1.0f;
 };
-

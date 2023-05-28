@@ -45,8 +45,6 @@ GameEngineLevel::~GameEngineLevel()
 
 void GameEngineLevel::ActorInit(GameEngineActor* _Actor, int _Order)
 {
-	// 메인카메라 위치 셋팅
-	MainCamera->SetPos(float4{ 0, -100 });
 	// Actor의 준비물실행
 	_Actor->Level = this;
 	_Actor->SetOrder(_Order);
