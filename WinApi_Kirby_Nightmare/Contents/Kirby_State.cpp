@@ -30,6 +30,7 @@ void Kirby::WalkStart()
 
 void Kirby::JumpStart()
 {
+	SetGravityVector(float4::UP);
 	ChangeAnimationState("Jump");
 }
 void Kirby::JumpTurnStart()
@@ -167,7 +168,7 @@ void Kirby::TackleUpdate(float _Delta)
 		}
 		AddPos(TackleSpeed);
 	}
-	CameraFocus();
+	//CameraFocus();
 }
 
 void Kirby::WalkUpdate(float _Delta)
@@ -213,8 +214,8 @@ void Kirby::WalkUpdate(float _Delta)
 // 땅에 닿을때 뿌직애니메이션.
 void Kirby::JumpUpdate(float _Delta)
 {
+	Gravity(_Delta);
 	DirCheck();
-	GroundCheck(_Delta);
 	// 머리위 체크
 	float4 UpCheck = { 0 , -64 };
 	unsigned int ColorCheck = GetGroundColor(RGB(255, 255, 255), UpCheck);
@@ -229,14 +230,14 @@ void Kirby::JumpUpdate(float _Delta)
 	if (true == GameEngineInput::IsDown('Z'))
 	{
 		GravityReset();
-		MovePos *= 0.8f;
+		//MovePos *= 0.8f;
 		ChangeState(KirbyState::AttackStart);
 		return;
 	}
 
-	MovePos = { 0.0f , -JumpPower * _Delta, };
-
-	AddPos(MovePos);
+	//MovePos = { 0.0f , -JumpPower * _Delta};
+	//AddPos(MovePos);
+	
 	// 애니메이션 출력 변경
 	if (GetLiveTime() >= 0.6f)
 	{
@@ -306,7 +307,7 @@ void Kirby::FallingUpdate(float _Delta)
 
 	{
 		MovePos = float4::ZERO;
-		CameraFocus();
+		//CameraFocus();
 		GravityReset();
 		ChangeState(KirbyState::FallingEnd);
 		return;
@@ -350,7 +351,7 @@ void Kirby::RunUpdate(float _Delta)
 
 void Kirby::FlyUpdate(float _Delta)
 {
-	CameraFocus();
+	//CameraFocus();
 	DirCheck();
 	GroundCheck(_Delta);
 
@@ -383,7 +384,7 @@ void Kirby::BreathInUpdate(float _Delta)
 	MovePos = { 0.0f , -JumpPower / 10 * _Delta, };
 	AddPos(MovePos);
 	Movement(_Delta);
-	CameraFocus();
+	//CameraFocus();
 
 	if (GetLiveTime() >= 0.35f)
 	{
@@ -398,7 +399,7 @@ void Kirby::AttackStartUpdate(float _Delta)
 
 	if (Dir == KirbyDir::Left)
 	{
-		CameraFocus();
+		//CameraFocus();
 		CheckPos = { -40.0f, -40.0f };
 		// 벽판정
 		if (GetWallCheck() != RGB(255, 255, 255))
@@ -409,7 +410,7 @@ void Kirby::AttackStartUpdate(float _Delta)
 	}
 	else if (Dir == KirbyDir::Right)
 	{
-		CameraFocus();
+		//CameraFocus();
 		CheckPos = { 40.0f, -40.0f };
 
 		if (GetWallCheck() != RGB(255, 255, 255))

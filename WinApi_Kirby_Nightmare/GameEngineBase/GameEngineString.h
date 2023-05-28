@@ -26,6 +26,15 @@ public:
 		return UpperString;
 	}
 
+	// Ansi는 멀티바이트 인코딩의 다른이름
+	static std::wstring AnsiToUnicode(const std::string& _Text);
+
+	static std::string UnicodeToAnsi(const std::wstring& _Text);
+
+	static std::string UnicodeToUTF8(const std::wstring& _Text);
+
+	static std::string AnsiToUTF8(const std::string& _Text);
+
 protected:
 
 private:

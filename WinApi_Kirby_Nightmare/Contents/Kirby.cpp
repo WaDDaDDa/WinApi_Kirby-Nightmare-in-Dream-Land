@@ -313,14 +313,19 @@ void Kirby::CameraFocus()
 	int PlayerX = GetPos().iX();
 	int PlayerY = GetPos().iY();
 
-	if (650 < PlayerX - CameraRangeX || 250 > PlayerX - CameraRangeX)
+	if (650 < PlayerX - CameraRangeX)
 	{
-		GetLevel()->GetMainCamera()->AddPos({ MovePos.X, 0});
+		GetLevel()->GetMainCamera()->AddPos(float4::RIGHT);
+	}
+
+	if (250 > PlayerX - CameraRangeX)
+	{
+		GetLevel()->GetMainCamera()->AddPos(float4::LEFT);
 	}
 
 	if (-200 < CameraRangeY - PlayerY)
 	{
-		GetLevel()->GetMainCamera()->AddPos({ 0, MovePos.Y });
+		GetLevel()->GetMainCamera()->AddPos(float4::UP);
 	}
 	else if (-450 > CameraRangeY - PlayerY)
 	{
@@ -343,7 +348,7 @@ void Kirby::Movement(float _Delta)
 {
 	if (true == GameEngineInput::IsPress('A') && Dir == KirbyDir::Left)
 	{
-		CameraFocus();
+		//CameraFocus();
 		CheckPos = { -40.0f, -40.0f };
 		MovePos = { -Speed * _Delta, 0.0f };
 
@@ -358,7 +363,7 @@ void Kirby::Movement(float _Delta)
 	}
 	else if (true == GameEngineInput::IsPress('D') && Dir == KirbyDir::Right)
 	{
-		CameraFocus();
+		//CameraFocus();
 		CheckPos = { 40.0f, -40.0f };
 
 		MovePos = { Speed * _Delta, 0.0f };

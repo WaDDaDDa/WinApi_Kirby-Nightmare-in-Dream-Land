@@ -4,6 +4,7 @@
 #include <GameEngineBase/GameEngineTime.h>
 #include "GameEngineLevel.h"
 #include <GameEnginePlatform/GameEngineInput.h>
+#include <GameEnginePlatform/GameEngineSound.h>
 
 // static 변수들의 초기화.
 std::string GameEngineCore::WindowTitle = "";
@@ -54,6 +55,7 @@ void GameEngineCore::CoreUpdate()
         GameEngineTime::MainTimer.Reset();
     }
 
+    GameEngineSound::Update();
     // 프레임의 시간을 측정하기 위해 여기서 Time Update하고 DeltaTime을 받아둔다.
     GameEngineTime::MainTimer.Update();
     float Delta = GameEngineTime::MainTimer.GetDeltaTime();
@@ -83,6 +85,8 @@ void GameEngineCore::CoreUpdate()
 // 게임 끝날때 정리.
 void GameEngineCore::CoreEnd()
 {
+    GameEngineSound::Release();
+
     Process->Release();
 
     // EngineStart에서 동적할당한 Process를 delete.

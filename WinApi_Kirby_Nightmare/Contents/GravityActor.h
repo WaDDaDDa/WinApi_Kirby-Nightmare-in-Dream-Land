@@ -39,6 +39,11 @@ public:
     float4 LeftCheck = float4{ -30 , 0 };
     float4 RightCheck = float4{ 30 , 0 };
 
+    void SetGravityVector(float4 _GravityVector)
+    {
+        GravityVector = _GravityVector;
+    }
+
 protected:
 
 

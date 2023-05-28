@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineLevel.h>
+#include <GameEnginePlatform/GameEngineSound.h>
 
 class MainHubLevel : public GameEngineLevel
 {
@@ -23,5 +24,9 @@ private:
 
     class Kirby* LevelPlayer = nullptr;
     class Stage* StagePtr = nullptr;
+
+    GameEngineSoundPlayer BGMPlayer;
+
+    float SoundVolume = 1.0f;
 };
 
