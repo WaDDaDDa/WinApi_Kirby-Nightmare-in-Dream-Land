@@ -30,7 +30,7 @@ void Kirby::WalkStart()
 
 void Kirby::JumpStart()
 {
-	SetGravityVector(float4::UP * 1.6f);
+	SetGravityVector(float4::UP * 1.4f);
 	ChangeAnimationState("Jump");
 }
 void Kirby::JumpTurnStart()
@@ -52,6 +52,7 @@ void Kirby::RunStart()
 
 void Kirby::FlyStart()
 {
+	GravityReset();
 	ChangeAnimationState("Fly");
 }
 
@@ -253,8 +254,6 @@ void Kirby::JumpUpdate(float _Delta)
 		ChangeState(KirbyState::BreathIn);
 		return;
 	}
-
-
 }
 
 void Kirby::JumpTurnUpdate(float _Delta)
@@ -351,9 +350,21 @@ void Kirby::RunUpdate(float _Delta)
 
 void Kirby::FlyUpdate(float _Delta)
 {
-	//CameraFocus();
 	DirCheck();
-	GroundCheck(_Delta);
+	Gravity(_Delta);
+
+	unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
+	unsigned int CheckLeftColor = GetGroundColor(RGB(255, 255, 255), float4::UP + LeftCheck);
+	unsigned int CheckRightColor = GetGroundColor(RGB(255, 255, 255), float4::UP + RightCheck);
+
+	// 체크중 어느하나라도  흰색이 아니라면 한칸올리기 반복한다.
+	while (CheckColor != RGB(255, 255, 255) || CheckLeftColor != RGB(255, 255, 255) || CheckRightColor != RGB(255, 255, 255))
+	{
+		CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
+		CheckLeftColor = GetGroundColor(RGB(255, 255, 255), float4::UP + LeftCheck);
+		CheckRightColor = GetGroundColor(RGB(255, 255, 255), float4::UP + RightCheck);
+		AddPos(float4::UP);
+	}
 
 	float4 UpCheck = { 0 , -80 };
 	unsigned int ColorCheck = GetGroundColor(RGB(255, 255, 255), UpCheck);
@@ -362,11 +373,11 @@ void Kirby::FlyUpdate(float _Delta)
 		return;
 	}
 
-	if (true == GameEngineInput::IsPress('F'))
+	if (true == GameEngineInput::IsDown('F'))
 	{
-		GravityReset();
-		MovePos = { 0.0f , -200 * _Delta, };
-		AddPos(MovePos);
+		SetGravityVector(float4::UP * 0.5f);
+		//MovePos = { 0.0f , -200 * _Delta, };
+		//AddPos(MovePos);
 	}
 
 	Movement(_Delta);

@@ -67,9 +67,6 @@ void Kirby::Start()
 	}
 
 	MainRenderer = CreateRenderer(RenderOrder::Play);
-	MainRenderer->SetScaleRatio(4.0f);
-	SetPos(float4{360,360});
-
 	{ // LeftAnimation 생성
 		MainRenderer->CreateAnimation("Left_Idle", "KirbyLeft_Idel.bmp", 0, 1, 0.2f, true);
 		MainRenderer->FindAnimation  ("Left_Idle")->Inters[1] = 0.5f;
@@ -115,6 +112,9 @@ void Kirby::Start()
 		BodyCollsion->SetCollisionPos(CollisionPos);
 		BodyCollsion->SetCollisionType(CollisionType::CirCle);
 	}
+
+	MainRenderer->SetScaleRatio(4.0f);
+	SetPos(float4{ 360,360 });
 
 	// PlayerPos 는 static 멤버 변수 선언후 초기 위치를 선언하고 시작할수있을듯.
 	ChangeState(KirbyState::Idle);
