@@ -214,7 +214,7 @@ void GameEngineRenderer::CreateAnimation(
 	Animation.Loop = _Loop;
 }
 
-void GameEngineRenderer::ChangeAnimation(const std::string& _AniamtionName, bool _ForceChange/*= false*/)
+void GameEngineRenderer::ChangeAnimation(const std::string& _AniamtionName, int _StartFrame, bool _ForceChange/*= false*/)
 {
 	Animation* ChangeAnimation = FindAnimation(_AniamtionName);
 
@@ -228,7 +228,7 @@ void GameEngineRenderer::ChangeAnimation(const std::string& _AniamtionName, bool
 
 	//애니메이션 바꾸고 처음부터 애니메이션 실행
 	CurAnimation->CurInter = CurAnimation->Inters[0];
-	CurAnimation->CurFrame = 0;
+	CurAnimation->CurFrame = _StartFrame;
 	CurAnimation->IsEnd = false;
 
 	if (nullptr == CurAnimation)
