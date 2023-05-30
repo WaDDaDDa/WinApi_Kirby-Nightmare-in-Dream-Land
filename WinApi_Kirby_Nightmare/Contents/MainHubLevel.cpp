@@ -58,6 +58,7 @@ void MainHubLevel::Start()
 
 
 	LevelPlayer = CreateActor<Kirby>();
+	LevelPlayer->OverOn();
 	CreateActor<UIManager>();
 
 }

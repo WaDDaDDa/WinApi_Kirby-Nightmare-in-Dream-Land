@@ -5,6 +5,12 @@
 #include <map>
 #include <vector>
 
+enum class CameraType
+{
+	MAIN,
+	UI,
+};
+
 // Ό³Έν :
 class GameEngineWindowTexture;
 class GameEngineActor;
@@ -119,6 +125,13 @@ public:
 
 	void MainCameraSetting();
 	void UICameraSetting();
+
+	size_t GetCurFrame()
+	{
+		return CurAnimation->CurFrame;
+	}
+
+	CameraType CameraTypeValue = CameraType::MAIN;
 
 	std::map<std::string, Animation> AllAnimation;
 	Animation* CurAnimation = nullptr;

@@ -92,11 +92,31 @@ public:
 		return Level;
 	}
 
+	bool IsLevelOver()
+	{
+		return IsOverValue;
+	}
+
+	void OverOn()
+	{
+		IsOverValue = true;
+	}
+
+	void OverOff()
+	{
+		IsOverValue = false;
+	}
+
 protected:
 	virtual void LevelStart() {}
 	virtual void LevelEnd() {}
 
 private:
+	// 레벨이 변경되었을때 엑터가 레벨이 변경되기전의 정보를 그대로가지고 레벨이 변경되는값이다.
+	// false라면 레벨이 변경될때 이전의 플레이어는 사라지고.
+	// true라면 그대로 유지된다.
+	bool IsOverValue = false;
+
 	float4 Pos = float4::ZERO;
 
 	GameEngineLevel* Level;

@@ -49,5 +49,7 @@ private:
 	void Render(float _Delta);
 
 	void Release();
+
+	void OverRelease();
 };
 

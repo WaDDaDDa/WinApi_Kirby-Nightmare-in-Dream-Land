@@ -1,5 +1,6 @@
 #include "GameEngineCamera.h"
 #include <GameEngineBase/GameEngineDebug.h>
+#include "GameEngineActor.h"
 
 
 GameEngineCamera::GameEngineCamera()
@@ -80,6 +81,41 @@ void GameEngineCamera::Release()
 				MsgBoxAssert("nullptr인 랜더러가 레벨의 리스트에 들어가 있었습니다.");
 				continue;
 			}
+			ActorStartIter = Group.erase(ActorStartIter);
+
+		}
+	}
+}
+
+
+void GameEngineCamera::OverRelease()
+{
+	std::map<int, std::list<GameEngineRenderer*>>::iterator GroupStartIter = Renderers.begin();
+	std::map<int, std::list<GameEngineRenderer*>>::iterator GroupEndIter = Renderers.end();
+
+	for (; GroupStartIter != GroupEndIter; ++GroupStartIter)
+	{
+		std::list<GameEngineRenderer*>& Group = GroupStartIter->second;
+
+		std::list<GameEngineRenderer*>::iterator ActorStartIter = Group.begin();
+		std::list<GameEngineRenderer*>::iterator ActorEndIter = Group.end();
+
+		for (; ActorStartIter != ActorEndIter; )
+		{
+			GameEngineRenderer* Object = *ActorStartIter;
+			// 레벨이 오버되었다면 랜더러를 지우는것
+			if (false == Object->GetActor()->IsLevelOver())
+			{
+				++ActorStartIter;
+				continue;
+			}
+
+			if (nullptr == Object)
+			{
+				MsgBoxAssert("nullptr인 랜더러가 레벨의 리스트에 들어가 있었습니다.");
+				continue;
+			}
+			// [s] [a] [a]     [a] [e]
 			ActorStartIter = Group.erase(ActorStartIter);
 
 		}

@@ -46,6 +46,8 @@ void GameEngineCore::CoreUpdate()
             CurLevel->ActorLevelEnd();
         }
 
+        NextLevel->OverCheck(CurLevel);
+
         NextLevel->LevelStart(CurLevel);
         NextLevel->ActorLevelStart();
 

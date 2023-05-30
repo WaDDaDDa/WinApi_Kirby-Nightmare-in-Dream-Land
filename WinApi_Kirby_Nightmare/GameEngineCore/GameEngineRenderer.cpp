@@ -242,11 +242,13 @@ void GameEngineRenderer::ChangeAnimation(const std::string& _AniamtionName, bool
 void GameEngineRenderer::MainCameraSetting()
 {
 	Camera = GetActor()->GetLevel()->GetMainCamera();
+	CameraTypeValue = CameraType::MAIN;
 }
 
 void GameEngineRenderer::UICameraSetting()
 {
 	Camera = GetActor()->GetLevel()->GetUICamera();
+	CameraTypeValue = CameraType::UI;
 }
 
 void GameEngineRenderer::Start()
