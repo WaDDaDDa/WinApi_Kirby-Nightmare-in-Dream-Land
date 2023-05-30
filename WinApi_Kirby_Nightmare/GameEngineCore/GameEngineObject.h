@@ -63,14 +63,20 @@ public:
 		LiveTime = 0.0f;
 	}
 
+	int GetOrder()
+	{
+		return Order;
+	}
+
 	virtual void SetOrder(int _Order)
 	{
 		Order = _Order;
 	}
 
-	int GetOrder()
+	template<typename EnumType>
+	void SetOrder(EnumType _Order)
 	{
-		return Order;
+		SetOrder(static_cast<int>(_Order));
 	}
 
 
