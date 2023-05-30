@@ -7,7 +7,6 @@
 class GameEngineWindow
 {
 public:
-	// 윈도우창을 한개만 띄울것이기 때문에 MainWindow를 가지도록 선언.
 	static GameEngineWindow MainWindow;
 
 	// constrcuter destructer
@@ -20,7 +19,6 @@ public:
 	GameEngineWindow& operator=(const GameEngineWindow& _Other) = delete;
 	GameEngineWindow& operator=(GameEngineWindow&& _Other) noexcept = delete;
 
-	// 윈도우 타이틀과 instance를 가지고 윈도우 창을 오픈하는 함수.
 	void Open(const std::string& _Title, HINSTANCE _hInstance);
 
 	static void MessageLoop(HINSTANCE _Inst, void(*_Start)(HINSTANCE), void(*_Update)(), void(*_End)());
@@ -45,6 +43,8 @@ public:
 		return BackBuffer;
 	}
 
+	float4 GetMousePos();
+
 	void SetPosAndScale(const float4& _Pos, const float4& _Scale);
 
 	static void WindowLoopOff()
@@ -52,13 +52,19 @@ public:
 		IsWindowUpdate = false;
 	}
 
+	void ClearBackBuffer();
 	void DoubleBuffering();
 
-	void ClearBackBuffer();
+	void CursorOff();
 
 	static bool IsFocus()
 	{
 		return IsFocusValue;
+	}
+
+	float GetDoubleBufferingCopyScaleRatio() const
+	{
+		return CopyRatio;
 	}
 
 	void SetDoubleBufferingCopyScaleRatio(float _Ratio)
@@ -74,26 +80,25 @@ public:
 protected:
 
 private:
-	static bool IsWindowUpdate; // 윈도우가 종료되기 위한 변수.
-	// HInstance를 전역 멤버변수로 가진다.
+	static bool IsWindowUpdate;
 	static bool IsFocusValue;
 	static HINSTANCE Instance;
 	std::string Title = "";
 	HWND hWnd = nullptr;
-	HDC Hdc = nullptr;
 
 	float CopyRatio = 1.0f;
 
-	// 윈도우가 생성될때 가지는 Texture. 이것이 가지는 이미지가 변경될때마다 출력되는 이미지가 달라짐.
 	float4 Scale;
-
 	GameEngineWindowTexture* WindowBuffer = nullptr;
 
 	GameEngineWindowTexture* BackBuffer = nullptr;
 
+	// 2차원 배열 형식의 색깔들의 집합이 존재하고
+	// 거기에 그림을 그리거나 수정할수 있는 권한을 HDC
+	HDC Hdc = nullptr;
+
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	void InitInstance();
 	void MyRegisterClass();
-
 };
 

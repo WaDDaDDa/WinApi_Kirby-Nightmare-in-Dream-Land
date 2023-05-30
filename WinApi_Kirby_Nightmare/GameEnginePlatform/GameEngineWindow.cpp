@@ -246,3 +246,17 @@ void GameEngineWindow::SetPosAndScale(const float4& _Pos, const float4& _Scale)
     //                          100        100         500          500
     SetWindowPos(hWnd, nullptr, _Pos.iX(), _Pos.iY(), Rc.right - Rc.left, Rc.bottom - Rc.top, SWP_NOZORDER);
 }
+
+float4 GameEngineWindow::GetMousePos()
+{
+    POINT MoniterPoint;
+    GetCursorPos(&MoniterPoint);
+    ScreenToClient(hWnd, &MoniterPoint);
+
+    return float4{ static_cast<float>(MoniterPoint.x), static_cast<float>(MoniterPoint.y) };
+}
+// 마우스커서가 안보이는
+void GameEngineWindow::CursorOff()
+{
+    ShowCursor(FALSE);
+}

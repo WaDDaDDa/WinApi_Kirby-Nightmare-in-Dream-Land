@@ -318,8 +318,7 @@ void Kirby::CameraFocus()
 	{
 		GetLevel()->GetMainCamera()->AddPos(float4::RIGHT);
 	}
-
-	if (250 > PlayerX - CameraRangeX)
+	else if (250 > PlayerX - CameraRangeX)
 	{
 		GetLevel()->GetMainCamera()->AddPos(float4::LEFT);
 	}
@@ -329,6 +328,7 @@ void Kirby::CameraFocus()
 		if (GetGravityVector().iY() <= -1)
 		{
 			GetLevel()->GetMainCamera()->AddPos(GetGravityVector());
+			return;
 		}
 		GetLevel()->GetMainCamera()->AddPos(float4::UP);
 	}
@@ -337,6 +337,7 @@ void Kirby::CameraFocus()
 		if (GetGravityVector().iY() >= 1 )
 		{
 			GetLevel()->GetMainCamera()->AddPos(GetGravityVector());
+			return;
 		}
 		GetLevel()->GetMainCamera()->AddPos(float4::DOWN);
 	}
