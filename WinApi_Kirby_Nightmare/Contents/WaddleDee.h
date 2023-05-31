@@ -66,7 +66,7 @@ private:
 
     void Update(float _Delta) override;
 
-    GameEngineCollision* BodyCollsion = nullptr;
+    GameEngineCollision* BodyCollision = nullptr;
     float4 CollisionPos = float4{ 0 , -40 };
     float4 CollisionScale = float4{ 80, 80 };
 };

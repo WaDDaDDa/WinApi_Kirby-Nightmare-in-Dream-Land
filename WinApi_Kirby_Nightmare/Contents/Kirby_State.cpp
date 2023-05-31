@@ -68,6 +68,7 @@ void Kirby::AttackStartStart()
 
 void Kirby::AttackStart()
 {
+	AttackCollision->On();
 	ChangeAnimationState("Attack");
 }
 
@@ -448,9 +449,9 @@ void Kirby::AttackStartUpdate(float _Delta)
 void Kirby::AttackUpdate(float _Delta)
 {
 	GroundCheck(_Delta);
-
 	if (true == GameEngineInput::IsUp('Z'))
 	{
+		AttackCollision->Off();
 		ChangeState(KirbyState::Idle);
 		return;
 	}

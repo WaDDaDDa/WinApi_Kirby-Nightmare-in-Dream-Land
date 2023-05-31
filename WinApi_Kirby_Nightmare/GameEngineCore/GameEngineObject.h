@@ -28,12 +28,12 @@ public:
 	// 정리된다.
 	virtual void Release() {}
 	// 업데이트 온
-	void On()
+	virtual void On()
 	{
 		IsUpdateValue = true;
 	}
 	// 업데이트 오프
-	void Off()
+	virtual void Off()
 	{
 		IsUpdateValue = false;
 	}

@@ -107,15 +107,19 @@ void Kirby::Start()
 	}
 
 	{ // 충돌체 설정
-		BodyCollsion = CreateCollision(CollisionOrder::PlayerBody);
-		BodyCollsion->SetCollisionScale(CollisionScale);
-		BodyCollsion->SetCollisionPos(CollisionPos);
-		BodyCollsion->SetCollisionType(CollisionType::CirCle);
+		BodyCollision = CreateCollision(CollisionOrder::PlayerBody);
+		BodyCollision->SetCollisionScale(BodyCollisionScale);
+		BodyCollision->SetCollisionPos(BodyCollisionPos);
+		BodyCollision->SetCollisionType(CollisionType::CirCle);
+		AttackCollision = CreateCollision(CollisionOrder::PlayerAttack);
+		AttackCollision->SetCollisionScale(AttackCollisionScale);
+		AttackCollision->SetCollisionPos(AttackCollisionPos);
+		AttackCollision->SetCollisionType(CollisionType::CirCle);
+		AttackCollision->Off();
 	}
-
 	MainRenderer->SetScaleRatio(4.0f);
 	SetPos(float4{ 360,360 });
-
+	
 	// PlayerPos 는 static 멤버 변수 선언후 초기 위치를 선언하고 시작할수있을듯.
 	ChangeState(KirbyState::Idle);
 }
@@ -125,7 +129,7 @@ void Kirby::Update(float _Delta)
 	// 충돌함수 사용방법.
 	std::vector<GameEngineCollision*> _Col;
 
-	if (true == BodyCollsion->Collision(CollisionOrder::MonsterBody
+	if (true == BodyCollision->Collision(CollisionOrder::MonsterBody
 		, _Col
 		, CollisionType::CirCle // 나를 사각형으로 봐줘
 		, CollisionType::CirCle // 상대도 사각형으로 봐줘

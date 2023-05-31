@@ -55,7 +55,6 @@ public:
     unsigned int GetWallCheck();
 
     void Movement(float _Delta);
-
 protected:
     // 클래스로 만들어도 된다. 행동과 랜더.
     void StateUpdate(float _Delta);
@@ -99,13 +98,16 @@ protected:
     void CameraFocus();
     void ChangeAnimationState(const std::string& _StateName);
 
-    GameEngineCollision* BodyCollsion = nullptr;
+    GameEngineCollision* BodyCollision = nullptr;
+    GameEngineCollision* AttackCollision = nullptr;
 
 private:
     float4 MovePos = float4::ZERO;
     float4 CheckPos = float4::ZERO;
-    float4 CollisionPos = float4{ 0 , -40 };
-    float4 CollisionScale = float4{ 80, 80 };
+    float4 BodyCollisionPos = float4{ 0 , -40 };
+    float4 BodyCollisionScale = float4{ 80, 80 };
+    float4 AttackCollisionPos = float4{ 100 , -40 };
+    float4 AttackCollisionScale = float4{ 100,40 };
 
     float Speed = 400.0f;
     float JumpPower = 800.0f;

@@ -43,10 +43,10 @@ void WaddleDee::Start()
 	MainRenderer->CreateAnimation("WaddleDeeRight_Walk", "WaddleDeeRight.bmp", 1, 4, 0.3f, true);
 
 	{ // 충돌체 설정
-		BodyCollsion = CreateCollision(CollisionOrder::MonsterBody);
-		BodyCollsion->SetCollisionScale(CollisionScale);
-		BodyCollsion->SetCollisionPos(CollisionPos);
-		BodyCollsion->SetCollisionType(CollisionType::CirCle);
+		BodyCollision = CreateCollision(CollisionOrder::MonsterBody);
+		BodyCollision->SetCollisionScale(CollisionScale);
+		BodyCollision->SetCollisionPos(CollisionPos);
+		BodyCollision->SetCollisionType(CollisionType::CirCle);
 	}
 
 	MainRenderer->SetScaleRatio(4.0f);
@@ -60,10 +60,27 @@ void WaddleDee::Update(float _Delta)
 {
 	std::vector<GameEngineCollision*> _Col;
 
-	if (true == BodyCollsion->Collision(CollisionOrder::PlayerBody
+	if (true == BodyCollision->Collision(CollisionOrder::PlayerBody
 		, _Col
 		, CollisionType::CirCle // 나를 사각형으로 봐줘
 		, CollisionType::CirCle // 상대도 사각형으로 봐줘
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			GameEngineActor* Actor = Collison->GetActor();
+
+			Death();
+
+		}
+	}
+
+	if (true == BodyCollision->Collision(CollisionOrder::PlayerAttack
+		, _Col
+		, CollisionType::CirCle // 나의 충돌체 모양
+		, CollisionType::CirCle // 상대의 충돌체 모양
 	))
 	{
 		for (size_t i = 0; i < _Col.size(); i++)
