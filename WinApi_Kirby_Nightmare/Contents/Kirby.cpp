@@ -162,7 +162,7 @@ void Kirby::Update(float _Delta)
 
 	StateUpdate(_Delta);
 
-	CameraFocus();
+	CameraFocus(_Delta);
 }
 
 void Kirby::StateUpdate(float _Delta)
@@ -308,7 +308,7 @@ void Kirby::ChangeAnimationState(const std::string& _StateName)
 	MainRenderer->ChangeAnimation(AnimationName);
 }
 
-void Kirby::CameraFocus()
+void Kirby::CameraFocus(float _Delta)
 {
 	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
 
@@ -320,21 +320,21 @@ void Kirby::CameraFocus()
 
 	if (650 < PlayerX - CameraRangeX)
 	{
-		GetLevel()->GetMainCamera()->AddPos(float4::RIGHT);
+		GetLevel()->GetMainCamera()->AddPos({ Speed * _Delta , 0});
 	}
 	else if (250 > PlayerX - CameraRangeX)
 	{
-		GetLevel()->GetMainCamera()->AddPos(float4::LEFT);
+		GetLevel()->GetMainCamera()->AddPos({ -Speed * _Delta , 0 });
 	}
 
 	if (-100 < CameraRangeY - PlayerY)
 	{
 		if (GetGravityVector().iY() <= -1)
 		{
-			GetLevel()->GetMainCamera()->AddPos(GetGravityVector());
+			GetLevel()->GetMainCamera()->AddPos(GetGravityVector() * _Delta);
 			return;
 		}
-		GetLevel()->GetMainCamera()->AddPos(float4::UP);
+		GetLevel()->GetMainCamera()->AddPos(float4::UP * _Delta);
 	}
 	else if (-550 > CameraRangeY - PlayerY)
 	{

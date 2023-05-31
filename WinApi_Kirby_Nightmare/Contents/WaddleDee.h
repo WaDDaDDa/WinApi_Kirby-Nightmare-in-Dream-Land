@@ -16,6 +16,7 @@ enum class WaddleDeeState
     BreathIn,
     AttackStart,
     Attack,
+    Hit,
     Max, // 일반적으로 사용하지 않는 값.
 };
 
@@ -45,6 +46,10 @@ public:
     void IdleUpdate(float _Delta);
     void WalkStart();
     void WalkUpdate(float _Delta);
+    void HitStart();
+    void HitUpdate(float _Delta);
+
+
     void ChangeState(WaddleDeeState _State);
 
     WaddleDeeDir Dir = WaddleDeeDir::Right;

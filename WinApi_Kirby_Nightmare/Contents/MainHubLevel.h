@@ -13,6 +13,8 @@ public:
     MainHubLevel& operator=(const MainHubLevel& _Other) = delete;
     MainHubLevel& operator=(MainHubLevel&& _Other) noexcept = delete;
 
+
+
 protected:
     void LevelStart(GameEngineLevel* _PrevLevel) override;
     void LevelEnd(GameEngineLevel* _NextLevel) override;

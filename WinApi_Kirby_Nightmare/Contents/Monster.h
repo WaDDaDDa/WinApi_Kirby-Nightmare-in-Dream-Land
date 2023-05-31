@@ -1,6 +1,6 @@
 #pragma once
 #include "GravityActor.h"
-
+class Kirby;
 class Monster : public GravityActor
 {
 public:

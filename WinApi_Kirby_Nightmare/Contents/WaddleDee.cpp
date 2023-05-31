@@ -3,6 +3,7 @@
 #include <GameEngineBase/GameEnginePath.h>
 #include <GameEngineCore/ResourcesManager.h>
 #include <GameEngineCore/GameEngineRenderer.h>
+#include <GameEngineCore/GameEngineLevel.h>
 
 WaddleDee::WaddleDee()
 {
@@ -36,11 +37,15 @@ void WaddleDee::Start()
 	}
 
 	MainRenderer = CreateRenderer(RenderOrder::Play);
+	{ // 애니메이션 설정
+		MainRenderer->CreateAnimation("WaddleDeeLeft_Idle", "WaddleDeeLeft.bmp", 2, 2, 0.1f, true);
+		MainRenderer->CreateAnimation("WaddleDeeLeft_Walk", "WaddleDeeLeft.bmp", 1, 4, 0.3f, true);
+		MainRenderer->CreateAnimation("WaddleDeeLeft_Hit", "WaddleDeeLeft.bmp", 5, 5, 0.1f, true);
 
-	MainRenderer->CreateAnimation("WaddleDeeLeft_Idle", "WaddleDeeLeft.bmp", 2, 2, 0.1f, true);
-	MainRenderer->CreateAnimation("WaddleDeeLeft_Walk", "WaddleDeeLeft.bmp", 1, 4, 0.3f, true);
-	MainRenderer->CreateAnimation("WaddleDeeRight_Idle", "WaddleDeeRight.bmp", 2, 2, 0.1f, true);
-	MainRenderer->CreateAnimation("WaddleDeeRight_Walk", "WaddleDeeRight.bmp", 1, 4, 0.3f, true);
+		MainRenderer->CreateAnimation("WaddleDeeRight_Idle", "WaddleDeeRight.bmp", 2, 2, 0.1f, true);
+		MainRenderer->CreateAnimation("WaddleDeeRight_Walk", "WaddleDeeRight.bmp", 1, 4, 0.3f, true);
+		MainRenderer->CreateAnimation("WaddleDeeRight_Hit", "WaddleDeeRight.bmp", 5, 5, 0.1f, true);
+	}
 
 	{ // 충돌체 설정
 		BodyCollision = CreateCollision(CollisionOrder::MonsterBody);
@@ -48,7 +53,6 @@ void WaddleDee::Start()
 		BodyCollision->SetCollisionPos(CollisionPos);
 		BodyCollision->SetCollisionType(CollisionType::CirCle);
 	}
-
 	MainRenderer->SetScaleRatio(4.0f);
 	SetPos(float4{ 500,360 });
 	SetGroundTexture("Level1_Debug.bmp");
@@ -89,7 +93,7 @@ void WaddleDee::Update(float _Delta)
 
 			GameEngineActor* Actor = Collison->GetActor();
 
-			Death();
+			ChangeState(WaddleDeeState::Hit);
 
 		}
 	}
@@ -106,6 +110,8 @@ void WaddleDee::StateUpdate(float _Delta)
 		return IdleUpdate(_Delta);
 	case WaddleDeeState::Walk:
 		return WalkUpdate(_Delta);
+	case WaddleDeeState::Hit:
+		return HitUpdate(_Delta);
 	default:
 		break;
 	}
@@ -122,6 +128,9 @@ void WaddleDee::ChangeState(WaddleDeeState _State)
 			break;
 		case WaddleDeeState::Walk:
 			WalkStart();
+			break;
+		case WaddleDeeState::Hit:
+			HitStart();
 			break;
 		default:
 			break;

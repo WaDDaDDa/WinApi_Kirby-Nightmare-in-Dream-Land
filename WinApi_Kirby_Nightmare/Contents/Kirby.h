@@ -95,7 +95,7 @@ protected:
     std::string CurState = "";
 
     void DirCheck();
-    void CameraFocus();
+    void CameraFocus(float _Delta);
     void ChangeAnimationState(const std::string& _StateName);
 
     GameEngineCollision* BodyCollision = nullptr;
