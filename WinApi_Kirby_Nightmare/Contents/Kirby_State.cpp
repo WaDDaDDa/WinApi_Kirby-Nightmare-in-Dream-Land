@@ -364,6 +364,7 @@ void Kirby::FlyUpdate(float _Delta)
 		CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
 		CheckLeftColor = GetGroundColor(RGB(255, 255, 255), float4::UP + LeftCheck);
 		CheckRightColor = GetGroundColor(RGB(255, 255, 255), float4::UP + RightCheck);
+		GravityReset();
 		AddPos(float4::UP);
 	}
 
@@ -374,11 +375,10 @@ void Kirby::FlyUpdate(float _Delta)
 		return;
 	}
 
-	if (true == GameEngineInput::IsDown('F'))
+	if (true == GameEngineInput::IsDown('F') || GameEngineInput::GetPressTime('F') >= 0.3f)
 	{
+		GameEngineInput::ResetPressTime('F');
 		SetGravityVector(float4::UP * 0.5f);
-		//MovePos = { 0.0f , -200 * _Delta, };
-		//AddPos(MovePos);
 	}
 
 	Movement(_Delta);

@@ -22,7 +22,7 @@ void WaddleDee::WalkStart()
 void WaddleDee::WalkUpdate(float _Delta)
 {
 	Movement(_Delta);
-	if (GetLiveTime() >= 10.0f)
+	if (GetLiveTime() >= 4.0f)
 	{
 		ChangeState(WaddleDeeState::Idle);
 	}

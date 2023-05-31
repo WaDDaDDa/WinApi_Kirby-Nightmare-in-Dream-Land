@@ -83,6 +83,9 @@ public:
 	static bool IsPress(int _Key);
 	static bool IsFree(int _Key);
 
+	static float GetPressTime(int _Key);
+	static void ResetPressTime(int _Key);
+
 protected:
 
 private:

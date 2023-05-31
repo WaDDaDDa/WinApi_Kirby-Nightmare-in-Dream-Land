@@ -114,7 +114,7 @@ void GameEngineInput::InputInit()
 		AllKeys[i] = GameEngineKey(i);
 	}
 
-	for (int i = '0'; i < '9'; i++)
+	for (int i = '0'; i <= '9'; i++)
 	{
 		AllKeys[i] = GameEngineKey(i);
 	}
@@ -228,4 +228,25 @@ bool GameEngineInput::IsFree(int _Key)
 
 	return AllKeys[_Key].Free;
 }
+
+float GameEngineInput::GetPressTime(int _Key)
+{
+	if (AllKeys.end() == AllKeys.find(_Key))
+	{
+		MsgBoxAssert("아직 처리하지 못하는 키입니다." + std::to_string(_Key));
+	}
+
+	return AllKeys[_Key].PressTime;
+}
+
+void GameEngineInput::ResetPressTime(int _Key)
+{
+	if (AllKeys.end() == AllKeys.find(_Key))
+	{
+		MsgBoxAssert("아직 처리하지 못하는 키입니다." + std::to_string(_Key));
+	}
+
+	AllKeys[_Key].PressTime = 0;
+}
+
 
