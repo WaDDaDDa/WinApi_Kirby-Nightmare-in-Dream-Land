@@ -449,6 +449,16 @@ void Kirby::AttackStartUpdate(float _Delta)
 void Kirby::AttackUpdate(float _Delta)
 {
 	GroundCheck(_Delta);
+
+	if (KirbyDir::Left == Dir)
+	{
+		AttackCollision->SetCollisionPos({ -AttackCollisionPos.X , AttackCollisionPos.Y });
+	}
+	else if (KirbyDir::Right == Dir)
+	{
+		AttackCollision->SetCollisionPos(AttackCollisionPos);
+	}
+
 	if (true == GameEngineInput::IsUp('Z'))
 	{
 		AttackCollision->Off();

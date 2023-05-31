@@ -59,7 +59,7 @@ void WaddleDee::Start()
 void WaddleDee::Update(float _Delta)
 {
 	std::vector<GameEngineCollision*> _Col;
-
+	//플레이어 몸통과 충돌.
 	if (true == BodyCollision->Collision(CollisionOrder::PlayerBody
 		, _Col
 		, CollisionType::CirCle // 나를 사각형으로 봐줘
@@ -76,7 +76,7 @@ void WaddleDee::Update(float _Delta)
 
 		}
 	}
-
+	//플레이어 공격과 충돌.
 	if (true == BodyCollision->Collision(CollisionOrder::PlayerAttack
 		, _Col
 		, CollisionType::CirCle // 나의 충돌체 모양
