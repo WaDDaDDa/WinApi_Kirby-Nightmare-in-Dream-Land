@@ -331,10 +331,10 @@ void Kirby::CameraFocus(float _Delta)
 	{
 		if (GetGravityVector().iY() <= -1)
 		{
-			GetLevel()->GetMainCamera()->AddPos(GetGravityVector() * _Delta);
+			GetLevel()->GetMainCamera()->AddPos(GetGravityVector());
 			return;
 		}
-		GetLevel()->GetMainCamera()->AddPos(float4::UP * _Delta);
+		GetLevel()->GetMainCamera()->AddPos(float4::UP);
 	}
 	else if (-550 > CameraRangeY - PlayerY)
 	{

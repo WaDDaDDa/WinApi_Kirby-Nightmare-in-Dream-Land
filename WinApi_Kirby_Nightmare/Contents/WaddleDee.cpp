@@ -40,10 +40,12 @@ void WaddleDee::Start()
 	{ // 애니메이션 설정
 		MainRenderer->CreateAnimation("WaddleDeeLeft_Idle", "WaddleDeeLeft.bmp", 2, 2, 0.1f, true);
 		MainRenderer->CreateAnimation("WaddleDeeLeft_Walk", "WaddleDeeLeft.bmp", 1, 4, 0.3f, true);
+		MainRenderer->CreateAnimation("WaddleDeeLeft_HitReady", "WaddleDeeLeft.bmp", 5, 5, 0.1f, true);
 		MainRenderer->CreateAnimation("WaddleDeeLeft_Hit", "WaddleDeeLeft.bmp", 5, 5, 0.1f, true);
 
 		MainRenderer->CreateAnimation("WaddleDeeRight_Idle", "WaddleDeeRight.bmp", 2, 2, 0.1f, true);
 		MainRenderer->CreateAnimation("WaddleDeeRight_Walk", "WaddleDeeRight.bmp", 1, 4, 0.3f, true);
+		MainRenderer->CreateAnimation("WaddleDeeRight_HitReady", "WaddleDeeRight.bmp", 5, 5, 0.1f, true);
 		MainRenderer->CreateAnimation("WaddleDeeRight_Hit", "WaddleDeeRight.bmp", 5, 5, 0.1f, true);
 	}
 
@@ -52,6 +54,12 @@ void WaddleDee::Start()
 		BodyCollision->SetCollisionScale(CollisionScale);
 		BodyCollision->SetCollisionPos(CollisionPos);
 		BodyCollision->SetCollisionType(CollisionType::CirCle);
+
+		DeathCollision = CreateCollision(CollisionOrder::MonsterBody);
+		DeathCollision->SetCollisionScale(CollisionScale);
+		DeathCollision->SetCollisionPos(CollisionPos);
+		DeathCollision->SetCollisionType(CollisionType::CirCle);
+		DeathCollision->Off();
 	}
 	MainRenderer->SetScaleRatio(4.0f);
 	SetPos(float4{ 500,360 });
@@ -74,10 +82,7 @@ void WaddleDee::Update(float _Delta)
 		{
 			GameEngineCollision* Collison = _Col[i];
 
-			GameEngineActor* Actor = Collison->GetActor();
-
-			Death();
-
+			Actor = Collison->GetActor();
 		}
 	}
 	//플레이어 공격과 충돌.
@@ -91,10 +96,22 @@ void WaddleDee::Update(float _Delta)
 		{
 			GameEngineCollision* Collison = _Col[i];
 
-			GameEngineActor* Actor = Collison->GetActor();
+			Actor = Collison->GetActor();
 
-			ChangeState(WaddleDeeState::Hit);
+			float4 ActorPos = Actor->GetPos();
 
+			if (GetPos().X > ActorPos.X)
+			{
+				Dir = WaddleDeeDir::Left;
+			}
+			else
+			{
+				Dir = WaddleDeeDir::Right;
+			}
+			// 계속 흡수당하고있음.
+			// 흡수당하는건 한번만 해야함.
+			ChangeState(WaddleDeeState::HitReady);
+			return;
 		}
 	}
 
@@ -110,6 +127,8 @@ void WaddleDee::StateUpdate(float _Delta)
 		return IdleUpdate(_Delta);
 	case WaddleDeeState::Walk:
 		return WalkUpdate(_Delta);
+	case WaddleDeeState::HitReady:
+		return HitReadyUpdate(_Delta);
 	case WaddleDeeState::Hit:
 		return HitUpdate(_Delta);
 	default:
@@ -128,6 +147,9 @@ void WaddleDee::ChangeState(WaddleDeeState _State)
 			break;
 		case WaddleDeeState::Walk:
 			WalkStart();
+			break;
+		case WaddleDeeState::HitReady:
+			HitReadyStart();
 			break;
 		case WaddleDeeState::Hit:
 			HitStart();

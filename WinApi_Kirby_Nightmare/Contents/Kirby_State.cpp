@@ -30,7 +30,7 @@ void Kirby::WalkStart()
 
 void Kirby::JumpStart()
 {
-	SetGravityVector(float4::UP * 1.4f);
+	SetGravityVector(float4::UP * JumpPower);
 	ChangeAnimationState("Jump");
 }
 void Kirby::JumpTurnStart()
@@ -361,10 +361,10 @@ void Kirby::FlyUpdate(float _Delta)
 	// 체크중 어느하나라도  흰색이 아니라면 한칸올리기 반복한다.
 	while (CheckColor != RGB(255, 255, 255) || CheckLeftColor != RGB(255, 255, 255) || CheckRightColor != RGB(255, 255, 255))
 	{
+		//GravityReset();  없으면 Fly상태일때 떨어지면 심한가속, 있으면 땅위에서 두들현상.
 		CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
 		CheckLeftColor = GetGroundColor(RGB(255, 255, 255), float4::UP + LeftCheck);
 		CheckRightColor = GetGroundColor(RGB(255, 255, 255), float4::UP + RightCheck);
-		GravityReset();
 		AddPos(float4::UP);
 	}
 
@@ -378,7 +378,7 @@ void Kirby::FlyUpdate(float _Delta)
 	if (true == GameEngineInput::IsDown('F') || GameEngineInput::GetPressTime('F') >= 0.3f)
 	{
 		GameEngineInput::ResetPressTime('F');
-		SetGravityVector(float4::UP * 0.5f);
+		SetGravityVector(float4::UP * JumpPower * 0.3f);
 	}
 
 	Movement(_Delta);
@@ -392,11 +392,10 @@ void Kirby::FlyUpdate(float _Delta)
 
 void Kirby::BreathInUpdate(float _Delta)
 {
+	Gravity(_Delta);
 	DirCheck();
-	MovePos = { 0.0f , -JumpPower / 10 * _Delta, };
-	AddPos(MovePos);
+	SetGravityVector(float4::UP * 0.3f);
 	Movement(_Delta);
-	//CameraFocus();
 
 	if (GetLiveTime() >= 0.35f)
 	{
