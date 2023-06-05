@@ -65,6 +65,11 @@ public:
 
 	void SetOrder(int _Order) override;
 
+	CameraType GetCameraType()
+	{
+		return CameraTypeValue;
+	}
+
 protected:
 	void Start() override;
 
@@ -79,6 +84,10 @@ private:
 
 	float4 CopyPos;
 	float4 CopyScale;
+	CameraType CameraTypeValue = CameraType::MAIN;
+	std::string Text;
+
+	void TextRender(float _DeltaTime);
 
 	// true이면 셋팅한 크기로 이미지를 출력
 	// false이면 이미지 크기그대로 출력
@@ -131,9 +140,26 @@ public:
 		return CurAnimation->CurFrame;
 	}
 
-	CameraType CameraTypeValue = CameraType::MAIN;
-
+	bool IsAnimationEnd()
+	{
+		return CurAnimation->IsEnd;
+	}
+	
+private:
 	std::map<std::string, Animation> AllAnimation;
 	Animation* CurAnimation = nullptr;
+
+	/////////////////////////////////// Text관련
+public:
+	void SetText(const std::string& _Text, int _TextScale = 20, const std::string& _Face = "굴림")
+	{
+		Text = _Text;
+		TextScale = _TextScale;
+		Face = _Face;
+	}
+
+private:
+	std::string Face;
+	int TextScale;
 };
 

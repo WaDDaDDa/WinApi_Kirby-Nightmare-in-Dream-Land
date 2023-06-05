@@ -89,7 +89,7 @@ void WaddleDee::Update(float _Delta)
 	if (true == BodyCollision->Collision(CollisionOrder::PlayerAttack
 		, _Col
 		, CollisionType::CirCle // 나의 충돌체 모양
-		, CollisionType::CirCle // 상대의 충돌체 모양
+		, CollisionType::Rect // 상대의 충돌체 모양
 	))
 	{
 		for (size_t i = 0; i < _Col.size(); i++)

@@ -59,10 +59,36 @@ GameEngineWindowTexture* ResourcesManager::FindTexture(const std::string& _Name)
 	return FindIter->second;
 }
 
+GameEngineWindowTexture* ResourcesManager::TextureCreate(const std::string& _Name, float4 _Scale)
+{
+	std::string UpperName = GameEngineString::ToUpperReturn(_Name);
+
+	if (AllTexture.find(UpperName) != AllTexture.end())
+	{
+		MsgBoxAssert("같은 이름의 텍스처가 이미 존재합니다." + UpperName);
+		return nullptr;
+	}
+
+	// 동적 바인딩이라고 합니다.
+	GameEngineWindowTexture* CreateTexture = new GameEngineWindowTexture();
+
+	CreateTexture->ResCreate(_Scale);
+
+	AllTexture.insert(std::make_pair(UpperName, CreateTexture));
+
+	return CreateTexture;
+
+}
 
 GameEngineWindowTexture* ResourcesManager::TextureLoad(const std::string& _Name, const std::string& _Path)
 {
 	std::string UpperName = GameEngineString::ToUpperReturn(_Name);
+
+	if (AllTexture.find(UpperName) != AllTexture.end())
+	{
+		MsgBoxAssert("같은 이름의 텍스처가 이미 존재합니다." + UpperName);
+		return nullptr;
+	}
 
 	// 동적 바인딩이라고 합니다.
 	GameEngineWindowTexture* LoadTexture = new GameEngineWindowTexture();

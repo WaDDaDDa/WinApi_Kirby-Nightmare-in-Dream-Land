@@ -48,6 +48,8 @@ public:
 
 	unsigned int GetColor(unsigned int _DefaultColor, float4 _Pos);
 
+	void FillTexture(unsigned int _Color);
+
 protected:
 
 private:

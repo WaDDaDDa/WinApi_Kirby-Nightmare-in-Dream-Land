@@ -114,7 +114,7 @@ void Kirby::Start()
 		AttackCollision = CreateCollision(CollisionOrder::PlayerAttack);
 		AttackCollision->SetCollisionScale(AttackCollisionScale);
 		AttackCollision->SetCollisionPos(AttackCollisionPos);
-		AttackCollision->SetCollisionType(CollisionType::CirCle);
+		AttackCollision->SetCollisionType(CollisionType::Rect);
 		AttackCollision->Off();
 	}
 	MainRenderer->SetScaleRatio(4.0f);
