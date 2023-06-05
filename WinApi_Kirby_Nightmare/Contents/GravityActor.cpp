@@ -24,7 +24,7 @@ void GravityActor::Gravity(float _Delta)
 	}
 	GravityVector += float4::DOWN * GravityPower * _Delta;
 
-	AddPos(GravityVector);
+	AddPos(GravityVector * _Delta);
 }
 
 void GravityActor::SetGroundTexture(const std::string& _GroundTextureName)

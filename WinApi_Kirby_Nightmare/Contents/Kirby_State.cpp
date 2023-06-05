@@ -170,7 +170,6 @@ void Kirby::TackleUpdate(float _Delta)
 		}
 		AddPos(TackleSpeed);
 	}
-	//CameraFocus();
 }
 
 void Kirby::WalkUpdate(float _Delta)
@@ -232,21 +231,15 @@ void Kirby::JumpUpdate(float _Delta)
 	if (true == GameEngineInput::IsDown('Z'))
 	{
 		GravityReset();
-		//MovePos *= 0.8f;
 		ChangeState(KirbyState::AttackStart);
 		return;
 	}
-
-	//MovePos = { 0.0f , -JumpPower * _Delta};
-	//AddPos(MovePos);
-	
-	// 애니메이션 출력 변경
+		// 애니메이션 출력 변경
 	if (GetGravityVector().iY() >= float4::ZERO.iY())
 	{
 		ChangeState(KirbyState::JumpTurn);
 		return;
 	}
-	float4 Vet = GetGravityVector();
 	// 점프중 이동
 	Movement(_Delta);
 
@@ -375,10 +368,10 @@ void Kirby::FlyUpdate(float _Delta)
 		return;
 	}
 
-	if (true == GameEngineInput::IsDown('F') || GameEngineInput::GetPressTime('F') >= 0.3f)
+	if (true == GameEngineInput::IsDown('F') || GameEngineInput::GetPressTime('F') >= 0.4f)
 	{
 		GameEngineInput::ResetPressTime('F');
-		SetGravityVector(float4::UP * JumpPower * 0.3f);
+		SetGravityVector(float4::UP * JumpPower * 0.5f);
 	}
 
 	Movement(_Delta);

@@ -110,7 +110,7 @@ private:
     float4 AttackCollisionScale = float4{ 100,40 };
 
     float Speed = 400.0f;
-    float JumpPower = 2.0f;
+    float JumpPower = 800.0f;
 
     void Start() override;
     void Update(float _Delta) override;
