@@ -51,9 +51,10 @@ void BurningKirby::Start()
 
 	MainRenderer = CreateRenderer(RenderOrder::Play);
 	{ // LeftAnimation 持失
-		MainRenderer->CreateAnimation("BurningKirbyLeft_Idle", "BurningKirbyLeft.bmp", 0, 7, 0.2f, true);
-		MainRenderer->FindAnimation("BurningKirbyLeft_Idle")->Inters[1] = 0.5f;
-		MainRenderer->CreateAnimation("BurningKirbyLeft_DownIdle", "BurningKirbyLeft.bmp", 8, 15, 0.2f, true);
+		MainRenderer->CreateAnimation("BurningKirbyLeft_Idle", "BurningKirbyLeft.bmp", 0, 6, 0.2f, true);
+		MainRenderer->FindAnimation("BurningKirbyLeft_Idle")->Inters[3] = 0.0f;
+		MainRenderer->CreateAnimation("BurningKirbyLeft_DownIdle", "BurningKirbyLeft.bmp", 8, 10, 0.2f, true);
+		MainRenderer->FindAnimation("BurningKirbyLeft_DownIdle")->Inters[2] = 0.0f;
 		MainRenderer->CreateAnimation("BurningKirbyLeft_Tackle", "BurningKirbyLeft.bmp", 0, 1, 0.1f, true);
 		MainRenderer->FindAnimation("BurningKirbyLeft_Tackle")->Inters[0] = 0.5f;
 		MainRenderer->CreateAnimation("BurningKirbyLeft_Walk", "BurningKirbyLeft.bmp", 0, 9, 0.05f, true);
@@ -71,8 +72,10 @@ void BurningKirby::Start()
 	}
 
 	{ // RightAnimation 持失
-		MainRenderer->CreateAnimation("BurningKirbyRight_Idle", "BurningKirbyRight.bmp", 0, 7, 0.2f, true);
-		MainRenderer->CreateAnimation("BurningKirbyRight_DownIdle", "BurningKirbyRight.bmp", 8, 15, 0.2f, true);
+		MainRenderer->CreateAnimation("BurningKirbyRight_Idle", "BurningKirbyRight.bmp", 0, 4, 0.2f, true);
+		MainRenderer->FindAnimation("BurningKirbyRight_Idle")->Inters[3] = 0.0f;
+		MainRenderer->CreateAnimation("BurningKirbyRight_DownIdle", "BurningKirbyRight.bmp", 8, 10, 0.2f, true);
+		MainRenderer->FindAnimation("BurningKirbyRight_DownIdle")->Inters[2] = 0.0f;
 		MainRenderer->CreateAnimation("BurningKirbyRight_Tackle", "BurningKirbyRight.bmp", 0, 1, 0.1f, true);
 		MainRenderer->FindAnimation("BurningKirbyRight_Tackle")->Inters[0] = 0.5f;
 		MainRenderer->CreateAnimation("BurningKirbyRight_Walk", "BurningKirbyRight.bmp", 0, 9, 0.05f, true);
