@@ -57,7 +57,7 @@ void MainHubLevel::Start()
 	StagePtr->Init("MainHup.Bmp", "MainHupDebug.bmp");
 
 	LevelPlayer = CreateActor<Kirby>();
-	//LevelPlayer->OverOn();
+	LevelPlayer->OverOn();
 	CreateActor<UIManager>();
 }
 
@@ -67,7 +67,7 @@ void MainHubLevel::Update(float _Delta)
 	if (true == GameEngineInput::IsDown('P'))
 	{
 		GameEngineCore::ChangeLevel("VegetableValleyLevel");
-		
+		LevelPlayer->SetGroundTexture("Level1_Debug.bmp");
 	}
 
 	if (true == GameEngineInput::IsDown('M'))

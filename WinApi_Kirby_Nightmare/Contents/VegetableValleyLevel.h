@@ -24,7 +24,7 @@ private:
 
     float SoundVolume = 1.0f;
 
-    class Kirby* LevelPlayer = nullptr;
+   // class Kirby* LevelPlayer = nullptr;
     class Stage* StagePtr = nullptr;
 };
 
