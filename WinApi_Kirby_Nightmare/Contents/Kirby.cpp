@@ -318,8 +318,8 @@ void Kirby::CameraFocus(float _Delta)
 	int PlayerX = GetPos().iX();
 	int PlayerY = GetPos().iY();
 
-	float ImageX = ResourcesManager::GetInst().FindTexture("Level1.bmp")->GetScale().X - 960.0f;
-	float ImageY = ResourcesManager::GetInst().FindTexture("Level1.bmp")->GetScale().Y;
+	float ImageX = GetGroundTexture()->GetScale().X - 960.0f;
+	float ImageY = GetGroundTexture()->GetScale().Y;
 
 	if (0 >= GetLevel()->GetMainCamera()->GetPos().X)
 	{

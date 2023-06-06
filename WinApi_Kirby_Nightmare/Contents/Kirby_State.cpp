@@ -223,6 +223,7 @@ void Kirby::JumpUpdate(float _Delta)
 	if (ColorCheck != RGB(255, 255, 255))
 	{
 		// 체인지 폴링
+		SetGravityVector(float4::ZERO);
 		ChangeState(KirbyState::Falling);
 		return;
 	}
@@ -365,6 +366,7 @@ void Kirby::FlyUpdate(float _Delta)
 	unsigned int ColorCheck = GetGroundColor(RGB(255, 255, 255), UpCheck);
 	if (ColorCheck != RGB(255, 255, 255))
 	{
+		SetGravityVector(float4::ZERO);
 		return;
 	}
 

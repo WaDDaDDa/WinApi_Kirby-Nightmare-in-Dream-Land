@@ -2,6 +2,7 @@
 #include "MainHubLevel.h"
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include "TitleLevel.h"
+#include "VegetableValleyLevel.h"
 
 
 MainHub::MainHub()
@@ -21,9 +22,10 @@ void MainHub::Start()
 	GameEngineWindow::MainWindow.SetPosAndScale({ 0, 0 }, { 960, 600 });
 	GameEngineCore::CreateLevel<TitleLevel>("TitleLevel");
 	GameEngineCore::CreateLevel<MainHubLevel>("MainHubLevel");
+	GameEngineCore::CreateLevel<VegetableValleyLevel>("VegetableValleyLevel");
 
 	// 이 레벨이 화면에 보여라.
-	GameEngineCore::ChangeLevel("MainHubLevel");
+	GameEngineCore::ChangeLevel("TitleLevel");
 }
 
 // 행동.

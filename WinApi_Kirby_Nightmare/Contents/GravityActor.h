@@ -2,7 +2,7 @@
 #include <GameEngineCore/GameEngineActor.h>
 #include <GameEngineCore/GameEngineCollision.h>
 #include "ContentsEnum.h"
-
+class GameEngineWindowTexture;
 class GravityActor : public GameEngineActor
 {
 public:
@@ -32,6 +32,11 @@ public:
 
     void SetGroundTexture(const std::string& _GroundTextureName);
 
+    GameEngineWindowTexture* GetGroundTexture()
+    {
+        return GroundTexture;
+    }
+
     int GetGroundColor(unsigned int _DefaultColor = RGB(255, 255, 255), float4 _Pos = float4::ZERO);
 
     void GroundCheck(float _Delta);
@@ -49,14 +54,13 @@ protected:
 
 private:
 
-    class GameEngineWindowTexture* GroundTexture = nullptr;
+    GameEngineWindowTexture* GroundTexture = nullptr;
 
     bool IsGravity = true;
 
     float GravityPower = 1000.0f;
 
     float4 GravityVector = float4::ZERO;
-
 
 };
 

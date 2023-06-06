@@ -1,4 +1,4 @@
-#include "MainHubLevel.h"
+#include "VegetableValleyLevel.h"
 #include <GameEngineCore/GameEngineCore.h>
 #include <GameEngineCore/ResourcesManager.h>
 #include <GameEnginePlatform/GameEngineInput.h>
@@ -15,22 +15,22 @@
 #include "Monster.h"
 #include "WaddleDee.h"
 
-MainHubLevel::MainHubLevel()
+VegetableValleyLevel::VegetableValleyLevel()
 {
 
 }
 
-MainHubLevel::~MainHubLevel()
+VegetableValleyLevel::~VegetableValleyLevel()
 {
 
 }
 
-void MainHubLevel::Start()
+void VegetableValleyLevel::Start()
 {
 	GetMainCamera()->SetPos(float4{ 0, -100 });
 	GameEngineSound::SetGlobalVolume(SoundVolume);
-	 //이미지가 로드되지않았다면 로드하고 로드 되었다면 로드안하기 위함.
-	if (false == ResourcesManager::GetInst().IsLoadTexture("MainHup.Bmp"))
+	//이미지가 로드되지않았다면 로드하고 로드 되었다면 로드안하기 위함.
+	if (false == ResourcesManager::GetInst().IsLoadTexture("TestBackGround.Bmp"))
 	{
 		GameEnginePath FilePath;
 		FilePath.MoveParentToExistsChild("Resource");
@@ -38,7 +38,7 @@ void MainHubLevel::Start()
 		GameEnginePath FolderPath = FilePath;
 
 		FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Stages\\");
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("MainHupDebug.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Level1_Debug.bmp"));
 	}
 
 	if (nullptr == GameEngineSound::FindSound("04Vegetable_Valley.mp3"))
@@ -52,22 +52,24 @@ void MainHubLevel::Start()
 	}
 
 	BackGround* CurBackGround = CreateActor<BackGround>();
-	CurBackGround->Init("MainHupBackGround.Bmp");
+	CurBackGround->Init("TestBackGround.Bmp");
+
 	StagePtr = CreateActor<Stage>();
-	StagePtr->Init("MainHup.Bmp", "MainHupDebug.bmp");
+	StagePtr->Init("Level1.Bmp", "Level1_Debug.bmp");
 
 	LevelPlayer = CreateActor<Kirby>();
 	//LevelPlayer->OverOn();
 	CreateActor<UIManager>();
+
 }
 
 
-void MainHubLevel::Update(float _Delta)
+void VegetableValleyLevel::Update(float _Delta)
 {
 	if (true == GameEngineInput::IsDown('P'))
 	{
-		GameEngineCore::ChangeLevel("VegetableValleyLevel");
-		
+		GameEngineCore::ChangeLevel("TitleLevel");
+
 	}
 
 	if (true == GameEngineInput::IsDown('M'))
@@ -77,30 +79,28 @@ void MainHubLevel::Update(float _Delta)
 
 	if (true == GameEngineInput::IsDown('J'))
 	{
-		StagePtr->SwitchRender();
+		//StagePtr->SwitchRender();
 		CollisionDebugRenderSwitch();
 	}
 }
 
 
-void MainHubLevel::Release()
+void VegetableValleyLevel::Release()
 {
 
 }
 
-void MainHubLevel::LevelStart(GameEngineLevel* _PrevLevel)
+void VegetableValleyLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	if (nullptr == LevelPlayer)
 	{
 		MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
 	}
 
-	LevelPlayer->SetGroundTexture("MainHupDebug.bmp");
-
-	BGMPlayer = GameEngineSound::SoundPlay("04Vegetable_Valley.mp3");
+	LevelPlayer->SetGroundTexture("Level1_Debug.bmp");
 }
 
-void MainHubLevel::LevelEnd(GameEngineLevel* _NextLevel)
+void VegetableValleyLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
 
 }

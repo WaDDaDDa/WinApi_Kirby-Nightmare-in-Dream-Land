@@ -124,7 +124,8 @@ GameEngineSprite* ResourcesManager::CreateSpriteSheet(const std::string& _Sprite
 
 	if (nullptr != FindSprite(UpperName))
 	{
-		MsgBoxAssert("이미 로드한 스프라이트를 또 로드하려고 했습니다." + _SpriteName);
+		//MsgBoxAssert("이미 로드한 스프라이트를 또 로드하려고 했습니다." + _SpriteName);
+		return FindSprite(UpperName);
 	}
 
 	GameEnginePath Path = _TexturePath;
