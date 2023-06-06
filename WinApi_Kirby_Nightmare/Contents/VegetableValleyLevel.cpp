@@ -79,7 +79,7 @@ void VegetableValleyLevel::Update(float _Delta)
 
 	if (true == GameEngineInput::IsDown('J'))
 	{
-		//StagePtr->SwitchRender();
+		StagePtr->SwitchRender();
 		CollisionDebugRenderSwitch();
 	}
 }

@@ -360,13 +360,14 @@ void Kirby::FlyUpdate(float _Delta)
 		CheckLeftColor = GetGroundColor(RGB(255, 255, 255), float4::UP + LeftCheck);
 		CheckRightColor = GetGroundColor(RGB(255, 255, 255), float4::UP + RightCheck);
 		AddPos(float4::UP);
+		GravityReset();
 	}
 
 	float4 UpCheck = { 0 , -80 };
 	unsigned int ColorCheck = GetGroundColor(RGB(255, 255, 255), UpCheck);
 	if (ColorCheck != RGB(255, 255, 255))
 	{
-		SetGravityVector(float4::ZERO);
+		GravityReset();
 		return;
 	}
 

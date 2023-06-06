@@ -320,17 +320,25 @@ void Kirby::CameraFocus(float _Delta)
 
 	float ImageX = GetGroundTexture()->GetScale().X - 960.0f;
 	float ImageY = GetGroundTexture()->GetScale().Y;
-
+	
+	// 카메라가 맵의 왼쪽으로 못나가게.
 	if (0 >= GetLevel()->GetMainCamera()->GetPos().X)
 	{
-		GetLevel()->GetMainCamera()->SetPos({ 0, GetLevel()->GetMainCamera()->GetPos().Y});
+		GetLevel()->GetMainCamera()->SetPos({ 0.0f, GetLevel()->GetMainCamera()->GetPos().Y});
 	}
-
+	// 카메라가 맵의 오른쪽 최대치를 못나가게.
 	if (ImageX <= GetLevel()->GetMainCamera()->GetPos().X)
 	{
 		GetLevel()->GetMainCamera()->SetPos({ ImageX, GetLevel()->GetMainCamera()->GetPos().Y });
 	}
+
+	if (0 >= GetLevel()->GetMainCamera()->GetPos().Y)
+	{
+		GetLevel()->GetMainCamera()->SetPos({ GetLevel()->GetMainCamera()->GetPos().X, 0.0f });
+	}
 	
+	// 카메라가 움직이는 X 범위 250 ~ 650 사이에캐릭터를 둔다.
+	// 카메라의 속도는 캐릭터의 속도로 한다.
 	if (650 < PlayerX - CameraRangeX)
 	{
 		GetLevel()->GetMainCamera()->AddPos({ Speed * _Delta , 0});
@@ -340,6 +348,8 @@ void Kirby::CameraFocus(float _Delta)
 		GetLevel()->GetMainCamera()->AddPos({ -Speed * _Delta , 0 });
 	}
 
+	// 카메라가 움직이는 Y범위 캐릭터가 -200 ~ -450 사이에서 움직인다.
+	// 캐릭터 이동속도가 카메라 보다 빨라지면 중력을 속도로 한다.
 	if (-200 < CameraRangeY - PlayerY)
 	{
 		if (GetGravityVector().iY() <= -1)
