@@ -34,6 +34,9 @@
     <ClInclude Include="VegetableValleyLevel.h">
       <Filter>Level</Filter>
     </ClInclude>
+    <ClInclude Include="BurningKirby.h">
+      <Filter>Kirby</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainHub.cpp" />
@@ -72,6 +75,12 @@
     <ClCompile Include="VegetableValleyLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
+    <ClCompile Include="BurningKirby.cpp">
+      <Filter>Kirby</Filter>
+    </ClCompile>
+    <ClCompile Include="BurningKirbyStatecpp.cpp">
+      <Filter>Kirby</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -79,6 +88,9 @@
     </Filter>
     <Filter Include="Global">
       <UniqueIdentifier>{8096eb9f-2489-46c6-94d1-ca2fb34d8d6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Kirby">
+      <UniqueIdentifier>{1f218c4c-2edf-4902-8da8-cfe14bb63179}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -14,6 +14,7 @@
 #include "BackGround.h"
 #include "Monster.h"
 #include "WaddleDee.h"
+#include "BurningKirby.h"
 
 MainHubLevel::MainHubLevel()
 {

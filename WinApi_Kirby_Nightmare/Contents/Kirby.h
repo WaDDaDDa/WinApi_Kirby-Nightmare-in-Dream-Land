@@ -96,7 +96,7 @@ protected:
 
     void DirCheck();
     void CameraFocus(float _Delta);
-    void ChangeAnimationState(const std::string& _StateName);
+    virtual void ChangeAnimationState(const std::string& _StateName);
 
     GameEngineCollision* BodyCollision = nullptr;
     GameEngineCollision* AttackCollision = nullptr;

@@ -14,6 +14,7 @@
 #include "BackGround.h"
 #include "Monster.h"
 #include "WaddleDee.h"
+#include "BurningKirby.h"
 
 VegetableValleyLevel::VegetableValleyLevel()
 {
@@ -57,7 +58,7 @@ void VegetableValleyLevel::Start()
 	StagePtr = CreateActor<Stage>();
 	StagePtr->Init("Level1.Bmp", "Level1_Debug.bmp");
 
-	//LevelPlayer = CreateActor<Kirby>();
+	LevelPlayer = CreateActor<BurningKirby>();
 	//LevelPlayer->OverOn();
 	CreateActor<UIManager>();
 
@@ -97,7 +98,7 @@ void VegetableValleyLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
 	}*/
 
-	//LevelPlayer->SetGroundTexture("Level1_Debug.bmp");
+	LevelPlayer->SetGroundTexture("Level1_Debug.bmp");
 }
 
 void VegetableValleyLevel::LevelEnd(GameEngineLevel* _NextLevel)
