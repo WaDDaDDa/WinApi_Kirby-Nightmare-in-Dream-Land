@@ -18,6 +18,9 @@ public:
     void Update(float _Delta) override;
 protected:
 
+    void AttackStartUpdate(float _Delta) override;
+    void AttackUpdate(float _Delta) override;
+
 private:
     static BurningKirby* MainPlayer;
 

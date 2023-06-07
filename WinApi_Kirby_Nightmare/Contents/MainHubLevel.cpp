@@ -58,7 +58,7 @@ void MainHubLevel::Start()
 	StagePtr->Init("MainHup.Bmp", "MainHupDebug.bmp");
 
 	LevelPlayer = CreateActor<Kirby>();
-	LevelPlayer->OverOn();
+	//LevelPlayer->OverOn();
 	CreateActor<UIManager>();
 }
 

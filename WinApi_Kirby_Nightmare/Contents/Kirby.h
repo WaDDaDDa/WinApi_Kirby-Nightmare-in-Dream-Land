@@ -84,8 +84,8 @@ protected:
     void RunUpdate(float _Delta);
     void FlyUpdate(float _Delta);
     void BreathInUpdate(float _Delta);
-    void AttackStartUpdate(float _Delta);
-    void AttackUpdate(float _Delta);
+    virtual void AttackStartUpdate(float _Delta);
+    virtual void AttackUpdate(float _Delta);
 
     void ChangeState(KirbyState _State);
 

@@ -55,16 +55,16 @@ void BurningKirby::Start()
 		MainRenderer->FindAnimation("BurningKirbyLeft_Idle")->Inters[3] = 0.0f;
 		MainRenderer->CreateAnimation("BurningKirbyLeft_DownIdle", "BurningKirbyLeft.bmp", 8, 10, 0.2f, true);
 		MainRenderer->FindAnimation("BurningKirbyLeft_DownIdle")->Inters[2] = 0.0f;
-		MainRenderer->CreateAnimation("BurningKirbyLeft_Tackle", "BurningKirbyLeft.bmp", 0, 1, 0.1f, true);
+		MainRenderer->CreateAnimation("BurningKirbyLeft_Tackle", "BurningKirbyLeft.bmp", 80, 84, 0.1f, true);
 		MainRenderer->FindAnimation("BurningKirbyLeft_Tackle")->Inters[0] = 0.5f;
-		MainRenderer->CreateAnimation("BurningKirbyLeft_Walk", "BurningKirbyLeft.bmp", 0, 9, 0.05f, true);
-		MainRenderer->CreateAnimation("BurningKirbyLeft_Jump", "BurningKirbyLeft.bmp", 0, 0, 0.1f, true);
-		MainRenderer->CreateAnimation("BurningKirbyLeft_JumpTurn", "BurningKirbyLeft.bmp", 1, 7, 0.03f, true);
-		MainRenderer->CreateAnimation("BurningKirbyLeft_Falling", "BurningKirbyLeft.bmp", 8, 8, 1.0f, true);
-		MainRenderer->CreateAnimation("BurningKirbyLeft_FallingEnd", "BurningKirbyLeft.bmp", 9, 9, 0.1f, true);
+		MainRenderer->CreateAnimation("BurningKirbyLeft_Walk", "BurningKirbyLeft.bmp", 96, 105, 0.05f, true);
+		MainRenderer->CreateAnimation("BurningKirbyLeft_Jump", "BurningKirbyLeft.bmp", 85, 85, 0.1f, false);
+		MainRenderer->CreateAnimation("BurningKirbyLeft_JumpTurn", "BurningKirbyLeft.bmp", 87, 93, 0.03f, true);
+		MainRenderer->CreateAnimation("BurningKirbyLeft_Falling", "BurningKirbyLeft.bmp", 94, 94, 1.0f, false);
+		MainRenderer->CreateAnimation("BurningKirbyLeft_FallingEnd", "BurningKirbyLeft.bmp", 95, 95, 0.1f, false);
 		MainRenderer->CreateAnimation("BurningKirbyLeft_Run", "BurningKirbyLeft.bmp", 0, 7, 0.1f, true);  // 8은 브레이크모션 9는 벽충돌
-		MainRenderer->CreateAnimation("BurningKirbyLeft_Fly", "BurningKirbyLeft.bmp", 0, 7, 0.1f, true);
-		MainRenderer->CreateAnimation("BurningKirbyLeft_BreathIn", "BurningKirbyLeft.bmp", 0, 4, 0.05f, true);
+		MainRenderer->CreateAnimation("BurningKirbyLeft_Fly", "BurningKirbyLeft.bmp", 151, 158, 0.1f, true);
+		MainRenderer->CreateAnimation("BurningKirbyLeft_BreathIn", "BurningKirbyLeft.bmp", 130, 134, 0.05f, true);
 		MainRenderer->FindAnimation("BurningKirbyLeft_BreathIn")->Inters[3] = 0.1f;
 		MainRenderer->FindAnimation("BurningKirbyLeft_BreathIn")->Inters[4] = 0.1f;
 		MainRenderer->CreateAnimation("BurningKirbyLeft_AttackStart", "BurningKirbyLeft.bmp", 0, 2, 0.1f, true);
@@ -73,19 +73,20 @@ void BurningKirby::Start()
 
 	{ // RightAnimation 생성
 		MainRenderer->CreateAnimation("BurningKirbyRight_Idle", "BurningKirbyRight.bmp", 0, 4, 0.2f, true);
+		MainRenderer->FindAnimation("BurningKirbyRight_Idle")->Inters[2] = 0.0f;
 		MainRenderer->FindAnimation("BurningKirbyRight_Idle")->Inters[3] = 0.0f;
 		MainRenderer->CreateAnimation("BurningKirbyRight_DownIdle", "BurningKirbyRight.bmp", 8, 10, 0.2f, true);
 		MainRenderer->FindAnimation("BurningKirbyRight_DownIdle")->Inters[2] = 0.0f;
-		MainRenderer->CreateAnimation("BurningKirbyRight_Tackle", "BurningKirbyRight.bmp", 0, 1, 0.1f, true);
+		MainRenderer->CreateAnimation("BurningKirbyRight_Tackle", "BurningKirbyRight.bmp", 80, 84, 0.1f, true);
 		MainRenderer->FindAnimation("BurningKirbyRight_Tackle")->Inters[0] = 0.5f;
-		MainRenderer->CreateAnimation("BurningKirbyRight_Walk", "BurningKirbyRight.bmp", 0, 9, 0.05f, true);
-		MainRenderer->CreateAnimation("BurningKirbyRight_Jump", "BurningKirbyRight.bmp", 0, 0, 0.1f, true);
-		MainRenderer->CreateAnimation("BurningKirbyRight_JumpTurn", "BurningKirbyRight.bmp", 1, 7, 0.03f, true);
-		MainRenderer->CreateAnimation("BurningKirbyRight_Falling", "BurningKirbyRight.bmp", 8, 8, 1.0f, true);
-		MainRenderer->CreateAnimation("BurningKirbyRight_FallingEnd", "BurningKirbyRight.bmp", 9, 9, 0.1f, true);
+		MainRenderer->CreateAnimation("BurningKirbyRight_Walk", "BurningKirbyRight.bmp", 96, 105, 0.05f, true);
+		MainRenderer->CreateAnimation("BurningKirbyRight_Jump", "BurningKirbyRight.bmp", 85, 85, 0.1f, false);
+		MainRenderer->CreateAnimation("BurningKirbyRight_JumpTurn", "BurningKirbyRight.bmp", 87, 93, 0.03f, true);
+		MainRenderer->CreateAnimation("BurningKirbyRight_Falling", "BurningKirbyRight.bmp", 94, 94, 1.0f, false);
+		MainRenderer->CreateAnimation("BurningKirbyRight_FallingEnd", "BurningKirbyRight.bmp", 95, 95, 0.1f, false);
 		MainRenderer->CreateAnimation("BurningKirbyRight_Run", "BurningKirbyRight.bmp", 0, 7, 0.1f, true); // 8은 브레이크모션 9는 벽충돌
-		MainRenderer->CreateAnimation("BurningKirbyRight_Fly", "BurningKirbyRight.bmp", 0, 7, 0.1f, true);
-		MainRenderer->CreateAnimation("BurningKirbyRight_BreathIn", "BurningKirbyRight.bmp", 0, 4, 0.05f, true);
+		MainRenderer->CreateAnimation("BurningKirbyRight_Fly", "BurningKirbyRight.bmp", 151, 158, 0.1f, true);
+		MainRenderer->CreateAnimation("BurningKirbyRight_BreathIn", "BurningKirbyRight.bmp", 130, 134, 0.05f, true);
 		MainRenderer->FindAnimation("BurningKirbyRight_BreathIn")->Inters[3] = 0.1f;
 		MainRenderer->FindAnimation("BurningKirbyRight_BreathIn")->Inters[4] = 0.1f;
 		MainRenderer->CreateAnimation("BurningKirbyRight_AttackStart", "BurningKirbyRight.bmp", 0, 2, 0.1f, true);

@@ -460,5 +460,4 @@ void Kirby::AttackUpdate(float _Delta)
 		ChangeState(KirbyState::Idle);
 		return;
 	}
-	
 }
