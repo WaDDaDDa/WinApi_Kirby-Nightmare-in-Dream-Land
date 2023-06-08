@@ -81,6 +81,15 @@ void MainHubLevel::Update(float _Delta)
 		StagePtr->SwitchRender();
 		CollisionDebugRenderSwitch();
 	}
+
+	if (true == GameEngineInput::IsDown('Q'))
+	{
+		float4 PrevPos = LevelPlayer->GetPos();
+		LevelPlayer->Death();
+		LevelPlayer = CreateActor<BurningKirby>();
+		LevelPlayer->SetPos(PrevPos);
+		LevelPlayer->SetGroundTexture("MainHupDebug.bmp");
+	}
 }
 
 
