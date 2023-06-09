@@ -58,7 +58,7 @@ void VegetableValleyLevel::Start()
 	StagePtr = CreateActor<Stage>();
 	StagePtr->Init("Level1.Bmp", "Level1_Debug.bmp");
 
-	LevelPlayer = CreateActor<BurningKirby>();
+	LevelPlayer = CreateActor<Kirby>();
 	//LevelPlayer->OverOn();
 	CreateActor<UIManager>();
 

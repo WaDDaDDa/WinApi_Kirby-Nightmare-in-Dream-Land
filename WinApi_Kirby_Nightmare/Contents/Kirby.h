@@ -16,6 +16,7 @@ enum class KirbyState
     BreathIn,
     AttackStart,
     Attack,
+    FatIdle,
     Max, // 일반적으로 사용하지 않는 값.
 };
 
@@ -72,6 +73,7 @@ protected:
     void BreathInStart();
     void AttackStartStart();
     void AttackStart();
+    void FatIdleStart();
 
     void IdleUpdate(float _Delta);
     void DownIdleUpdate(float _Delta);
@@ -86,6 +88,7 @@ protected:
     void BreathInUpdate(float _Delta);
     virtual void AttackStartUpdate(float _Delta);
     virtual void AttackUpdate(float _Delta);
+    void FatIdleUpdate(float _Delta);
 
     void ChangeState(KirbyState _State);
 

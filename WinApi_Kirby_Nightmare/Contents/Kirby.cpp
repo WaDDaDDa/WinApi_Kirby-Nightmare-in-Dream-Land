@@ -50,6 +50,7 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Fly.bmp"), 4, 2);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_BreathIn.bmp"), 5, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Attack.bmp"), 6, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_FatIdle.bmp"), 2, 1);
 		}
 		{ // RinghtAnimation 셋팅
 			FilePath.MoveParentToExistsChild("Right");
@@ -63,6 +64,8 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Fly.bmp"), 4, 2);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_BreathIn.bmp"), 5, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Attack.bmp"), 6, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_FatIdle.bmp"), 2, 1);
+
 		}
 	}
 
@@ -85,6 +88,8 @@ void Kirby::Start()
 		MainRenderer->FindAnimation("Left_BreathIn")->Inters[4] = 0.1f;
 		MainRenderer->CreateAnimation("Left_AttackStart", "KirbyLeft_Attack.bmp", 0, 2, 0.1f, true);
 		MainRenderer->CreateAnimation("Left_Attack", "KirbyLeft_Attack.bmp", 3, 4, 0.05f, true);
+		MainRenderer->CreateAnimation("Left_FatIdle", "KirbyLeft_FatIdle.bmp", 0, 1, 0.2f, true);
+
 	}
 
 	{ // RightAnimation 생성
@@ -104,6 +109,8 @@ void Kirby::Start()
 		MainRenderer->FindAnimation("Right_BreathIn")->Inters[4] = 0.1f;
 		MainRenderer->CreateAnimation("Right_AttackStart", "KirbyRight_Attack.bmp", 0, 2, 0.1f, true);
 		MainRenderer->CreateAnimation("Right_Attack", "KirbyRight_Attack.bmp", 3, 4, 0.05f, true);
+		MainRenderer->CreateAnimation("Right_FatIdle", "KirbyRight_FatIdle.bmp", 0, 1, 0.2f, true);
+
 	}
 
 	{ // 충돌체 설정
@@ -195,6 +202,8 @@ void Kirby::StateUpdate(float _Delta)
 		return AttackStartUpdate(_Delta);
 	case KirbyState::Attack:
 		return AttackUpdate(_Delta);
+	case KirbyState::FatIdle:
+		return FatIdleUpdate(_Delta);
 	default:
 		break;
 	}
@@ -244,6 +253,9 @@ void Kirby::ChangeState(KirbyState _State)
 			break;
 		case KirbyState::Attack:
 			AttackStart();
+			break;
+		case KirbyState::FatIdle:
+			FatIdleStart();
 			break;
 		default:
 			break;

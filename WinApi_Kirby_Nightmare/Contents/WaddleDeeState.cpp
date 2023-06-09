@@ -84,7 +84,6 @@ void WaddleDee::HitUpdate(float _Delta)
 			GameEngineCollision* Collison = _Col[i];
 
 			Actor = Collison->GetActor();
-
 			Death();
 		}
 	}
