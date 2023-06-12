@@ -78,6 +78,11 @@ void Kirby::FatIdleStart()
 	ChangeAnimationState("FatIdle");
 }
 
+void Kirby::FatWalkStart()
+{
+	ChangeAnimationState("FatWalk");
+}
+
 // IsDown으로 키를 받아서 State를 체인지하게 되면 
 // 업데이트는 실제 행동을 행하는 단계.
 void Kirby::IdleUpdate(float _Delta)
@@ -194,7 +199,6 @@ void Kirby::WalkUpdate(float _Delta)
 
 	GroundCheck(_Delta);
 	Movement(_Delta);
-	static float Deley = 0;
 	// 점프
 	if (true == GameEngineInput::IsDown('F'))
 	{
@@ -517,7 +521,7 @@ void Kirby::FatIdleUpdate(float _Delta)
 	if (true == GameEngineInput::IsPress('A')
 		|| true == GameEngineInput::IsPress('D'))
 	{
-		ChangeState(KirbyState::Walk);
+		ChangeState(KirbyState::FatWalk);
 		return;
 	}
 
@@ -537,6 +541,43 @@ void Kirby::FatIdleUpdate(float _Delta)
 	{
 		MovePos = float4::ZERO;
 		ChangeState(KirbyState::AttackStart);
+		return;
+	}
+}
+
+void Kirby::FatWalkUpdate(float _Delta)
+{
+	DirCheck();
+
+	GroundCheck(_Delta);
+	Movement(_Delta);
+	// 점프
+	if (true == GameEngineInput::IsDown('F'))
+	{
+		MovePos = float4::ZERO;
+		ChangeState(KirbyState::Jump);
+		return;
+	}
+	// 공격
+	if (true == GameEngineInput::IsDown('Z'))
+	{
+		MovePos = float4::ZERO;
+		ChangeState(KirbyState::AttackStart);
+		return;
+	}
+
+	// 대기
+	if (true == GameEngineInput::IsFree('A') && true == GameEngineInput::IsFree('D'))
+	{
+		ChangeState(KirbyState::FatIdle);
+	}
+	unsigned int Color = GetGroundColor(RGB(255, 255, 255), float4::DOWN);
+	unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), float4::DOWN + LeftCheck);
+	unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), float4::DOWN + RightCheck);
+
+	if ((RGB(255, 255, 255) == Color && LeftColor == RGB(255, 255, 255) && RightColor == RGB(255, 255, 255)))
+	{
+		ChangeState(KirbyState::Falling);
 		return;
 	}
 }
