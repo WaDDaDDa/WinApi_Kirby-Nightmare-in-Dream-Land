@@ -94,7 +94,10 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Left_Attack", "KirbyLeft_Attack.bmp", 3, 4, 0.05f, true);
 		MainRenderer->CreateAnimation("Left_FatIdle", "KirbyLeft_FatIdle.bmp", 0, 1, 0.2f, true);
 		MainRenderer->CreateAnimation("Left_FatWalk", "KirbyLeft_FatWalk.bmp", 0, 15, 0.05f, true);
-		MainRenderer->CreateAnimation("Left_FatJump", "KirbyLeft_FatJump.bmp", 0, 1, 0.1f, false);
+		MainRenderer->CreateAnimation("Left_FatJump", "KirbyLeft_FatJump.bmp", 1, 1, 0.1f, false);
+		MainRenderer->CreateAnimation("Left_FatJumpTurn", "KirbyLeft_FatJump.bmp", 2, 4, 0.1f, false);
+		MainRenderer->CreateAnimation("Left_FatFalling", "KirbyLeft_FatJump.bmp", 5, 6, 0.1f, false);
+		MainRenderer->CreateAnimation("Left_FatFallingEnd", "KirbyLeft_FatJump.bmp", 7, 7, 0.1f, false);
 
 	}
 
@@ -117,8 +120,10 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Right_Attack", "KirbyRight_Attack.bmp", 3, 4, 0.05f, true);
 		MainRenderer->CreateAnimation("Right_FatIdle", "KirbyRight_FatIdle.bmp", 0, 1, 0.2f, true);
 		MainRenderer->CreateAnimation("Right_FatWalk", "KirbyRight_FatWalk.bmp", 0, 15, 0.05f, true);
-		MainRenderer->CreateAnimation("Right_FatJump", "KirbyRight_FatJump.bmp", 0, 1, 0.1f, false);
-
+		MainRenderer->CreateAnimation("Right_FatJump", "KirbyRight_FatJump.bmp", 1, 1, 0.1f, false);
+		MainRenderer->CreateAnimation("Right_FatJumpTurn", "KirbyRight_FatJump.bmp", 2, 4, 0.1f, false);
+		MainRenderer->CreateAnimation("Right_FatFalling", "KirbyRight_FatJump.bmp", 5, 6, 0.1f, false);
+		MainRenderer->CreateAnimation("Right_FatFallingEnd", "KirbyRight_FatJump.bmp", 7, 7, 0.1f, false);
 
 	}
 
@@ -217,6 +222,12 @@ void Kirby::StateUpdate(float _Delta)
 		return FatWalkUpdate(_Delta);
 	case KirbyState::FatJump:
 		return FatJumpUpdate(_Delta);
+	case KirbyState::FatJumpTurn:
+		return FatJumpTurnUpdate(_Delta);
+	case KirbyState::FatFalling:
+		return FatFallingUpdate(_Delta);
+	case KirbyState::FatFallingEnd:
+		return FatFallingEndUpdate(_Delta);
 	default:
 		break;
 	}
@@ -275,6 +286,15 @@ void Kirby::ChangeState(KirbyState _State)
 			break;
 		case KirbyState::FatJump:
 			FatJumpStart();
+			break;
+		case KirbyState::FatJumpTurn:
+			FatJumpTurnStart();
+			break;
+		case KirbyState::FatFalling:
+			FatFallingStart();
+			break;
+		case KirbyState::FatFallingEnd:
+			FatFallingEndStart();
 			break;
 		default:
 			break;

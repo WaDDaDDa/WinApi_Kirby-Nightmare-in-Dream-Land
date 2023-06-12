@@ -19,6 +19,9 @@ enum class KirbyState
     FatIdle,
     FatWalk,
     FatJump,
+    FatJumpTurn,
+    FatFalling,
+    FatFallingEnd,
     Max, // 일반적으로 사용하지 않는 값.
 };
 
@@ -78,6 +81,9 @@ protected:
     void FatIdleStart();
     void FatWalkStart();
     void FatJumpStart();
+    void FatJumpTurnStart();
+    void FatFallingStart();
+    void FatFallingEndStart();
 
     void IdleUpdate(float _Delta);
     void DownIdleUpdate(float _Delta);
@@ -95,6 +101,9 @@ protected:
     void FatIdleUpdate(float _Delta);
     void FatWalkUpdate(float _Delta);
     void FatJumpUpdate(float _Delta);
+    void FatJumpTurnUpdate(float _Delta);
+    void FatFallingUpdate(float _Delta);
+    void FatFallingEndUpdate(float _Delta);
 
     void ChangeState(KirbyState _State);
 

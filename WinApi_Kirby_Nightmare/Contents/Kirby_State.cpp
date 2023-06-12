@@ -85,8 +85,23 @@ void Kirby::FatWalkStart()
 
 void Kirby::FatJumpStart()
 {
-	SetGravityVector(float4::UP * JumpPower);
+	SetGravityVector(float4::UP * JumpPower * 0.8f);
 	ChangeAnimationState("FatJump");
+}
+
+void Kirby::FatJumpTurnStart()
+{
+	ChangeAnimationState("FatJumpTurn");
+}
+
+void Kirby::FatFallingStart()
+{
+	ChangeAnimationState("FatFalling");
+}
+
+void Kirby::FatFallingEndStart()
+{
+	ChangeAnimationState("FatFallingEnd");
 }
 
 // IsDown으로 키를 받아서 State를 체인지하게 되면 
@@ -520,7 +535,7 @@ void Kirby::FatIdleUpdate(float _Delta)
 
 	if ((RGB(255, 255, 255) == Color && LeftColor == RGB(255, 255, 255) && RightColor == RGB(255, 255, 255)))
 	{
-		ChangeState(KirbyState::Falling);
+		ChangeState(KirbyState::FatFalling);
 		return;
 	}
 
@@ -533,7 +548,7 @@ void Kirby::FatIdleUpdate(float _Delta)
 
 	if (true == GameEngineInput::IsPress('S'))
 	{
-		ChangeState(KirbyState::DownIdle);
+		// ChangeState(KirbyState::DownIdle); 삼키기
 		return;
 	}
 
@@ -546,7 +561,7 @@ void Kirby::FatIdleUpdate(float _Delta)
 	if (true == GameEngineInput::IsDown('Z'))
 	{
 		MovePos = float4::ZERO;
-		ChangeState(KirbyState::AttackStart);
+		// ChangeState(KirbyState::AttackStart); 별뱉기
 		return;
 	}
 }
@@ -568,7 +583,7 @@ void Kirby::FatWalkUpdate(float _Delta)
 	if (true == GameEngineInput::IsDown('Z'))
 	{
 		MovePos = float4::ZERO;
-		ChangeState(KirbyState::AttackStart);
+		//ChangeState(KirbyState::AttackStart); 별뱉기 공격
 		return;
 	}
 
@@ -583,7 +598,7 @@ void Kirby::FatWalkUpdate(float _Delta)
 
 	if ((RGB(255, 255, 255) == Color && LeftColor == RGB(255, 255, 255) && RightColor == RGB(255, 255, 255)))
 	{
-		ChangeState(KirbyState::Falling);
+		ChangeState(KirbyState::FatFalling);
 		return;
 	}
 }
@@ -599,7 +614,7 @@ void Kirby::FatJumpUpdate(float _Delta)
 	{
 		// 체인지 폴링
 		SetGravityVector(float4::ZERO);
-		ChangeState(KirbyState::Falling);
+		ChangeState(KirbyState::FatFalling);
 		return;
 	}
 
@@ -613,9 +628,77 @@ void Kirby::FatJumpUpdate(float _Delta)
 	// 애니메이션 출력 변경
 	if (GetGravityVector().iY() >= float4::ZERO.iY())
 	{
-		ChangeState(KirbyState::JumpTurn);
+		ChangeState(KirbyState::FatJumpTurn);
 		return;
 	}
 	// 점프중 이동
 	Movement(_Delta);
+}
+
+void Kirby::FatJumpTurnUpdate(float _Delta)
+{
+	DirCheck();
+	Movement(_Delta);
+	GravityReset();
+
+	if (GetLiveTime() >= 0.2f)
+	{
+		ChangeState(KirbyState::FatFalling);
+		return;
+	}
+}
+
+void Kirby::FatFallingUpdate(float _Delta)
+{
+	DirCheck();
+	GroundCheck(_Delta);
+
+	Movement(_Delta);
+
+	// 공격
+	if (true == GameEngineInput::IsDown('Z'))
+	{
+		MovePos = float4::ZERO;
+		//ChangeState(KirbyState::AttackStart);  별뱉기 공격
+		return;
+	}
+
+	// 땅에 닿으면 기본상태.
+	unsigned int Color = GetGroundColor(RGB(255, 255, 255));
+	unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), LeftCheck);
+	unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), RightCheck);
+
+	if ((RGB(255, 255, 255) != Color || LeftColor != RGB(255, 255, 255) || RightColor != RGB(255, 255, 255)))
+
+	{
+		MovePos = float4::ZERO;
+		//CameraFocus();
+		GravityReset();
+		ChangeState(KirbyState::FatFallingEnd);
+		return;
+	}
+}
+
+void Kirby::FatFallingEndUpdate(float _Delta)
+{
+	if (GetLiveTime() >= 0.1f)
+	{
+		ChangeState(KirbyState::FatIdle);
+		return;
+	}
+
+	if (true == GameEngineInput::IsPress('A')
+		|| true == GameEngineInput::IsPress('S')
+		|| true == GameEngineInput::IsPress('D'))
+	{
+		ChangeState(KirbyState::FatIdle);
+		return;
+	}
+
+	if (true == GameEngineInput::IsDown('F'))
+	{
+		MovePos = float4::ZERO;
+		ChangeState(KirbyState::FatJump);
+		return;
+	}
 }
