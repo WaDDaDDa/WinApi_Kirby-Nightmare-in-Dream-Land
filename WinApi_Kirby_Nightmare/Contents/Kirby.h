@@ -16,6 +16,8 @@ enum class KirbyState
     BreathIn,
     AttackStart,
     Attack,
+    StarIn,
+    StarOut,
     FatIdle,
     FatWalk,
     FatJump,
@@ -78,6 +80,8 @@ protected:
     void BreathInStart();
     void AttackStartStart();
     void AttackStart();
+    void StarInStart();
+    void StarOutStart();
     void FatIdleStart();
     void FatWalkStart();
     void FatJumpStart();
@@ -98,6 +102,8 @@ protected:
     void BreathInUpdate(float _Delta);
     virtual void AttackStartUpdate(float _Delta);
     virtual void AttackUpdate(float _Delta);
+    void StarInUpdate(float _Delta);
+    void StarOutUpdate(float _Delta);
     void FatIdleUpdate(float _Delta);
     void FatWalkUpdate(float _Delta);
     void FatJumpUpdate(float _Delta);

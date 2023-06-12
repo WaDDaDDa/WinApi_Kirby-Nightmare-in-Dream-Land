@@ -73,6 +73,16 @@ void Kirby::AttackStart()
 	ChangeAnimationState("Attack");
 }
 
+void Kirby::StarInStart()
+{
+	ChangeAnimationState("StarIn");
+}
+
+void Kirby::StarOutStart()
+{
+	ChangeAnimationState("StarOut");
+}
+
 void Kirby::FatIdleStart()
 {
 	ChangeAnimationState("FatIdle");
@@ -518,12 +528,29 @@ void Kirby::AttackUpdate(float _Delta)
 
 			Actor->Death();
 			AttackCollision->Off();
-			ChangeState(KirbyState::FatIdle);
+			ChangeState(KirbyState::StarIn);
 			return;
 		}
 	}
 }
 
+void Kirby::StarInUpdate(float _Delta)
+{
+	if (GetLiveTime() >= 0.3f)
+	{
+		ChangeState(KirbyState::FatIdle);
+		return;
+	}
+}
+
+void Kirby::StarOutUpdate(float _Delta)
+{
+	if (GetLiveTime() >= 0.25f)
+	{
+		ChangeState(KirbyState::Idle);
+		return;
+	}
+}
 
 void Kirby::FatIdleUpdate(float _Delta)
 {
@@ -561,7 +588,7 @@ void Kirby::FatIdleUpdate(float _Delta)
 	if (true == GameEngineInput::IsDown('Z'))
 	{
 		MovePos = float4::ZERO;
-		// ChangeState(KirbyState::AttackStart); 별뱉기
+		ChangeState(KirbyState::StarOut);
 		return;
 	}
 }
@@ -583,7 +610,7 @@ void Kirby::FatWalkUpdate(float _Delta)
 	if (true == GameEngineInput::IsDown('Z'))
 	{
 		MovePos = float4::ZERO;
-		//ChangeState(KirbyState::AttackStart); 별뱉기 공격
+		ChangeState(KirbyState::StarOut);
 		return;
 	}
 
@@ -622,7 +649,7 @@ void Kirby::FatJumpUpdate(float _Delta)
 	if (true == GameEngineInput::IsDown('Z'))
 	{
 		GravityReset();
-		ChangeState(KirbyState::AttackStart);
+		ChangeState(KirbyState::StarOut);
 		return;
 	}
 	// 애니메이션 출력 변경
@@ -659,7 +686,7 @@ void Kirby::FatFallingUpdate(float _Delta)
 	if (true == GameEngineInput::IsDown('Z'))
 	{
 		MovePos = float4::ZERO;
-		//ChangeState(KirbyState::AttackStart);  별뱉기 공격
+		ChangeState(KirbyState::StarOut);
 		return;
 	}
 
@@ -672,7 +699,6 @@ void Kirby::FatFallingUpdate(float _Delta)
 
 	{
 		MovePos = float4::ZERO;
-		//CameraFocus();
 		GravityReset();
 		ChangeState(KirbyState::FatFallingEnd);
 		return;
