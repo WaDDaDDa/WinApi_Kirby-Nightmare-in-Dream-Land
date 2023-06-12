@@ -83,6 +83,12 @@ void Kirby::FatWalkStart()
 	ChangeAnimationState("FatWalk");
 }
 
+void Kirby::FatJumpStart()
+{
+	SetGravityVector(float4::UP * JumpPower);
+	ChangeAnimationState("FatJump");
+}
+
 // IsDown으로 키를 받아서 State를 체인지하게 되면 
 // 업데이트는 실제 행동을 행하는 단계.
 void Kirby::IdleUpdate(float _Delta)
@@ -496,7 +502,7 @@ void Kirby::AttackUpdate(float _Delta)
 			GameEngineActor* Actor = Collison->GetActor();
 
 			Actor->Death();
-
+			AttackCollision->Off();
 			ChangeState(KirbyState::FatIdle);
 			return;
 		}
@@ -533,7 +539,7 @@ void Kirby::FatIdleUpdate(float _Delta)
 
 	if (true == GameEngineInput::IsDown('F'))
 	{
-		ChangeState(KirbyState::Jump);
+		ChangeState(KirbyState::FatJump);
 		return;
 	}
 
@@ -555,7 +561,7 @@ void Kirby::FatWalkUpdate(float _Delta)
 	if (true == GameEngineInput::IsDown('F'))
 	{
 		MovePos = float4::ZERO;
-		ChangeState(KirbyState::Jump);
+		ChangeState(KirbyState::FatJump);
 		return;
 	}
 	// 공격
@@ -580,4 +586,36 @@ void Kirby::FatWalkUpdate(float _Delta)
 		ChangeState(KirbyState::Falling);
 		return;
 	}
+}
+
+void Kirby::FatJumpUpdate(float _Delta)
+{
+	Gravity(_Delta);
+	DirCheck();
+	// 머리위 체크
+	float4 UpCheck = { 0 , -64 };
+	unsigned int ColorCheck = GetGroundColor(RGB(255, 255, 255), UpCheck);
+	if (ColorCheck != RGB(255, 255, 255))
+	{
+		// 체인지 폴링
+		SetGravityVector(float4::ZERO);
+		ChangeState(KirbyState::Falling);
+		return;
+	}
+
+	// 공격
+	if (true == GameEngineInput::IsDown('Z'))
+	{
+		GravityReset();
+		ChangeState(KirbyState::AttackStart);
+		return;
+	}
+	// 애니메이션 출력 변경
+	if (GetGravityVector().iY() >= float4::ZERO.iY())
+	{
+		ChangeState(KirbyState::JumpTurn);
+		return;
+	}
+	// 점프중 이동
+	Movement(_Delta);
 }

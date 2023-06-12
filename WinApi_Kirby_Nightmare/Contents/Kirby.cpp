@@ -52,6 +52,7 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Attack.bmp"), 6, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_FatIdle.bmp"), 2, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_FatWalk.bmp"), 4, 4);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_FatJump.bmp"), 4, 2);
 		}
 		{ // RinghtAnimation 셋팅
 			FilePath.MoveParentToExistsChild("Right");
@@ -67,6 +68,8 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Attack.bmp"), 6, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_FatIdle.bmp"), 2, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_FatWalk.bmp"), 4, 4);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_FatJump.bmp"), 4, 2);
+
 		}
 	}
 
@@ -79,7 +82,7 @@ void Kirby::Start()
 		MainRenderer->FindAnimation("Left_Tackle")->Inters[0] = 0.5f;
 		MainRenderer->CreateAnimation("Left_Walk", "KirbyLeft_Walk.bmp", 0, 9, 0.05f, true);
 		MainRenderer->CreateAnimation("Left_Jump", "KirbyLeft_Jump.bmp", 0, 0, 0.1f, false);
-		MainRenderer->CreateAnimation("Left_JumpTurn", "KirbyLeft_Jump.bmp", 1, 7, 0.03f, true);
+		MainRenderer->CreateAnimation("Left_JumpTurn", "KirbyLeft_Jump.bmp", 1, 7, 0.03f, false);
 		MainRenderer->CreateAnimation("Left_Falling", "KirbyLeft_Jump.bmp", 8, 8, 1.0f, false);
 		MainRenderer->CreateAnimation("Left_FallingEnd", "KirbyLeft_Jump.bmp", 9, 9, 0.1f, false);
 		MainRenderer->CreateAnimation("Left_Run", "KirbyLeft_Run.bmp", 0, 7, 0.1f, true);  // 8은 브레이크모션 9는 벽충돌
@@ -91,6 +94,7 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Left_Attack", "KirbyLeft_Attack.bmp", 3, 4, 0.05f, true);
 		MainRenderer->CreateAnimation("Left_FatIdle", "KirbyLeft_FatIdle.bmp", 0, 1, 0.2f, true);
 		MainRenderer->CreateAnimation("Left_FatWalk", "KirbyLeft_FatWalk.bmp", 0, 15, 0.05f, true);
+		MainRenderer->CreateAnimation("Left_FatJump", "KirbyLeft_FatJump.bmp", 0, 1, 0.1f, false);
 
 	}
 
@@ -101,7 +105,7 @@ void Kirby::Start()
 		MainRenderer->FindAnimation("Right_Tackle")->Inters[0] = 0.5f;
 		MainRenderer->CreateAnimation("Right_Walk", "KirbyRight_Walk.bmp", 0, 9, 0.05f, true);
 		MainRenderer->CreateAnimation("Right_Jump", "KirbyRight_Jump.bmp", 0, 0, 0.1f, false);
-		MainRenderer->CreateAnimation("Right_JumpTurn", "KirbyRight_Jump.bmp", 1, 7, 0.03f, true);
+		MainRenderer->CreateAnimation("Right_JumpTurn", "KirbyRight_Jump.bmp", 1, 7, 0.03f, false);
 		MainRenderer->CreateAnimation("Right_Falling", "KirbyRight_Jump.bmp", 8, 8, 1.0f, false);
 		MainRenderer->CreateAnimation("Right_FallingEnd", "KirbyRight_Jump.bmp", 9, 9, 0.1f, false);
 		MainRenderer->CreateAnimation("Right_Run", "KirbyRight_Run.bmp", 0, 7, 0.1f, true); // 8은 브레이크모션 9는 벽충돌
@@ -113,6 +117,8 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Right_Attack", "KirbyRight_Attack.bmp", 3, 4, 0.05f, true);
 		MainRenderer->CreateAnimation("Right_FatIdle", "KirbyRight_FatIdle.bmp", 0, 1, 0.2f, true);
 		MainRenderer->CreateAnimation("Right_FatWalk", "KirbyRight_FatWalk.bmp", 0, 15, 0.05f, true);
+		MainRenderer->CreateAnimation("Right_FatJump", "KirbyRight_FatJump.bmp", 0, 1, 0.1f, false);
+
 
 	}
 
@@ -209,6 +215,8 @@ void Kirby::StateUpdate(float _Delta)
 		return FatIdleUpdate(_Delta);
 	case KirbyState::FatWalk:
 		return FatWalkUpdate(_Delta);
+	case KirbyState::FatJump:
+		return FatJumpUpdate(_Delta);
 	default:
 		break;
 	}
@@ -264,6 +272,9 @@ void Kirby::ChangeState(KirbyState _State)
 			break;
 		case KirbyState::FatWalk:
 			FatWalkStart();
+			break;
+		case KirbyState::FatJump:
+			FatJumpStart();
 			break;
 		default:
 			break;
