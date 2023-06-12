@@ -3,7 +3,7 @@
 #include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineCamera.h>
-#include "Bullet.h"
+#include "AirAttack.h"
 #include "BurningKirby.h"
 
 // 랜더할 이미지를 먼저 설정해주고 이미지는 그에 맞게 랜더되고 있으면서 update가 일어난다.
@@ -432,6 +432,9 @@ void Kirby::FlyUpdate(float _Delta)
 
 	if (true == GameEngineInput::IsPress('X'))
 	{
+		AirAttack* MainAttack = GetLevel()->CreateActor<AirAttack>();
+		MainAttack->SetPos(GetPos());
+		MainAttack->SetKirby(this);
 		ChangeState(KirbyState::Idle);
 		return;
 	}

@@ -63,6 +63,12 @@ public:
     unsigned int GetWallCheck();
 
     void Movement(float _Delta);
+
+    KirbyDir GetDir()
+    {
+        return Dir;
+    }
+
 protected:
     // 클래스로 만들어도 된다. 행동과 랜더.
     void StateUpdate(float _Delta);
