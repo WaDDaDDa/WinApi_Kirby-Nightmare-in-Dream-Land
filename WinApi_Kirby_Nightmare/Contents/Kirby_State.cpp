@@ -491,6 +491,8 @@ void Kirby::AttackUpdate(float _Delta)
 
 			GameEngineActor* Actor = Collison->GetActor();
 
+			Actor->Death();
+
 			ChangeState(KirbyState::FatIdle);
 			return;
 		}
@@ -500,5 +502,41 @@ void Kirby::AttackUpdate(float _Delta)
 
 void Kirby::FatIdleUpdate(float _Delta)
 {
+	GroundCheck(_Delta);
 
+	unsigned int Color = GetGroundColor(RGB(255, 255, 255));
+	unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), LeftCheck);
+	unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), RightCheck);
+
+	if ((RGB(255, 255, 255) == Color && LeftColor == RGB(255, 255, 255) && RightColor == RGB(255, 255, 255)))
+	{
+		ChangeState(KirbyState::Falling);
+		return;
+	}
+
+	if (true == GameEngineInput::IsPress('A')
+		|| true == GameEngineInput::IsPress('D'))
+	{
+		ChangeState(KirbyState::Walk);
+		return;
+	}
+
+	if (true == GameEngineInput::IsPress('S'))
+	{
+		ChangeState(KirbyState::DownIdle);
+		return;
+	}
+
+	if (true == GameEngineInput::IsDown('F'))
+	{
+		ChangeState(KirbyState::Jump);
+		return;
+	}
+
+	if (true == GameEngineInput::IsDown('Z'))
+	{
+		MovePos = float4::ZERO;
+		ChangeState(KirbyState::AttackStart);
+		return;
+	}
 }

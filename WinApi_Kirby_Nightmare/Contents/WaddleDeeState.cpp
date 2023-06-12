@@ -51,11 +51,11 @@ void WaddleDee::HitReadyUpdate(float _Delta)
 
 	if (Value == 1)
 	{
-		MainRenderer->Off();
+		//MainRenderer->Off();
 	}
 	else
 	{
-		MainRenderer->On();
+		//MainRenderer->On();
 	}
 
 }
@@ -73,18 +73,18 @@ void WaddleDee::HitUpdate(float _Delta)
 
 	std::vector<GameEngineCollision*> _Col;
 	//플레이어 몸통과 충돌.
-	if (true == DeathCollision->Collision(CollisionOrder::PlayerBody
-		, _Col
-		, CollisionType::CirCle // 나를 사각형으로 봐줘
-		, CollisionType::CirCle // 상대도 사각형으로 봐줘
-	))
-	{
-		for (size_t i = 0; i < _Col.size(); i++)
-		{
-			GameEngineCollision* Collison = _Col[i];
+	//if (true == DeathCollision->Collision(CollisionOrder::PlayerBody
+	//	, _Col
+	//	, CollisionType::CirCle // 나를 사각형으로 봐줘
+	//	, CollisionType::CirCle // 상대도 사각형으로 봐줘
+	//))
+	//{
+	//	for (size_t i = 0; i < _Col.size(); i++)
+	//	{
+	//		GameEngineCollision* Collison = _Col[i];
 
-			Actor = Collison->GetActor();
-			Death();
-		}
-	}
+	//		Actor = Collison->GetActor();
+	//		Death();
+	//	}
+	//}
 }
