@@ -2,7 +2,7 @@
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/ResourcesManager.h>
 #include "ContentsEnum.h"
-
+#include <GameEngineCore/GameEngineLevel.h>
 
 AirAttack::AirAttack()
 {
@@ -40,21 +40,32 @@ void AirAttack::Start()
 		Renderer->CreateAnimation("Right_AirAttack", "Right_AirAttackEffect.bmp", 0, 5, 0.2f, true);
 	}
 	Renderer->ChangeAnimation("Right_AirAttack");
-	Renderer->SetScaleRatio(4.0f);
+	Renderer->SetScaleRatio(3.0f);
 
+	AttackCollision = CreateCollision(CollisionOrder::PlayerAttack);
+	AttackCollision->SetCollisionScale(AttackCollisionScale);
+	AttackCollision->SetCollisionType(CollisionType::CirCle);
+}
+
+
+void AirAttack::DirCheck()
+{
+	if (KirbyDir::Left == MainKirby->GetDir())
+	{
+		AddPos(LeftAttackPos);
+		Renderer->ChangeAnimation("Left_AirAttack");
+		Dir = float4::LEFT;
+	}
+	else if (KirbyDir::Right == MainKirby->GetDir())
+	{
+		AddPos(RightAttackPos);
+		Renderer->ChangeAnimation("Right_AirAttack");
+		Dir = float4::RIGHT;
+	}
 }
 
 void AirAttack::Update(float _Delta)
 {
-	if (KirbyDir::Left == MainKirby->GetDir())
-	{
-		Dir = float4::LEFT;
-		Renderer->ChangeAnimation("Left_AirAttack");
-	}
-	else if (KirbyDir::Right == MainKirby->GetDir())
-	{
-		Dir = float4::RIGHT;
-	}
 	AddPos(Dir * _Delta * Speed);
 
 	// 1초뒤 데스
@@ -62,8 +73,23 @@ void AirAttack::Update(float _Delta)
 	{
 		if (nullptr != Renderer)
 		{
-			Renderer->Death();
-			Renderer = nullptr;
+			Death();
+		}
+	}
+
+	std::vector<GameEngineCollision*> _Col;
+
+	if (true == AttackCollision->Collision(CollisionOrder::MonsterBody
+		, _Col
+		, CollisionType::CirCle // 나를 사각형으로 봐줘
+		, CollisionType::CirCle // 상대도 사각형으로 봐줘
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			GameEngineActor* Actor = Collison->GetActor();
 		}
 	}
 

@@ -55,6 +55,7 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_FatIdle.bmp"), 2, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_FatWalk.bmp"), 4, 4);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_FatJump.bmp"), 4, 2);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_BreathOut.bmp"), 6, 3);
 		}
 		{ // RinghtAnimation 셋팅
 			FilePath.MoveParentToExistsChild("Right");
@@ -73,7 +74,14 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_FatIdle.bmp"), 2, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_FatWalk.bmp"), 4, 4);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_FatJump.bmp"), 4, 2);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_BreathOut.bmp"), 6, 3);
 
+		}
+		{
+			//이펙트 로드
+			FilePath.MoveParentToExistsChild("Resource");
+			FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Etc\\");
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("DamageEffects.bmp"), 3, 1);
 		}
 	}
 
@@ -104,6 +112,7 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Left_FatJumpTurn", "KirbyLeft_FatJump.bmp", 2, 4, 0.1f, false);
 		MainRenderer->CreateAnimation("Left_FatFalling", "KirbyLeft_FatJump.bmp", 5, 6, 0.1f, false);
 		MainRenderer->CreateAnimation("Left_FatFallingEnd", "KirbyLeft_FatJump.bmp", 7, 7, 0.1f, false);
+		MainRenderer->CreateAnimation("Left_BreathOut", "KirbyLeft_BreathOut.bmp", 0, 1, 0.1f, false);
 
 	}
 
@@ -132,6 +141,7 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Right_FatJumpTurn", "KirbyRight_FatJump.bmp", 2, 4, 0.1f, false);
 		MainRenderer->CreateAnimation("Right_FatFalling", "KirbyRight_FatJump.bmp", 5, 6, 0.1f, false);
 		MainRenderer->CreateAnimation("Right_FatFallingEnd", "KirbyRight_FatJump.bmp", 7, 7, 0.1f, false);
+		MainRenderer->CreateAnimation("Right_BreathOut", "KirbyRight_BreathOut.bmp", 0, 1, 0.1f, false);
 
 	}
 
@@ -140,7 +150,7 @@ void Kirby::Start()
 		BodyCollision->SetCollisionScale(BodyCollisionScale);
 		BodyCollision->SetCollisionPos(BodyCollisionPos);
 		BodyCollision->SetCollisionType(CollisionType::CirCle);
-		AttackCollision = CreateCollision(CollisionOrder::PlayerAttack);
+		AttackCollision = CreateCollision(CollisionOrder::VacumAttack);
 		AttackCollision->SetCollisionScale(AttackCollisionScale);
 		AttackCollision->SetCollisionPos(AttackCollisionPos);
 		AttackCollision->SetCollisionType(CollisionType::Rect);
@@ -240,6 +250,8 @@ void Kirby::StateUpdate(float _Delta)
 		return FatFallingUpdate(_Delta);
 	case KirbyState::FatFallingEnd:
 		return FatFallingEndUpdate(_Delta);
+	case KirbyState::BreathOut:
+		return BreathOutUpdate(_Delta);
 	default:
 		break;
 	}
@@ -313,6 +325,9 @@ void Kirby::ChangeState(KirbyState _State)
 			break;
 		case KirbyState::FatFallingEnd:
 			FatFallingEndStart();
+			break;		
+		case KirbyState::BreathOut:
+			BreathOutStart();
 			break;
 		default:
 			break;

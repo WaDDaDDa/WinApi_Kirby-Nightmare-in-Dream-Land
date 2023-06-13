@@ -114,6 +114,11 @@ void Kirby::FatFallingEndStart()
 	ChangeAnimationState("FatFallingEnd");
 }
 
+void Kirby::BreathOutStart()
+{
+	ChangeAnimationState("BreathOut");
+}
+
 // IsDown으로 키를 받아서 State를 체인지하게 되면 
 // 업데이트는 실제 행동을 행하는 단계.
 void Kirby::IdleUpdate(float _Delta)
@@ -435,7 +440,8 @@ void Kirby::FlyUpdate(float _Delta)
 		AirAttack* MainAttack = GetLevel()->CreateActor<AirAttack>();
 		MainAttack->SetPos(GetPos());
 		MainAttack->SetKirby(this);
-		ChangeState(KirbyState::Idle);
+		MainAttack->DirCheck();
+		ChangeState(KirbyState::BreathOut);
 		return;
 	}
 }
@@ -728,6 +734,18 @@ void Kirby::FatFallingEndUpdate(float _Delta)
 	{
 		MovePos = float4::ZERO;
 		ChangeState(KirbyState::FatJump);
+		return;
+	}
+}
+
+void Kirby::BreathOutUpdate(float _Delta)
+{
+	DirCheck();
+	GroundCheck(_Delta);
+	Movement(_Delta);
+	if (GetLiveTime() >= 0.1f)
+	{
+		ChangeState(KirbyState::Idle);
 		return;
 	}
 }

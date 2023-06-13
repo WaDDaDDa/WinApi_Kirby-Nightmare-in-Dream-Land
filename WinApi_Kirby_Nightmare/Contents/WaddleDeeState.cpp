@@ -88,3 +88,44 @@ void WaddleDee::HitUpdate(float _Delta)
 	//	}
 	//}
 }
+
+void WaddleDee::DamageStart()
+{
+	ChangeAnimationState("Hit");
+}
+
+void WaddleDee::DamageUpdate(float _Delta)
+{
+	float4 MoveDir = float4::ZERO;
+	if (WaddleDeeDir::Left == Dir)
+	{
+		MoveDir = float4::RIGHT;
+	}
+	else if (WaddleDeeDir::Right == Dir)
+	{
+		MoveDir = float4::LEFT;
+	}
+	MoveDir.Normalize();
+	AddPos(MoveDir * 100.0f * _Delta);
+
+	if (1.0f <= GetLiveTime())
+	{
+		ChangeState(WaddleDeeState::Effect);
+		return;
+	}
+}
+
+void WaddleDee::EffectStart()
+{
+	AddPos(CollisionPos);
+	ChangeAnimationState("Effect");
+}
+
+void WaddleDee::EffectUpdate(float _Delta)
+{
+	GravityOff();
+	if (1.0f <= GetLiveTime())
+	{
+		Death();
+	}
+}

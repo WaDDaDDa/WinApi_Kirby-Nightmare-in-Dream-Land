@@ -42,11 +42,13 @@ void WaddleDee::Start()
 		MainRenderer->CreateAnimation("WaddleDeeLeft_Walk", "WaddleDeeLeft.bmp", 1, 4, 0.3f, true);
 		MainRenderer->CreateAnimation("WaddleDeeLeft_HitReady", "WaddleDeeLeft.bmp", 5, 5, 0.1f, true);
 		MainRenderer->CreateAnimation("WaddleDeeLeft_Hit", "WaddleDeeLeft.bmp", 5, 5, 0.1f, true);
+		MainRenderer->CreateAnimation("WaddleDeeLeft_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
 
 		MainRenderer->CreateAnimation("WaddleDeeRight_Idle", "WaddleDeeRight.bmp", 2, 2, 0.1f, true);
 		MainRenderer->CreateAnimation("WaddleDeeRight_Walk", "WaddleDeeRight.bmp", 1, 4, 0.3f, true);
 		MainRenderer->CreateAnimation("WaddleDeeRight_HitReady", "WaddleDeeRight.bmp", 5, 5, 0.1f, true);
 		MainRenderer->CreateAnimation("WaddleDeeRight_Hit", "WaddleDeeRight.bmp", 5, 5, 0.1f, true);
+		MainRenderer->CreateAnimation("WaddleDeeRight_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
 	}
 
 	{ // 충돌체 설정
@@ -86,7 +88,7 @@ void WaddleDee::Update(float _Delta)
 		}
 	}
 	//플레이어 공격과 충돌.
-	if (true == BodyCollision->Collision(CollisionOrder::PlayerAttack
+	if (true == BodyCollision->Collision(CollisionOrder::VacumAttack
 		, _Col
 		, CollisionType::CirCle // 나의 충돌체 모양
 		, CollisionType::Rect // 상대의 충돌체 모양
@@ -115,6 +117,37 @@ void WaddleDee::Update(float _Delta)
 		}
 	}
 
+	if (true == BodyCollision->Collision(CollisionOrder::PlayerAttack
+		, _Col
+		, CollisionType::CirCle // 나의 충돌체 모양
+		, CollisionType::CirCle // 상대의 충돌체 모양
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			Actor = Collison->GetActor();
+
+			float4 ActorPos = Actor->GetPos();
+
+			if (GetPos().X > ActorPos.X)
+			{
+				Dir = WaddleDeeDir::Left;
+			}
+			else
+			{
+				Dir = WaddleDeeDir::Right;
+			}
+			// 계속 흡수당하고있음.
+			// 흡수당하는건 한번만 해야함.
+			Collison->Off();
+			BodyCollision->Off();
+			ChangeState(WaddleDeeState::Damage);
+			return;
+		}
+	}
+
 	StateUpdate(_Delta);
 	GroundCheck(_Delta);
 }
@@ -131,6 +164,10 @@ void WaddleDee::StateUpdate(float _Delta)
 		return HitReadyUpdate(_Delta);
 	case WaddleDeeState::Hit:
 		return HitUpdate(_Delta);
+	case WaddleDeeState::Damage:
+		return DamageUpdate(_Delta);
+	case WaddleDeeState::Effect:
+		return EffectUpdate(_Delta);
 	default:
 		break;
 	}
@@ -153,6 +190,12 @@ void WaddleDee::ChangeState(WaddleDeeState _State)
 			break;
 		case WaddleDeeState::Hit:
 			HitStart();
+			break;
+		case WaddleDeeState::Damage:
+			DamageStart();
+			break;
+		case WaddleDeeState::Effect:
+			EffectStart();
 			break;
 		default:
 			break;

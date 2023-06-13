@@ -18,6 +18,8 @@ enum class WaddleDeeState
     Attack,
     HitReady,
     Hit,
+    Damage,
+    Effect,
     Max, // 일반적으로 사용하지 않는 값.
 };
 
@@ -51,6 +53,10 @@ public:
     void HitReadyUpdate(float _Delta);
     void HitStart();
     void HitUpdate(float _Delta);
+    void DamageStart();
+    void DamageUpdate(float _Delta);
+    void EffectStart();
+    void EffectUpdate(float _Delta);
 
 
     void ChangeState(WaddleDeeState _State);
