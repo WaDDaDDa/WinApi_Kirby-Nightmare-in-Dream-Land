@@ -40,6 +40,9 @@
     <ClInclude Include="AirAttack.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="Star.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainHub.cpp" />
@@ -85,6 +88,9 @@
       <Filter>Kirby</Filter>
     </ClCompile>
     <ClCompile Include="AirAttack.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="Star.cpp">
       <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>

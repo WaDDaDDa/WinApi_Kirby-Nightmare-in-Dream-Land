@@ -5,6 +5,7 @@
 #include <GameEngineCore/GameEngineCamera.h>
 #include "AirAttack.h"
 #include "BurningKirby.h"
+#include "Star.h"
 
 // 랜더할 이미지를 먼저 설정해주고 이미지는 그에 맞게 랜더되고 있으면서 update가 일어난다.
 
@@ -556,6 +557,10 @@ void Kirby::StarOutUpdate(float _Delta)
 {
 	if (GetLiveTime() >= 0.25f)
 	{
+		Star* StarAttack = GetLevel()->CreateActor<Star>();
+		StarAttack->SetPos(GetPos());
+		StarAttack->SetKirby(this);
+		StarAttack->DirCheck();
 		ChangeState(KirbyState::Idle);
 		return;
 	}

@@ -82,6 +82,8 @@ void Kirby::Start()
 			FilePath.MoveParentToExistsChild("Resource");
 			FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Etc\\");
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("DamageEffects.bmp"), 3, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Star.bmp"), 2, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("StarEffects.bmp"), 4, 1);
 		}
 	}
 
@@ -187,14 +189,14 @@ void Kirby::Update(float _Delta)
 	// ¡‹ ¿Œ æ∆øÙ ±‚¥…
 	if (true == GameEngineInput::IsPress('L'))
 	{
-		GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(1.0f * _Delta);
+		//GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(1.0f * _Delta);
 
 		// Monster::AllMonsterDeath();
 	}
 
 	if (true == GameEngineInput::IsPress('Y'))
 	{
-		GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(-1.0f * _Delta);
+		//GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(-1.0f * _Delta);
 		// GameEngineLevel::CollisionDebugRenderSwitch();
 	}
 
