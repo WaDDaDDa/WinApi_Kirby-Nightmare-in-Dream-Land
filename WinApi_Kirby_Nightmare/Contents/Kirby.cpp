@@ -58,6 +58,7 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_BreathOut.bmp"), 6, 3);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Swallow.bmp"), 3, 3);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Damage.bmp"), 3, 3);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_FatDamage.bmp"), 4, 1);
 		}
 		{ // RinghtAnimation 셋팅
 			FilePath.MoveParentToExistsChild("Right");
@@ -79,6 +80,7 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_BreathOut.bmp"), 6, 3);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Swallow.bmp"), 3, 3);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Damage.bmp"), 3, 3);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_FatDamage.bmp"), 4, 1);
 
 		}
 		{
@@ -121,6 +123,7 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Left_BreathOut", "KirbyLeft_BreathOut.bmp", 0, 1, 0.1f, false);
 		MainRenderer->CreateAnimation("Left_Swallow", "KirbyLeft_Swallow.bmp", 0, 7, 0.05f, false);
 		MainRenderer->CreateAnimation("Left_Damage", "KirbyLeft_Damage.bmp", 0, 8, 0.05f, false);
+		MainRenderer->CreateAnimation("Left_FatDamage", "KirbyLeft_FatDamage.bmp", 0, 3, 0.1f, false);
 	}
 
 	{ // RightAnimation 생성
@@ -151,6 +154,7 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Right_BreathOut", "KirbyRight_BreathOut.bmp", 0, 1, 0.1f, false);
 		MainRenderer->CreateAnimation("Right_Swallow", "KirbyRight_Swallow.bmp", 0, 7, 0.05f, false);
 		MainRenderer->CreateAnimation("Right_Damage", "KirbyRight_Damage.bmp", 0, 8, 0.05f, false);
+		MainRenderer->CreateAnimation("Right_FatDamage", "KirbyRight_FatDamage.bmp", 0, 3, 0.1f, false);
 	}
 
 	{ // 충돌체 설정
@@ -188,6 +192,17 @@ void Kirby::Update(float _Delta)
 			GameEngineCollision* Collison = _Col[i];
 
 			GameEngineActor* Actor = Collison->GetActor();
+
+			if (State == KirbyState::FatFalling ||
+				State == KirbyState::FatFallingEnd ||
+				State == KirbyState::FatIdle ||
+				State == KirbyState::FatJump ||
+				State == KirbyState::FatJumpTurn ||
+				State == KirbyState::FatWalk)
+			{
+				ChangeState(KirbyState::FatDamage);
+				return;
+			}
 
 			ChangeState(KirbyState::Damage);
 			return;
@@ -265,6 +280,8 @@ void Kirby::StateUpdate(float _Delta)
 		return SwallowUpdate(_Delta);
 	case KirbyState::Damage:
 		return DamageUpdate(_Delta);
+	case KirbyState::FatDamage:
+		return FatDamageUpdate(_Delta);
 	default:
 		break;
 	}
@@ -347,6 +364,9 @@ void Kirby::ChangeState(KirbyState _State)
 			break;
 		case KirbyState::Damage:
 			DamageStart();
+			break;
+		case KirbyState::FatDamage:
+			FatDamageStart();
 			break;
 		default:
 			break;

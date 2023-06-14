@@ -27,6 +27,7 @@ enum class KirbyState
     BreathOut,
     Swallow,
     Damage,
+    FatDamage,
     Max, // 일반적으로 사용하지 않는 값.
 };
 
@@ -103,6 +104,7 @@ protected:
     void BreathOutStart();
     void SwallowStart();
     void DamageStart();
+    void FatDamageStart();
 
     void IdleUpdate(float _Delta);
     void DownIdleUpdate(float _Delta);
@@ -128,6 +130,7 @@ protected:
     void BreathOutUpdate(float _Delta);
     void SwallowUpdate(float _Delta);
     void DamageUpdate(float _Delta);
+    void FatDamageUpdate(float _Delta);
 
     void ChangeState(KirbyState _State);
 

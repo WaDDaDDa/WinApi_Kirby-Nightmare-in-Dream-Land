@@ -131,6 +131,12 @@ void Kirby::DamageStart()
 	ChangeAnimationState("Damage");
 }
 
+void Kirby::FatDamageStart()
+{
+	BodyCollision->Off();
+	ChangeAnimationState("FatDamage");
+}
+
 // IsDown으로 키를 받아서 State를 체인지하게 되면 
 // 업데이트는 실제 행동을 행하는 단계.
 void Kirby::IdleUpdate(float _Delta)
@@ -806,6 +812,29 @@ void Kirby::DamageUpdate(float _Delta)
 	{
 		ImmuneValue = true;
 		ChangeState(KirbyState::Idle);
+		return;
+	}
+}
+
+void Kirby::FatDamageUpdate(float _Delta)
+{
+
+	float4 MoveDir = float4::ZERO;
+	if (KirbyDir::Left == Dir)
+	{
+		MoveDir = float4::RIGHT;
+	}
+	else if (KirbyDir::Right == Dir)
+	{
+		MoveDir = float4::LEFT;
+	}
+	MoveDir.Normalize();
+	AddPos(MoveDir * 200.0f * _Delta);
+
+	if (GetLiveTime() >= 0.4f)
+	{
+		ImmuneValue = true;
+		ChangeState(KirbyState::FatIdle);
 		return;
 	}
 }
