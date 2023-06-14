@@ -25,7 +25,7 @@ void MainHub::Start()
 	GameEngineCore::CreateLevel<VegetableValleyLevel>("VegetableValleyLevel");
 
 	// 이 레벨이 화면에 보여라.
-	GameEngineCore::ChangeLevel("TitleLevel");
+	GameEngineCore::ChangeLevel("VegetableValleyLevel");
 }
 
 // 행동.
