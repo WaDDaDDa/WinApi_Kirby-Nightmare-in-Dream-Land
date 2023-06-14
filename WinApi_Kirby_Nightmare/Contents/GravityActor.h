@@ -32,6 +32,11 @@ public:
 
     void SetGroundTexture(const std::string& _GroundTextureName);
 
+    void SetGroundTexture(GameEngineWindowTexture* _GroundTextureName)
+    {
+        GroundTexture = _GroundTextureName;
+    }
+
     GameEngineWindowTexture* GetGroundTexture()
     {
         return GroundTexture;
@@ -48,6 +53,7 @@ public:
     {
         GravityVector = _GravityVector;
     }
+
 
 protected:
 

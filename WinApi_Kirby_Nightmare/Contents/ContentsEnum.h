@@ -22,4 +22,11 @@ enum class CollisionOrder
 	MonsterBody,
 	VacumAttack,
 	PlayerAttack,
+	SpecialAttack,
+};
+
+enum class Abillity
+{
+	Normal,
+	Burning,
 };

@@ -69,11 +69,13 @@ void MainHubLevel::Update(float _Delta)
 	{
 		GameEngineCore::ChangeLevel("VegetableValleyLevel");
 		LevelPlayer->SetGroundTexture("Level1_Debug.bmp");
+		BGMPlayer.Stop();
 	}
 
 	if (true == GameEngineInput::IsDown('M'))
 	{
-		CreateActor<WaddleDee>();
+		WaddleDee* Waddle = CreateActor<WaddleDee>();
+		Waddle->SetGroundTexture("MainHupDebug.bmp");
 	}
 
 	if (true == GameEngineInput::IsDown('J'))

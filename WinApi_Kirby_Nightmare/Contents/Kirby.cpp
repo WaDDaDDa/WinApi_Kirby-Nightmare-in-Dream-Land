@@ -56,6 +56,7 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_FatWalk.bmp"), 4, 4);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_FatJump.bmp"), 4, 2);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_BreathOut.bmp"), 6, 3);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Swallow.bmp"), 3, 3);
 		}
 		{ // RinghtAnimation 셋팅
 			FilePath.MoveParentToExistsChild("Right");
@@ -75,6 +76,7 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_FatWalk.bmp"), 4, 4);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_FatJump.bmp"), 4, 2);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_BreathOut.bmp"), 6, 3);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Swallow.bmp"), 3, 3);
 
 		}
 		{
@@ -115,7 +117,7 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Left_FatFalling", "KirbyLeft_FatJump.bmp", 5, 6, 0.1f, false);
 		MainRenderer->CreateAnimation("Left_FatFallingEnd", "KirbyLeft_FatJump.bmp", 7, 7, 0.1f, false);
 		MainRenderer->CreateAnimation("Left_BreathOut", "KirbyLeft_BreathOut.bmp", 0, 1, 0.1f, false);
-
+		MainRenderer->CreateAnimation("Left_Swallow", "KirbyLeft_Swallow.bmp", 0, 7, 0.05f, false);
 	}
 
 	{ // RightAnimation 생성
@@ -144,7 +146,7 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Right_FatFalling", "KirbyRight_FatJump.bmp", 5, 6, 0.1f, false);
 		MainRenderer->CreateAnimation("Right_FatFallingEnd", "KirbyRight_FatJump.bmp", 7, 7, 0.1f, false);
 		MainRenderer->CreateAnimation("Right_BreathOut", "KirbyRight_BreathOut.bmp", 0, 1, 0.1f, false);
-
+		MainRenderer->CreateAnimation("Right_Swallow", "KirbyRight_Swallow.bmp", 0, 7, 0.05f, false);
 	}
 
 	{ // 충돌체 설정
@@ -254,6 +256,8 @@ void Kirby::StateUpdate(float _Delta)
 		return FatFallingEndUpdate(_Delta);
 	case KirbyState::BreathOut:
 		return BreathOutUpdate(_Delta);
+	case KirbyState::Swallow:
+		return SwallowUpdate(_Delta);
 	default:
 		break;
 	}
@@ -330,6 +334,9 @@ void Kirby::ChangeState(KirbyState _State)
 			break;		
 		case KirbyState::BreathOut:
 			BreathOutStart();
+			break;
+		case KirbyState::Swallow:
+			SwallowStart();
 			break;
 		default:
 			break;
@@ -431,7 +438,7 @@ void Kirby::CameraFocus(float _Delta)
 	}
 	else if (250 > PlayerX - CameraRangeX)
 	{
-		GetLevel()->GetMainCamera()->AddPos({ -Speed * _Delta , 0 });
+		GetLevel()->GetMainCamera()->AddPos({- Speed * _Delta , 0 });
 	}
 
 	// 카메라가 움직이는 Y범위 캐릭터가 -200 ~ -450 사이에서 움직인다.

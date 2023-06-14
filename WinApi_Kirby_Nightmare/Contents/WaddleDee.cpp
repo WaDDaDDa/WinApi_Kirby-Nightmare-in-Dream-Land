@@ -65,7 +65,7 @@ void WaddleDee::Start()
 	}
 	MainRenderer->SetScaleRatio(4.0f);
 	SetPos(float4{ 500,360 });
-	SetGroundTexture("Level1_Debug.bmp");
+	//SetGroundTexture("Level1_Debug.bmp");
 
 	ChangeState(WaddleDeeState::Idle);
 }
@@ -142,6 +142,36 @@ void WaddleDee::Update(float _Delta)
 			// 계속 흡수당하고있음.
 			// 흡수당하는건 한번만 해야함.
 			Collison->Off();
+			BodyCollision->Off();
+			ChangeState(WaddleDeeState::Damage);
+			return;
+		}
+	}
+
+	if (true == BodyCollision->Collision(CollisionOrder::SpecialAttack
+		, _Col
+		, CollisionType::CirCle // 나의 충돌체 모양
+		, CollisionType::Rect // 상대의 충돌체 모양
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			Actor = Collison->GetActor();
+
+			float4 ActorPos = Actor->GetPos();
+
+			if (GetPos().X > ActorPos.X)
+			{
+				Dir = WaddleDeeDir::Left;
+			}
+			else
+			{
+				Dir = WaddleDeeDir::Right;
+			}
+			// 계속 흡수당하고있음.
+			// 흡수당하는건 한번만 해야함.
 			BodyCollision->Off();
 			ChangeState(WaddleDeeState::Damage);
 			return;

@@ -67,8 +67,9 @@ void BurningKirby::Start()
 		MainRenderer->CreateAnimation("BurningKirbyLeft_BreathIn", "BurningKirbyLeft.bmp", 130, 134, 0.05f, true);
 		MainRenderer->FindAnimation("BurningKirbyLeft_BreathIn")->Inters[3] = 0.1f;
 		MainRenderer->FindAnimation("BurningKirbyLeft_BreathIn")->Inters[4] = 0.1f;
-		MainRenderer->CreateAnimation("BurningKirbyLeft_AttackStart", "BurningKirbyLeft.bmp", 0, 2, 0.1f, true);
-		MainRenderer->CreateAnimation("BurningKirbyLeft_Attack", "BurningKirbyLeft.bmp", 3, 4, 0.05f, true);
+		MainRenderer->CreateAnimation("BurningKirbyLeft_AttackStart", "BurningKirbyLeft.bmp", 298, 300, 0.05f, false);
+		MainRenderer->CreateAnimation("BurningKirbyLeft_Attack", "BurningKirbyLeft.bmp", 301, 320, 0.05f, false);
+		MainRenderer->CreateAnimation("BurningKirbyLeft_BreathOut", "BurningKirbyLeft.bmp", 164, 165, 0.1f, false);
 	}
 
 	{ // RightAnimation 생성
@@ -89,8 +90,9 @@ void BurningKirby::Start()
 		MainRenderer->CreateAnimation("BurningKirbyRight_BreathIn", "BurningKirbyRight.bmp", 130, 134, 0.05f, true);
 		MainRenderer->FindAnimation("BurningKirbyRight_BreathIn")->Inters[3] = 0.1f;
 		MainRenderer->FindAnimation("BurningKirbyRight_BreathIn")->Inters[4] = 0.1f;
-		MainRenderer->CreateAnimation("BurningKirbyRight_AttackStart", "BurningKirbyRight.bmp", 0, 2, 0.1f, true);
-		MainRenderer->CreateAnimation("BurningKirbyRight_Attack", "BurningKirbyRight.bmp", 3, 4, 0.05f, true);
+		MainRenderer->CreateAnimation("BurningKirbyRight_AttackStart", "BurningKirbyRight.bmp", 298, 300, 0.05f, false);
+		MainRenderer->CreateAnimation("BurningKirbyRight_Attack", "BurningKirbyRight.bmp", 301, 320, 0.05f, false);
+		MainRenderer->CreateAnimation("BurningKirbyRight_BreathOut", "BurningKirbyRight.bmp", 164, 165, 0.1f, false);
 	}
 
 	{ // 충돌체 설정
@@ -98,7 +100,7 @@ void BurningKirby::Start()
 		BodyCollision->SetCollisionScale(BodyCollisionScale);
 		BodyCollision->SetCollisionPos(BodyCollisionPos);
 		BodyCollision->SetCollisionType(CollisionType::CirCle);
-		AttackCollision = CreateCollision(CollisionOrder::PlayerAttack);
+		AttackCollision = CreateCollision(CollisionOrder::SpecialAttack);
 		AttackCollision->SetCollisionScale(AttackCollisionScale);
 		AttackCollision->SetCollisionPos(AttackCollisionPos);
 		AttackCollision->SetCollisionType(CollisionType::Rect);
@@ -173,4 +175,66 @@ void BurningKirby::ChangeAnimationState(const std::string& _StateName)
 	CurState = _StateName;
 
 	MainRenderer->ChangeAnimation(AnimationName);
+}
+
+void BurningKirby::CameraFocus(float _Delta)
+{
+	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
+
+	int CameraRangeX = GetLevel()->GetMainCamera()->GetPos().iX();
+	int CameraRangeY = GetLevel()->GetMainCamera()->GetPos().iY();
+
+	int PlayerX = GetPos().iX();
+	int PlayerY = GetPos().iY();
+
+	float ImageX = GetGroundTexture()->GetScale().X - 960.0f;
+	float ImageY = GetGroundTexture()->GetScale().Y;
+
+	// 카메라가 맵의 왼쪽으로 못나가게.
+	if (0 >= GetLevel()->GetMainCamera()->GetPos().X)
+	{
+		GetLevel()->GetMainCamera()->SetPos({ 0.0f, GetLevel()->GetMainCamera()->GetPos().Y });
+	}
+	// 카메라가 맵의 오른쪽 최대치를 못나가게.
+	if (ImageX <= GetLevel()->GetMainCamera()->GetPos().X)
+	{
+		GetLevel()->GetMainCamera()->SetPos({ ImageX, GetLevel()->GetMainCamera()->GetPos().Y });
+	}
+
+	if (0 >= GetLevel()->GetMainCamera()->GetPos().Y)
+	{
+		//GetLevel()->GetMainCamera()->SetPos({ GetLevel()->GetMainCamera()->GetPos().X, 0.0f });
+	}
+
+	// 카메라가 움직이는 X 범위 250 ~ 650 사이에캐릭터를 둔다.
+	// 카메라의 속도는 캐릭터의 속도로 한다.
+	if (650 < PlayerX - CameraRangeX)
+	{
+		GetLevel()->GetMainCamera()->AddPos({ Speed * _Delta , 0 });
+	}
+	else if (250 > PlayerX - CameraRangeX)
+	{
+		GetLevel()->GetMainCamera()->AddPos({ -Speed * _Delta , 0 });
+	}
+
+	// 카메라가 움직이는 Y범위 캐릭터가 -200 ~ -450 사이에서 움직인다.
+	// 캐릭터 이동속도가 카메라 보다 빨라지면 중력을 속도로 한다.
+	if (-200 < CameraRangeY - PlayerY)
+	{
+		if (GetGravityVector().iY() <= -1)
+		{
+			GetLevel()->GetMainCamera()->AddPos(GetGravityVector() * _Delta);
+			return;
+		}
+		GetLevel()->GetMainCamera()->AddPos(float4::UP);
+	}
+	else if (-450 > CameraRangeY - PlayerY)
+	{
+		if (GetGravityVector().iY() >= 1)
+		{
+			GetLevel()->GetMainCamera()->AddPos(GetGravityVector() * _Delta);
+			return;
+		}
+		GetLevel()->GetMainCamera()->AddPos(float4::DOWN);
+	}
 }

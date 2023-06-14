@@ -120,6 +120,11 @@ void Kirby::BreathOutStart()
 	ChangeAnimationState("BreathOut");
 }
 
+void Kirby::SwallowStart()
+{
+	ChangeAnimationState("Swallow");
+}
+
 // IsDown으로 키를 받아서 State를 체인지하게 되면 
 // 업데이트는 실제 행동을 행하는 단계.
 void Kirby::IdleUpdate(float _Delta)
@@ -155,7 +160,7 @@ void Kirby::IdleUpdate(float _Delta)
 		return;
 	}
 
-	if (true == GameEngineInput::IsDown('Z'))
+	if (true == GameEngineInput::IsDown('X'))
 	{
 		MovePos = float4::ZERO;
 		ChangeState(KirbyState::AttackStart);
@@ -244,7 +249,7 @@ void Kirby::WalkUpdate(float _Delta)
 		return;
 	}
 	// 공격
-	if (true == GameEngineInput::IsDown('Z'))
+	if (true == GameEngineInput::IsDown('X'))
 	{
 		MovePos = float4::ZERO;
 		ChangeState(KirbyState::AttackStart);
@@ -286,7 +291,7 @@ void Kirby::JumpUpdate(float _Delta)
 	}
 
 	// 공격
-	if (true == GameEngineInput::IsDown('Z'))
+	if (true == GameEngineInput::IsDown('X'))
 	{
 		GravityReset();
 		ChangeState(KirbyState::AttackStart);
@@ -342,7 +347,7 @@ void Kirby::FallingUpdate(float _Delta)
 	}
 
 	// 공격
-	if (true == GameEngineInput::IsDown('Z'))
+	if (true == GameEngineInput::IsDown('X'))
 	{
 		MovePos = float4::ZERO;
 		ChangeState(KirbyState::AttackStart);
@@ -390,7 +395,7 @@ void Kirby::FallingEndUpdate(float _Delta)
 	}
 
 }
-
+// 달리기 보류
 void Kirby::RunUpdate(float _Delta)
 {
 
@@ -494,7 +499,7 @@ void Kirby::AttackStartUpdate(float _Delta)
 		return;
 	}
 
-	if (true == GameEngineInput::IsUp('Z'))
+	if (true == GameEngineInput::IsUp('X'))
 	{
 		ChangeState(KirbyState::Idle);
 		return;
@@ -515,7 +520,7 @@ void Kirby::AttackUpdate(float _Delta)
 		AttackCollision->SetCollisionPos(AttackCollisionPos);
 	}
 
-	if (true == GameEngineInput::IsUp('Z'))
+	if (true == GameEngineInput::IsUp('X'))
 	{
 		AttackCollision->Off();
 		ChangeState(KirbyState::Idle);
@@ -579,27 +584,27 @@ void Kirby::FatIdleUpdate(float _Delta)
 		ChangeState(KirbyState::FatFalling);
 		return;
 	}
-
+	// 이동
 	if (true == GameEngineInput::IsPress('A')
 		|| true == GameEngineInput::IsPress('D'))
 	{
 		ChangeState(KirbyState::FatWalk);
 		return;
 	}
-
+	// 삼키기
 	if (true == GameEngineInput::IsPress('S'))
 	{
-		// ChangeState(KirbyState::DownIdle); 삼키기
+		ChangeState(KirbyState::Swallow);
 		return;
 	}
-
+	// 점프
 	if (true == GameEngineInput::IsDown('F'))
 	{
 		ChangeState(KirbyState::FatJump);
 		return;
 	}
-
-	if (true == GameEngineInput::IsDown('Z'))
+	// 공격
+	if (true == GameEngineInput::IsDown('X'))
 	{
 		MovePos = float4::ZERO;
 		ChangeState(KirbyState::StarOut);
@@ -621,10 +626,16 @@ void Kirby::FatWalkUpdate(float _Delta)
 		return;
 	}
 	// 공격
-	if (true == GameEngineInput::IsDown('Z'))
+	if (true == GameEngineInput::IsDown('X'))
 	{
 		MovePos = float4::ZERO;
 		ChangeState(KirbyState::StarOut);
+		return;
+	}
+	// 삼키기
+	if (true == GameEngineInput::IsPress('S'))
+	{
+		ChangeState(KirbyState::Swallow);
 		return;
 	}
 
@@ -660,7 +671,7 @@ void Kirby::FatJumpUpdate(float _Delta)
 	}
 
 	// 공격
-	if (true == GameEngineInput::IsDown('Z'))
+	if (true == GameEngineInput::IsDown('X'))
 	{
 		GravityReset();
 		ChangeState(KirbyState::StarOut);
@@ -697,7 +708,7 @@ void Kirby::FatFallingUpdate(float _Delta)
 	Movement(_Delta);
 
 	// 공격
-	if (true == GameEngineInput::IsDown('Z'))
+	if (true == GameEngineInput::IsDown('X'))
 	{
 		MovePos = float4::ZERO;
 		ChangeState(KirbyState::StarOut);
@@ -751,6 +762,21 @@ void Kirby::BreathOutUpdate(float _Delta)
 	if (GetLiveTime() >= 0.1f)
 	{
 		ChangeState(KirbyState::Idle);
+		return;
+	}
+}
+
+void Kirby::SwallowUpdate(float _Delta)
+{
+	if (GetLiveTime() >= 0.4f)
+	{
+		ChangeState(KirbyState::Idle);
+
+		float4 PrevPos = MainPlayer->GetPos();
+		MainPlayer->Death();
+		MainPlayer = GetLevel()->CreateActor<BurningKirby>();
+		MainPlayer->SetPos(PrevPos);
+		MainPlayer->SetGroundTexture(GetGroundTexture());
 		return;
 	}
 }

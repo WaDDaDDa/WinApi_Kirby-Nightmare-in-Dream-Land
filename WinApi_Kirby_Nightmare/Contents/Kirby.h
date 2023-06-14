@@ -25,6 +25,7 @@ enum class KirbyState
     FatFalling,
     FatFallingEnd,
     BreathOut,
+    Swallow,
     Max, // 일반적으로 사용하지 않는 값.
 };
 
@@ -85,8 +86,8 @@ protected:
     void RunStart();
     void FlyStart();
     void BreathInStart();
-    void AttackStartStart();
-    void AttackStart();
+    virtual void AttackStartStart();
+    virtual void AttackStart();
     void StarInStart();
     void StarOutStart();
     void FatIdleStart();
@@ -96,6 +97,7 @@ protected:
     void FatFallingStart();
     void FatFallingEndStart();
     void BreathOutStart();
+    void SwallowStart();
 
     void IdleUpdate(float _Delta);
     void DownIdleUpdate(float _Delta);
@@ -119,6 +121,7 @@ protected:
     void FatFallingUpdate(float _Delta);
     void FatFallingEndUpdate(float _Delta);
     void BreathOutUpdate(float _Delta);
+    void SwallowUpdate(float _Delta);
 
     void ChangeState(KirbyState _State);
 
@@ -128,7 +131,7 @@ protected:
     std::string CurState = "";
 
     void DirCheck();
-    void CameraFocus(float _Delta);
+    virtual void CameraFocus(float _Delta);
     virtual void ChangeAnimationState(const std::string& _StateName);
 
     GameEngineCollision* BodyCollision = nullptr;

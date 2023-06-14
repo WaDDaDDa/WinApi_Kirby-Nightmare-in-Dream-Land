@@ -70,12 +70,14 @@ void VegetableValleyLevel::Update(float _Delta)
 	if (true == GameEngineInput::IsDown('P'))
 	{
 		GameEngineCore::ChangeLevel("TitleLevel");
+		BGMPlayer.Stop();
 
 	}
 
 	if (true == GameEngineInput::IsDown('M'))
 	{
-		CreateActor<WaddleDee>();
+		WaddleDee* Waddle = CreateActor<WaddleDee>();
+		Waddle->SetGroundTexture("Level1_Debug.bmp");
 	}
 
 	if (true == GameEngineInput::IsDown('J'))
@@ -99,6 +101,7 @@ void VegetableValleyLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	}*/
 
 	LevelPlayer->SetGroundTexture("Level1_Debug.bmp");
+	BGMPlayer = GameEngineSound::SoundPlay("04Vegetable_Valley.mp3");
 }
 
 void VegetableValleyLevel::LevelEnd(GameEngineLevel* _NextLevel)

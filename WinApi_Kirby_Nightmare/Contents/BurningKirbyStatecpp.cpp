@@ -1,15 +1,28 @@
 #include "BurningKirby.h"
 #include <GameEnginePlatform/GameEngineInput.h>
 
+void BurningKirby::AttackStartStart()
+{
+	Speed *= 2;
+	AttackCollision->On();
+	BodyCollision->Off();
+	ChangeAnimationState("AttackStart");
+}
+
+void BurningKirby::AttackStart()
+{
+	ChangeAnimationState("Attack");
+}
+
 void BurningKirby::AttackStartUpdate(float _Delta)
 {
-	if (GetLiveTime() >= 0.6f)
+	if (GetLiveTime() >= 0.1f)
 	{
-		ChangeState(KirbyState::Idle);
+		ChangeState(KirbyState::Attack);
 		return;
 	}
 
-	float4 TackleSpeed = { 2.0f , 0.0f };
+	float4 TackleSpeed = { 0.0f , 0.0f };
 	if (KirbyDir::Left == Dir)
 	{
 		CheckPos = { -40.0f, -40.0f };
@@ -37,13 +50,16 @@ void BurningKirby::AttackStartUpdate(float _Delta)
 void BurningKirby::AttackUpdate(float _Delta)
 {
 
-	if (GetLiveTime() >= 0.6f)
+	if (GetLiveTime() >= 1.0f)
 	{
+		AttackCollision->Off();
+		BodyCollision->On();
+		Speed /= 2;
 		ChangeState(KirbyState::Idle);
 		return;
 	}
 
-	float4 TackleSpeed = { 1.0f , 0.0f };
+	float4 TackleSpeed = { Speed * _Delta , 0.0f };
 	if (KirbyDir::Left == Dir)
 	{
 		CheckPos = { -40.0f, -40.0f };
