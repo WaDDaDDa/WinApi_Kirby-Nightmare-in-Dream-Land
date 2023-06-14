@@ -26,6 +26,7 @@ enum class KirbyState
     FatFallingEnd,
     BreathOut,
     Swallow,
+    Damage,
     Max, // 일반적으로 사용하지 않는 값.
 };
 
@@ -66,6 +67,9 @@ public:
 
     void Movement(float _Delta);
 
+    void Immune();
+    void RenderSwitch();
+
     KirbyDir GetDir()
     {
         return Dir;
@@ -98,6 +102,7 @@ protected:
     void FatFallingEndStart();
     void BreathOutStart();
     void SwallowStart();
+    void DamageStart();
 
     void IdleUpdate(float _Delta);
     void DownIdleUpdate(float _Delta);
@@ -122,6 +127,7 @@ protected:
     void FatFallingEndUpdate(float _Delta);
     void BreathOutUpdate(float _Delta);
     void SwallowUpdate(float _Delta);
+    void DamageUpdate(float _Delta);
 
     void ChangeState(KirbyState _State);
 
@@ -147,6 +153,7 @@ private:
 
     float Speed = 400.0f;
     float JumpPower = 800.0f;
+    bool ImmuneValue = false;
 
     void Start() override;
     void Update(float _Delta) override;

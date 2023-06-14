@@ -91,7 +91,7 @@ void WaddleDee::HitUpdate(float _Delta)
 
 void WaddleDee::DamageStart()
 {
-	ChangeAnimationState("Hit");
+	ChangeAnimationState("Damage");
 }
 
 void WaddleDee::DamageUpdate(float _Delta)
@@ -118,6 +118,7 @@ void WaddleDee::DamageUpdate(float _Delta)
 void WaddleDee::EffectStart()
 {
 	AddPos(CollisionPos);
+	BodyCollision->Off();
 	ChangeAnimationState("Effect");
 }
 

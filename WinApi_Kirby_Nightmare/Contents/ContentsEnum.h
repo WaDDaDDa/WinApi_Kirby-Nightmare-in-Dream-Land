@@ -20,6 +20,7 @@ enum class CollisionOrder
 	Potal,
 	PlayerBody,
 	MonsterBody,
+	DeathBody,
 	VacumAttack,
 	PlayerAttack,
 	SpecialAttack,

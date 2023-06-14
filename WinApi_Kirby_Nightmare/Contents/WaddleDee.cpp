@@ -43,12 +43,14 @@ void WaddleDee::Start()
 		MainRenderer->CreateAnimation("WaddleDeeLeft_HitReady", "WaddleDeeLeft.bmp", 5, 5, 0.1f, true);
 		MainRenderer->CreateAnimation("WaddleDeeLeft_Hit", "WaddleDeeLeft.bmp", 5, 5, 0.1f, true);
 		MainRenderer->CreateAnimation("WaddleDeeLeft_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
+		MainRenderer->CreateAnimation("WaddleDeeLeft_Damage", "WaddleDeeLeft.bmp", 5, 5, 0.1f, true);
 
 		MainRenderer->CreateAnimation("WaddleDeeRight_Idle", "WaddleDeeRight.bmp", 2, 2, 0.1f, true);
 		MainRenderer->CreateAnimation("WaddleDeeRight_Walk", "WaddleDeeRight.bmp", 1, 4, 0.3f, true);
 		MainRenderer->CreateAnimation("WaddleDeeRight_HitReady", "WaddleDeeRight.bmp", 5, 5, 0.1f, true);
 		MainRenderer->CreateAnimation("WaddleDeeRight_Hit", "WaddleDeeRight.bmp", 5, 5, 0.1f, true);
 		MainRenderer->CreateAnimation("WaddleDeeRight_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
+		MainRenderer->CreateAnimation("WaddleDeeRight_Damage", "WaddleDeeRight.bmp", 5, 5, 0.1f, true);
 	}
 
 	{ // 충돌체 설정
@@ -57,8 +59,8 @@ void WaddleDee::Start()
 		BodyCollision->SetCollisionPos(CollisionPos);
 		BodyCollision->SetCollisionType(CollisionType::CirCle);
 
-		DeathCollision = CreateCollision(CollisionOrder::MonsterBody);
-		DeathCollision->SetCollisionScale(CollisionScale);
+		DeathCollision = CreateCollision(CollisionOrder::DeathBody);
+		DeathCollision->SetCollisionScale(DeathCollisionScale);
 		DeathCollision->SetCollisionPos(CollisionPos);
 		DeathCollision->SetCollisionType(CollisionType::CirCle);
 		DeathCollision->Off();
@@ -72,6 +74,9 @@ void WaddleDee::Start()
 
 void WaddleDee::Update(float _Delta)
 {
+	StateUpdate(_Delta);
+	GroundCheck(_Delta);
+
 	std::vector<GameEngineCollision*> _Col;
 	//플레이어 몸통과 충돌.
 	if (true == BodyCollision->Collision(CollisionOrder::PlayerBody
@@ -83,8 +88,19 @@ void WaddleDee::Update(float _Delta)
 		for (size_t i = 0; i < _Col.size(); i++)
 		{
 			GameEngineCollision* Collison = _Col[i];
-
 			Actor = Collison->GetActor();
+			float4 ActorPos = Actor->GetPos();
+
+			if (GetPos().X > ActorPos.X)
+			{
+				Dir = WaddleDeeDir::Left;
+			}
+			else
+			{
+				Dir = WaddleDeeDir::Right;
+			}
+			ChangeState(WaddleDeeState::Damage);
+			return;
 		}
 	}
 	//플레이어 공격과 충돌.
@@ -178,8 +194,7 @@ void WaddleDee::Update(float _Delta)
 		}
 	}
 
-	StateUpdate(_Delta);
-	GroundCheck(_Delta);
+
 }
 
 void WaddleDee::StateUpdate(float _Delta)

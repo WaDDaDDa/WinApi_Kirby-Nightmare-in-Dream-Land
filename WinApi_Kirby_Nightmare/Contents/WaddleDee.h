@@ -84,6 +84,7 @@ private:
     GameEngineCollision* DeathCollision = nullptr;
     float4 CollisionPos = float4{ 0 , -40 };
     float4 CollisionScale = float4{ 80, 80 };
+    float4 DeathCollisionScale = float4{ 100, 100 };
 
     GameEngineActor* Actor = nullptr;
 };

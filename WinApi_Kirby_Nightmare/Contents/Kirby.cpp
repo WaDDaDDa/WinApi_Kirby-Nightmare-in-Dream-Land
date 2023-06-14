@@ -57,6 +57,7 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_FatJump.bmp"), 4, 2);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_BreathOut.bmp"), 6, 3);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Swallow.bmp"), 3, 3);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Damage.bmp"), 3, 3);
 		}
 		{ // RinghtAnimation 셋팅
 			FilePath.MoveParentToExistsChild("Right");
@@ -77,6 +78,7 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_FatJump.bmp"), 4, 2);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_BreathOut.bmp"), 6, 3);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Swallow.bmp"), 3, 3);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Damage.bmp"), 3, 3);
 
 		}
 		{
@@ -118,6 +120,7 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Left_FatFallingEnd", "KirbyLeft_FatJump.bmp", 7, 7, 0.1f, false);
 		MainRenderer->CreateAnimation("Left_BreathOut", "KirbyLeft_BreathOut.bmp", 0, 1, 0.1f, false);
 		MainRenderer->CreateAnimation("Left_Swallow", "KirbyLeft_Swallow.bmp", 0, 7, 0.05f, false);
+		MainRenderer->CreateAnimation("Left_Damage", "KirbyLeft_Damage.bmp", 0, 8, 0.05f, false);
 	}
 
 	{ // RightAnimation 생성
@@ -147,6 +150,7 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Right_FatFallingEnd", "KirbyRight_FatJump.bmp", 7, 7, 0.1f, false);
 		MainRenderer->CreateAnimation("Right_BreathOut", "KirbyRight_BreathOut.bmp", 0, 1, 0.1f, false);
 		MainRenderer->CreateAnimation("Right_Swallow", "KirbyRight_Swallow.bmp", 0, 7, 0.05f, false);
+		MainRenderer->CreateAnimation("Right_Damage", "KirbyRight_Damage.bmp", 0, 8, 0.05f, false);
 	}
 
 	{ // 충돌체 설정
@@ -169,6 +173,7 @@ void Kirby::Start()
 
 void Kirby::Update(float _Delta)
 {
+
 	// 충돌함수 사용방법.
 	std::vector<GameEngineCollision*> _Col;
 
@@ -184,7 +189,8 @@ void Kirby::Update(float _Delta)
 
 			GameEngineActor* Actor = Collison->GetActor();
 
-			//Actor->Death();
+			ChangeState(KirbyState::Damage);
+			return;
 		}
 	}
 
@@ -202,10 +208,9 @@ void Kirby::Update(float _Delta)
 		// GameEngineLevel::CollisionDebugRenderSwitch();
 	}
 
-
-	StateUpdate(_Delta);
-
 	CameraFocus(_Delta);
+	StateUpdate(_Delta);
+	Immune();
 }
 
 void Kirby::StateUpdate(float _Delta)
@@ -258,6 +263,8 @@ void Kirby::StateUpdate(float _Delta)
 		return BreathOutUpdate(_Delta);
 	case KirbyState::Swallow:
 		return SwallowUpdate(_Delta);
+	case KirbyState::Damage:
+		return DamageUpdate(_Delta);
 	default:
 		break;
 	}
@@ -337,6 +344,9 @@ void Kirby::ChangeState(KirbyState _State)
 			break;
 		case KirbyState::Swallow:
 			SwallowStart();
+			break;
+		case KirbyState::Damage:
+			DamageStart();
 			break;
 		default:
 			break;
@@ -516,3 +526,43 @@ void Kirby::Movement(float _Delta)
 //
 //	TextOutA(dc, 2, 3, Text.c_str(), Text.size());
 //}
+
+void Kirby::Immune()
+{
+	if (true == ImmuneValue)
+	{
+		RenderSwitch();
+		BodyCollision->Off();
+		if (0.6f <= GetLiveTime())
+		{
+			ImmuneValue = false;
+			BodyCollision->On();
+			MainRenderer->On();
+		}
+	}
+}
+
+void Kirby::RenderSwitch()
+{
+	static float Sec = 0.0f;
+	static bool RenderValue = true;
+	Sec += GetLiveTime();
+
+	if (0.2f <= Sec)
+	{
+		RenderValue = !RenderValue;
+		Sec = 0.0f;
+	}
+
+	if (RenderValue == true)
+	{
+		MainRenderer->On();
+		return;
+	}
+	else if (RenderValue == false)
+	{
+		MainRenderer->Off();
+		return;
+	}
+
+}

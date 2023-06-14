@@ -125,6 +125,12 @@ void Kirby::SwallowStart()
 	ChangeAnimationState("Swallow");
 }
 
+void Kirby::DamageStart()
+{
+	BodyCollision->Off();
+	ChangeAnimationState("Damage");
+}
+
 // IsDown으로 키를 받아서 State를 체인지하게 되면 
 // 업데이트는 실제 행동을 행하는 단계.
 void Kirby::IdleUpdate(float _Delta)
@@ -529,16 +535,16 @@ void Kirby::AttackUpdate(float _Delta)
 
 	std::vector<GameEngineCollision*> _Col;
 
-	if (true == BodyCollision->Collision(CollisionOrder::MonsterBody
+	if (true == BodyCollision->Collision(CollisionOrder::DeathBody
 		, _Col
-		, CollisionType::CirCle // 나를 사각형으로 봐줘
-		, CollisionType::CirCle // 상대도 사각형으로 봐줘
+		, CollisionType::CirCle // 나
+		, CollisionType::CirCle // 상대
 	))
 	{
 		for (size_t i = 0; i < _Col.size(); i++)
 		{
 			GameEngineCollision* Collison = _Col[i];
-
+			
 			GameEngineActor* Actor = Collison->GetActor();
 
 			Actor->Death();
@@ -777,6 +783,29 @@ void Kirby::SwallowUpdate(float _Delta)
 		MainPlayer = GetLevel()->CreateActor<BurningKirby>();
 		MainPlayer->SetPos(PrevPos);
 		MainPlayer->SetGroundTexture(GetGroundTexture());
+		return;
+	}
+}
+
+void Kirby::DamageUpdate(float _Delta)
+{
+
+	float4 MoveDir = float4::ZERO;
+	if (KirbyDir::Left == Dir)
+	{
+		MoveDir = float4::RIGHT;
+	}
+	else if (KirbyDir::Right == Dir)
+	{
+		MoveDir = float4::LEFT;
+	}
+	MoveDir.Normalize();
+	AddPos(MoveDir * 200.0f * _Delta);
+
+	if (GetLiveTime() >= 0.4f)
+	{
+		ImmuneValue = true;
+		ChangeState(KirbyState::Idle);
 		return;
 	}
 }
