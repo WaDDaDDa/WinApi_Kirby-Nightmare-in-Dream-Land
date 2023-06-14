@@ -778,18 +778,21 @@ void Kirby::BreathOutUpdate(float _Delta)
 	}
 }
 
+//º¯½Å
 void Kirby::SwallowUpdate(float _Delta)
 {
 	if (GetLiveTime() >= 0.4f)
 	{
+		if (Abillity::Burning == ChangeAbillity)
+		{
+			float4 PrevPos = MainPlayer->GetPos();
+			MainPlayer->Death();
+			MainPlayer = GetLevel()->CreateActor<BurningKirby>();
+			MainPlayer->SetPos(PrevPos);
+			MainPlayer->SetGroundTexture(GetGroundTexture());
+			return;
+		}
 		ChangeState(KirbyState::Idle);
-
-		float4 PrevPos = MainPlayer->GetPos();
-		MainPlayer->Death();
-		MainPlayer = GetLevel()->CreateActor<BurningKirby>();
-		MainPlayer->SetPos(PrevPos);
-		MainPlayer->SetGroundTexture(GetGroundTexture());
-		return;
 	}
 }
 

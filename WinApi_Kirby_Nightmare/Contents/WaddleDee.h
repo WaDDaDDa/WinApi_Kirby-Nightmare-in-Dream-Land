@@ -87,5 +87,6 @@ private:
     float4 DeathCollisionScale = float4{ 100, 100 };
 
     GameEngineActor* Actor = nullptr;
+    Abillity CurAbillity = Abillity::Normal;
 };
 

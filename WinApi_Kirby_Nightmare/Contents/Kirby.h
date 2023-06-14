@@ -154,6 +154,9 @@ private:
     float4 AttackCollisionPos = float4{ 100 , -50 };
     float4 AttackCollisionScale = float4{ 100,80 };
 
+    Abillity CurAbillity = Abillity::Normal;
+    Abillity ChangeAbillity = Abillity::Normal;
+
     float Speed = 400.0f;
     float JumpPower = 800.0f;
     bool ImmuneValue = false;
