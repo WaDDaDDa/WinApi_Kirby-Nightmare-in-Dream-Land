@@ -111,7 +111,7 @@ void GameEngineLevel::ActorRender(float _Delta)
 void GameEngineLevel::ActorRelease()
 {
 	MainCamera->Release();
-
+	UICamera->Release();
 	// 콜리전의 릴리즈
 	{
 		std::map<int, std::list<GameEngineCollision*>>::iterator GroupStartIter = AllCollision.begin();
