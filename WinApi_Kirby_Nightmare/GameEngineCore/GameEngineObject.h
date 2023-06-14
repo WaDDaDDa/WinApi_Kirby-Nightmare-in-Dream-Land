@@ -43,7 +43,7 @@ public:
 		IsDeathValue = true;
 	}
 	// 데이터가 죽어있지않고 업데이트 온이면 true 출력. <== 이래야만 업데이트 가능.
-	bool IsUpdate()
+	virtual bool IsUpdate()
 	{
 		return true == IsUpdateValue && false == IsDeathValue; // Death인상태이면 업데이트 하면안됨.
 	}

@@ -100,6 +100,11 @@ void GameEngineLevel::ActorRender(float _Delta)
 
 			for (GameEngineCollision* Collision : Group)
 			{
+				if (false == Collision->IsUpdate())
+				{
+					continue;
+				}
+
 				Collision->DebugRender();
 			}
 
