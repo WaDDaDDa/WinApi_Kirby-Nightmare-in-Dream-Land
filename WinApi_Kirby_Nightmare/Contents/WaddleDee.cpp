@@ -4,6 +4,7 @@
 #include <GameEngineCore/ResourcesManager.h>
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/GameEngineLevel.h>
+#include "ContentsEnum.h"
 
 WaddleDee::WaddleDee()
 {
@@ -66,9 +67,8 @@ void WaddleDee::Start()
 		DeathCollision->Off();
 	}
 	MainRenderer->SetScaleRatio(4.0f);
+	SetAbillity(Abillity::Normal);
 	SetPos(float4{ 500,360 });
-	//SetGroundTexture("Level1_Debug.bmp");
-
 	ChangeState(WaddleDeeState::Idle);
 }
 

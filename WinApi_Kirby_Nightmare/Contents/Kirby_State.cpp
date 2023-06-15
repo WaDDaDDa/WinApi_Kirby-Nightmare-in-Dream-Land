@@ -553,6 +553,7 @@ void Kirby::AttackUpdate(float _Delta)
 			
 			GameEngineActor* Actor = Collison->GetActor();
 
+			ChangeAbillity = Actor->GetAbillity();
 			Actor->Death();
 			AttackCollision->Off();
 			ChangeState(KirbyState::StarIn);
@@ -783,6 +784,7 @@ void Kirby::SwallowUpdate(float _Delta)
 {
 	if (GetLiveTime() >= 0.4f)
 	{
+		// ¹ö´×À¸·Î ÆûÃ¼ÀÎÁö
 		if (Abillity::Burning == ChangeAbillity)
 		{
 			float4 PrevPos = MainPlayer->GetPos();
@@ -798,7 +800,6 @@ void Kirby::SwallowUpdate(float _Delta)
 
 void Kirby::DamageUpdate(float _Delta)
 {
-
 	float4 MoveDir = float4::ZERO;
 	if (KirbyDir::Left == Dir)
 	{
@@ -821,7 +822,6 @@ void Kirby::DamageUpdate(float _Delta)
 
 void Kirby::FatDamageUpdate(float _Delta)
 {
-
 	float4 MoveDir = float4::ZERO;
 	if (KirbyDir::Left == Dir)
 	{

@@ -3,6 +3,7 @@
 #include "GameEngineObject.h"
 #include <string>
 #include <list>
+#include <Contents/ContentsEnum.h>
 
 class GameEngineLevel;
 class GameEngineRenderer;
@@ -107,6 +108,15 @@ public:
 		IsOverValue = false;
 	}
 
+	Abillity GetAbillity()
+	{
+		return CurAbillity;
+	}
+	void SetAbillity(Abillity _abillity)
+	{
+		CurAbillity = _abillity;
+	}
+
 protected:
 	virtual void LevelStart() {}
 	virtual void LevelEnd() {}
@@ -125,5 +135,6 @@ private:
 	std::list<GameEngineCollision*> AllCollision;
 
 	void ActorRelease();
+	Abillity CurAbillity = Abillity::Normal;
 };
 
