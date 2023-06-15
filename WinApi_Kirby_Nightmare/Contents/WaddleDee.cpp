@@ -67,7 +67,7 @@ void WaddleDee::Start()
 		DeathCollision->Off();
 	}
 	MainRenderer->SetScaleRatio(4.0f);
-	SetAbillity(Abillity::Normal);
+	SetAbillity(Abillity::Burning);
 	SetPos(float4{ 500,360 });
 	ChangeState(WaddleDeeState::Idle);
 }

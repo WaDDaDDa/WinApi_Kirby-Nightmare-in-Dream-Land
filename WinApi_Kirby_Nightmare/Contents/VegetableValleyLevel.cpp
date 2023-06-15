@@ -101,7 +101,7 @@ void VegetableValleyLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	}*/
 
 	LevelPlayer->SetGroundTexture("Level1_Debug.bmp");
-	BGMPlayer = GameEngineSound::SoundPlay("04Vegetable_Valley.mp3");
+	//BGMPlayer = GameEngineSound::SoundPlay("04Vegetable_Valley.mp3");
 }
 
 void VegetableValleyLevel::LevelEnd(GameEngineLevel* _NextLevel)
