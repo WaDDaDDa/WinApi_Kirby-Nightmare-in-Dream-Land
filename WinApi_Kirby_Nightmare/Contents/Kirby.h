@@ -82,6 +82,16 @@ public:
         return Dir;
     }
 
+    float4 GetPrevPos()
+    {
+        return PrevPos;
+    }
+
+    void SetPrevPos(float4 _PrevPos)
+    {
+        PrevPos = _PrevPos;
+    }
+
 protected:
     // 클래스로 만들어도 된다. 행동과 랜더.
     void ChangeState(KirbyState _State);
@@ -166,10 +176,11 @@ private:
     float Speed = 400.0f;
     float JumpPower = 800.0f;
     bool ImmuneValue = false;
+    float4 PrevPos = float4::ZERO;
 
     void Start() override;
     void Update(float _Delta) override;
-    // void Render(float _Delta) override;
+    void Render(float _Delta) override;
 
     void LevelStart() override;
 };

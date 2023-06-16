@@ -15,6 +15,9 @@
 #include "Monster.h"
 #include "WaddleDee.h"
 #include "BurningKirby.h"
+#include "Portal.h"
+
+class Kirby* VegetableValleyLevel::LevelPlayer = nullptr;
 
 VegetableValleyLevel::VegetableValleyLevel()
 {
@@ -28,7 +31,7 @@ VegetableValleyLevel::~VegetableValleyLevel()
 
 void VegetableValleyLevel::Start()
 {
-	GetMainCamera()->SetPos(float4{ 0, -100 });
+	//GetMainCamera()->SetPos(float4{ 0, -100 });
 	GameEngineSound::SetGlobalVolume(SoundVolume);
 	//이미지가 로드되지않았다면 로드하고 로드 되었다면 로드안하기 위함.
 	if (false == ResourcesManager::GetInst().IsLoadTexture("TestBackGround.Bmp"))
@@ -59,9 +62,10 @@ void VegetableValleyLevel::Start()
 	StagePtr->Init("Level1.Bmp", "Level1_Debug.bmp");
 
 	LevelPlayer = CreateActor<Kirby>();
-	//LevelPlayer->OverOn();
+	LevelPlayer->OverOn();
 	CreateActor<UIManager>();
-
+	MainPortal = CreateActor<Portal>();
+	MainPortal->SetPos(float4{ 3900, 290 });
 }
 
 
@@ -85,6 +89,33 @@ void VegetableValleyLevel::Update(float _Delta)
 		StagePtr->SwitchRender();
 		CollisionDebugRenderSwitch();
 	}
+
+	std::vector<GameEngineCollision*> _Col;
+
+	if (true == MainPortal->BodyCollision->Collision(CollisionOrder::PlayerBody
+		, _Col
+		, CollisionType::Rect // 나를 사각형으로 봐줘
+		, CollisionType::CirCle // 상대도 사각형으로 봐줘
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			GameEngineActor* Actor = Collison->GetActor();
+
+			if (true == GameEngineInput::IsPress('W'))
+			{
+				GameEngineCore::ChangeLevel("MainHubLevel");
+				LevelPlayer->SetGroundTexture("MainHupDebug.bmp");
+				LevelPlayer->SetPrevPos(LevelPlayer->GetPos());
+				LevelPlayer->SetPos(float4 { 500 , 800 });
+				BGMPlayer.Stop();
+				return;
+			}
+			return;
+		}
+	}
 }
 
 
@@ -101,6 +132,9 @@ void VegetableValleyLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	}*/
 
 	LevelPlayer->SetGroundTexture("Level1_Debug.bmp");
+	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
+	GetMainCamera()->SetPos(LevelPlayer->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
+	//GetMainCamera()->SetPos(float4{ VegetableValleyLevel::LevelPlayer->GetPos().Half().X, -VegetableValleyLevel::LevelPlayer->GetPos().Half().Y });
 	//BGMPlayer = GameEngineSound::SoundPlay("04Vegetable_Valley.mp3");
 }
 

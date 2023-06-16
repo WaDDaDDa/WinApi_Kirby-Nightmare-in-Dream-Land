@@ -74,6 +74,11 @@ public:
 		NextLevel = Finditer->second;  // second에는 GameEngineLevel*가 들어있다.
 	}
 
+	static GameEngineLevel* GetNextLevel()
+	{
+		return NextLevel;
+	}
+
 protected:
 
 private:

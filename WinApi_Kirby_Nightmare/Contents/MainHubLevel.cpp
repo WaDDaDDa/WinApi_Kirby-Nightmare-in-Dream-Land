@@ -15,6 +15,7 @@
 #include "Monster.h"
 #include "WaddleDee.h"
 #include "BurningKirby.h"
+#include "VegetableValleyLevel.h"
 
 MainHubLevel::MainHubLevel()
 {
@@ -57,7 +58,7 @@ void MainHubLevel::Start()
 	StagePtr = CreateActor<Stage>();
 	StagePtr->Init("MainHup.Bmp", "MainHupDebug.bmp");
 
-	LevelPlayer = CreateActor<Kirby>();
+	//LevelPlayer = CreateActor<Kirby>();
 	//LevelPlayer->OverOn();
 	CreateActor<UIManager>();
 }
@@ -68,7 +69,9 @@ void MainHubLevel::Update(float _Delta)
 	if (true == GameEngineInput::IsDown('P'))
 	{
 		GameEngineCore::ChangeLevel("VegetableValleyLevel");
-		LevelPlayer->SetGroundTexture("Level1_Debug.bmp");
+		VegetableValleyLevel::LevelPlayer->SetGroundTexture("Level1_Debug.bmp");
+		VegetableValleyLevel::LevelPlayer->SetPos(VegetableValleyLevel::LevelPlayer->GetPrevPos());
+
 		BGMPlayer.Stop();
 	}
 
@@ -86,11 +89,11 @@ void MainHubLevel::Update(float _Delta)
 
 	if (true == GameEngineInput::IsDown('Q'))
 	{
-		float4 PrevPos = LevelPlayer->GetPos();
-		LevelPlayer->Death();
-		LevelPlayer = CreateActor<BurningKirby>();
-		LevelPlayer->SetPos(PrevPos);
-		LevelPlayer->SetGroundTexture("MainHupDebug.bmp");
+		float4 PrevPos = VegetableValleyLevel::LevelPlayer->GetPos();
+		VegetableValleyLevel::LevelPlayer->Death();
+		VegetableValleyLevel::LevelPlayer = CreateActor<BurningKirby>();
+		VegetableValleyLevel::LevelPlayer->SetPos(PrevPos);
+		VegetableValleyLevel::LevelPlayer->SetGroundTexture("MainHupDebug.bmp");
 	}
 }
 
@@ -102,13 +105,13 @@ void MainHubLevel::Release()
 
 void MainHubLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	if (nullptr == LevelPlayer)
+	if (nullptr == VegetableValleyLevel::LevelPlayer)
 	{
-		MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
+		//MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
 	}
 
-	LevelPlayer->SetGroundTexture("MainHupDebug.bmp");
-
+	//LevelPlayer->SetGroundTexture("MainHupDebug.bmp");
+	GetMainCamera()->SetPos(VegetableValleyLevel::LevelPlayer->GetPos().Half());
 	BGMPlayer = GameEngineSound::SoundPlay("04Vegetable_Valley.mp3");
 }
 

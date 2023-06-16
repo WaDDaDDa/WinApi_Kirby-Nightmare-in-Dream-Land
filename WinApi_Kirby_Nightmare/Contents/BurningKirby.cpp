@@ -187,9 +187,9 @@ void BurningKirby::CameraFocus(float _Delta)
 		GetLevel()->GetMainCamera()->SetPos({ ImageX, GetLevel()->GetMainCamera()->GetPos().Y });
 	}
 
-	if (0 >= GetLevel()->GetMainCamera()->GetPos().Y)
+	if (ImageY <= GetLevel()->GetMainCamera()->GetPos().Y)
 	{
-		//GetLevel()->GetMainCamera()->SetPos({ GetLevel()->GetMainCamera()->GetPos().X, 0.0f });
+		GetLevel()->GetMainCamera()->SetPos({ GetLevel()->GetMainCamera()->GetPos().X, ImageY });
 	}
 
 	// 카메라가 움직이는 X 범위 250 ~ 650 사이에캐릭터를 둔다.

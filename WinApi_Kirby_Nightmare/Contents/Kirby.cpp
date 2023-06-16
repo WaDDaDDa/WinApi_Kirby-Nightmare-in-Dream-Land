@@ -442,7 +442,7 @@ void Kirby::CameraFocus(float _Delta)
 	int PlayerY = GetPos().iY();
 
 	float ImageX = GetGroundTexture()->GetScale().X - 960.0f;
-	float ImageY = GetGroundTexture()->GetScale().Y;
+	float ImageY = GetGroundTexture()->GetScale().Y - 600.0f;
 	
 	// 카메라가 맵의 왼쪽으로 못나가게.
 	if (0 >= GetLevel()->GetMainCamera()->GetPos().X)
@@ -455,9 +455,9 @@ void Kirby::CameraFocus(float _Delta)
 		GetLevel()->GetMainCamera()->SetPos({ ImageX, GetLevel()->GetMainCamera()->GetPos().Y });
 	}
 
-	if (0 >= GetLevel()->GetMainCamera()->GetPos().Y)
+	if (ImageY <= GetLevel()->GetMainCamera()->GetPos().Y)
 	{
-		//GetLevel()->GetMainCamera()->SetPos({ GetLevel()->GetMainCamera()->GetPos().X, 0.0f });
+		GetLevel()->GetMainCamera()->SetPos({ GetLevel()->GetMainCamera()->GetPos().X, ImageY });
 	}
 	
 	// 카메라가 움직이는 X 범위 250 ~ 650 사이에캐릭터를 둔다.
@@ -535,17 +535,23 @@ void Kirby::Movement(float _Delta)
 		AddPos(MovePos);
 	}
 }
+
 // 텍스트 출력해서 확인하는 방법.
-//void Player::Render(float _Delta)
-//{
-//	std::string Text = "";
-//
-//	Text += std::to_string(TestValue);
-//
-//	HDC dc = GameEngineWindow::MainWindow.GetBackBuffer()->GetImageDC();
-//
-//	TextOutA(dc, 2, 3, Text.c_str(), Text.size());
-//}
+void Kirby::Render(float _Delta)
+{
+	std::string Text = "플레이어 현재위치 : ";
+
+	Text += std::to_string(GetPos().X);
+	Text += ", ";
+	Text += std::to_string(GetPos().Y);
+	Text += "  카메라 현재위치 :";
+	Text += std::to_string(GetLevel()->GetMainCamera()->GetPos().X);
+	Text += ", ";
+	Text += std::to_string(GetLevel()->GetMainCamera()->GetPos().Y);
+	HDC dc = GameEngineWindow::MainWindow.GetBackBuffer()->GetImageDC();
+
+	TextOutA(dc, 2, 3, Text.c_str(), Text.size());
+}
 
 void Kirby::Immune()
 {

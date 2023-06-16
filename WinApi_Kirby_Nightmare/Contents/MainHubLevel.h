@@ -22,7 +22,7 @@ private:
     void Update(float _Delta) override;
     void Release() override;
 
-    class Kirby* LevelPlayer = nullptr;
+    //class Kirby* LevelPlayer = nullptr;
     class Stage* StagePtr = nullptr;
 
     GameEngineSoundPlayer BGMPlayer;
