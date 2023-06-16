@@ -17,7 +17,7 @@ enum class RenderOrder
 enum class CollisionOrder
 {
 	Map,
-	Potal,
+	Portal,
 	PlayerBody,
 	MonsterBody,
 	DeathBody,
