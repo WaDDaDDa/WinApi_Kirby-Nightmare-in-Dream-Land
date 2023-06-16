@@ -8,6 +8,7 @@ void WaddleDee::IdleStart()
 
 void WaddleDee::IdleUpdate(float _Delta)
 {
+	GroundCheck(_Delta);
 	if (GetLiveTime() >= 1.0f)
 	{
 		ChangeState(WaddleDeeState::Walk);
@@ -22,6 +23,7 @@ void WaddleDee::WalkStart()
 
 void WaddleDee::WalkUpdate(float _Delta)
 {
+	GroundCheck(_Delta);
 	Movement(_Delta);
 	if (GetLiveTime() >= 4.0f)
 	{
@@ -39,6 +41,7 @@ void WaddleDee::HitReadyStart()
 
 void WaddleDee::HitReadyUpdate(float _Delta)
 {
+	GroundCheck(_Delta);
 	if (GetLiveTime() >= 1.0f)
 	{
 		MainRenderer->On();
@@ -67,6 +70,7 @@ void WaddleDee::HitStart()
 
 void WaddleDee::HitUpdate(float _Delta)
 {
+	GroundCheck(_Delta);
 	float4 MoveDir = Actor->GetPos() - GetPos();
 	MoveDir.Normalize();
 	AddPos(MoveDir * 800.0f* _Delta);
@@ -96,6 +100,7 @@ void WaddleDee::DamageStart()
 
 void WaddleDee::DamageUpdate(float _Delta)
 {
+	GroundCheck(_Delta);
 	float4 MoveDir = float4::ZERO;
 	if (WaddleDeeDir::Left == Dir)
 	{
@@ -105,6 +110,26 @@ void WaddleDee::DamageUpdate(float _Delta)
 	{
 		MoveDir = float4::LEFT;
 	}
+	// 벽판정
+	if (Dir == WaddleDeeDir::Right)
+	{
+		CheckPos = { -40.0f, -40.0f };
+		// 벽판정
+		if (GetWallCheck() != RGB(255, 255, 255))
+		{
+			MoveDir.X *= 0;
+		}
+	}
+	else if (Dir == WaddleDeeDir::Left)
+	{
+		CheckPos = { 40.0f, -40.0f };
+
+		if (GetWallCheck() != RGB(255, 255, 255))
+		{
+			MoveDir.X *= 0;
+		}
+	}
+
 	MoveDir.Normalize();
 	AddPos(MoveDir * 100.0f * _Delta);
 
@@ -124,6 +149,7 @@ void WaddleDee::EffectStart()
 
 void WaddleDee::EffectUpdate(float _Delta)
 {
+	GroundCheck(_Delta);
 	GravityOff();
 	if (1.0f <= GetLiveTime())
 	{

@@ -75,7 +75,7 @@ void WaddleDee::Start()
 void WaddleDee::Update(float _Delta)
 {
 	StateUpdate(_Delta);
-	GroundCheck(_Delta);
+	//GroundCheck(_Delta);
 
 	std::vector<GameEngineCollision*> _Col;
 	//플레이어 몸통과 충돌.

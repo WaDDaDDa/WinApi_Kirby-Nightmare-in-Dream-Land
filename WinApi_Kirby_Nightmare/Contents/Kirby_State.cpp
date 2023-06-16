@@ -800,6 +800,7 @@ void Kirby::SwallowUpdate(float _Delta)
 
 void Kirby::DamageUpdate(float _Delta)
 {
+	GroundCheck(_Delta);
 	float4 MoveDir = float4::ZERO;
 	if (KirbyDir::Left == Dir)
 	{
@@ -809,6 +810,27 @@ void Kirby::DamageUpdate(float _Delta)
 	{
 		MoveDir = float4::LEFT;
 	}
+
+	// 벽판정
+	if (Dir == KirbyDir::Right)
+	{
+		CheckPos = { -40.0f, -40.0f };
+		// 벽판정
+		if (GetWallCheck() != RGB(255, 255, 255))
+		{
+			MoveDir.X *= 0;
+		}
+	}
+	else if (Dir == KirbyDir::Left)
+	{
+		CheckPos = { 40.0f, -40.0f };
+
+		if (GetWallCheck() != RGB(255, 255, 255))
+		{
+			MoveDir.X *= 0;
+		}
+	}
+
 	MoveDir.Normalize();
 	AddPos(MoveDir * 200.0f * _Delta);
 
