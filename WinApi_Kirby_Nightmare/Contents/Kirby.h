@@ -40,6 +40,7 @@ enum class KirbyDir
 class GameEngineRenderer;
 class Kirby : public GravityActor
 {
+    friend class BurningKirby;
 private:
     static Kirby* MainPlayer;
 
@@ -57,6 +58,11 @@ public:
     float4 GetMovePos()
     {
         return MovePos;
+    }
+
+    static void SetMainPlayer(Kirby* _MainPlayer)
+    {
+        MainPlayer = _MainPlayer;
     }
 
     static Kirby* GetMainPlayer()
@@ -78,6 +84,7 @@ public:
 
 protected:
     // 클래스로 만들어도 된다. 행동과 랜더.
+    void ChangeState(KirbyState _State);
     void StateUpdate(float _Delta);
 
     void IdleStart();
@@ -103,7 +110,7 @@ protected:
     void FatFallingEndStart();
     void BreathOutStart();
     void SwallowStart();
-    void DamageStart();
+    virtual void DamageStart();
     void FatDamageStart();
 
     void IdleUpdate(float _Delta);
@@ -132,7 +139,6 @@ protected:
     void DamageUpdate(float _Delta);
     void FatDamageUpdate(float _Delta);
 
-    void ChangeState(KirbyState _State);
 
     KirbyState State = KirbyState::Max;
 

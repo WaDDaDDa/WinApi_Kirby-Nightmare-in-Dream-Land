@@ -15,7 +15,6 @@
 #include "Monster.h"
 #include <GameEngineCore/GameEngineCollision.h>
 
-BurningKirby* BurningKirby::MainPlayer = nullptr;
 
 BurningKirby::BurningKirby()
 {
@@ -106,6 +105,7 @@ void BurningKirby::Start()
 		AttackCollision->SetCollisionType(CollisionType::Rect);
 		AttackCollision->Off();
 	}
+	SetMainPlayer(this);
 	MainRenderer->SetScaleRatio(4.0f);
 	SetPos(float4{ 360,360 });
 	SetAbillity(Abillity::Burning);
@@ -130,24 +130,10 @@ void BurningKirby::Update(float _Delta)
 
 			GameEngineActor* Actor = Collison->GetActor();
 
-			//Actor->Death();
+			ChangeState(KirbyState::Damage);
+			return;
 		}
 	}
-
-	// ¡‹ ¿Œ æ∆øÙ ±‚¥…
-	if (true == GameEngineInput::IsPress('L'))
-	{
-		GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(1.0f * _Delta);
-
-		// Monster::AllMonsterDeath();
-	}
-
-	if (true == GameEngineInput::IsPress('Y'))
-	{
-		GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(-1.0f * _Delta);
-		// GameEngineLevel::CollisionDebugRenderSwitch();
-	}
-
 
 	StateUpdate(_Delta);
 
