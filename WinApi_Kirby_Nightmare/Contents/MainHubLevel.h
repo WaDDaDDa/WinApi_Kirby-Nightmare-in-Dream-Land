@@ -13,6 +13,8 @@ public:
     MainHubLevel& operator=(const MainHubLevel& _Other) = delete;
     MainHubLevel& operator=(MainHubLevel&& _Other) noexcept = delete;
 
+    static class Kirby* LevelPlayer;
+
 protected:
     void LevelStart(GameEngineLevel* _PrevLevel) override;
     void LevelEnd(GameEngineLevel* _NextLevel) override;
@@ -22,10 +24,13 @@ private:
     void Update(float _Delta) override;
     void Release() override;
 
-    //class Kirby* LevelPlayer = nullptr;
     class Stage* StagePtr = nullptr;
 
     GameEngineSoundPlayer BGMPlayer;
 
+    float4 StartPlayerPos = float4{ 700 , 900 };
+
     float SoundVolume = 1.0f;
+
+    class Portal* Stage1Portal = nullptr;
 };

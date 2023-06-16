@@ -12,7 +12,6 @@ public:
     VegetableValleyLevel& operator=(const VegetableValleyLevel&& _Other) = delete;
     VegetableValleyLevel(const VegetableValleyLevel& _Other) = delete;
     VegetableValleyLevel(const VegetableValleyLevel&& _Other) = delete;
-    static class Kirby* LevelPlayer;
 
 protected:
     void LevelStart(GameEngineLevel* _PrevLevel) override;

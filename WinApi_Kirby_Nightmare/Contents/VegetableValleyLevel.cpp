@@ -16,8 +16,7 @@
 #include "WaddleDee.h"
 #include "BurningKirby.h"
 #include "Portal.h"
-
-class Kirby* VegetableValleyLevel::LevelPlayer = nullptr;
+#include "MainHubLevel.h"
 
 VegetableValleyLevel::VegetableValleyLevel()
 {
@@ -31,7 +30,6 @@ VegetableValleyLevel::~VegetableValleyLevel()
 
 void VegetableValleyLevel::Start()
 {
-	//GetMainCamera()->SetPos(float4{ 0, -100 });
 	GameEngineSound::SetGlobalVolume(SoundVolume);
 	//이미지가 로드되지않았다면 로드하고 로드 되었다면 로드안하기 위함.
 	if (false == ResourcesManager::GetInst().IsLoadTexture("TestBackGround.Bmp"))
@@ -61,8 +59,8 @@ void VegetableValleyLevel::Start()
 	StagePtr = CreateActor<Stage>();
 	StagePtr->Init("Level1.Bmp", "Level1_Debug.bmp");
 
-	LevelPlayer = CreateActor<Kirby>();
-	LevelPlayer->OverOn();
+	//MainHubLevel::LevelPlayer = CreateActor<Kirby>();
+	//LevelPlayer->OverOn();
 	CreateActor<UIManager>();
 	MainPortal = CreateActor<Portal>();
 	MainPortal->SetPos(float4{ 3900, 290 });
@@ -104,12 +102,12 @@ void VegetableValleyLevel::Update(float _Delta)
 
 			GameEngineActor* Actor = Collison->GetActor();
 
-			if (true == GameEngineInput::IsPress('W'))
+			if (true == GameEngineInput::IsDown('W'))
 			{
 				GameEngineCore::ChangeLevel("MainHubLevel");
-				LevelPlayer->SetGroundTexture("MainHupDebug.bmp");
-				LevelPlayer->SetPrevPos(LevelPlayer->GetPos());
-				LevelPlayer->SetPos(float4 { 500 , 800 });
+				MainHubLevel::LevelPlayer->SetGroundTexture("MainHupDebug.bmp");
+				MainHubLevel::LevelPlayer->SetPos(MainHubLevel::LevelPlayer->GetPrevPos());
+				MainHubLevel::LevelPlayer->SetPrevPos(MainHubLevel::LevelPlayer->GetPos());
 				BGMPlayer.Stop();
 				return;
 			}
@@ -126,16 +124,18 @@ void VegetableValleyLevel::Release()
 
 void VegetableValleyLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	/*if (nullptr == LevelPlayer)
+	if (nullptr == MainHubLevel::LevelPlayer)
 	{
 		MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
-	}*/
+	}
 
-	LevelPlayer->SetGroundTexture("Level1_Debug.bmp");
+	MainHubLevel::LevelPlayer->SetGroundTexture("Level1_Debug.bmp");
 	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
-	GetMainCamera()->SetPos(LevelPlayer->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
+	
+
+	GetMainCamera()->SetPos(MainHubLevel::LevelPlayer->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
 	//GetMainCamera()->SetPos(float4{ VegetableValleyLevel::LevelPlayer->GetPos().Half().X, -VegetableValleyLevel::LevelPlayer->GetPos().Half().Y });
-	//BGMPlayer = GameEngineSound::SoundPlay("04Vegetable_Valley.mp3");
+	BGMPlayer = GameEngineSound::SoundPlay("04Vegetable_Valley.mp3");
 }
 
 void VegetableValleyLevel::LevelEnd(GameEngineLevel* _NextLevel)

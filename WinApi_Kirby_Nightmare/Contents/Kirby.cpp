@@ -169,7 +169,6 @@ void Kirby::Start()
 		AttackCollision->Off();
 	}
 	MainRenderer->SetScaleRatio(4.0f);
-	SetPos(float4{ 360,360 });
 	
 	// PlayerPos 는 static 멤버 변수 선언후 초기 위치를 선언하고 시작할수있을듯.
 	ChangeState(KirbyState::Idle);
