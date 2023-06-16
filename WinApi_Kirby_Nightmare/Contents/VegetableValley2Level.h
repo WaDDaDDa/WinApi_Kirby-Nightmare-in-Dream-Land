@@ -2,16 +2,16 @@
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEnginePlatform/GameEngineSound.h>
 
-class VegetableValleyLevel : public GameEngineLevel
+class VegetableValley2Level : public GameEngineLevel
 {
 public:
-    VegetableValleyLevel();
-    ~VegetableValleyLevel();
+    VegetableValley2Level();
+    ~VegetableValley2Level();
 
-    VegetableValleyLevel& operator=(const VegetableValleyLevel& _Other) = delete;
-    VegetableValleyLevel& operator=(const VegetableValleyLevel&& _Other) = delete;
-    VegetableValleyLevel(const VegetableValleyLevel& _Other) = delete;
-    VegetableValleyLevel(const VegetableValleyLevel&& _Other) = delete;
+    VegetableValley2Level& operator=(const VegetableValley2Level& _Other) = delete;
+    VegetableValley2Level& operator=(const VegetableValley2Level&& _Other) = delete;
+    VegetableValley2Level(const VegetableValley2Level& _Other) = delete;
+    VegetableValley2Level(const VegetableValley2Level&& _Other) = delete;
 
 protected:
     void LevelStart(GameEngineLevel* _PrevLevel) override;

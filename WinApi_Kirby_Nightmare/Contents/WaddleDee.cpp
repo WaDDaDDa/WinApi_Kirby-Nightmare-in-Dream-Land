@@ -68,7 +68,6 @@ void WaddleDee::Start()
 	}
 	MainRenderer->SetScaleRatio(4.0f);
 	SetAbillity(Abillity::Burning);
-	SetPos(float4{ 500,360 });
 	ChangeState(WaddleDeeState::Idle);
 }
 

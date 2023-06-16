@@ -46,6 +46,12 @@
     <ClInclude Include="Portal.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="VegetableValley2Level.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="VegetableValley3Level.h">
+      <Filter>Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainHub.cpp" />
@@ -98,6 +104,12 @@
     </ClCompile>
     <ClCompile Include="Portal.cpp">
       <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="VegetableValley2Level.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="VegetableValley3Level.cpp">
+      <Filter>Level</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

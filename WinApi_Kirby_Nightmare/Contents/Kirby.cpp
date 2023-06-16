@@ -549,7 +549,7 @@ void Kirby::Render(float _Delta)
 	Text += std::to_string(GetLevel()->GetMainCamera()->GetPos().Y);
 	HDC dc = GameEngineWindow::MainWindow.GetBackBuffer()->GetImageDC();
 
-	TextOutA(dc, 2, 3, Text.c_str(), Text.size());
+	TextOutA(dc, 2, 3, Text.c_str(), static_cast<int>(Text.size()));
 }
 
 void Kirby::Immune()

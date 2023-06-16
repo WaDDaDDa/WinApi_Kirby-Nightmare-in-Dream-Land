@@ -28,7 +28,6 @@ public:
     GameEngineLevel& operator=(const GameEngineLevel& _Other) = delete;
     GameEngineLevel& operator=(GameEngineLevel&& _Other) noexcept = delete;
 
-
     template<typename ActorType, typename EnumType>
     ActorType* CreateActor(EnumType _Order)
     {

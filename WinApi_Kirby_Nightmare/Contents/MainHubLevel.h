@@ -30,7 +30,5 @@ private:
 
     float4 StartPlayerPos = float4{ 700 , 900 };
 
-    float SoundVolume = 1.0f;
-
     class Portal* Stage1Portal = nullptr;
 };
