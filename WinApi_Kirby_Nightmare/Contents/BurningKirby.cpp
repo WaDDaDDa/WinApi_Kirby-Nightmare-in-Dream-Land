@@ -105,7 +105,7 @@ void BurningKirby::Start()
 		AttackCollision->SetCollisionType(CollisionType::Rect);
 		AttackCollision->Off();
 	}
-	SetMainPlayer(this);
+	// SetMainPlayer(this);
 	MainRenderer->SetScaleRatio(4.0f);
 	SetPos(float4{ 360,360 });
 	SetAbillity(Abillity::Burning);

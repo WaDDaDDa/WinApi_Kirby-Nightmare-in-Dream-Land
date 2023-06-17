@@ -6,6 +6,7 @@
 #include "AirAttack.h"
 #include "BurningKirby.h"
 #include "Star.h"
+#include "MainHubLevel.h"
 
 // 랜더할 이미지를 먼저 설정해주고 이미지는 그에 맞게 랜더되고 있으면서 update가 일어난다.
 
@@ -787,14 +788,7 @@ void Kirby::SwallowUpdate(float _Delta)
 		// 버닝으로 폼체인지
 		if (Abillity::Burning == ChangeAbillity)
 		{
-			float4 CurPos = MainPlayer->GetPos();
-			float4 CurPrevPos = MainPlayer->GetPrevPos();
-			MainPlayer->Death();
-			MainPlayer = GetLevel()->CreateActor<BurningKirby>();
-			MainPlayer->SetPrevPos(CurPrevPos);
-			MainPlayer->SetPos(CurPos);
-			MainPlayer->SetGroundTexture(GetGroundTexture());
-			return;
+			ChangeKirby(Abillity::Burning);
 		}
 		ChangeState(KirbyState::Idle);
 	}

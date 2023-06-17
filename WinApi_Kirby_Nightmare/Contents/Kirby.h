@@ -42,7 +42,7 @@ class Kirby : public GravityActor
 {
     friend class BurningKirby;
 private:
-    static Kirby* MainPlayer;
+    // static Kirby* MainPlayer;
 
 public:
     Kirby();
@@ -60,15 +60,15 @@ public:
         return MovePos;
     }
 
-    static void SetMainPlayer(Kirby* _MainPlayer)
-    {
-        MainPlayer = _MainPlayer;
-    }
+    //static void SetMainPlayer(Kirby* _MainPlayer)
+    //{
+    //    MainPlayer = _MainPlayer;
+    //}
 
-    static Kirby* GetMainPlayer()
-    {
-        return MainPlayer;
-    }
+    //static Kirby* GetMainPlayer()
+    //{
+    //    return MainPlayer;
+    //}
 
     unsigned int GetWallCheck();
 
@@ -91,6 +91,8 @@ public:
     {
         PrevPos = _PrevPos;
     }
+
+    void ChangeKirby(Abillity _Kirby);
 
 protected:
     // 클래스로 만들어도 된다. 행동과 랜더.
