@@ -45,7 +45,7 @@ void MainHubLevel::Start()
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("04Vegetable_Valley.mp3"));
 	}
 
-	BackGround* CurBackGround = CreateActor<BackGround>();
+	CurBackGround = CreateActor<BackGround>();
 	CurBackGround->Init("MainHupBackGround.Bmp");
 
 	StagePtr = CreateActor<Stage>();
@@ -88,6 +88,10 @@ void MainHubLevel::Update(float _Delta)
 	if (true == GameEngineInput::IsDown('J'))
 	{
 		StagePtr->SwitchRender();
+	}
+
+	if (true == GameEngineInput::IsDown('K'))
+	{
 		CollisionDebugRenderSwitch();
 	}
 
@@ -122,7 +126,7 @@ void MainHubLevel::Update(float _Delta)
 				// 포탈입장전 현재위치를 저장
 				Kirby::GetMainPlayer()->SetPrevPos(Kirby::GetMainPlayer()->GetPos());
 				// stage1의 시작위치
-				Kirby::GetMainPlayer()->SetPos(float4{ 360 , 350 });
+				Kirby::GetMainPlayer()->SetPos(Stage1StartPos);
 				BGMPlayer.Stop();
 				return;
 			}
@@ -148,8 +152,8 @@ void MainHubLevel::Update(float _Delta)
 				Kirby::GetMainPlayer()->SetGroundTexture("Level2_Debug.bmp");
 				// 포탈입장전 현재위치를 저장
 				Kirby::GetMainPlayer()->SetPrevPos(Kirby::GetMainPlayer()->GetPos());
-				// stage1의 시작위치
-				Kirby::GetMainPlayer()->SetPos(float4{ 360 , 350 });
+				// stage2의 시작위치
+				Kirby::GetMainPlayer()->SetPos(Stage2StartPos);
 				BGMPlayer.Stop();
 				return;
 			}

@@ -502,7 +502,6 @@ void Kirby::LevelStart()
 
 void Kirby::ChangeKirby(Abillity _Kirby)
 {
-
 	if (GetAbillity() != _Kirby)
 	{
 		float4 CurPos = MainPlayer->GetPos();
@@ -512,11 +511,11 @@ void Kirby::ChangeKirby(Abillity _Kirby)
 		{
 		case Abillity::Normal:
 			MainPlayer->Death();
-			MainPlayer->GetLevel()->CreateActor<Kirby>();
+			SetMainPlayer(MainPlayer->GetLevel()->CreateActor<Kirby>());
 			break;
 		case Abillity::Burning:
 			MainPlayer->Death();
-			MainPlayer->GetLevel()->CreateActor<BurningKirby>();
+			SetMainPlayer(MainPlayer->GetLevel()->CreateActor<BurningKirby>());
 			break;
 		default:
 			break;

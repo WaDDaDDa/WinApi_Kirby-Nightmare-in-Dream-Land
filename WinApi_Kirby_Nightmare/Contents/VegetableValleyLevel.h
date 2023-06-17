@@ -23,6 +23,7 @@ private:
     void Release() override;
 
     GameEngineSoundPlayer BGMPlayer;
+    class BackGround* CurBackGround = nullptr;
 
     class Stage* StagePtr = nullptr;
     class Portal* MainPortal = nullptr;

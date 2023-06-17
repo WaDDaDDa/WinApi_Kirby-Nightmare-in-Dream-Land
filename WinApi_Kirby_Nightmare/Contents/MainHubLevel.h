@@ -26,10 +26,14 @@ private:
     void CameraFocus();
 
     class Stage* StagePtr = nullptr;
+    class BackGround* CurBackGround = nullptr;
 
     GameEngineSoundPlayer BGMPlayer;
 
     float4 StartPlayerPos = float4{ 700 , 900 };
+    float4 Stage1StartPos = float4{ 360 , 350 };
+    float4 Stage2StartPos = float4{ 360 , 350 };
+    float4 Stage3StartPos;
 
     class Portal* Stage1Portal = nullptr;
     Portal* Stage2Portal = nullptr;

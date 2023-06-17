@@ -40,7 +40,7 @@ void VegetableValley2Level::Start()
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("04Vegetable_Valley.mp3"));
 	}
 
-	BackGround* CurBackGround = CreateActor<BackGround>();
+	CurBackGround = CreateActor<BackGround>();
 	CurBackGround->Init("TestBackGround.Bmp");
 
 	StagePtr = CreateActor<Stage>();
@@ -48,20 +48,7 @@ void VegetableValley2Level::Start()
 
 	CreateActor<UIManager>();
 	MainPortal = CreateActor<Portal>();
-	MainPortal->SetPos(float4{ 3900, 290 });
-
-	// 몬스터 배치
-	{
-		WaddleDee* Waddle = CreateActor<WaddleDee>();
-		Waddle->SetGroundTexture("Level2_Debug.bmp");
-		Waddle->SetPos(float4{ 1500,350 });
-	}
-	{
-		WaddleDee* Waddle = CreateActor<WaddleDee>();
-		Waddle->SetGroundTexture("Level2_Debug.bmp");
-		Waddle->SetPos(float4{ 2600,350 });
-	}
-
+	MainPortal->SetPos(float4{ 4750, 360 });
 }
 
 
@@ -69,9 +56,13 @@ void VegetableValley2Level::Update(float _Delta)
 {
 	if (true == GameEngineInput::IsDown('P'))
 	{
-		GameEngineCore::ChangeLevel("TitleLevel");
+		GameEngineCore::ChangeLevel("MainHubLevel");
+		Kirby::GetMainPlayer()->SetGroundTexture("MainHupDebug.bmp");
+		float4 Ppos = Kirby::GetMainPlayer()->GetPos();
+		Kirby::GetMainPlayer()->SetPos(Kirby::GetMainPlayer()->GetPrevPos());
+		Kirby::GetMainPlayer()->SetPrevPos(Ppos);
 		BGMPlayer.Stop();
-
+		return;
 	}
 
 	if (true == GameEngineInput::IsDown('M'))
@@ -84,6 +75,10 @@ void VegetableValley2Level::Update(float _Delta)
 	if (true == GameEngineInput::IsDown('J'))
 	{
 		StagePtr->SwitchRender();
+	}
+
+	if (true == GameEngineInput::IsDown('K'))
+	{
 		CollisionDebugRenderSwitch();
 	}
 
@@ -103,10 +98,12 @@ void VegetableValley2Level::Update(float _Delta)
 
 			if (true == GameEngineInput::IsDown('W'))
 			{
-				GameEngineCore::ChangeLevel("MainHubLevel");
-				Kirby::GetMainPlayer()->SetGroundTexture("MainHupDebug.bmp");
-				Kirby::GetMainPlayer()->SetPos(Kirby::GetMainPlayer()->GetPrevPos());
-				Kirby::GetMainPlayer()->SetPrevPos(Kirby::GetMainPlayer()->GetPos());
+				GameEngineCore::ChangeLevel("VegetableValley3Level");
+				Kirby::GetMainPlayer()->SetGroundTexture("Level3_Debug.bmp");
+				float4 Ppos = Kirby::GetMainPlayer()->GetPos();
+				//Kirby::GetMainPlayer()->SetPos(Kirby::GetMainPlayer()->GetPrevPos());
+				Kirby::GetMainPlayer()->SetPos(float4{ 330, 640 });
+				Kirby::GetMainPlayer()->SetPrevPos(Ppos);
 				BGMPlayer.Stop();
 				return;
 			}
@@ -123,6 +120,8 @@ void VegetableValley2Level::Release()
 
 void VegetableValley2Level::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	Monster::AllMonsterDeath();
+
 	if (nullptr == Kirby::GetMainPlayer())
 	{
 		MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
@@ -133,6 +132,19 @@ void VegetableValley2Level::LevelStart(GameEngineLevel* _PrevLevel)
 
 	GetMainCamera()->SetPos(Kirby::GetMainPlayer()->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
 	BGMPlayer = GameEngineSound::SoundPlay("04Vegetable_Valley.mp3");
+
+	// 몬스터 배치
+	{
+		WaddleDee* Waddle = CreateActor<WaddleDee>();
+		Waddle->SetGroundTexture("Level2_Debug.bmp");
+		Waddle->SetPos(float4{ 1500,350 });
+	}
+	{
+		WaddleDee* Waddle = CreateActor<WaddleDee>();
+		Waddle->SetGroundTexture("Level2_Debug.bmp");
+		Waddle->SetPos(float4{ 2600,350 });
+	}
+
 }
 
 void VegetableValley2Level::LevelEnd(GameEngineLevel* _NextLevel)
