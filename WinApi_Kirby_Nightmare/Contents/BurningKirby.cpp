@@ -136,7 +136,6 @@ void BurningKirby::Update(float _Delta)
 	}
 
 	StateUpdate(_Delta);
-
 	CameraFocus(_Delta);
 }
 

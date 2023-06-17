@@ -98,7 +98,7 @@ void VegetableValleyLevel::Update(float _Delta)
 		StagePtr->SwitchRender();
 		CollisionDebugRenderSwitch();
 	}
-
+	
 	std::vector<GameEngineCollision*> _Col;
 
 	if (true == MainPortal->BodyCollision->Collision(CollisionOrder::PlayerBody

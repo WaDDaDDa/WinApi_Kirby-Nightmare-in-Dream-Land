@@ -787,10 +787,12 @@ void Kirby::SwallowUpdate(float _Delta)
 		// ¹ö´×À¸·Î ÆûÃ¼ÀÎÁö
 		if (Abillity::Burning == ChangeAbillity)
 		{
-			float4 PrevPos = MainPlayer->GetPos();
+			float4 CurPos = MainPlayer->GetPos();
+			float4 CurPrevPos = MainPlayer->GetPrevPos();
 			MainPlayer->Death();
 			MainPlayer = GetLevel()->CreateActor<BurningKirby>();
-			MainPlayer->SetPos(PrevPos);
+			MainPlayer->SetPrevPos(CurPrevPos);
+			MainPlayer->SetPos(CurPos);
 			MainPlayer->SetGroundTexture(GetGroundTexture());
 			return;
 		}

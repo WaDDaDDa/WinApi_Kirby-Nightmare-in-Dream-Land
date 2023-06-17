@@ -32,7 +32,7 @@ MainHubLevel::~MainHubLevel()
 void MainHubLevel::Start()
 {
 	// GlobalVolume 볼륨조절
-	// GameEngineSound::SetGlobalVolume(SoundVolume);
+	GameEngineSound::SetGlobalVolume(0.0f);
 	//이미지가 로드되지않았다면 로드하고 로드 되었다면 로드안하기 위함.
 	if (false == ResourcesManager::GetInst().IsLoadTexture("MainHup.Bmp"))
 	{
