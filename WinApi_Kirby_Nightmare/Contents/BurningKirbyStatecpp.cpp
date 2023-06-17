@@ -5,13 +5,13 @@
 
 void BurningKirby::DamageStart()
 {
-	float4 PrevPos = MainHubLevel::LevelPlayer->GetPos();
-	MainHubLevel::LevelPlayer->Death();
-	MainHubLevel::LevelPlayer = GetLevel()->CreateActor<Kirby>();
-	MainHubLevel::LevelPlayer->SetPos(PrevPos);
-	MainHubLevel::LevelPlayer->SetGroundTexture(GetGroundTexture());
-	MainHubLevel::LevelPlayer->DirCheck();
-	MainHubLevel::LevelPlayer->ChangeState(KirbyState::Damage);
+	float4 PrevPos = GetMainPlayer()->GetPos();
+	GetMainPlayer()->Death();
+	SetMainPlayer(GetLevel()->CreateActor<Kirby>());
+	GetMainPlayer()->SetPos(PrevPos);
+	GetMainPlayer()->SetGroundTexture(GetGroundTexture());
+	GetMainPlayer()->DirCheck();
+	GetMainPlayer()->ChangeState(KirbyState::Damage);
 	return;
 }
 

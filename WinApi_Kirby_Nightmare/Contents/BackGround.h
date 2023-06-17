@@ -27,5 +27,6 @@ private:
 
     float4 PrevCameraPos = { 0,0 };
 
+    class GameEngineRenderer* MainRenderer = nullptr;
 };
 

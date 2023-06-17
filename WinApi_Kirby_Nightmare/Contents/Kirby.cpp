@@ -17,7 +17,7 @@
 #include "MainHubLevel.h"
 #include "BurningKirby.h"
 
-// Kirby* Kirby::MainPlayer = nullptr;
+Kirby* Kirby::MainPlayer = nullptr;
 
 Kirby::Kirby()
 {
@@ -497,9 +497,7 @@ void Kirby::CameraFocus(float _Delta)
 
 void Kirby::LevelStart()
 {
-	MainHubLevel::LevelPlayer = this;
-	// MainPlayer = MainHubLevel::LevelPlayer;
-	// MainPlayer = this;
+	MainPlayer = this;
 }
 
 void Kirby::ChangeKirby(Abillity _Kirby)
@@ -507,30 +505,30 @@ void Kirby::ChangeKirby(Abillity _Kirby)
 
 	if (GetAbillity() != _Kirby)
 	{
-		float4 CurPos = MainHubLevel::LevelPlayer->GetPos();
-		float4 CurPrevPos = MainHubLevel::LevelPlayer->GetPrevPos();
+		float4 CurPos = MainPlayer->GetPos();
+		float4 CurPrevPos = MainPlayer->GetPrevPos();
 
 		switch (_Kirby)
 		{
 		case Abillity::Normal:
-			MainHubLevel::LevelPlayer->Death();
-			MainHubLevel::LevelPlayer = GetLevel()->CreateActor<Kirby>();
+			MainPlayer->Death();
+			MainPlayer->GetLevel()->CreateActor<Kirby>();
 			break;
 		case Abillity::Burning:
-			MainHubLevel::LevelPlayer->Death();
-			MainHubLevel::LevelPlayer = GetLevel()->CreateActor<BurningKirby>();
+			MainPlayer->Death();
+			MainPlayer->GetLevel()->CreateActor<BurningKirby>();
 			break;
 		default:
 			break;
 		}
 
-		MainHubLevel::LevelPlayer->SetPrevPos(CurPrevPos);
-		MainHubLevel::LevelPlayer->SetPos(CurPos);
-		MainHubLevel::LevelPlayer->SetGroundTexture(GetGroundTexture());
-		MainHubLevel::LevelPlayer->OverOn();
+		MainPlayer->SetPrevPos(CurPrevPos);
+		MainPlayer->SetPos(CurPos);
+		MainPlayer->SetGroundTexture(GetGroundTexture());
+		MainPlayer->OverOn();
 	}
 
-	SetAbillity(_Kirby);
+	MainPlayer->SetAbillity(_Kirby);
 }
 
 unsigned int Kirby::GetWallCheck()

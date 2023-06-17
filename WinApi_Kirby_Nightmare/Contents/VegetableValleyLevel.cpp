@@ -30,18 +30,6 @@ VegetableValleyLevel::~VegetableValleyLevel()
 
 void VegetableValleyLevel::Start()
 {
-	//이미지가 로드되지않았다면 로드하고 로드 되었다면 로드안하기 위함.
-	if (false == ResourcesManager::GetInst().IsLoadTexture("TestBackGround.Bmp"))
-	{
-		GameEnginePath FilePath;
-		FilePath.MoveParentToExistsChild("Resource");
-
-		GameEnginePath FolderPath = FilePath;
-
-		FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Stages\\");
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Level1_Debug.bmp"));
-	}
-
 	if (nullptr == GameEngineSound::FindSound("04Vegetable_Valley.mp3"))
 	{
 		GameEnginePath FilePath;
@@ -116,9 +104,9 @@ void VegetableValleyLevel::Update(float _Delta)
 			if (true == GameEngineInput::IsDown('W'))
 			{
 				GameEngineCore::ChangeLevel("MainHubLevel");
-				MainHubLevel::LevelPlayer->SetGroundTexture("MainHupDebug.bmp");
-				MainHubLevel::LevelPlayer->SetPos(MainHubLevel::LevelPlayer->GetPrevPos());
-				MainHubLevel::LevelPlayer->SetPrevPos(MainHubLevel::LevelPlayer->GetPos());
+				Kirby::GetMainPlayer()->SetGroundTexture("MainHupDebug.bmp");
+				Kirby::GetMainPlayer()->SetPos(Kirby::GetMainPlayer()->GetPrevPos());
+				Kirby::GetMainPlayer()->SetPrevPos(Kirby::GetMainPlayer()->GetPos());
 				BGMPlayer.Stop();
 				return;
 			}
@@ -135,15 +123,15 @@ void VegetableValleyLevel::Release()
 
 void VegetableValleyLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	if (nullptr == MainHubLevel::LevelPlayer)
+	if (nullptr == Kirby::GetMainPlayer())
 	{
 		MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
 	}
 
-	MainHubLevel::LevelPlayer->SetGroundTexture("Level1_Debug.bmp");
+	Kirby::GetMainPlayer()->SetGroundTexture("Level1_Debug.bmp");
 	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
 
-	GetMainCamera()->SetPos(MainHubLevel::LevelPlayer->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
+	GetMainCamera()->SetPos(Kirby::GetMainPlayer()->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
 	BGMPlayer = GameEngineSound::SoundPlay("04Vegetable_Valley.mp3");
 }
 

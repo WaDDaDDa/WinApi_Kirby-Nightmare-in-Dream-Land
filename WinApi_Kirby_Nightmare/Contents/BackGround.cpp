@@ -20,6 +20,7 @@ BackGround::~BackGround()
 
 void BackGround::Start()
 {
+	MainRenderer = CreateRenderer(RenderOrder::BackGround);
 	SetPos({ 540, 300 });
 }
 
@@ -56,15 +57,14 @@ void BackGround::Init(const std::string& _FileName)
 		FilePath.MoveChild("Resource\\\\Kirby_Nightmare_in_Dream_Land\\Backgrounds\\" + _FileName);
 
 		GameEngineWindowTexture* Text = ResourcesManager::GetInst().TextureLoad(FilePath.GetStringPath());
-
-		float4 Scale = Text->GetScale();
-
-		Scale.X *= 4.0f;
-		Scale.Y *= 4.0f;
-
-		GameEngineRenderer* Render = CreateRenderer(_FileName, RenderOrder::BackGround);
-
-		Render->SetRenderScale(Scale);
 	}
 
+	GameEngineWindowTexture* Texture = ResourcesManager::GetInst().FindTexture(_FileName);
+	float4 Scale = Texture->GetScale();
+	Scale.X *= 4.0f;
+	Scale.Y *= 4.0f;
+
+	MainRenderer->SetTexture(_FileName);
+
+	MainRenderer->SetRenderScale(Scale);
 }

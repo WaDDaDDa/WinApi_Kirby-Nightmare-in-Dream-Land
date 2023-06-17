@@ -17,7 +17,7 @@
 #include "BurningKirby.h"
 #include "Portal.h"
 
-Kirby* MainHubLevel::LevelPlayer = nullptr;
+// Kirby* MainHubLevel::LevelPlayer = nullptr;
 
 MainHubLevel::MainHubLevel()
 {
@@ -33,18 +33,8 @@ void MainHubLevel::Start()
 {
 	// GlobalVolume 볼륨조절
 	GameEngineSound::SetGlobalVolume(0.0f);
-	//이미지가 로드되지않았다면 로드하고 로드 되었다면 로드안하기 위함.
-	if (false == ResourcesManager::GetInst().IsLoadTexture("MainHup.Bmp"))
-	{
-		GameEnginePath FilePath;
-		FilePath.MoveParentToExistsChild("Resource");
 
-		GameEnginePath FolderPath = FilePath;
-
-		FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Stages\\");
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("MainHupDebug.bmp"));
-	}
-
+	// 사운드 로드
 	if (nullptr == GameEngineSound::FindSound("04Vegetable_Valley.mp3"))
 	{
 		GameEnginePath FilePath;
@@ -57,27 +47,33 @@ void MainHubLevel::Start()
 
 	BackGround* CurBackGround = CreateActor<BackGround>();
 	CurBackGround->Init("MainHupBackGround.Bmp");
+
 	StagePtr = CreateActor<Stage>();
 	StagePtr->Init("MainHup.Bmp", "MainHupDebug.bmp");
 
-	LevelPlayer = CreateActor<Kirby>();
-	LevelPlayer->OverOn();
-	CreateActor<UIManager>();
+	Kirby::SetMainPlayer(CreateActor<Kirby>());
+	Kirby::GetMainPlayer()->OverOn();
+	Kirby::GetMainPlayer()->SetPos(StartPlayerPos);
 
-	LevelPlayer->SetPos(StartPlayerPos);
+	CreateActor<UIManager>();
 
 	Stage1Portal = CreateActor<Portal>();
 	Stage1Portal->SetPos(float4{ 440, 1100 });
+
+	Stage2Portal = CreateActor<Portal>();
+	Stage2Portal->SetPos(float4{ 960, 1220 });
 }
 
 
 void MainHubLevel::Update(float _Delta)
 {
+	CameraFocus();
+
 	if (true == GameEngineInput::IsDown('P'))
 	{
 		GameEngineCore::ChangeLevel("VegetableValleyLevel");
-		LevelPlayer->SetGroundTexture("Level1_Debug.bmp");
-		LevelPlayer->SetPos(LevelPlayer->GetPrevPos());
+		Kirby::GetMainPlayer()->SetGroundTexture("Level1_Debug.bmp");
+		Kirby::GetMainPlayer()->SetPos(Kirby::GetMainPlayer()->GetPrevPos());
 
 		BGMPlayer.Stop();
 	}
@@ -86,6 +82,7 @@ void MainHubLevel::Update(float _Delta)
 	{
 		WaddleDee* Waddle = CreateActor<WaddleDee>();
 		Waddle->SetGroundTexture("MainHupDebug.bmp");
+		Waddle->SetPos(float4{ 500,360 });
 	}
 
 	if (true == GameEngineInput::IsDown('J'))
@@ -96,11 +93,11 @@ void MainHubLevel::Update(float _Delta)
 
 	if (true == GameEngineInput::IsDown('Q'))
 	{
-		float4 PrevPos = LevelPlayer->GetPos();
-		LevelPlayer->Death();
-		LevelPlayer = CreateActor<BurningKirby>();
-		LevelPlayer->SetPos(PrevPos);
-		LevelPlayer->SetGroundTexture("MainHupDebug.bmp");
+		float4 PrevPos = Kirby::GetMainPlayer()->GetPos();
+		Kirby::GetMainPlayer()->Death();
+		Kirby::SetMainPlayer(CreateActor<BurningKirby>());
+		Kirby::GetMainPlayer()->SetPos(PrevPos);
+		Kirby::GetMainPlayer()->SetGroundTexture("MainHupDebug.bmp");
 	}
 
 	// 포탈 이동
@@ -121,11 +118,38 @@ void MainHubLevel::Update(float _Delta)
 			if (true == GameEngineInput::IsDown('W'))
 			{
 				GameEngineCore::ChangeLevel("VegetableValleyLevel");
-				LevelPlayer->SetGroundTexture("Level1_Debug.bmp");
+				Kirby::GetMainPlayer()->SetGroundTexture("Level1_Debug.bmp");
 				// 포탈입장전 현재위치를 저장
-				LevelPlayer->SetPrevPos(MainHubLevel::LevelPlayer->GetPos());
+				Kirby::GetMainPlayer()->SetPrevPos(Kirby::GetMainPlayer()->GetPos());
 				// stage1의 시작위치
-				LevelPlayer->SetPos(float4{ 360 , 350 });
+				Kirby::GetMainPlayer()->SetPos(float4{ 360 , 350 });
+				BGMPlayer.Stop();
+				return;
+			}
+			return;
+		}
+	}
+
+	if (true == Stage2Portal->BodyCollision->Collision(CollisionOrder::PlayerBody
+		, _Col
+		, CollisionType::Rect // 나를 사각형으로 봐줘
+		, CollisionType::CirCle // 상대도 사각형으로 봐줘
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			GameEngineActor* Actor = Collison->GetActor();
+
+			if (true == GameEngineInput::IsDown('W'))
+			{
+				GameEngineCore::ChangeLevel("VegetableValley2Level");
+				Kirby::GetMainPlayer()->SetGroundTexture("Level2_Debug.bmp");
+				// 포탈입장전 현재위치를 저장
+				Kirby::GetMainPlayer()->SetPrevPos(Kirby::GetMainPlayer()->GetPos());
+				// stage1의 시작위치
+				Kirby::GetMainPlayer()->SetPos(float4{ 360 , 350 });
 				BGMPlayer.Stop();
 				return;
 			}
@@ -142,18 +166,38 @@ void MainHubLevel::Release()
 
 void MainHubLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	if (nullptr == LevelPlayer)
+	if (nullptr == Kirby::GetMainPlayer())
 	{
 		MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
 	}
 
 	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
-	GetMainCamera()->SetPos(LevelPlayer->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
-	LevelPlayer->SetGroundTexture("MainHupDebug.bmp");
+	GetMainCamera()->SetPos(Kirby::GetMainPlayer()->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
+	Kirby::GetMainPlayer()->SetGroundTexture("MainHupDebug.bmp");
 	BGMPlayer = GameEngineSound::SoundPlay("04Vegetable_Valley.mp3");
 }
 
 void MainHubLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
 
+}
+
+void MainHubLevel::CameraFocus()
+{
+	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
+
+	int CameraRangeX = GetMainCamera()->GetPos().iX();
+	int CameraRangeY = GetMainCamera()->GetPos().iY();
+
+	int PlayerX = Kirby::GetMainPlayer()->GetPos().iX();
+	int PlayerY = Kirby::GetMainPlayer()->GetPos().iY();
+
+	float ImageX = Kirby::GetMainPlayer()->GetGroundTexture()->GetScale().X - 960.0f;
+	float ImageY = Kirby::GetMainPlayer()->GetGroundTexture()->GetScale().Y - 600.0f;
+
+	if (0.0f >= GetMainCamera()->GetPos().Y)
+	{
+		GetMainCamera()->SetPos({ GetMainCamera()->GetPos().X, 0.0f });
+	}
+	return;
 }

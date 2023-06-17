@@ -105,7 +105,7 @@ void BurningKirby::Start()
 		AttackCollision->SetCollisionType(CollisionType::Rect);
 		AttackCollision->Off();
 	}
-	// SetMainPlayer(this);
+	SetMainPlayer(this);
 	MainRenderer->SetScaleRatio(4.0f);
 	SetPos(float4{ 360,360 });
 	SetAbillity(Abillity::Burning);
@@ -173,7 +173,7 @@ void BurningKirby::CameraFocus(float _Delta)
 	int PlayerY = GetPos().iY();
 
 	float ImageX = GetGroundTexture()->GetScale().X - 960.0f;
-	float ImageY = GetGroundTexture()->GetScale().Y;
+	float ImageY = GetGroundTexture()->GetScale().Y - 600.0f;
 
 	// 카메라가 맵의 왼쪽으로 못나가게.
 	if (0 >= GetLevel()->GetMainCamera()->GetPos().X)

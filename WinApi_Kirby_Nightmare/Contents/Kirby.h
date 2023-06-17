@@ -42,7 +42,7 @@ class Kirby : public GravityActor
 {
     friend class BurningKirby;
 private:
-    // static Kirby* MainPlayer;
+    static Kirby* MainPlayer;
 
 public:
     Kirby();
@@ -60,15 +60,15 @@ public:
         return MovePos;
     }
 
-    //static void SetMainPlayer(Kirby* _MainPlayer)
-    //{
-    //    MainPlayer = _MainPlayer;
-    //}
+    static void SetMainPlayer(Kirby* _MainPlayer)
+    {
+        MainPlayer = _MainPlayer;
+    }
 
-    //static Kirby* GetMainPlayer()
-    //{
-    //    return MainPlayer;
-    //}
+    static Kirby* GetMainPlayer()
+    {
+        return MainPlayer;
+    }
 
     unsigned int GetWallCheck();
 

@@ -40,6 +40,7 @@ void Stage::Release()
 void Stage::Init(const std::string& _FileName, const std::string& _DebugFileName)
 {
 	FileName = _FileName;
+	DebugFileName = _DebugFileName;
 
 	if (false == ResourcesManager::GetInst().IsLoadTexture(_FileName))
 	{
@@ -47,6 +48,16 @@ void Stage::Init(const std::string& _FileName, const std::string& _DebugFileName
 
 		FilePath.MoveParentToExistsChild("Resource");
 		FilePath.MoveChild("Resource\\\\Kirby_Nightmare_in_Dream_Land\\Stages\\" + _FileName);
+
+		GameEngineWindowTexture* Text = ResourcesManager::GetInst().TextureLoad(FilePath.GetStringPath());
+	}
+
+	if (false == ResourcesManager::GetInst().IsLoadTexture(DebugFileName))
+	{
+		GameEnginePath FilePath;
+
+		FilePath.MoveParentToExistsChild("Resource");
+		FilePath.MoveChild("Resource\\\\Kirby_Nightmare_in_Dream_Land\\Stages\\" + DebugFileName);
 
 		GameEngineWindowTexture* Text = ResourcesManager::GetInst().TextureLoad(FilePath.GetStringPath());
 	}

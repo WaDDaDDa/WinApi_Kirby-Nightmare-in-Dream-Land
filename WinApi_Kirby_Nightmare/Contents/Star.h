@@ -13,7 +13,7 @@ public:
 	Star& operator=(const Star& _Other) = delete;
 	Star& operator=(Star&& _Other) noexcept = delete;
 
-	class GameEngineRenderer* Renderer;
+	class GameEngineRenderer* Renderer = nullptr;
 
 	void SetDir(const float4& _Dir)
 	{
