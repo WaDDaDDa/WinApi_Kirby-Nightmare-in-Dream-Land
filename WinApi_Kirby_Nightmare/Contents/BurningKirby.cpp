@@ -73,8 +73,8 @@ void BurningKirby::Start()
 
 	{ // RightAnimation »ý¼º
 		MainRenderer->CreateAnimation("BurningKirbyRight_Idle", "BurningKirbyRight.bmp", 0, 4, 0.2f, true);
-		MainRenderer->FindAnimation("BurningKirbyRight_Idle")->Inters[2] = 0.0f;
-		MainRenderer->FindAnimation("BurningKirbyRight_Idle")->Inters[3] = 0.0f;
+		//MainRenderer->FindAnimation("BurningKirbyRight_Idle")->Inters[2] = 0.0f;
+		//MainRenderer->FindAnimation("BurningKirbyRight_Idle")->Inters[3] = 0.0f;
 		MainRenderer->CreateAnimation("BurningKirbyRight_DownIdle", "BurningKirbyRight.bmp", 8, 10, 0.2f, true);
 		MainRenderer->FindAnimation("BurningKirbyRight_DownIdle")->Inters[2] = 0.0f;
 		MainRenderer->CreateAnimation("BurningKirbyRight_Tackle", "BurningKirbyRight.bmp", 80, 84, 0.1f, true);

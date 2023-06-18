@@ -528,28 +528,28 @@ void Kirby::ChangeKirby(Abillity _Kirby)
 	{
 		float4 CurPos = MainPlayer->GetPos();
 		float4 CurPrevPos = MainPlayer->GetPrevPos();
-
+		
 		switch (_Kirby)
 		{
 		case Abillity::Normal:
-			MainPlayer->Death();
-			SetMainPlayer(MainPlayer->GetLevel()->CreateActor<Kirby>());
+			Kirby::GetMainPlayer()->Death();
+			SetMainPlayer(Kirby::GetMainPlayer()->GetLevel()->CreateActor<Kirby>());
 			break;
 		case Abillity::Burning:
-			MainPlayer->Death();
-			SetMainPlayer(MainPlayer->GetLevel()->CreateActor<BurningKirby>());
+			Kirby::GetMainPlayer()->Death();
+			SetMainPlayer(Kirby::GetMainPlayer()->GetLevel()->CreateActor<BurningKirby>());
 			break;
 		default:
 			break;
 		}
 
-		MainPlayer->SetPrevPos(CurPrevPos);
-		MainPlayer->SetPos(CurPos);
-		MainPlayer->SetGroundTexture(GetGroundTexture());
-		MainPlayer->OverOn();
+		Kirby::GetMainPlayer()->SetPrevPos(CurPrevPos);
+		Kirby::GetMainPlayer()->SetPos(CurPos);
+		Kirby::GetMainPlayer()->SetGroundTexture(GetGroundTexture());
+		Kirby::GetMainPlayer()->OverOn();
 	}
 
-	MainPlayer->SetAbillity(_Kirby);
+	Kirby::GetMainPlayer()->SetAbillity(_Kirby);
 }
 
 unsigned int Kirby::GetWallCheck()
