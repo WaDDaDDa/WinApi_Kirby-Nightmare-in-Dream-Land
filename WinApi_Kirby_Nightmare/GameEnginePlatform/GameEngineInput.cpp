@@ -20,7 +20,6 @@ void GameEngineInput::InputInit()
 		return;
 	}
 
-
 	AllKeys[VK_LBUTTON] = GameEngineKey(VK_LBUTTON);
 	AllKeys[VK_RBUTTON] = GameEngineKey(VK_RBUTTON);
 	AllKeys[VK_CANCEL] = GameEngineKey(VK_CANCEL);

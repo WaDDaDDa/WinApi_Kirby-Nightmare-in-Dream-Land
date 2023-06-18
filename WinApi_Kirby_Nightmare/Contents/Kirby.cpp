@@ -519,15 +519,15 @@ void Kirby::CameraFocus(float _Delta)
 
 void Kirby::LevelStart()
 {
-	MainPlayer = this;
+	Kirby::GetMainPlayer()->SetMainPlayer(this);
 }
 
 void Kirby::ChangeKirby(Abillity _Kirby)
 {
 	if (GetAbillity() != _Kirby)
 	{
-		float4 CurPos = MainPlayer->GetPos();
-		float4 CurPrevPos = MainPlayer->GetPrevPos();
+		float4 CurPos = Kirby::GetMainPlayer()->GetPos();
+		float4 CurPrevPos = Kirby::GetMainPlayer()->GetPrevPos();
 		
 		switch (_Kirby)
 		{

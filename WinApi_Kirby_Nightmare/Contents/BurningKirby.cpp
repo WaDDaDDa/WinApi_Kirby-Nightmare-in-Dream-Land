@@ -105,12 +105,18 @@ void BurningKirby::Start()
 		AttackCollision->SetCollisionType(CollisionType::Rect);
 		AttackCollision->Off();
 	}
-	SetMainPlayer(this);
 	MainRenderer->SetScaleRatio(4.0f);
 	SetPos(float4{ 360,360 });
 	SetAbillity(Abillity::Burning);
 	// PlayerPos 는 static 멤버 변수 선언후 초기 위치를 선언하고 시작할수있을듯.
 	ChangeState(KirbyState::Idle);
+}
+
+void BurningKirby::LevelStart()
+{
+	Kirby::GetMainPlayer()->SetMainPlayer(this);
+	Kirby::GetMainPlayer()->OverOn();
+	//SetMainPlayer(this);
 }
 
 void BurningKirby::Update(float _Delta)

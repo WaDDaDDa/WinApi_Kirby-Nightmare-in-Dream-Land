@@ -17,6 +17,7 @@ public:
     void Start() override;
     void Update(float _Delta) override;
     void CameraFocus(float _Delta) override;
+    void LevelStart() override;
 protected:
 
     void AttackStartStart() override;

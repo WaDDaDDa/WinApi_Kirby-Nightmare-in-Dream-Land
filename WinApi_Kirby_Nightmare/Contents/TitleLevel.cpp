@@ -37,7 +37,31 @@ void TitleLevel::Start()
 
 void TitleLevel::Update(float _DeltaTime)
 {
-	if (true == GameEngineInput::IsDown('P'))
+	if (true == GameEngineInput::IsDown('P') ||
+		true == GameEngineInput::IsDown('Q') ||
+		true == GameEngineInput::IsDown('W') ||
+		true == GameEngineInput::IsDown('E') ||
+		true == GameEngineInput::IsDown('R') ||
+		true == GameEngineInput::IsDown('T') ||
+		true == GameEngineInput::IsDown('Y') ||
+		true == GameEngineInput::IsDown('U') ||
+		true == GameEngineInput::IsDown('I') ||
+		true == GameEngineInput::IsDown('O') ||
+		true == GameEngineInput::IsDown('A') ||
+		true == GameEngineInput::IsDown('S') ||
+		true == GameEngineInput::IsDown('D') ||
+		true == GameEngineInput::IsDown('F') ||
+		true == GameEngineInput::IsDown('G') ||
+		true == GameEngineInput::IsDown('H') ||
+		true == GameEngineInput::IsDown('J') ||
+		true == GameEngineInput::IsDown('L') ||
+		true == GameEngineInput::IsDown('Z') ||
+		true == GameEngineInput::IsDown('X') ||
+		true == GameEngineInput::IsDown('C') ||
+		true == GameEngineInput::IsDown('V') ||
+		true == GameEngineInput::IsDown('B') ||
+		true == GameEngineInput::IsDown('N') ||
+		true == GameEngineInput::IsDown('M'))
 	{
 		GameEngineCore::ChangeLevel("MainHubLevel");
 	}
