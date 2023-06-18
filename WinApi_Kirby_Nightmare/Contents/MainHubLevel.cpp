@@ -47,6 +47,7 @@ void MainHubLevel::Start()
 
 	CurBackGround = CreateActor<BackGround>();
 	CurBackGround->Init("MainHupBackGround.Bmp");
+	CurBackGround->SetScale("MainHupBackGround.Bmp", 4.0f);
 
 	StagePtr = CreateActor<Stage>();
 	StagePtr->Init("MainHup.Bmp", "MainHupDebug.bmp");

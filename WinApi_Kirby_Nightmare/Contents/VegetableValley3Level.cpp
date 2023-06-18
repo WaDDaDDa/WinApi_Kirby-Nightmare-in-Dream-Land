@@ -42,6 +42,7 @@ void VegetableValley3Level::Start()
 
 	CurBackGround = CreateActor<BackGround>();
 	CurBackGround->Init("TestBackGround.Bmp");
+	CurBackGround->SetScale("TestBackGround.Bmp", 4.0f);
 
 	StagePtr = CreateActor<Stage>();
 	StagePtr->Init("Level3.Bmp", "Level3_Debug.bmp");

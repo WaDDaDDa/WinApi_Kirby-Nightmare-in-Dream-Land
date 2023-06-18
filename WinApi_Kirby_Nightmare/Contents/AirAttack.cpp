@@ -29,6 +29,7 @@ void AirAttack::Start()
 		}
 		{ // LeftAnimation 悸泼
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_AirAttackEffect.bmp"), 6, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("AirAttackCollision.bmp"), 2, 1);
 		}
 	}
 
@@ -38,6 +39,7 @@ void AirAttack::Start()
 	}
 	{ // RightAnimation 积己
 		Renderer->CreateAnimation("Right_AirAttack", "Right_AirAttackEffect.bmp", 0, 5, 0.2f, true);
+		Renderer->CreateAnimation("AirAttackCollision", "AirAttackCollision.bmp", 0, 1, 0.2f, true);
 	}
 	Renderer->ChangeAnimation("Right_AirAttack");
 	Renderer->SetScaleRatio(3.0f);
@@ -67,6 +69,7 @@ void AirAttack::DirCheck()
 void AirAttack::Update(float _Delta)
 {
 	AddPos(Dir * _Delta * Speed);
+	Speed -= 300.0f * _Delta;
 
 	// 1檬第 单胶
 	if (1.0f < GetLiveTime())
@@ -74,6 +77,7 @@ void AirAttack::Update(float _Delta)
 		if (nullptr != Renderer)
 		{
 			Death();
+			
 		}
 	}
 
@@ -90,6 +94,8 @@ void AirAttack::Update(float _Delta)
 			GameEngineCollision* Collison = _Col[i];
 
 			GameEngineActor* Actor = Collison->GetActor();
+			Renderer->SetRenderScale(float4{300,300});
+			Renderer->ChangeAnimation("AirAttackCollision");
 		}
 	}
 

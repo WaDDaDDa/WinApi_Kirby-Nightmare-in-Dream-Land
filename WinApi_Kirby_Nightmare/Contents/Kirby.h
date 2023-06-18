@@ -54,6 +54,8 @@ public:
     Kirby& operator=(Kirby&& _Other) noexcept = delete;
 
     GameEngineRenderer* MainRenderer = nullptr;
+    GameEngineRenderer* RightChargeRenderer = nullptr;
+    GameEngineRenderer* LeftChargeRenderer = nullptr;
 
     float4 GetMovePos()
     {

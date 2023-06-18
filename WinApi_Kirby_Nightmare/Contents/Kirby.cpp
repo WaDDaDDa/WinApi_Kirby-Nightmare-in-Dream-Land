@@ -43,7 +43,7 @@ void Kirby::Start()
 		
 		{ // LeftAnimation 셋팅
 			FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Kirby\\Left\\");
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Idel.bmp"), 2, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Idel.bmp"), 4, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_DownIdel.bmp"), 2, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Tackle.bmp"), 2, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Walk.bmp"), 5, 2);
@@ -54,7 +54,7 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_Attack.bmp"), 6, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_StarIn.bmp"), 6, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_StarOut.bmp"), 5, 1);
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_FatIdle.bmp"), 2, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_FatIdle.bmp"), 4, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_FatWalk.bmp"), 4, 4);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_FatJump.bmp"), 4, 2);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyLeft_BreathOut.bmp"), 6, 3);
@@ -65,7 +65,7 @@ void Kirby::Start()
 		{ // RinghtAnimation 셋팅
 			FilePath.MoveParentToExistsChild("Right");
 			FilePath.MoveChild("Right\\");
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Idel.bmp"), 2, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Idel.bmp"), 4, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_DownIdel.bmp"), 2, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Tackle.bmp"), 2, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Walk.bmp"), 5, 2);
@@ -76,7 +76,7 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Attack.bmp"), 6, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_StarIn.bmp"), 6, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_StarOut.bmp"), 5, 1);
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_FatIdle.bmp"), 2, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_FatIdle.bmp"), 4, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_FatWalk.bmp"), 4, 4);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_FatJump.bmp"), 4, 2);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_BreathOut.bmp"), 6, 3);
@@ -92,13 +92,17 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("DamageEffects.bmp"), 3, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Star.bmp"), 2, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("StarEffects.bmp"), 4, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("RightCharge.bmp"), 3, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("LeftCharge.bmp"), 3, 1);
 		}
 	}
 
 	MainRenderer = CreateRenderer(RenderOrder::Play);
+	RightChargeRenderer = CreateRenderer(RenderOrder::Effect);
+	LeftChargeRenderer = CreateRenderer(RenderOrder::Effect);
 	{ // LeftAnimation 생성
-		MainRenderer->CreateAnimation("Left_Idle", "KirbyLeft_Idel.bmp", 0, 1, 0.2f, true);
-		MainRenderer->FindAnimation  ("Left_Idle")->Inters[1] = 0.5f;
+		MainRenderer->CreateAnimation("Left_Idle", "KirbyLeft_Idel.bmp", 0, 3, 0.2f, true);
+		MainRenderer->FindAnimation  ("Left_Idle")->Inters[2] = 1.0f;
 		MainRenderer->CreateAnimation("Left_DownIdle", "KirbyLeft_DownIdel.bmp", 0, 1, 0.2f, true);
 		MainRenderer->CreateAnimation("Left_Tackle", "KirbyLeft_Tackle.bmp", 0, 1, 0.1f, true);
 		MainRenderer->FindAnimation("Left_Tackle")->Inters[0] = 0.5f;
@@ -116,7 +120,8 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Left_Attack", "KirbyLeft_Attack.bmp", 3, 4, 0.05f, true);
 		MainRenderer->CreateAnimation("Left_StarIn", "KirbyLeft_StarIn.bmp", 0, 5, 0.05f, true);
 		MainRenderer->CreateAnimation("Left_StarOut", "KirbyLeft_StarOut.bmp", 0, 4, 0.05f, true);
-		MainRenderer->CreateAnimation("Left_FatIdle", "KirbyLeft_FatIdle.bmp", 0, 1, 0.2f, true);
+		MainRenderer->CreateAnimation("Left_FatIdle", "KirbyLeft_FatIdle.bmp", 0, 3, 0.2f, true);
+		MainRenderer->FindAnimation("Left_FatIdle")->Inters[2] = 1.0f;
 		MainRenderer->CreateAnimation("Left_FatWalk", "KirbyLeft_FatWalk.bmp", 0, 15, 0.05f, true);
 		MainRenderer->CreateAnimation("Left_FatJump", "KirbyLeft_FatJump.bmp", 1, 1, 0.1f, false);
 		MainRenderer->CreateAnimation("Left_FatJumpTurn", "KirbyLeft_FatJump.bmp", 2, 4, 0.1f, false);
@@ -129,7 +134,8 @@ void Kirby::Start()
 	}
 
 	{ // RightAnimation 생성
-		MainRenderer->CreateAnimation("Right_Idle", "KirbyRight_Idel.bmp", 0, 1, 0.2f, true);
+		MainRenderer->CreateAnimation("Right_Idle", "KirbyRight_Idel.bmp", 0, 3, 0.2f, true);
+		MainRenderer->FindAnimation("Right_Idle")->Inters[2] = 1.0f;
 		MainRenderer->CreateAnimation("Right_DownIdle", "KirbyRight_DownIdel.bmp", 0, 1, 0.2f, true);
 		MainRenderer->CreateAnimation("Right_Tackle", "KirbyRight_Tackle.bmp", 0, 1, 0.1f, true);
 		MainRenderer->FindAnimation("Right_Tackle")->Inters[0] = 0.5f;
@@ -147,7 +153,8 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Right_Attack", "KirbyRight_Attack.bmp", 3, 4, 0.05f, true);
 		MainRenderer->CreateAnimation("Right_StarIn", "KirbyRight_StarIn.bmp", 0, 5, 0.05f, true);
 		MainRenderer->CreateAnimation("Right_StarOut", "KirbyRight_StarOut.bmp", 0, 4, 0.05f, true);
-		MainRenderer->CreateAnimation("Right_FatIdle", "KirbyRight_FatIdle.bmp", 0, 1, 0.2f, true);
+		MainRenderer->CreateAnimation("Right_FatIdle", "KirbyRight_FatIdle.bmp", 0, 3, 0.2f, true);
+		MainRenderer->FindAnimation("Right_FatIdle")->Inters[2] = 1.0f;
 		MainRenderer->CreateAnimation("Right_FatWalk", "KirbyRight_FatWalk.bmp", 0, 15, 0.05f, true);
 		MainRenderer->CreateAnimation("Right_FatJump", "KirbyRight_FatJump.bmp", 1, 1, 0.1f, false);
 		MainRenderer->CreateAnimation("Right_FatJumpTurn", "KirbyRight_FatJump.bmp", 2, 4, 0.1f, false);
@@ -157,6 +164,13 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Right_Swallow", "KirbyRight_Swallow.bmp", 0, 7, 0.05f, false);
 		MainRenderer->CreateAnimation("Right_Damage", "KirbyRight_Damage.bmp", 0, 8, 0.05f, false);
 		MainRenderer->CreateAnimation("Right_FatDamage", "KirbyRight_FatDamage.bmp", 0, 3, 0.1f, false);
+	}
+
+	{
+		RightChargeRenderer->CreateAnimation("Right_Charge", "RightCharge.bmp", 0, 2, 0.05f, true);
+		RightChargeRenderer->ChangeAnimation("Right_Charge");
+		LeftChargeRenderer->CreateAnimation("Left_Charge", "LeftCharge.bmp", 0, 2, 0.05f, true);
+		LeftChargeRenderer->ChangeAnimation("Left_Charge");
 	}
 
 	{ // 충돌체 설정
@@ -171,6 +185,13 @@ void Kirby::Start()
 		AttackCollision->Off();
 	}
 	MainRenderer->SetScaleRatio(4.0f);
+
+	RightChargeRenderer->SetRenderPos({120, -40});
+	RightChargeRenderer->SetScaleRatio(3.0f);
+	RightChargeRenderer->Off();
+	LeftChargeRenderer->SetRenderPos({ -120, -40 });
+	LeftChargeRenderer->SetScaleRatio(3.0f);
+	LeftChargeRenderer->Off();
 	
 	// PlayerPos 는 static 멤버 변수 선언후 초기 위치를 선언하고 시작할수있을듯.
 	ChangeState(KirbyState::Idle);
@@ -204,7 +225,8 @@ void Kirby::Update(float _Delta)
 				ChangeState(KirbyState::FatDamage);
 				return;
 			}
-
+			RightChargeRenderer->Off();
+			LeftChargeRenderer->Off();
 			ChangeState(KirbyState::Damage);
 			return;
 		}

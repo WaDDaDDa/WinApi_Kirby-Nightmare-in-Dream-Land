@@ -72,6 +72,14 @@ void Kirby::AttackStartStart()
 void Kirby::AttackStart()
 {
 	AttackCollision->On();
+	if (KirbyDir::Left == GetDir())
+	{
+		LeftChargeRenderer->On();
+	}
+	else if (KirbyDir::Right == GetDir())
+	{
+		RightChargeRenderer->On();
+	}
 	ChangeAnimationState("Attack");
 }
 
@@ -536,6 +544,8 @@ void Kirby::AttackUpdate(float _Delta)
 	if (true == GameEngineInput::IsUp('X'))
 	{
 		AttackCollision->Off();
+		RightChargeRenderer->Off();
+		LeftChargeRenderer->Off();
 		ChangeState(KirbyState::Idle);
 		return;
 	}
@@ -557,6 +567,8 @@ void Kirby::AttackUpdate(float _Delta)
 			ChangeAbillity = Actor->GetAbillity();
 			Actor->Death();
 			AttackCollision->Off();
+			RightChargeRenderer->Off();
+			LeftChargeRenderer->Off();
 			ChangeState(KirbyState::StarIn);
 			return;
 		}

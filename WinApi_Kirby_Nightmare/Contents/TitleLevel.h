@@ -19,7 +19,7 @@ protected:
 
 
 private:
-
+	class BackGround* CurBackGround = nullptr;
 	void Update(float _DeltaTime) override;
 	void Start() override;
 };

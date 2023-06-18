@@ -133,7 +133,7 @@ void WaddleDee::DamageUpdate(float _Delta)
 	MoveDir.Normalize();
 	AddPos(MoveDir * 100.0f * _Delta);
 
-	if (1.0f <= GetLiveTime())
+	if (0.5f <= GetLiveTime())
 	{
 		ChangeState(WaddleDeeState::Effect);
 		return;
@@ -151,7 +151,7 @@ void WaddleDee::EffectUpdate(float _Delta)
 {
 	GroundCheck(_Delta);
 	GravityOff();
-	if (1.0f <= GetLiveTime())
+	if (0.5f <= GetLiveTime())
 	{
 		Death();
 	}

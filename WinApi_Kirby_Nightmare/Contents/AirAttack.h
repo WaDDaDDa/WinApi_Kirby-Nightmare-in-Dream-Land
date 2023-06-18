@@ -47,7 +47,7 @@ private:
 	float4 LeftAttackPos = float4{ -40.0f, -40.0f };
 	Kirby* MainKirby = nullptr;
 	float4 Dir = float4::ZERO;
-	float Speed = 400.0f;
+	float Speed = 320.0f;
 
 	void Start() override;
 	void Update(float _Delta) override;

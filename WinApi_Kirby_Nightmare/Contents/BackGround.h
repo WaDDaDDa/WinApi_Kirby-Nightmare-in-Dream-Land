@@ -14,7 +14,14 @@ public:
     BackGround& operator=(BackGround&& _Other) noexcept = delete;
 
     void Init(const std::string& _FileName);
+    void SetAnimation(const std::string& _AniamtionName,
+        const std::string& _SpriteName,
+        size_t _Start,
+        size_t _End,
+        float _Inter,
+        bool _Loop);
 
+    void SetScale(const std::string& _FileName, float _Value);
 protected:
 
 private:

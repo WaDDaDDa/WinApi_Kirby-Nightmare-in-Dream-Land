@@ -11,6 +11,7 @@ enum class RenderOrder
 	BackGround,
 	Stage,
 	Play,
+	Effect,
 	PlayUI,
 };
 

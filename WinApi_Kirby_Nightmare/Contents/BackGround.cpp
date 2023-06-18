@@ -59,12 +59,35 @@ void BackGround::Init(const std::string& _FileName)
 		GameEngineWindowTexture* Text = ResourcesManager::GetInst().TextureLoad(FilePath.GetStringPath());
 	}
 
-	GameEngineWindowTexture* Texture = ResourcesManager::GetInst().FindTexture(_FileName);
-	float4 Scale = Texture->GetScale();
-	Scale.X *= 4.0f;
-	Scale.Y *= 4.0f;
+	//GameEngineWindowTexture* Texture = ResourcesManager::GetInst().FindTexture(_FileName);
+	//float4 Scale = Texture->GetScale();
+	//Scale.X *= 4.0f;
+	//Scale.Y *= 4.0f;
 
 	MainRenderer->SetTexture(_FileName);
+	MainRenderer->SetScaleRatio(1.0f);
+	//MainRenderer->SetRenderScale(Scale);
+}
 
+void BackGround::SetAnimation(const std::string& _AniamtionName, // 애니메이션 행동 이름
+	const std::string& _SpriteName,
+	size_t _Start,
+	size_t _End,
+	float _Inter,
+	bool _Loop)
+{
+	MainRenderer->CreateAnimation(_AniamtionName, _SpriteName, _Start, _End, _Inter, _Loop);
+
+	MainRenderer->ChangeAnimation(_AniamtionName);
+	return;
+}
+
+void BackGround::SetScale(const std::string& _FileName, float _Value)
+{
+	GameEngineWindowTexture* Texture = ResourcesManager::GetInst().FindTexture(_FileName);
+	float4 Scale = Texture->GetScale();
+	Scale.X *= _Value;
+	Scale.Y *= _Value;
 	MainRenderer->SetRenderScale(Scale);
+	return;
 }
