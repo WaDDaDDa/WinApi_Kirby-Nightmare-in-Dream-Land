@@ -33,4 +33,5 @@ enum class Abillity
 {
 	Normal,
 	Burning,
+	Spark,
 };

@@ -1,4 +1,4 @@
-#include "BurningMonster.h"
+#include "SparkMonster.h"
 #include <GameEngineBase/GameEngineDebug.h>
 #include <GameEngineBase/GameEnginePath.h>
 #include <GameEngineCore/ResourcesManager.h>
@@ -6,19 +6,19 @@
 #include <GameEngineCore/GameEngineLevel.h>
 #include "ContentsEnum.h"
 
-BurningMonster::BurningMonster()
+SparkMonster::SparkMonster()
 {
 
 }
 
-BurningMonster::~BurningMonster()
+SparkMonster::~SparkMonster()
 {
 
 }
 
-void BurningMonster::Start()
+void SparkMonster::Start()
 {
-	bool IsResource = ResourcesManager::GetInst().IsLoadTexture("BurningMonsterLeft.bmp");
+	bool IsResource = ResourcesManager::GetInst().IsLoadTexture("SparkMonsterLeft.bmp");
 	if (false == IsResource)
 	{
 		// 무조건 자동으로 현재 실행중인 위치가 된다.
@@ -27,13 +27,13 @@ void BurningMonster::Start()
 
 		{ // LeftAnimation 셋팅
 			FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Enemies\\Left\\");
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("BurningMonsterLeft.bmp"), 5, 2);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("SparkMonsterLeft.bmp"), 7, 3);
 		}
 
 		{ // RinghtAnimation 셋팅
 			FilePath.MoveParentToExistsChild("Right");
 			FilePath.MoveChild("Right\\");
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("BurningMonsterRight.bmp"), 5, 2);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("SparkMonsterRight.bmp"), 7, 3);
 		}
 	}
 
@@ -44,25 +44,25 @@ void BurningMonster::Start()
 	RightAttack2Renderer = CreateRenderer(RenderOrder::Effect2);
 
 	{ // 애니메이션 설정
-		MainRenderer->CreateAnimation("BurningMonsterLeft_Idle", "BurningMonsterLeft.bmp", 3, 3, 0.1f, false);
-		MainRenderer->CreateAnimation("BurningMonsterLeft_Walk", "BurningMonsterLeft.bmp", 1, 5, 0.3f, false);
-		MainRenderer->CreateAnimation("BurningMonsterLeft_HitReady", "BurningMonsterLeft.bmp", 0, 0, 0.1f, false);
-		MainRenderer->CreateAnimation("BurningMonsterLeft_Hit", "BurningMonsterLeft.bmp", 0, 0, 0.1f, false);
-		MainRenderer->CreateAnimation("BurningMonsterLeft_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
-		MainRenderer->CreateAnimation("BurningMonsterLeft_Damage", "BurningMonsterLeft.bmp", 0, 0, 0.1f, false);
-		MainRenderer->CreateAnimation("BurningMonsterLeft_AttackStart", "BurningMonsterLeft.bmp", 6, 6, 0.1f, false);
-		MainRenderer->CreateAnimation("BurningMonsterLeft_Attack1", "BurningMonsterLeft.bmp", 7, 8, 0.1f, true);
-		MainRenderer->CreateAnimation("BurningMonsterLeft_Attack2", "BurningMonsterLeft.bmp", 7, 9, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkMonsterLeft_Idle", "SparkMonsterLeft.bmp", 0, 0, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkMonsterLeft_Walk", "SparkMonsterLeft.bmp", 1, 5, 0.3f, true);
+		MainRenderer->CreateAnimation("SparkMonsterLeft_HitReady", "SparkMonsterLeft.bmp", 0, 0, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkMonsterLeft_Hit", "SparkMonsterLeft.bmp", 0, 0, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkMonsterLeft_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
+		MainRenderer->CreateAnimation("SparkMonsterLeft_Damage", "SparkMonsterLeft.bmp", 0, 0, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkMonsterLeft_AttackStart", "SparkMonsterLeft.bmp", 6, 6, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkMonsterLeft_Attack1", "SparkMonsterLeft.bmp", 7, 8, 0.1f, true);
+		MainRenderer->CreateAnimation("SparkMonsterLeft_Attack2", "SparkMonsterLeft.bmp", 7, 9, 0.1f, false);
 
-		MainRenderer->CreateAnimation("BurningMonsterRight_Idle", "BurningMonsterRight.bmp", 3, 3, 0.1f, false);
-		MainRenderer->CreateAnimation("BurningMonsterRight_Walk", "BurningMonsterRight.bmp", 1, 5, 0.3f, false);
-		MainRenderer->CreateAnimation("BurningMonsterRight_HitReady", "BurningMonsterRight.bmp", 0, 0, 0.1f, false);
-		MainRenderer->CreateAnimation("BurningMonsterRight_Hit", "BurningMonsterRight.bmp", 0, 0, 0.1f, false);
-		MainRenderer->CreateAnimation("BurningMonsterRight_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
-		MainRenderer->CreateAnimation("BurningMonsterRight_Damage", "BurningMonsterRight.bmp", 0, 0, 0.1f, false);
-		MainRenderer->CreateAnimation("BurningMonsterRight_AttackStart", "BurningMonsterRight.bmp", 6, 6, 0.1f, false);
-		MainRenderer->CreateAnimation("BurningMonsterRight_Attack1", "BurningMonsterRight.bmp", 7, 8, 0.1f, true);
-		MainRenderer->CreateAnimation("BurningMonsterRight_Attack2", "BurningMonsterRight.bmp", 7, 9, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkMonsterRight_Idle", "SparkMonsterRight.bmp", 0, 0, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkMonsterRight_Walk", "SparkMonsterRight.bmp", 1, 5, 0.3f, true);
+		MainRenderer->CreateAnimation("SparkMonsterRight_HitReady", "SparkMonsterRight.bmp", 0, 0, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkMonsterRight_Hit", "SparkMonsterRight.bmp", 0, 0, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkMonsterRight_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
+		MainRenderer->CreateAnimation("SparkMonsterRight_Damage", "SparkMonsterRight.bmp", 0, 0, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkMonsterRight_AttackStart", "SparkMonsterRight.bmp", 6, 6, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkMonsterRight_Attack1", "SparkMonsterRight.bmp", 7, 8, 0.1f, true);
+		MainRenderer->CreateAnimation("SparkMonsterRight_Attack2", "SparkMonsterRight.bmp", 7, 9, 0.1f, false);
 	}
 
 	{
@@ -114,11 +114,11 @@ void BurningMonster::Start()
 	RightAttackRenderer->Off();
 	RightAttack2Renderer->Off();
 
-	SetAbillity(Abillity::Burning);
-	ChangeState(BurningMonsterState::Idle);
+	SetAbillity(Abillity::Spark);
+	ChangeState(SparkMonsterState::Idle);
 }
 
-void BurningMonster::Update(float _Delta)
+void SparkMonster::Update(float _Delta)
 {
 	StateUpdate(_Delta);
 	//GroundCheck(_Delta);
@@ -139,17 +139,17 @@ void BurningMonster::Update(float _Delta)
 
 			if (GetPos().X > ActorPos.X)
 			{
-				Dir = BurningMonsterDir::Left;
+				Dir = SparkMonsterDir::Left;
 			}
 			else
 			{
-				Dir = BurningMonsterDir::Right;
+				Dir = SparkMonsterDir::Right;
 			}
 			LeftAttackRenderer->Off();
 			LeftAttack2Renderer->Off();
 			RightAttackRenderer->Off();
 			RightAttack2Renderer->Off();
-			ChangeState(BurningMonsterState::Damage);
+			ChangeState(SparkMonsterState::Damage);
 			return;
 		}
 	}
@@ -170,11 +170,11 @@ void BurningMonster::Update(float _Delta)
 
 			if (GetPos().X > ActorPos.X)
 			{
-				Dir = BurningMonsterDir::Left;
+				Dir = SparkMonsterDir::Left;
 			}
 			else
 			{
-				Dir = BurningMonsterDir::Right;
+				Dir = SparkMonsterDir::Right;
 			}
 			// 계속 흡수당하고있음.
 			// 흡수당하는건 한번만 해야함.
@@ -182,7 +182,7 @@ void BurningMonster::Update(float _Delta)
 			LeftAttack2Renderer->Off();
 			RightAttackRenderer->Off();
 			RightAttack2Renderer->Off();
-			ChangeState(BurningMonsterState::HitReady);
+			ChangeState(SparkMonsterState::HitReady);
 			return;
 		}
 	}
@@ -203,11 +203,11 @@ void BurningMonster::Update(float _Delta)
 
 			if (GetPos().X > ActorPos.X)
 			{
-				Dir = BurningMonsterDir::Left;
+				Dir = SparkMonsterDir::Left;
 			}
 			else
 			{
-				Dir = BurningMonsterDir::Right;
+				Dir = SparkMonsterDir::Right;
 			}
 			// 계속 흡수당하고있음.
 			// 흡수당하는건 한번만 해야함.
@@ -217,7 +217,7 @@ void BurningMonster::Update(float _Delta)
 			LeftAttack2Renderer->Off();
 			RightAttackRenderer->Off();
 			RightAttack2Renderer->Off();
-			ChangeState(BurningMonsterState::Damage);
+			ChangeState(SparkMonsterState::Damage);
 			return;
 		}
 	}
@@ -238,11 +238,11 @@ void BurningMonster::Update(float _Delta)
 
 			if (GetPos().X > ActorPos.X)
 			{
-				Dir = BurningMonsterDir::Left;
+				Dir = SparkMonsterDir::Left;
 			}
 			else
 			{
-				Dir = BurningMonsterDir::Right;
+				Dir = SparkMonsterDir::Right;
 			}
 			// 계속 흡수당하고있음.
 			// 흡수당하는건 한번만 해야함.
@@ -251,70 +251,70 @@ void BurningMonster::Update(float _Delta)
 			LeftAttack2Renderer->Off();
 			RightAttackRenderer->Off();
 			RightAttack2Renderer->Off();
-			ChangeState(BurningMonsterState::Damage);
+			ChangeState(SparkMonsterState::Damage);
 			return;
 		}
 	}
 }
 
-void BurningMonster::StateUpdate(float _Delta)
+void SparkMonster::StateUpdate(float _Delta)
 {
 	switch (State)
 	{
-	case BurningMonsterState::Idle:
+	case SparkMonsterState::Idle:
 		return IdleUpdate(_Delta);
-	case BurningMonsterState::Walk:
+	case SparkMonsterState::Walk:
 		return WalkUpdate(_Delta);
-	case BurningMonsterState::HitReady:
+	case SparkMonsterState::HitReady:
 		return HitReadyUpdate(_Delta);
-	case BurningMonsterState::Hit:
+	case SparkMonsterState::Hit:
 		return HitUpdate(_Delta);
-	case BurningMonsterState::Damage:
+	case SparkMonsterState::Damage:
 		return DamageUpdate(_Delta);
-	case BurningMonsterState::Effect:
+	case SparkMonsterState::Effect:
 		return EffectUpdate(_Delta);
-	case BurningMonsterState::AttackStart:
+	case SparkMonsterState::AttackStart:
 		return AttackStartUpdate(_Delta);
-	case BurningMonsterState::Attack1:
+	case SparkMonsterState::Attack1:
 		return Attack1Update(_Delta);
-	case BurningMonsterState::Attack2:
+	case SparkMonsterState::Attack2:
 		return Attack2Update(_Delta);
 	default:
 		break;
 	}
 }
 
-void BurningMonster::ChangeState(BurningMonsterState _State)
+void SparkMonster::ChangeState(SparkMonsterState _State)
 {
 	if (_State != State)
 	{
 		switch (_State)
 		{
-		case BurningMonsterState::Idle:
+		case SparkMonsterState::Idle:
 			IdleStart();
 			break;
-		case BurningMonsterState::Walk:
+		case SparkMonsterState::Walk:
 			WalkStart();
 			break;
-		case BurningMonsterState::HitReady:
+		case SparkMonsterState::HitReady:
 			HitReadyStart();
 			break;
-		case BurningMonsterState::Hit:
+		case SparkMonsterState::Hit:
 			HitStart();
 			break;
-		case BurningMonsterState::Damage:
+		case SparkMonsterState::Damage:
 			DamageStart();
 			break;
-		case BurningMonsterState::Effect:
+		case SparkMonsterState::Effect:
 			EffectStart();
 			break;
-		case BurningMonsterState::AttackStart:
+		case SparkMonsterState::AttackStart:
 			AttackStartStart();
 			break;
-		case BurningMonsterState::Attack1:
+		case SparkMonsterState::Attack1:
 			Attack1Start();
 			break;
-		case BurningMonsterState::Attack2:
+		case SparkMonsterState::Attack2:
 			Attack2Start();
 			break;
 		default:
@@ -327,17 +327,17 @@ void BurningMonster::ChangeState(BurningMonsterState _State)
 }
 
 
-void BurningMonster::ChangeAnimationState(const std::string& _StateName)
+void SparkMonster::ChangeAnimationState(const std::string& _StateName)
 {
 	std::string AnimationName;
 
 	switch (Dir)
 	{
-	case BurningMonsterDir::Right:
-		AnimationName = "BurningMonsterRight_";
+	case SparkMonsterDir::Right:
+		AnimationName = "SparkMonsterRight_";
 		break;
-	case BurningMonsterDir::Left:
-		AnimationName = "BurningMonsterLeft_";
+	case SparkMonsterDir::Left:
+		AnimationName = "SparkMonsterLeft_";
 		break;
 	default:
 		break;
@@ -350,15 +350,15 @@ void BurningMonster::ChangeAnimationState(const std::string& _StateName)
 	MainRenderer->ChangeAnimation(AnimationName);
 }
 
-unsigned int BurningMonster::GetWallCheck()
+unsigned int SparkMonster::GetWallCheck()
 {
 	unsigned int WallColor = GetGroundColor(RGB(255, 255, 255), CheckPos);
 	return WallColor;
 }
 
-void BurningMonster::Movement(float _Delta)
+void SparkMonster::Movement(float _Delta)
 {
-	if (Dir == BurningMonsterDir::Left)
+	if (Dir == SparkMonsterDir::Left)
 	{
 		CheckPos = { -40.0f, -40.0f };
 		MovePos = { -Speed * _Delta, 0.0f };
@@ -367,13 +367,13 @@ void BurningMonster::Movement(float _Delta)
 		if (GetWallCheck() != RGB(255, 255, 255))
 		{
 			MovePos.X *= 0;
-			Dir = BurningMonsterDir::Right;
+			Dir = SparkMonsterDir::Right;
 			ChangeAnimationState(CurState);
 			return;
 		}
 		AddPos(MovePos);
 	}
-	else if (Dir == BurningMonsterDir::Right)
+	else if (Dir == SparkMonsterDir::Right)
 	{
 		CheckPos = { 40.0f, -40.0f };
 		MovePos = { Speed * _Delta, 0.0f };
@@ -381,7 +381,7 @@ void BurningMonster::Movement(float _Delta)
 		if (GetWallCheck() != RGB(255, 255, 255))
 		{
 			MovePos.X *= 0;
-			Dir = BurningMonsterDir::Left;
+			Dir = SparkMonsterDir::Left;
 			ChangeAnimationState(CurState);
 			return;
 		}

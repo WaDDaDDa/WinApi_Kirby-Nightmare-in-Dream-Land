@@ -55,6 +55,9 @@
     <ClInclude Include="BurningMonster.h">
       <Filter>Monster</Filter>
     </ClInclude>
+    <ClInclude Include="SparkMonster.h">
+      <Filter>Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainHub.cpp" />
@@ -118,6 +121,12 @@
       <Filter>Monster</Filter>
     </ClCompile>
     <ClCompile Include="BurningMonsterState.cpp">
+      <Filter>Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="SparkMonster.cpp">
+      <Filter>Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="SparkMonsterState.cpp">
       <Filter>Monster</Filter>
     </ClCompile>
   </ItemGroup>

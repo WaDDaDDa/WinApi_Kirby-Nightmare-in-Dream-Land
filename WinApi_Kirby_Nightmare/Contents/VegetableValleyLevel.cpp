@@ -18,6 +18,7 @@
 #include "Portal.h"
 #include "MainHubLevel.h"
 #include "BurningMonster.h"
+#include "SparkMonster.h"
 
 VegetableValleyLevel::VegetableValleyLevel()
 {
@@ -78,7 +79,7 @@ void VegetableValleyLevel::Update(float _Delta)
 
 	if (true == GameEngineInput::IsDown('M'))
 	{
-		BurningMonster* Waddle = CreateActor<BurningMonster>();
+		SparkMonster* Waddle = CreateActor<SparkMonster>();
 		Waddle->SetGroundTexture("Level1_Debug.bmp");
 		Waddle->SetPos(float4{ 500,360 });
 	}
