@@ -18,6 +18,7 @@ void BurningMonster::IdleUpdate(float _Delta)
 
 void BurningMonster::WalkStart()
 {
+	AttackCollision->Off();
 	ChangeAnimationState("Walk");
 }
 
@@ -25,7 +26,7 @@ void BurningMonster::WalkUpdate(float _Delta)
 {
 	GroundCheck(_Delta);
 	Movement(_Delta);
-	if (GetLiveTime() >= 4.0f)
+	if (GetLiveTime() >= 2.0f)
 	{
 		ChangeState(BurningMonsterState::Idle);
 		return;
@@ -34,6 +35,7 @@ void BurningMonster::WalkUpdate(float _Delta)
 
 void BurningMonster::HitReadyStart()
 {
+	AttackCollision->Off();
 	BodyCollision->Off();
 	DeathCollision->On();
 	ChangeAnimationState("HitReady");
@@ -65,6 +67,7 @@ void BurningMonster::HitReadyUpdate(float _Delta)
 
 void BurningMonster::HitStart()
 {
+	AttackCollision->Off();
 	ChangeAnimationState("Hit");
 }
 
@@ -95,6 +98,7 @@ void BurningMonster::HitUpdate(float _Delta)
 
 void BurningMonster::DamageStart()
 {
+	AttackCollision->Off();
 	ChangeAnimationState("Damage");
 }
 
@@ -189,6 +193,17 @@ void BurningMonster::AttackStart()
 void BurningMonster::AttackUpdate(float _Delta)
 {
 	GroundCheck(_Delta);
+
+	if (GetLiveTime() >= 1.0f)
+	{
+		LeftAttackRenderer->Off();
+		LeftAttack2Renderer->Off();
+		RightAttackRenderer->Off();
+		RightAttack2Renderer->Off();
+		AttackCollision->Off();
+		ChangeState(BurningMonsterState::Walk);
+		return;
+	}
 
 	if (BurningMonsterDir::Left == Dir)
 	{
