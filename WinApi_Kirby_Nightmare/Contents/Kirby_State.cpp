@@ -154,7 +154,9 @@ void Kirby::IdleUpdate(float _Delta)
 
 	unsigned int Color = GetGroundColor(RGB(255, 255, 255));
 	unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), LeftCheck);
+	unsigned int LeftDownColor = GetGroundColor(RGB(255, 255, 255), LeftCheck - float4{0, 40});
 	unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), RightCheck);
+	unsigned int RightDownColor = GetGroundColor(RGB(255, 255, 255), RightCheck - float4{ 0, 40 });
 
 	if ((RGB(255, 255, 255) == Color && LeftColor == RGB(255, 255, 255) && RightColor == RGB(255, 255, 255)))
 	{
@@ -187,16 +189,6 @@ void Kirby::IdleUpdate(float _Delta)
 		ChangeState(KirbyState::AttackStart);
 		return;
 	}
-	// 플레이어 변경 가능함.
-	//if (true == GameEngineInput::IsDown('E'))
-	//{
-	//	float4 PrevPos = MainPlayer->GetPos();
-	//	MainPlayer->Death();
-	//	MainPlayer = GetLevel()->CreateActor<BurningKirby>();
-	//	MainPlayer->SetPos(PrevPos);
-	//	MainPlayer->SetGroundTexture("MainHupDebug.bmp");
-	//	return;
-	//}
 }
 
 void Kirby::DownIdleUpdate(float _Delta)
@@ -431,6 +423,7 @@ void Kirby::FlyUpdate(float _Delta)
 {
 	DirCheck();
 	Gravity(_Delta);
+	//GroundCheck(_Delta);
 
 	unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
 	unsigned int CheckLeftColor = GetGroundColor(RGB(255, 255, 255), float4::UP + LeftCheck);
@@ -447,11 +440,13 @@ void Kirby::FlyUpdate(float _Delta)
 		GravityReset();
 	}
 
+	// 천장 체크
 	float4 UpCheck = { 0 , -80 };
 	unsigned int ColorCheck = GetGroundColor(RGB(255, 255, 255), UpCheck);
 	if (ColorCheck != RGB(255, 255, 255))
 	{
-		GravityReset();
+		//GravityReset();
+		SetGravityVector(-GetGravityVector());
 		return;
 	}
 
