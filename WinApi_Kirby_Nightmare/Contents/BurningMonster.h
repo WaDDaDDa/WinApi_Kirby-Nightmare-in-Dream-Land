@@ -1,7 +1,7 @@
 #pragma once
 #include "Monster.h"
 
-enum class WaddleDeeState
+enum class BurningMonsterState
 {
     Idle,
     DownIdle,
@@ -23,27 +23,33 @@ enum class WaddleDeeState
     Max, // 일반적으로 사용하지 않는 값.
 };
 
-enum class WaddleDeeDir
+enum class BurningMonsterDir
 {
     Right,
     Left,
 };
 
 class GameEngineRenderer;
-class WaddleDee : public Monster
+class BurningMonster : public Monster
 {
 public:
-    WaddleDee();
-    ~WaddleDee();
+    BurningMonster();
+    ~BurningMonster();
 
-    WaddleDee(const WaddleDee& _Other) = delete;
-    WaddleDee(WaddleDee&& _Other) noexcept = delete;
-    WaddleDee& operator=(const WaddleDee& _Other) = delete;
-    WaddleDee& operator=(WaddleDee&& _Other) noexcept = delete;
+    BurningMonster(const BurningMonster& _Other) = delete;
+    BurningMonster(BurningMonster&& _Other) noexcept = delete;
+    BurningMonster& operator=(const BurningMonster& _Other) = delete;
+    BurningMonster& operator=(BurningMonster&& _Other) noexcept = delete;
 
     GameEngineRenderer* MainRenderer = nullptr;
 
-    WaddleDeeState State = WaddleDeeState::Max;
+    GameEngineRenderer* LeftAttackRenderer = nullptr;
+    GameEngineRenderer* LeftAttack2Renderer = nullptr;
+
+    GameEngineRenderer* RightAttackRenderer = nullptr;
+    GameEngineRenderer* RightAttack2Renderer = nullptr;
+
+    BurningMonsterState State = BurningMonsterState::Max;
     void StateUpdate(float _Delta);
     void IdleStart();
     void IdleUpdate(float _Delta);
@@ -57,11 +63,19 @@ public:
     void DamageUpdate(float _Delta);
     void EffectStart();
     void EffectUpdate(float _Delta);
+    void AttackStartStart();
+    void AttackStartUpdate(float _Delta);
+    void AttackStart();
+    void AttackUpdate(float _Delta);
 
+    void ChangeState(BurningMonsterState _State);
 
-    void ChangeState(WaddleDeeState _State);
+    BurningMonsterDir GetDir()
+    {
+        return Dir;
+    }
 
-    WaddleDeeDir Dir = WaddleDeeDir::Right;
+    BurningMonsterDir Dir = BurningMonsterDir::Right;
     std::string CurState = "";
 
     void ChangeAnimationState(const std::string& _StateName);
@@ -82,10 +96,16 @@ private:
 
     GameEngineCollision* BodyCollision = nullptr;
     GameEngineCollision* DeathCollision = nullptr;
+    GameEngineCollision* AttackCollision = nullptr;
+
     float4 CollisionPos = float4{ 0 , -40 };
     float4 CollisionScale = float4{ 80, 80 };
     float4 DeathCollisionScale = float4{ 100, 100 };
 
+    float4 AttackCollisionPos = float4{ 100 , -40 };
+    float4 AttackCollisionScale = float4{ 80,80 };
+
     GameEngineActor* Actor = nullptr;
+    // Abillity CurAbillity = Abillity::Normal;
 };
 

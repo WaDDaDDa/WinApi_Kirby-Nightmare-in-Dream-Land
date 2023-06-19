@@ -12,6 +12,7 @@ enum class RenderOrder
 	Stage,
 	Play,
 	Effect,
+	Effect2,
 	PlayUI,
 };
 
@@ -24,6 +25,7 @@ enum class CollisionOrder
 	DeathBody,
 	VacumAttack,
 	PlayerAttack,
+	MonsterFireAttack,
 	SpecialAttack,
 };
 

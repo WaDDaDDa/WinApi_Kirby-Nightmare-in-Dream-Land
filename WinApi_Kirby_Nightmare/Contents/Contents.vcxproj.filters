@@ -28,9 +28,6 @@
       <Filter>Global</Filter>
     </ClInclude>
     <ClInclude Include="UIManager.h" />
-    <ClInclude Include="WaddleDee.h">
-      <Filter>Global</Filter>
-    </ClInclude>
     <ClInclude Include="VegetableValleyLevel.h">
       <Filter>Level</Filter>
     </ClInclude>
@@ -51,6 +48,12 @@
     </ClInclude>
     <ClInclude Include="VegetableValley3Level.h">
       <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="WaddleDee.h">
+      <Filter>Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="BurningMonster.h">
+      <Filter>Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -81,12 +84,6 @@
       <Filter>Global</Filter>
     </ClCompile>
     <ClCompile Include="UIManager.cpp" />
-    <ClCompile Include="WaddleDee.cpp">
-      <Filter>Global</Filter>
-    </ClCompile>
-    <ClCompile Include="WaddleDeeState.cpp">
-      <Filter>Global</Filter>
-    </ClCompile>
     <ClCompile Include="VegetableValleyLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
@@ -111,6 +108,18 @@
     <ClCompile Include="VegetableValley3Level.cpp">
       <Filter>Level</Filter>
     </ClCompile>
+    <ClCompile Include="WaddleDee.cpp">
+      <Filter>Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="WaddleDeeState.cpp">
+      <Filter>Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="BurningMonster.cpp">
+      <Filter>Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="BurningMonsterState.cpp">
+      <Filter>Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -121,6 +130,9 @@
     </Filter>
     <Filter Include="Kirby">
       <UniqueIdentifier>{1f218c4c-2edf-4902-8da8-cfe14bb63179}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Monster">
+      <UniqueIdentifier>{9a0e7d8d-6ab7-40cd-889d-c8147712c727}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
