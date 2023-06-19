@@ -300,7 +300,8 @@ void Kirby::JumpUpdate(float _Delta)
 {
 	Gravity(_Delta);
 	DirCheck();
-	// 머리위 체크
+	// 머리위 체크가 하얀색이 아니라면 Falling으로 상태전환. = 다른색상이 있다면 Falling
+	// 머리위 체크가 녹색이면 Falling,  빨간색이면 통과.  이런식으로 하면 통과하는 발판이 가능해질듯함.
 	float4 UpCheck = { 0 , -64 };
 	unsigned int ColorCheck = GetGroundColor(RGB(255, 255, 255), UpCheck);
 	if (ColorCheck != RGB(255, 255, 255))

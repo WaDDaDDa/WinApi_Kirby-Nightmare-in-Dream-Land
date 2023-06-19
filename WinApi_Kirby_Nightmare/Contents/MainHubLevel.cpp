@@ -72,10 +72,10 @@ void MainHubLevel::Update(float _Delta)
 
 	if (true == GameEngineInput::IsDown('P'))
 	{
-		GameEngineCore::ChangeLevel("VegetableValleyLevel");
-		Kirby::GetMainPlayer()->SetGroundTexture("Level1_Debug.bmp");
-		Kirby::GetMainPlayer()->SetPos(Kirby::GetMainPlayer()->GetPrevPos());
-
+		GameEngineCore::ChangeLevel("VegetableValley3Level");
+		Kirby::GetMainPlayer()->SetGroundTexture("Level3_Debug.bmp");
+		Kirby::GetMainPlayer()->SetPos(float4{ 2400,510 });
+		//Kirby::GetMainPlayer()->SetPos(Kirby::GetMainPlayer()->GetPrevPos());
 		BGMPlayer.Stop();
 	}
 
