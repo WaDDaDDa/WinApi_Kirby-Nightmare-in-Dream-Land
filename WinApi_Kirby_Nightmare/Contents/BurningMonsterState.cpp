@@ -1,5 +1,9 @@
 #include "BurningMonster.h"
 #include <GameEngineCore/GameEngineRenderer.h>
+#include <GameEngineCore/GameEngineLevel.h>
+#include <GameEngineBase/GameEngineRandom.h>
+#include "Bullet.h"
+#include "Kirby.h"
 
 void BurningMonster::IdleStart()
 {
@@ -11,7 +15,20 @@ void BurningMonster::IdleUpdate(float _Delta)
 	GroundCheck(_Delta);
 	if (GetLiveTime() >= 1.0f)
 	{
-		ChangeState(BurningMonsterState::AttackStart);
+		int Value = GameEngineRandom::MainRandom.RandomInt(0, 1);
+		float Posi = Kirby::GetMainPlayer()->GetPos().X - GetPos().X;
+		if (Posi <= 0 && BurningMonsterDir::Left == Dir)
+		{
+			ChangeState(BurningMonsterState::AttackStart);
+			return;
+		}
+		if (Posi >= 0 && BurningMonsterDir::Right == Dir)
+		{
+			ChangeState(BurningMonsterState::AttackStart);
+			return;
+		}
+
+		ChangeState(BurningMonsterState::Walk);
 		return;
 	}
 }
@@ -170,11 +187,35 @@ void BurningMonster::AttackStartUpdate(float _Delta)
 {
 	if (0.5f <= GetLiveTime())
 	{
-		ChangeState(BurningMonsterState::Attack);
+		int Value = GameEngineRandom::MainRandom.RandomInt(0, 1);
+		float Posi = Kirby::GetMainPlayer()->GetPos().X - GetPos().X;
+		if (Posi <= 0 && BurningMonsterDir::Left != Dir)
+		{
+			ChangeState(BurningMonsterState::Attack1);
+			return;
+		}
+		if (Posi >= 0 && BurningMonsterDir::Right != Dir)
+		{
+			ChangeState(BurningMonsterState::Attack1);
+			return;
+		}
+
+		switch (Value)
+		{
+		case 0:
+			ChangeState(BurningMonsterState::Attack1);
+			break;
+		case 1:
+			ChangeState(BurningMonsterState::Attack2);
+			break;
+		default:
+			break;
+		}
 	}
 }
 
-void BurningMonster::AttackStart()
+// 불뿜기.
+void BurningMonster::Attack1Start()
 {
 	AttackCollision->On();
 	if (BurningMonsterDir::Left == GetDir())
@@ -187,14 +228,51 @@ void BurningMonster::AttackStart()
 		RightAttackRenderer->On();
 		RightAttack2Renderer->On();
 	}
-	ChangeAnimationState("Attack");
+
+	ChangeAnimationState("Attack1");
 }
 
-void BurningMonster::AttackUpdate(float _Delta)
+void BurningMonster::Attack1Update(float _Delta)
 {
 	GroundCheck(_Delta);
 
 	if (GetLiveTime() >= 1.0f)
+	{
+		LeftAttackRenderer->Off();
+		LeftAttack2Renderer->Off();
+		RightAttackRenderer->Off();
+		RightAttack2Renderer->Off();
+		AttackCollision->Off();
+		ChangeState(BurningMonsterState::Walk);
+		return;
+	}
+
+	if (BurningMonsterDir::Left == Dir)
+	{
+		AttackCollision->SetCollisionPos({ -AttackCollisionPos.X , AttackCollisionPos.Y });
+	}
+	else if (BurningMonsterDir::Right == Dir)
+	{
+		AttackCollision->SetCollisionPos(AttackCollisionPos);
+	}
+}
+
+// 불 발사
+void BurningMonster::Attack2Start()
+{
+	Bullet* StarAttack = GetLevel()->CreateActor<Bullet>();
+	StarAttack->SetPos(GetPos() + float4{0,-40});
+	StarAttack->SetMaster(this);
+	StarAttack->Init();
+
+	ChangeAnimationState("Attack2");
+}
+
+void BurningMonster::Attack2Update(float _Delta)
+{
+	GroundCheck(_Delta);
+
+	if (GetLiveTime() >= 0.5f)
 	{
 		LeftAttackRenderer->Off();
 		LeftAttack2Renderer->Off();

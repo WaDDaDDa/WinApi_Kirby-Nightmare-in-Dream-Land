@@ -51,7 +51,8 @@ void BurningMonster::Start()
 		MainRenderer->CreateAnimation("BurningMonsterLeft_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
 		MainRenderer->CreateAnimation("BurningMonsterLeft_Damage", "BurningMonsterLeft.bmp", 0, 0, 0.1f, false);
 		MainRenderer->CreateAnimation("BurningMonsterLeft_AttackStart", "BurningMonsterLeft.bmp", 6, 6, 0.1f, false);
-		MainRenderer->CreateAnimation("BurningMonsterLeft_Attack", "BurningMonsterLeft.bmp", 7, 8, 0.1f, true);
+		MainRenderer->CreateAnimation("BurningMonsterLeft_Attack1", "BurningMonsterLeft.bmp", 7, 8, 0.1f, true);
+		MainRenderer->CreateAnimation("BurningMonsterLeft_Attack2", "BurningMonsterLeft.bmp", 7, 9, 0.1f, false);
 
 		MainRenderer->CreateAnimation("BurningMonsterRight_Idle", "BurningMonsterRight.bmp", 3, 3, 0.1f, false);
 		MainRenderer->CreateAnimation("BurningMonsterRight_Walk", "BurningMonsterRight.bmp", 1, 5, 0.3f, true);
@@ -60,7 +61,8 @@ void BurningMonster::Start()
 		MainRenderer->CreateAnimation("BurningMonsterRight_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
 		MainRenderer->CreateAnimation("BurningMonsterRight_Damage", "BurningMonsterRight.bmp", 0, 0, 0.1f, false);
 		MainRenderer->CreateAnimation("BurningMonsterRight_AttackStart", "BurningMonsterRight.bmp", 6, 6, 0.1f, false);
-		MainRenderer->CreateAnimation("BurningMonsterRight_Attack", "BurningMonsterRight.bmp", 7, 8, 0.1f, true);
+		MainRenderer->CreateAnimation("BurningMonsterRight_Attack1", "BurningMonsterRight.bmp", 7, 8, 0.1f, true);
+		MainRenderer->CreateAnimation("BurningMonsterRight_Attack2", "BurningMonsterRight.bmp", 7, 9, 0.1f, false);
 	}
 
 	{
@@ -273,8 +275,10 @@ void BurningMonster::StateUpdate(float _Delta)
 		return EffectUpdate(_Delta);
 	case BurningMonsterState::AttackStart:
 		return AttackStartUpdate(_Delta);
-	case BurningMonsterState::Attack:
-		return AttackUpdate(_Delta);
+	case BurningMonsterState::Attack1:
+		return Attack1Update(_Delta);
+	case BurningMonsterState::Attack2:
+		return Attack2Update(_Delta);
 	default:
 		break;
 	}
@@ -307,8 +311,11 @@ void BurningMonster::ChangeState(BurningMonsterState _State)
 		case BurningMonsterState::AttackStart:
 			AttackStartStart();
 			break;
-		case BurningMonsterState::Attack:
-			AttackStart();
+		case BurningMonsterState::Attack1:
+			Attack1Start();
+			break;
+		case BurningMonsterState::Attack2:
+			Attack2Start();
 			break;
 		default:
 			break;

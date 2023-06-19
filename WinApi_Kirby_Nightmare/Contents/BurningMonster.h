@@ -15,7 +15,8 @@ enum class BurningMonsterState
     Fly,
     BreathIn,
     AttackStart,
-    Attack,
+    Attack1,
+    Attack2,
     HitReady,
     Hit,
     Damage,
@@ -65,8 +66,10 @@ public:
     void EffectUpdate(float _Delta);
     void AttackStartStart();
     void AttackStartUpdate(float _Delta);
-    void AttackStart();
-    void AttackUpdate(float _Delta);
+    void Attack1Start();
+    void Attack1Update(float _Delta);
+    void Attack2Start();
+    void Attack2Update(float _Delta);
 
     void ChangeState(BurningMonsterState _State);
 
