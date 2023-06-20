@@ -226,6 +226,7 @@ void GameEngineRenderer::CreateAnimation(
 
 	GameEngineRenderer::Animation& Animation = AllAnimation[UpperName];
 
+	Animation.Name = _AniamtionName;
 	Animation.Sprite = Sprite;
 
 	if (_Start != -1)
@@ -293,6 +294,7 @@ void GameEngineRenderer::CreateAnimationToFrame(
 
 	GameEngineRenderer::Animation& Animation = AllAnimation[UpperName];
 
+	Animation.Name = _AniamtionName;
 	Animation.Sprite = Sprite;
 	Animation.StartFrame = 0;
 	Animation.EndFrame = _Frame.size() - 1;
