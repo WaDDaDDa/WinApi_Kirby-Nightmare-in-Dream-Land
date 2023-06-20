@@ -389,8 +389,8 @@ bool GameEngineCollision::CollisonCheckNext(const CollisionData& _Next, GameEngi
 }
 
 bool GameEngineCollision::CollisionNext(const float4& _NextPos, int _Order, std::vector<GameEngineCollision*>& _Result
-	, CollisionType _ThisType = CollisionType::CirCle
-	, CollisionType _OtherType = CollisionType::CirCle)
+	, CollisionType _ThisType
+	, CollisionType _OtherType)
 {
 	if (false == IsUpdate())
 	{

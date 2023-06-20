@@ -211,33 +211,49 @@ public:
 		return X > Y ? X : Y;
 	}
 
-public:
-	inline float GetVectorToDeg(const float4& _Vector)
+	POINT WindowPOINT()
 	{
-
-
-
-		return 0.0f;
+		return POINT{ iX(), iY() };
 	}
 
-	inline float GetVectorToRad(const float4& _Vector)
+	float4 	GetRotationToDegZ(const float _Angle) const
 	{
-		float4 CalVector = _Vector;
-		CalVector.Normalize();
-		// acos함수는 이녀석이 180도를 넘어가게 되면 
-		// 똑같은 값을 리턴하기 시작합니다.
-		float Rad = acosf(CalVector.X);
+		return GetRotationToDegZ(*this, _Angle);
+	}
 
-		//if (_Vector.Y < 0)
-		//{
+public:
+	inline float AngleDeg()
+	{
+		return AngleRad() * GameEngineMath::R2D;
+	}
 
-		//}
+	inline float AngleRad()
+	{
+		float4 AngleVector = NormalizeReturn();
 
-		// 2         => 1;                 
-		// 
-		// CalVector.X = > cosf(각도);
-		// CalVector.Y = > sinf(각도);
-		return 0.0f;
+		// 라디안 각도만 나오게 된다. = acosf(AngleVector.X);
+
+		float Angle = acosf(AngleVector.X);
+
+		if (0 >= AngleVector.Y)
+		{
+			Angle = GameEngineMath::PI + GameEngineMath::PI - Angle;
+		}
+
+		return Angle;
+	}
+
+	static float4 GetRotationToDegZ(const float4& _Value, const float _Deg)
+	{
+		return GetRotationToRadZ(_Value, _Deg * GameEngineMath::D2R);
+	}
+
+	static float4 GetRotationToRadZ(const float4& _Value, const float _Rad)
+	{
+		float4 Rot;
+		Rot.X = _Value.X * cosf(_Rad) - _Value.Y * sinf(_Rad);
+		Rot.Y = _Value.X * sinf(_Rad) + _Value.Y * cosf(_Rad);
+		return Rot;
 	}
 
 	// GetUnitVectorFromDeg(45)
@@ -259,3 +275,71 @@ public:
 	}
 };
 
+
+class GameEngineRect
+{
+public:
+	float4 Pos;
+	float4 Scale;
+
+public:
+	float4 CenterLeftTop()
+	{
+		return { CenterLeft(), CenterTop() };
+	}
+
+	float4 CenterRightTop()
+	{
+		return{ CenterRight(), CenterTop() };
+	}
+
+	float4 CenterLeftBot()
+	{
+		return{ CenterLeft(), CenterBot() };
+	}
+
+	float4 CenterRightBot()
+	{
+		return{ CenterRight(), CenterBot() };
+	}
+
+	float CenterLeft()
+	{
+		return Pos.X - Scale.hX();
+	}
+
+	float CenterRight()
+	{
+		return Pos.X + Scale.hX();
+	}
+
+	float CenterTop()
+	{
+		return Pos.Y - Scale.hY();
+	}
+
+	float CenterBot()
+	{
+		return Pos.Y + Scale.hY();
+	}
+
+	int iCenterLeft()
+	{
+		return Pos.iX() - Scale.ihX();
+	}
+
+	int iCenterRight()
+	{
+		return Pos.iX() + Scale.ihX();
+	}
+
+	int iCenterTop()
+	{
+		return Pos.iY() - Scale.ihY();
+	}
+
+	int iCenterBot()
+	{
+		return Pos.iY() + Scale.ihY();
+	}
+};
