@@ -198,6 +198,8 @@ void Kirby::Start()
 	LeftChargeRenderer->SetRenderPos({ -120, -40 });
 	LeftChargeRenderer->SetScaleRatio(3.0f);
 	LeftChargeRenderer->Off();
+
+	SetOrder(UpdateOrder::Player);
 	
 	// PlayerPos 는 static 멤버 변수 선언후 초기 위치를 선언하고 시작할수있을듯.
 	ChangeState(KirbyState::Idle);
@@ -205,6 +207,10 @@ void Kirby::Start()
 
 void Kirby::Update(float _Delta)
 {
+	if (0.0f == GameEngineTime::MainTimer.GetTimeScale(GetOrder()))
+	{
+		return;
+	}
 
 	// 충돌함수 사용방법.
 	std::vector<GameEngineCollision*> _Col;
@@ -280,7 +286,6 @@ void Kirby::Update(float _Delta)
 		//GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(-1.0f * _Delta);
 		// GameEngineLevel::CollisionDebugRenderSwitch();
 	}
-
 	CameraFocus(_Delta);
 	StateUpdate(_Delta);
 	Immune();

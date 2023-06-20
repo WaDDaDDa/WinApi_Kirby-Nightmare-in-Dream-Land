@@ -5,6 +5,7 @@
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEngineCore/GameEngineCamera.h>
 #include <GameEnginePlatform/GameEngineSound.h>
+#include <GameEngineBase/GameEngineTime.h>
 #include "UIManager.h"
 
 
@@ -84,6 +85,20 @@ void VegetableValleyLevel::Update(float _Delta)
 		Waddle->SetPos(float4{ 500,360 });
 	}
 
+	if (true == GameEngineInput::IsDown('N'))
+	{
+		if (0.0f != GameEngineTime::MainTimer.GetTimeScale(UpdateOrder::Player))
+		{
+			GameEngineTime::MainTimer.SetTimeScale(UpdateOrder::Player, 0.0f);
+		}
+		else
+		{
+			GameEngineTime::MainTimer.SetTimeScale(UpdateOrder::Player, 1.0f);
+		}
+
+		StagePtr->SwitchRender();
+	}
+
 	if (true == GameEngineInput::IsDown('J'))
 	{
 		StagePtr->SwitchRender();
@@ -146,7 +161,7 @@ void VegetableValleyLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 	// 몬스터 배치
 	{
-		WaddleDee* Waddle = CreateActor<WaddleDee>();
+		BurningMonster* Waddle = CreateActor<BurningMonster>();
 		Waddle->SetGroundTexture("Level1_Debug.bmp");
 		Waddle->SetPos(float4{ 1500,350 });
 	}

@@ -3,6 +3,7 @@
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineCamera.h>
 #include <GameEngineCore/ResourcesManager.h>
+#include <GameEngineBase/GameEngineTime.h>
 
 
 

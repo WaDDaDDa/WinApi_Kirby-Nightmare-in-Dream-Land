@@ -45,7 +45,7 @@ void BurningMonster::Start()
 
 	{ // 애니메이션 설정
 		MainRenderer->CreateAnimation("BurningMonsterLeft_Idle", "BurningMonsterLeft.bmp", 3, 3, 0.1f, false);
-		MainRenderer->CreateAnimation("BurningMonsterLeft_Walk", "BurningMonsterLeft.bmp", 1, 5, 0.3f, false);
+		MainRenderer->CreateAnimation("BurningMonsterLeft_Walk", "BurningMonsterLeft.bmp", 1, 5, 0.3f, true);
 		MainRenderer->CreateAnimation("BurningMonsterLeft_HitReady", "BurningMonsterLeft.bmp", 0, 0, 0.1f, false);
 		MainRenderer->CreateAnimation("BurningMonsterLeft_Hit", "BurningMonsterLeft.bmp", 0, 0, 0.1f, false);
 		MainRenderer->CreateAnimation("BurningMonsterLeft_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
@@ -55,7 +55,7 @@ void BurningMonster::Start()
 		MainRenderer->CreateAnimation("BurningMonsterLeft_Attack2", "BurningMonsterLeft.bmp", 7, 9, 0.1f, false);
 
 		MainRenderer->CreateAnimation("BurningMonsterRight_Idle", "BurningMonsterRight.bmp", 3, 3, 0.1f, false);
-		MainRenderer->CreateAnimation("BurningMonsterRight_Walk", "BurningMonsterRight.bmp", 1, 5, 0.3f, false);
+		MainRenderer->CreateAnimation("BurningMonsterRight_Walk", "BurningMonsterRight.bmp", 1, 5, 0.3f, true);
 		MainRenderer->CreateAnimation("BurningMonsterRight_HitReady", "BurningMonsterRight.bmp", 0, 0, 0.1f, false);
 		MainRenderer->CreateAnimation("BurningMonsterRight_Hit", "BurningMonsterRight.bmp", 0, 0, 0.1f, false);
 		MainRenderer->CreateAnimation("BurningMonsterRight_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
@@ -114,12 +114,19 @@ void BurningMonster::Start()
 	RightAttackRenderer->Off();
 	RightAttack2Renderer->Off();
 
+	SetOrder(UpdateOrder::Monster);
+
 	SetAbillity(Abillity::Burning);
 	ChangeState(BurningMonsterState::Idle);
 }
 
 void BurningMonster::Update(float _Delta)
 {
+	if (0.0f == GameEngineTime::MainTimer.GetTimeScale(GetOrder()))
+	{
+		return;
+	}
+	
 	StateUpdate(_Delta);
 	//GroundCheck(_Delta);
 

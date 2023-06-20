@@ -21,12 +21,18 @@ BackGround::~BackGround()
 void BackGround::Start()
 {
 	MainRenderer = CreateRenderer(RenderOrder::BackGround);
+	SetOrder(UpdateOrder::Map);
 	SetPos({ 540, 300 });
 }
 
 
 void BackGround::Update(float _Delta) 
 {
+	if (0.0f == GameEngineTime::MainTimer.GetTimeScale(GetOrder()))
+	{
+		return;
+	}
+
 	float4 CurCameraPos = GetLevel()->GetMainCamera()->GetPos();
 	if (PrevCameraPos != CurCameraPos)
 	{

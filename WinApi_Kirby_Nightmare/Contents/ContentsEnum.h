@@ -2,6 +2,7 @@
 
 enum class UpdateOrder
 {
+	Map,
 	Player,
 	Monster,
 };

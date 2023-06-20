@@ -67,12 +67,19 @@ void WaddleDee::Start()
 		DeathCollision->Off();
 	}
 	MainRenderer->SetScaleRatio(4.0f);
+
+	SetOrder(UpdateOrder::Monster);
 	SetAbillity(Abillity::Normal);
 	ChangeState(WaddleDeeState::Idle);
 }
 
 void WaddleDee::Update(float _Delta)
 {
+	if (0.0f == GameEngineTime::MainTimer.GetTimeScale(GetOrder()))
+	{
+		return;
+	}
+
 	StateUpdate(_Delta);
 	//GroundCheck(_Delta);
 

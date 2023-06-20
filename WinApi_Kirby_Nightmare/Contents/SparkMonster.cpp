@@ -114,12 +114,18 @@ void SparkMonster::Start()
 	RightAttackRenderer->Off();
 	RightAttack2Renderer->Off();
 
+	SetOrder(UpdateOrder::Monster);
 	SetAbillity(Abillity::Spark);
 	ChangeState(SparkMonsterState::Idle);
 }
 
 void SparkMonster::Update(float _Delta)
 {
+	if (0.0f == GameEngineTime::MainTimer.GetTimeScale(GetOrder()))
+	{
+		return;
+	}
+
 	StateUpdate(_Delta);
 	//GroundCheck(_Delta);
 

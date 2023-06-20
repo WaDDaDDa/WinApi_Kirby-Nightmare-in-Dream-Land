@@ -15,21 +15,20 @@ void BurningMonster::IdleUpdate(float _Delta)
 	GroundCheck(_Delta);
 	if (GetLiveTime() >= 1.0f)
 	{
-		//int Value = GameEngineRandom::MainRandom.RandomInt(0, 1);
-		//float Posi = Kirby::GetMainPlayer()->GetPos().X - GetPos().X;
-		//if (Posi <= 0 && BurningMonsterDir::Left == Dir)
-		//{
-		//	ChangeState(BurningMonsterState::AttackStart);
-		//	return;
-		//}
-		//if (Posi >= 0 && BurningMonsterDir::Right == Dir)
-		//{
-		//	ChangeState(BurningMonsterState::AttackStart);
-		//	return;
-		//}
+		int Value = GameEngineRandom::MainRandom.RandomInt(0, 1);
 
-		ChangeState(BurningMonsterState::Walk);
-		return;
+		switch (Value)
+		{
+		case 0:
+			ChangeState(BurningMonsterState::Walk);
+			return;
+		case 1:
+			ChangeState(BurningMonsterState::AttackStart);
+			return;
+		default:
+			break;
+		}
+
 	}
 }
 
@@ -44,6 +43,11 @@ void BurningMonster::WalkUpdate(float _Delta)
 	GroundCheck(_Delta);
 	Movement(_Delta);
 
+	if (GetLiveTime() >= 1.0f)
+	{
+		ChangeState(BurningMonsterState::Idle);
+		return;
+	}
 }
 
 void BurningMonster::HitReadyStart()
@@ -200,10 +204,10 @@ void BurningMonster::AttackStartUpdate(float _Delta)
 		{
 		case 0:
 			ChangeState(BurningMonsterState::Attack1);
-			break;
+			return;
 		case 1:
 			ChangeState(BurningMonsterState::Attack2);
-			break;
+			return;
 		default:
 			break;
 		}

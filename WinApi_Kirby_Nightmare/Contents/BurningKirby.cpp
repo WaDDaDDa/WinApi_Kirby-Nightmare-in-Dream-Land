@@ -106,7 +106,8 @@ void BurningKirby::Start()
 		AttackCollision->Off();
 	}
 	MainRenderer->SetScaleRatio(4.0f);
-	SetPos(float4{ 360,360 });
+	//SetPos(float4{ 360,360 });
+	SetOrder(UpdateOrder::Player);
 	SetAbillity(Abillity::Burning);
 	// PlayerPos 는 static 멤버 변수 선언후 초기 위치를 선언하고 시작할수있을듯.
 	ChangeState(KirbyState::Idle);
@@ -121,6 +122,11 @@ void BurningKirby::LevelStart()
 
 void BurningKirby::Update(float _Delta)
 {
+	if (0.0f == GameEngineTime::MainTimer.GetTimeScale(GetOrder()))
+	{
+		return;
+	}
+
 	// 충돌함수 사용방법.
 	std::vector<GameEngineCollision*> _Col;
 

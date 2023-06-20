@@ -22,9 +22,11 @@ void Star::Start()
 		Renderer->CreateAnimation("StarAttack", "Star.bmp", 0, 1, 0.2f, true);
 		Renderer->CreateAnimation("StarEffect", "StarEffects.bmp", 0, 3, 0.1f, true);
 	}
-
+	Renderer->SetTexture("Star.bmp");
 	Renderer->ChangeAnimation("StarAttack");
 	Renderer->SetScaleRatio(4.0f);
+
+	SetOrder(UpdateOrder::Player);
 
 	AttackCollision = CreateCollision(CollisionOrder::PlayerAttack);
 	AttackCollision->SetCollisionScale(AttackCollisionScale);
@@ -48,6 +50,11 @@ void Star::DirCheck()
 
 void Star::Update(float _Delta)
 {
+	if (0.0f == GameEngineTime::MainTimer.GetTimeScale(GetOrder()))
+	{
+		return;
+	}
+
 	AddPos(Dir * _Delta * Speed);
 
 	// 1초뒤 데스

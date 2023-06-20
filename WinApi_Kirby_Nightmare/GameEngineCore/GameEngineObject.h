@@ -1,4 +1,5 @@
 #pragma once
+#include <GameEngineBase/GameEngineTime.h>
 
 // GameEngineObject를 상속받는 class들은 다형성을 가진다.
 // virtual로 선언된 함수들을 사용할수있고 안할수도있는 제안을 받는다.
@@ -20,7 +21,7 @@ public:
 	virtual void Start() {}
 
 	// 행동한고.
-	virtual void Update(float _Delta) {}
+	virtual void Update(float _Delta){}
 
 	// 그려지고.
 	virtual void Render(float _Delta) {}

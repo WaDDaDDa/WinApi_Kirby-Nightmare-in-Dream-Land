@@ -149,6 +149,8 @@ public:
 	void MainCameraSetting();
 	void UICameraSetting();
 
+	void Update(float _Delta) override;
+
 	size_t GetCurFrame()
 	{
 		return CurAnimation->CurFrame;

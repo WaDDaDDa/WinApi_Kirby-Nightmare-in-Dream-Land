@@ -41,8 +41,11 @@ void AirAttack::Start()
 		Renderer->CreateAnimation("Right_AirAttack", "Right_AirAttackEffect.bmp", 0, 5, 0.2f, true);
 		Renderer->CreateAnimation("AirAttackCollision", "AirAttackCollision.bmp", 0, 1, 0.2f, true);
 	}
+	Renderer->SetTexture("Left_AirAttackEffect.bmp");
 	Renderer->ChangeAnimation("Right_AirAttack");
 	Renderer->SetScaleRatio(3.0f);
+
+	SetOrder(UpdateOrder::Player);
 
 	AttackCollision = CreateCollision(CollisionOrder::PlayerAttack);
 	AttackCollision->SetCollisionScale(AttackCollisionScale);
@@ -68,6 +71,11 @@ void AirAttack::DirCheck()
 
 void AirAttack::Update(float _Delta)
 {
+	if (0.0f == GameEngineTime::MainTimer.GetTimeScale(GetOrder()))
+	{
+		return;
+	}
+
 	AddPos(Dir * _Delta * Speed);
 	Speed -= 300.0f * _Delta;
 

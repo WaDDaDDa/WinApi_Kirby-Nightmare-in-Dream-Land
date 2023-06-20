@@ -21,7 +21,7 @@ void Bullet::Start()
 		Renderer->CreateAnimation("FireAttack", "BunringMonsterAttack.bmp", 0, 0, 0.2f, false);
 		Renderer->CreateAnimation("FireEffect", "BunringMonsterAttack.bmp", 0, 3, 0.1f, false);
 	}
-
+	Renderer->SetTexture("BunringMonsterAttack.bmp");
 	Renderer->ChangeAnimation("FireAttack");
 	Renderer->SetScaleRatio(4.0f);
 
@@ -29,6 +29,7 @@ void Bullet::Start()
 	AttackCollision->SetCollisionScale(AttackCollisionScale);
 	AttackCollision->SetCollisionType(CollisionType::CirCle);
 
+	SetOrder(UpdateOrder::Monster);
 	ChangeState(BulletState::Normal);
 }
 
@@ -54,6 +55,11 @@ void Bullet::DirCheck()
 
 void Bullet::Update(float _Delta)
 {
+	if (0.0f == GameEngineTime::MainTimer.GetTimeScale(GetOrder()))
+	{
+		return;
+	}
+
 	StateUpdate(_Delta);
 }
 
