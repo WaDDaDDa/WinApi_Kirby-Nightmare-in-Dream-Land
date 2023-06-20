@@ -1,5 +1,6 @@
 #pragma once
 #include "GameEngineDebug.h"
+#include <Windows.h>
 
 // Ό³Έν :
 class GameEngineMath
