@@ -75,6 +75,7 @@ public:
     unsigned int GetWallCheck();
 
     void Movement(float _Delta);
+    void Movement2(float _Delta);
 
     void Immune();
     void RenderSwitch();
@@ -95,6 +96,11 @@ public:
     }
 
     void ChangeKirby(Abillity _Kirby);
+
+    float GetSpeed()
+    {
+        return Speed;
+    }
 
 protected:
     // 클래스로 만들어도 된다. 행동과 랜더.
@@ -169,6 +175,8 @@ protected:
 private:
     float4 MovePos = float4::ZERO;
     float4 CheckPos = float4::ZERO;
+    float4 LeftCheckPos = float4{ -30.0f, -40.0f };
+    float4 RightCheckPos = float4{ 30.0f, -40.0f };
     float4 BodyCollisionPos = float4{ 0 , -40 };
     float4 BodyCollisionScale = float4{ 80, 80 };
     float4 AttackCollisionPos = float4{ 100 , -50 };
@@ -177,6 +185,8 @@ private:
     Abillity CurAbillity = Abillity::Normal;
     Abillity ChangeAbillity = Abillity::Normal;
 
+    float NormalSpeed = 400.0f;
+    float TackleSpeed = 600.0f;
     float Speed = 400.0f;
     float JumpPower = 800.0f;
     bool ImmuneValue = false;

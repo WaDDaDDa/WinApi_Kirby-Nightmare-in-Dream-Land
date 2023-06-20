@@ -74,7 +74,7 @@ void BurningKirby::AttackUpdate(float _Delta)
 		return;
 	}
 
-	float4 TackleSpeed = { Speed * _Delta , 0.0f };
+	float4 AttackSpeed = { Speed * _Delta , 0.0f };
 	if (KirbyDir::Left == Dir)
 	{
 		CheckPos = { -40.0f, -40.0f };
@@ -84,7 +84,7 @@ void BurningKirby::AttackUpdate(float _Delta)
 			AddPos(MovePos);
 			return;
 		}
-		AddPos(-TackleSpeed);
+		AddPos(-AttackSpeed);
 	}
 	else if (KirbyDir::Right == Dir)
 	{
@@ -95,6 +95,6 @@ void BurningKirby::AttackUpdate(float _Delta)
 			AddPos(MovePos);
 			return;
 		}
-		AddPos(TackleSpeed);
+		AddPos(AttackSpeed);
 	}
 }

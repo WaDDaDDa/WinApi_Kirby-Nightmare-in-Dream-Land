@@ -46,14 +46,14 @@ public:
 
     void GroundCheck(float _Delta);
 
-    float4 LeftCheck = float4{ -30 , 0 };
-    float4 RightCheck = float4{ 30 , 0 };
 
     void SetGravityVector(float4 _GravityVector)
     {
         GravityVector = _GravityVector;
     }
 
+    float4 LeftCheck = float4{ -30 , 0 };
+    float4 RightCheck = float4{ 30 , 0 };
 
 protected:
 

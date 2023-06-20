@@ -523,11 +523,11 @@ void Kirby::CameraFocus(float _Delta)
 	// 카메라의 속도는 캐릭터의 속도로 한다.
 	if (650 < PlayerX - CameraRangeX)
 	{
-		GetLevel()->GetMainCamera()->AddPos({ Speed * _Delta , 0});
+		GetLevel()->GetMainCamera()->AddPos({ GetSpeed() * _Delta , 0});
 	}
 	else if (250 > PlayerX - CameraRangeX)
 	{
-		GetLevel()->GetMainCamera()->AddPos({- Speed * _Delta , 0 });
+		GetLevel()->GetMainCamera()->AddPos({-GetSpeed() * _Delta , 0 });
 	}
 
 	// 카메라가 움직이는 Y범위 캐릭터가 -200 ~ -450 사이에서 움직인다.
@@ -548,7 +548,7 @@ void Kirby::CameraFocus(float _Delta)
 			GetLevel()->GetMainCamera()->AddPos(GetGravityVector() * _Delta);
 			return;
 		}
-		GetLevel()->GetMainCamera()->AddPos(float4::DOWN);
+		GetLevel()->GetMainCamera()->AddPos(float4::DOWN * 2.0f);
 	}
 }
 
@@ -622,6 +622,71 @@ void Kirby::Movement(float _Delta)
 			AddPos(MovePos);
 		}
 		AddPos(MovePos);
+	}
+}
+
+void Kirby::Movement2(float _Delta)
+{
+	DirCheck();
+	
+	float4 MovePos1 = float4::ZERO;
+
+	if (true == GameEngineInput::IsPress('A') && Dir == KirbyDir::Left)
+	{
+		CheckPos = LeftCheckPos;
+		MovePos1 = { -Speed * _Delta, 0.0f };
+	}
+	else if (true == GameEngineInput::IsPress('D') && Dir == KirbyDir::Right)
+	{
+		CheckPos = RightCheckPos;
+		MovePos1 = { Speed * _Delta, 0.0f };
+	}
+
+	{
+		unsigned int Color = GetGroundColor(RGB(255, 255, 255), CheckPos);
+
+		if (Color == RGB(255, 255, 255))
+		{
+			// MovePos를 바꿔버리는 방법이 있을것이고.
+
+			if (RGB(255, 255, 255) == GetGroundColor(RGB(255, 255, 255), MovePos1))
+			{
+				float4 XPos = float4::ZERO;
+				float4 Dir = MovePos1.X <= 0.0f ? float4::RIGHT : float4::LEFT;
+
+				while (RGB(0, 255, 0) != GetGroundColor(RGB(255, 255, 255), MovePos1 + XPos))
+				{
+					XPos += Dir;
+
+					if (abs(XPos.X) > 50.0f)
+					{
+						break;
+					}
+				}
+
+				float4 YPos = float4::ZERO;
+				while (RGB(0, 255, 0) != GetGroundColor(RGB(255, 255, 255), MovePos1 + YPos))
+				{
+					YPos.Y += 1;
+
+					if (YPos.Y > 60.0f)
+					{
+						break;
+					}
+				}
+
+				if (abs(XPos.X) >= YPos.Y)
+				{
+					while (RGB(0, 255, 0) != GetGroundColor(RGB(255, 255, 255), MovePos1))
+					{
+						MovePos1.Y += 1;
+					}
+				}
+
+			}
+
+			AddPos(MovePos1);
+		}
 	}
 }
 

@@ -23,6 +23,7 @@ void Kirby::DownIdleStart()
 
 void Kirby::TackleStart()
 {
+	Speed = TackleSpeed;
 	ChangeAnimationState("Tackle");
 }
 
@@ -61,6 +62,7 @@ void Kirby::FlyStart()
 
 void Kirby::BreathInStart()
 {
+	SetGravityVector(float4::UP * 200.0f);
 	ChangeAnimationState("BreathIn");
 }
 
@@ -154,9 +156,7 @@ void Kirby::IdleUpdate(float _Delta)
 
 	unsigned int Color = GetGroundColor(RGB(255, 255, 255));
 	unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), LeftCheck);
-	unsigned int LeftDownColor = GetGroundColor(RGB(255, 255, 255), LeftCheck - float4{0, 40});
 	unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), RightCheck);
-	unsigned int RightDownColor = GetGroundColor(RGB(255, 255, 255), RightCheck - float4{ 0, 40 });
 
 	if ((RGB(255, 255, 255) == Color && LeftColor == RGB(255, 255, 255) && RightColor == RGB(255, 255, 255)))
 	{
@@ -219,32 +219,32 @@ void Kirby::TackleUpdate(float _Delta)
 	
 	if (GetLiveTime() >= 0.6f)
 	{
+		Speed = NormalSpeed;
 		ChangeState(KirbyState::Idle);
 		return;
 	}
-
-	float4 TackleSpeed = { 1.0f , 0.0f };
+	float4 MovePos1 = { Speed * _Delta, 0.0f };
 	if (KirbyDir::Left == Dir)
 	{
-		CheckPos = { -40.0f, -40.0f };
+		CheckPos = LeftCheckPos;
 		if (GetWallCheck() != RGB(255, 255, 255))
 		{
 			MovePos.X *= 0;
 			AddPos(MovePos);
 			return;
 		}
-		AddPos(-TackleSpeed);
+		AddPos(-MovePos1);
 	}
 	else if (KirbyDir::Right == Dir)
 	{
-		CheckPos = { 40.0f, -40.0f };
+		CheckPos = RightCheckPos;
 		if (GetWallCheck() != RGB(255, 255, 255))
 		{
 			MovePos.X *= 0;
 			AddPos(MovePos);
 			return;
 		}
-		AddPos(TackleSpeed);
+		AddPos(MovePos1);
 	}
 }
 
@@ -253,7 +253,7 @@ void Kirby::WalkUpdate(float _Delta)
 	DirCheck();
 
 	GroundCheck(_Delta);
-	Movement(_Delta);
+	Movement2(_Delta);
 	// 점프
 	if (true == GameEngineInput::IsDown('F'))
 	{
@@ -373,11 +373,9 @@ void Kirby::FallingUpdate(float _Delta)
 	unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), LeftCheck);
 	unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), RightCheck);
 
-	if ((RGB(255, 255, 255) != Color || LeftColor != RGB(255, 255, 255) || RightColor != RGB(255, 255, 255)))
-
+	if (RGB(255, 255, 255) != Color || LeftColor != RGB(255, 255, 255) || RightColor != RGB(255, 255, 255))
 	{
 		MovePos = float4::ZERO;
-		//CameraFocus();
 		GravityReset();
 		ChangeState(KirbyState::FallingEnd);
 		return;
@@ -423,27 +421,38 @@ void Kirby::FlyUpdate(float _Delta)
 {
 	DirCheck();
 	Gravity(_Delta);
-	//GroundCheck(_Delta);
 
-	unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
-	unsigned int CheckLeftColor = GetGroundColor(RGB(255, 255, 255), float4::UP + LeftCheck);
-	unsigned int CheckRightColor = GetGroundColor(RGB(255, 255, 255), float4::UP + RightCheck);
+	unsigned int Color = GetGroundColor(RGB(255, 255, 255));
+	unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), LeftCheck);
+	unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), RightCheck);
 
-	// 체크중 어느하나라도  흰색이 아니라면 한칸올리기 반복한다.
-	while (CheckColor != RGB(255, 255, 255) || CheckLeftColor != RGB(255, 255, 255) || CheckRightColor != RGB(255, 255, 255))
+	// 플레이어 위치가 흰색이면 중력작용.
+	// 모두 흰색이면 공중이다.
+	if (RGB(255, 255, 255) == Color && LeftColor == RGB(255, 255, 255) && RightColor == RGB(255, 255, 255))
 	{
-		//GravityReset();  없으면 Fly상태일때 떨어지면 심한가속, 있으면 땅위에서 두들현상.
-		CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
-		CheckLeftColor = GetGroundColor(RGB(255, 255, 255), float4::UP + LeftCheck);
-		CheckRightColor = GetGroundColor(RGB(255, 255, 255), float4::UP + RightCheck);
-		AddPos(float4::UP);
+		//Gravity(_Delta);
+	}
+	else // 모두흰색이 아니다 = 땅에닿아있다.
+	{
+		unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
+		//unsigned int CheckLeftColor = GetGroundColor(RGB(255, 255, 255), float4::UP + LeftCheck);
+		//unsigned int CheckRightColor = GetGroundColor(RGB(255, 255, 255), float4::UP + RightCheck);
+
+		// 체크중 어느하나라도  흰색이 아니라면 한칸올리기 반복한다.
+		while (CheckColor != RGB(255, 255, 255))// || CheckLeftColor != RGB(255, 255, 255) || CheckRightColor != RGB(255, 255, 255))
+		{
+			CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
+			//CheckLeftColor = GetGroundColor(RGB(255, 255, 255), float4::UP + LeftCheck);
+			//CheckRightColor = GetGroundColor(RGB(255, 255, 255), float4::UP + RightCheck);
+			AddPos(float4::UP);
+		}
 		GravityReset();
 	}
 
 	// 천장 체크
 	float4 UpCheck = { 0 , -80 };
 	unsigned int ColorCheck = GetGroundColor(RGB(255, 255, 255), UpCheck);
-	if (ColorCheck != RGB(255, 255, 255))
+	if (ColorCheck == RGB(0, 255, 0))
 	{
 		//GravityReset();
 		SetGravityVector(-GetGravityVector());
@@ -471,10 +480,22 @@ void Kirby::FlyUpdate(float _Delta)
 
 void Kirby::BreathInUpdate(float _Delta)
 {
-	Gravity(_Delta);
+	//Gravity(_Delta);
 	DirCheck();
-	SetGravityVector(float4::UP * 0.3f);
 	Movement(_Delta);
+	GroundCheck(_Delta);
+
+	float4 UpCheck = { 0 , -80 };
+	unsigned int ColorCheck = GetGroundColor(RGB(255, 255, 255), UpCheck);
+	if (ColorCheck == RGB(0, 255, 0))
+	{
+		//SetGravityVector(-GetGravityVector());
+		while (RGB(0, 255, 0) != ColorCheck)
+		{
+			UpCheck.Y += 1;
+			AddPos(UpCheck);
+		}
+	}
 
 	if (GetLiveTime() >= 0.35f)
 	{
@@ -598,10 +619,10 @@ void Kirby::FatIdleUpdate(float _Delta)
 	GroundCheck(_Delta);
 
 	unsigned int Color = GetGroundColor(RGB(255, 255, 255));
-	unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), LeftCheck);
-	unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), RightCheck);
+	//unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), LeftCheck);
+	//unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), RightCheck);
 
-	if ((RGB(255, 255, 255) == Color && LeftColor == RGB(255, 255, 255) && RightColor == RGB(255, 255, 255)))
+	if ((RGB(255, 255, 255) == Color))// && LeftColor == RGB(255, 255, 255) && RightColor == RGB(255, 255, 255)))
 	{
 		ChangeState(KirbyState::FatFalling);
 		return;
@@ -667,10 +688,10 @@ void Kirby::FatWalkUpdate(float _Delta)
 		ChangeState(KirbyState::FatIdle);
 	}
 	unsigned int Color = GetGroundColor(RGB(255, 255, 255), float4::DOWN);
-	unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), float4::DOWN + LeftCheck);
-	unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), float4::DOWN + RightCheck);
+	//unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), float4::DOWN + LeftCheck);
+	//unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), float4::DOWN + RightCheck);
 
-	if ((RGB(255, 255, 255) == Color && LeftColor == RGB(255, 255, 255) && RightColor == RGB(255, 255, 255)))
+	if ((RGB(255, 255, 255) == Color))// && LeftColor == RGB(255, 255, 255) && RightColor == RGB(255, 255, 255)))
 	{
 		ChangeState(KirbyState::FatFalling);
 		return;
@@ -739,11 +760,10 @@ void Kirby::FatFallingUpdate(float _Delta)
 
 	// 땅에 닿으면 기본상태.
 	unsigned int Color = GetGroundColor(RGB(255, 255, 255));
-	unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), LeftCheck);
-	unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), RightCheck);
+	//unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), LeftCheck);
+	//unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), RightCheck);
 
-	if ((RGB(255, 255, 255) != Color || LeftColor != RGB(255, 255, 255) || RightColor != RGB(255, 255, 255)))
-
+	if ((RGB(255, 255, 255) != Color))// || LeftColor != RGB(255, 255, 255) || RightColor != RGB(255, 255, 255)))
 	{
 		MovePos = float4::ZERO;
 		GravityReset();

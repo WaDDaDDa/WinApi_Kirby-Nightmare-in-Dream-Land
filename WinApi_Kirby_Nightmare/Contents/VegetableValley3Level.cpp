@@ -17,6 +17,7 @@
 #include "BurningKirby.h"
 #include "Portal.h"
 #include "MainHubLevel.h"
+#include "BurningMonster.h"
 
 VegetableValley3Level::VegetableValley3Level()
 {
@@ -140,7 +141,7 @@ void VegetableValley3Level::LevelStart(GameEngineLevel* _PrevLevel)
 		Waddle->SetPos(float4{ 1500,350 });
 	}
 	{
-		WaddleDee* Waddle = CreateActor<WaddleDee>();
+		BurningMonster* Waddle = CreateActor<BurningMonster>();
 		Waddle->SetGroundTexture("Level3_Debug.bmp");
 		Waddle->SetPos(float4{ 2600,350 });
 	}

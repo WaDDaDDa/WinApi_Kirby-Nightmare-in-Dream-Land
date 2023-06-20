@@ -62,15 +62,15 @@ void GravityActor::GroundCheck(float _Delta)
 	else // 모두흰색이 아니다 = 땅에닿아있다.
 	{
 		unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
-		unsigned int CheckLeftColor = GetGroundColor(RGB(255, 255, 255), float4::UP + LeftCheck);
-		unsigned int CheckRightColor = GetGroundColor(RGB(255, 255, 255), float4::UP + RightCheck);
+		//unsigned int CheckLeftColor = GetGroundColor(RGB(255, 255, 255), float4::UP + LeftCheck);
+		//unsigned int CheckRightColor = GetGroundColor(RGB(255, 255, 255), float4::UP + RightCheck);
 
 		// 체크중 어느하나라도  흰색이 아니라면 한칸올리기 반복한다.
-		while (CheckColor != RGB(255, 255, 255) || CheckLeftColor != RGB(255, 255, 255) || CheckRightColor != RGB(255, 255, 255))
+		while (CheckColor != RGB(255, 255, 255))// || CheckLeftColor != RGB(255, 255, 255) || CheckRightColor != RGB(255, 255, 255))
 		{
 			CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
-			CheckLeftColor = GetGroundColor(RGB(255, 255, 255), float4::UP + LeftCheck);
-			CheckRightColor = GetGroundColor(RGB(255, 255, 255), float4::UP + RightCheck);
+			//CheckLeftColor = GetGroundColor(RGB(255, 255, 255), float4::UP + LeftCheck);
+			//CheckRightColor = GetGroundColor(RGB(255, 255, 255), float4::UP + RightCheck);
 			AddPos(float4::UP);
 		}
 		GravityReset();
