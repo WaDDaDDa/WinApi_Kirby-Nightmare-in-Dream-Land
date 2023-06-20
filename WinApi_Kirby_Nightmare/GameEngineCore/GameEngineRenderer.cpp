@@ -160,6 +160,7 @@ void GameEngineRenderer::Render(float _DeltaTime)
 		Sprite = CurAnimation->Sprite;
 		const GameEngineSprite::Sprite& SpriteInfo = Sprite->GetSprite(Frame);
 		Texture = SpriteInfo.BaseTexture;
+		MaskTexture = SpriteInfo.MaskTexture;
 		SetCopyPos(SpriteInfo.RenderPos);
 		SetCopyScale(SpriteInfo.RenderScale);
 
@@ -177,7 +178,14 @@ void GameEngineRenderer::Render(float _DeltaTime)
 	GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
 
 	// 3. 7. 출력한다.
-	BackBuffer->TransCopy(Texture, GetActor()->GetPos() + RenderPos - Camera->GetPos(), RenderScale, CopyPos, CopyScale);
+	if (0 == Angle)
+	{
+		BackBuffer->TransCopy(Texture, GetActor()->GetPos() + RenderPos - Camera->GetPos(), RenderScale, CopyPos, CopyScale);
+	}
+	else
+	{
+		BackBuffer->PlgCopy(Texture, MaskTexture, GetActor()->GetPos() + RenderPos - Camera->GetPos(), RenderScale, CopyPos, CopyScale, Angle);
+	}	
 	// BackBuffer->TransCopy(출력할 이미지, 출력될 엑터의 위치 + 출력될 이미지의 위치 - 카메라의 위치,
 	//                          출력될 크기, 출력할 이미지의 시작점, 출력할 이미지의 끝점);
 
@@ -353,6 +361,11 @@ void GameEngineRenderer::UICameraSetting()
 void GameEngineRenderer::Start()
 {
 
+}
+
+void GameEngineRenderer::SetAngle(float _Angle)
+{
+	Angle = _Angle;
 }
 
 void GameEngineRenderer::SetOrder(int _Order)

@@ -70,6 +70,8 @@ public:
 		return CameraTypeValue;
 	}
 
+	void SetAngle(float _Angle);
+
 protected:
 	void Start() override;
 
@@ -78,6 +80,7 @@ private:
 	GameEngineSprite* Sprite = nullptr;
 	// 렌더러는 텍스쳐를 알고있다.
 	GameEngineWindowTexture* Texture = nullptr;
+	GameEngineWindowTexture* MaskTexture = nullptr;
 
 	float4 RenderPos;
 	float4 RenderScale;
@@ -94,8 +97,11 @@ private:
 	bool ScaleCheck = false;
 	// 이미지 배율
 	float ScaleRatio = 1.0f;
+	float Angle = 0.0f;
+
 	void Render(float _DeltaTime);
 
+///////////////////////////////////////////////////애니메이션
 private:
 	class Animation
 	{
