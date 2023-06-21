@@ -40,15 +40,19 @@ void SparkKirby::Start()
 		{ // LeftAnimation 実特
 			FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Kirby\\Left\\");
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("SparkKirbyLeft.bmp"), 8, 30);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("SparkKirbyLeft_Attack.bmp"), 7, 1);
 		}
 		{ // RinghtAnimation 実特
 			FilePath.MoveParentToExistsChild("Right");
 			FilePath.MoveChild("Right\\");
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("SparkKirbyRight.bmp"), 8, 30);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("SparkKirbyRight_Attack.bmp"), 7, 1);
 		}
 	}
 
 	MainRenderer = CreateRenderer(RenderOrder::Play);
+	AttRenderer = CreateRenderer(RenderOrder::BackEffect);
+
 	{ // LeftAnimation 持失
 		MainRenderer->CreateAnimation("SparkKirbyLeft_Idle", "SparkKirbyLeft.bmp", 0, 6, 0.2f, true);
 		MainRenderer->FindAnimation("SparkKirbyLeft_Idle")->Inters[3] = 0.0f;
@@ -66,8 +70,8 @@ void SparkKirby::Start()
 		MainRenderer->CreateAnimation("SparkKirbyLeft_BreathIn", "SparkKirbyLeft.bmp", 130, 134, 0.05f, true);
 		MainRenderer->FindAnimation("SparkKirbyLeft_BreathIn")->Inters[3] = 0.1f;
 		MainRenderer->FindAnimation("SparkKirbyLeft_BreathIn")->Inters[4] = 0.1f;
-		MainRenderer->CreateAnimation("SparkKirbyLeft_AttackStart", "SparkKirbyLeft.bmp", 298, 300, 0.05f, false);
-		MainRenderer->CreateAnimation("SparkKirbyLeft_Attack", "SparkKirbyLeft.bmp", 301, 320, 0.05f, false);
+		MainRenderer->CreateAnimation("SparkKirbyLeft_AttackStart", "SparkKirbyLeft_Attack.bmp", 0, 0, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkKirbyLeft_Attack", "SparkKirbyLeft_Attack.bmp", 4, 6, 0.1f, true);
 		MainRenderer->CreateAnimation("SparkKirbyLeft_BreathOut", "SparkKirbyLeft.bmp", 164, 165, 0.1f, false);
 	}
 
@@ -89,8 +93,8 @@ void SparkKirby::Start()
 		MainRenderer->CreateAnimation("SparkKirbyRight_BreathIn", "SparkKirbyRight.bmp", 130, 134, 0.05f, true);
 		MainRenderer->FindAnimation("SparkKirbyRight_BreathIn")->Inters[3] = 0.1f;
 		MainRenderer->FindAnimation("SparkKirbyRight_BreathIn")->Inters[4] = 0.1f;
-		MainRenderer->CreateAnimation("SparkKirbyRight_AttackStart", "SparkKirbyRight.bmp", 298, 300, 0.05f, false);
-		MainRenderer->CreateAnimation("SparkKirbyRight_Attack", "SparkKirbyRight.bmp", 301, 320, 0.05f, false);
+		MainRenderer->CreateAnimation("SparkKirbyRight_AttackStart", "SparkKirbyRight_Attack.bmp", 0, 0, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkKirbyRight_Attack", "SparkKirbyRight_Attack.bmp", 4, 6, 0.1f, true);
 		MainRenderer->CreateAnimation("SparkKirbyRight_BreathOut", "SparkKirbyRight.bmp", 164, 165, 0.1f, false);
 	}
 
@@ -99,12 +103,20 @@ void SparkKirby::Start()
 		BodyCollision->SetCollisionScale(BodyCollisionScale);
 		BodyCollision->SetCollisionPos(BodyCollisionPos);
 		BodyCollision->SetCollisionType(CollisionType::CirCle);
-		AttackCollision = CreateCollision(CollisionOrder::SpecialAttack);
+
+		AttackCollision = CreateCollision(CollisionOrder::SparkAttack);
 		AttackCollision->SetCollisionScale(AttackCollisionScale);
 		AttackCollision->SetCollisionPos(AttackCollisionPos);
-		AttackCollision->SetCollisionType(CollisionType::Rect);
+		AttackCollision->SetCollisionType(CollisionType::CirCle);
 		AttackCollision->Off();
 	}
+	AttRenderer ->SetTexture("Blank.bmp");
+	AttRenderer->CreateAnimation("SparkEffect", "SparkEffect.bmp", 0, 3, 0.1f, true);
+	AttRenderer->ChangeAnimation("SparkEffect");
+	AttRenderer->SetRenderPos(AttackCollisionPos);
+	AttRenderer->SetScaleRatio(4.0f);
+	AttRenderer->Off();
+
 	MainRenderer->SetScaleRatio(4.0f);
 	MainRenderer->SetTexture("Blank.bmp");
 	SetOrder(UpdateOrder::Player);

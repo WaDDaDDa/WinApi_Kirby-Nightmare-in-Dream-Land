@@ -1,6 +1,7 @@
 #include "SparkKirby.h"
 #include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEngineCore/GameEngineLevel.h>
+#include <GameEngineCore/GameEngineRenderer.h>
 #include "MainHubLevel.h"
 
 void SparkKirby::DamageStart()
@@ -18,28 +19,63 @@ void SparkKirby::AttackStartStart()
 	ChangeAnimationState("AttackStart");
 }
 
-void SparkKirby::AttackStart()
-{
-	ChangeAnimationState("Attack");
-}
-
 void SparkKirby::AttackStartUpdate(float _Delta)
 {
+	GroundCheck(_Delta);
+
+	if (Dir == KirbyDir::Left)
+	{
+		//CameraFocus();
+		CheckPos = { -40.0f, -40.0f };
+		// º®ÆÇÁ¤
+		if (GetWallCheck() != RGB(255, 255, 255))
+		{
+			MovePos.X *= 0;
+		}
+		AddPos(MovePos);
+	}
+	else if (Dir == KirbyDir::Right)
+	{
+		//CameraFocus();
+		CheckPos = { 40.0f, -40.0f };
+
+		if (GetWallCheck() != RGB(255, 255, 255))
+		{
+			MovePos.X *= 0;
+		}
+		AddPos(MovePos);
+	}
+
 	if (GetLiveTime() >= 0.1f)
 	{
 		ChangeState(KirbyState::Attack);
 		return;
 	}
 
+	if (true == GameEngineInput::IsUp('X'))
+	{
+		ChangeState(KirbyState::Idle);
+		return;
+	}
+}
+
+void SparkKirby::AttackStart()
+{
+	AttackCollision->On();
+	AttRenderer->On();
+	ChangeAnimationState("Attack");
 }
 
 void SparkKirby::AttackUpdate(float _Delta)
 {
-	if (GetLiveTime() >= 1.0f)
+	GroundCheck(_Delta);
+
+	if (true == GameEngineInput::IsUp('X'))
 	{
 		AttackCollision->Off();
-		BodyCollision->On();
+		AttRenderer->Off();
 		ChangeState(KirbyState::Idle);
 		return;
 	}
+
 }

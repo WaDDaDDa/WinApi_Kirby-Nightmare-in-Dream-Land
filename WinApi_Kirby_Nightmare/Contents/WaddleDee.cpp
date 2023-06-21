@@ -170,7 +170,7 @@ void WaddleDee::Update(float _Delta)
 		}
 	}
 
-	if (true == BodyCollision->Collision(CollisionOrder::SpecialAttack
+	if (true == BodyCollision->Collision(CollisionOrder::BurningAttack
 		, _Col
 		, CollisionType::CirCle // 나의 충돌체 모양
 		, CollisionType::Rect // 상대의 충돌체 모양
@@ -192,14 +192,39 @@ void WaddleDee::Update(float _Delta)
 			{
 				Dir = WaddleDeeDir::Right;
 			}
-			// 계속 흡수당하고있음.
-			// 흡수당하는건 한번만 해야함.
 			BodyCollision->Off();
 			ChangeState(WaddleDeeState::Damage);
 			return;
 		}
 	}
 
+	if (true == BodyCollision->Collision(CollisionOrder::SparkAttack
+		, _Col
+		, CollisionType::CirCle // 나의 충돌체 모양
+		, CollisionType::CirCle // 상대의 충돌체 모양
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			Actor = Collison->GetActor();
+
+			float4 ActorPos = Actor->GetPos();
+
+			if (GetPos().X > ActorPos.X)
+			{
+				Dir = WaddleDeeDir::Left;
+			}
+			else
+			{
+				Dir = WaddleDeeDir::Right;
+			}
+			BodyCollision->Off();
+			ChangeState(WaddleDeeState::Damage);
+			return;
+		}
+	}
 
 }
 

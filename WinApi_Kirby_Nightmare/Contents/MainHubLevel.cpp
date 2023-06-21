@@ -100,11 +100,7 @@ void MainHubLevel::Update(float _Delta)
 
 	if (true == GameEngineInput::IsDown('Q'))
 	{
-		float4 PrevPos = Kirby::GetMainPlayer()->GetPos();
-		Kirby::GetMainPlayer()->Death();
-		Kirby::SetMainPlayer(CreateActor<SparkKirby>());
-		Kirby::GetMainPlayer()->SetPos(PrevPos);
-		Kirby::GetMainPlayer()->SetGroundTexture("MainHupDebug.bmp");
+		Kirby::GetMainPlayer()->ChangeKirby(Abillity::Spark);
 	}
 
 	// Æ÷Å» ÀÌµ¿

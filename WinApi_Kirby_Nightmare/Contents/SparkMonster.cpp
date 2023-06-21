@@ -228,7 +228,7 @@ void SparkMonster::Update(float _Delta)
 		}
 	}
 
-	if (true == BodyCollision->Collision(CollisionOrder::SpecialAttack
+	if (true == BodyCollision->Collision(CollisionOrder::BurningAttack
 		, _Col
 		, CollisionType::CirCle // 나의 충돌체 모양
 		, CollisionType::Rect // 상대의 충돌체 모양

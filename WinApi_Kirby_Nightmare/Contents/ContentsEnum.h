@@ -11,6 +11,7 @@ enum class RenderOrder
 {
 	BackGround,
 	Stage,
+	BackEffect,
 	Play,
 	Effect,
 	Effect2,
@@ -24,10 +25,11 @@ enum class CollisionOrder
 	PlayerBody,
 	MonsterBody,
 	DeathBody,
-	VacumAttack,
-	PlayerAttack,
-	MonsterFireAttack,
-	SpecialAttack,
+	VacumAttack,   // 커비의 흡수 공격
+	PlayerAttack,  // 별이나 Airatt같은거
+	BurningAttack, // 커비의 버닝어택
+	SparkAttack,
+	MonsterFireAttack, // 몬스터의 화염 공격
 };
 
 enum class Abillity

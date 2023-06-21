@@ -99,7 +99,7 @@ void BurningKirby::Start()
 		BodyCollision->SetCollisionScale(BodyCollisionScale);
 		BodyCollision->SetCollisionPos(BodyCollisionPos);
 		BodyCollision->SetCollisionType(CollisionType::CirCle);
-		AttackCollision = CreateCollision(CollisionOrder::SpecialAttack);
+		AttackCollision = CreateCollision(CollisionOrder::BurningAttack);
 		AttackCollision->SetCollisionScale(AttackCollisionScale);
 		AttackCollision->SetCollisionPos(AttackCollisionPos);
 		AttackCollision->SetCollisionType(CollisionType::Rect);
