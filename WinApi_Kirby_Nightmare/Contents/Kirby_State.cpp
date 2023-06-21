@@ -85,6 +85,11 @@ void Kirby::AttackStart()
 	ChangeAnimationState("Attack");
 }
 
+void Kirby::ChargeStart()
+{
+	ChangeAnimationState("Charge");
+}
+
 void Kirby::StarInStart()
 {
 	ChangeAnimationState("StarIn");
@@ -569,7 +574,27 @@ void Kirby::AttackUpdate(float _Delta)
 
 	std::vector<GameEngineCollision*> _Col;
 
-	if (true == BodyCollision->Collision(CollisionOrder::DeathBody
+	if (true == AttackCollision->Collision(CollisionOrder::DeathBody
+		, _Col
+		, CollisionType::CirCle // 나
+		, CollisionType::CirCle // 상대
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			ChangeState(KirbyState::Charge);
+			return;
+		}
+	}
+}
+
+void Kirby::ChargeUpdate(float _Delta)
+{
+	GroundCheck(_Delta);
+
+	std::vector<GameEngineCollision*> _Col;
+
+	if (true == EatCollision->Collision(CollisionOrder::DeathBody
 		, _Col
 		, CollisionType::CirCle // 나
 		, CollisionType::CirCle // 상대
@@ -578,7 +603,7 @@ void Kirby::AttackUpdate(float _Delta)
 		for (size_t i = 0; i < _Col.size(); i++)
 		{
 			GameEngineCollision* Collison = _Col[i];
-			
+
 			GameEngineActor* Actor = Collison->GetActor();
 
 			ChangeAbillity = Actor->GetAbillity();

@@ -107,7 +107,7 @@ void Kirby::Start()
 		}
 	}
 
-	MainRenderer = CreateRenderer(RenderOrder::Play); 
+	MainRenderer = CreateRenderer(RenderOrder::Player); 
 	RightChargeRenderer = CreateRenderer(RenderOrder::Effect);
 	LeftChargeRenderer = CreateRenderer(RenderOrder::Effect);
 	{ // LeftAnimation 생성
@@ -128,6 +128,7 @@ void Kirby::Start()
 		MainRenderer->FindAnimation("Left_BreathIn")->Inters[4] = 0.1f;
 		MainRenderer->CreateAnimation("Left_AttackStart", "KirbyLeft_Attack.bmp", 0, 2, 0.1f, true);
 		MainRenderer->CreateAnimation("Left_Attack", "KirbyLeft_Attack.bmp", 3, 4, 0.05f, true);
+		MainRenderer->CreateAnimation("Left_Charge", "KirbyLeft_Attack.bmp", 3, 4, 0.05f, true);
 		MainRenderer->CreateAnimation("Left_StarIn", "KirbyLeft_StarIn.bmp", 0, 5, 0.05f, true);
 		MainRenderer->CreateAnimation("Left_StarOut", "KirbyLeft_StarOut.bmp", 0, 4, 0.05f, true);
 		MainRenderer->CreateAnimation("Left_FatIdle", "KirbyLeft_FatIdle.bmp", 0, 3, 0.2f, true);
@@ -161,6 +162,7 @@ void Kirby::Start()
 		MainRenderer->FindAnimation("Right_BreathIn")->Inters[4] = 0.1f;
 		MainRenderer->CreateAnimation("Right_AttackStart", "KirbyRight_Attack.bmp", 0, 2, 0.1f, true);
 		MainRenderer->CreateAnimation("Right_Attack", "KirbyRight_Attack.bmp", 3, 4, 0.05f, true);
+		MainRenderer->CreateAnimation("Right_Charge", "KirbyRight_Attack.bmp", 3, 4, 0.05f, true);
 		MainRenderer->CreateAnimation("Right_StarIn", "KirbyRight_StarIn.bmp", 0, 5, 0.05f, true);
 		MainRenderer->CreateAnimation("Right_StarOut", "KirbyRight_StarOut.bmp", 0, 4, 0.05f, true);
 		MainRenderer->CreateAnimation("Right_FatIdle", "KirbyRight_FatIdle.bmp", 0, 3, 0.2f, true);
@@ -188,6 +190,12 @@ void Kirby::Start()
 		BodyCollision->SetCollisionScale(BodyCollisionScale);
 		BodyCollision->SetCollisionPos(BodyCollisionPos);
 		BodyCollision->SetCollisionType(CollisionType::CirCle);
+
+		EatCollision = CreateCollision(CollisionOrder::PlayerCore);
+		EatCollision->SetCollisionScale(BodyCollisionScale);
+		EatCollision->SetCollisionPos(BodyCollisionPos);
+		EatCollision->SetCollisionType(CollisionType::CirCle);
+
 		AttackCollision = CreateCollision(CollisionOrder::VacumAttack);
 		AttackCollision->SetCollisionScale(AttackCollisionScale);
 		AttackCollision->SetCollisionPos(AttackCollisionPos);
@@ -309,6 +317,8 @@ void Kirby::Update(float _Delta)
 	// 줌 인 아웃 기능
 	if (true == GameEngineInput::IsPress('L'))
 	{
+
+		BodyCollision->Off();
 		//GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(1.0f * _Delta);
 
 		// Monster::AllMonsterDeath();
@@ -355,6 +365,8 @@ void Kirby::StateUpdate(float _Delta)
 		return AttackStartUpdate(_Delta);
 	case KirbyState::Attack:
 		return AttackUpdate(_Delta);
+	case KirbyState::Charge:
+		return ChargeUpdate(_Delta);
 	case KirbyState::StarIn:
 		return StarInUpdate(_Delta);
 	case KirbyState::StarOut:
@@ -428,6 +440,9 @@ void Kirby::ChangeState(KirbyState _State)
 			break;
 		case KirbyState::Attack:
 			AttackStart();
+			break;
+		case KirbyState::Charge:
+			ChargeStart();
 			break;
 		case KirbyState::StarIn:
 			StarInStart();
@@ -753,9 +768,12 @@ void Kirby::Immune()
 {
 	if (true == ImmuneValue)
 	{
-		RenderSwitch();
+		if (0.1f <= GetLiveTime())
+		{
+			RenderSwitch();
+		}
 		BodyCollision->Off();
-		if (0.6f <= GetLiveTime())
+		if (0.6f <= GetLiveTime()) // 무적시간
 		{
 			ImmuneValue = false;
 			BodyCollision->On();

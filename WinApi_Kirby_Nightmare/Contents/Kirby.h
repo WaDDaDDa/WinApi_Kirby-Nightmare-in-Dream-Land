@@ -16,6 +16,7 @@ enum class KirbyState
     BreathIn,
     AttackStart,
     Attack,
+    Charge,
     StarIn,
     StarOut,
     FatIdle,
@@ -121,6 +122,7 @@ protected:
     void BreathInStart();
     virtual void AttackStartStart();
     virtual void AttackStart();
+    void ChargeStart();
     void StarInStart();
     void StarOutStart();
     void FatIdleStart();
@@ -147,6 +149,7 @@ protected:
     void BreathInUpdate(float _Delta);
     virtual void AttackStartUpdate(float _Delta);
     virtual void AttackUpdate(float _Delta);
+    void ChargeUpdate(float _Delta);
     void StarInUpdate(float _Delta);
     void StarOutUpdate(float _Delta);
     void FatIdleUpdate(float _Delta);
@@ -171,6 +174,7 @@ protected:
     virtual void ChangeAnimationState(const std::string& _StateName);
 
     GameEngineCollision* BodyCollision = nullptr;
+    GameEngineCollision* EatCollision = nullptr;
     GameEngineCollision* AttackCollision = nullptr;
 
 private:

@@ -13,6 +13,7 @@ enum class RenderOrder
 	Stage,
 	BackEffect,
 	Play,
+	Player,
 	Effect,
 	Effect2,
 	PlayUI,
@@ -22,6 +23,7 @@ enum class CollisionOrder
 {
 	Map,
 	Portal,
+	PlayerCore,
 	PlayerBody,
 	MonsterBody,
 	DeathBody,
