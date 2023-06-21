@@ -106,6 +106,7 @@ void BurningKirby::Start()
 		AttackCollision->Off();
 	}
 	MainRenderer->SetScaleRatio(4.0f);
+	MainRenderer->SetTexture("Blank.bmp");
 	//SetPos(float4{ 360,360 });
 	SetOrder(UpdateOrder::Player);
 	SetAbillity(Abillity::Burning);

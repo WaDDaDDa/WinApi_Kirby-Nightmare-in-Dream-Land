@@ -100,6 +100,8 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("FireEffect1Right.bmp"), 7, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("FireEffect2Right.bmp"), 7, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("BunringMonsterAttack.bmp"), 6, 2);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Blank.bmp"), 4, 1);
+
 		}
 	}
 
