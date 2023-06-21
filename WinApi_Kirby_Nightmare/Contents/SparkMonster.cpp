@@ -38,10 +38,7 @@ void SparkMonster::Start()
 	}
 
 	MainRenderer = CreateRenderer(RenderOrder::Play);
-	LeftAttackRenderer = CreateRenderer(RenderOrder::Effect);
-	LeftAttack2Renderer = CreateRenderer(RenderOrder::Effect2);
-	RightAttackRenderer = CreateRenderer(RenderOrder::Effect);
-	RightAttack2Renderer = CreateRenderer(RenderOrder::Effect2);
+	AttRenderer = CreateRenderer(RenderOrder::BackEffect);
 
 	{ // 애니메이션 설정
 		MainRenderer->CreateAnimation("SparkMonsterLeft_Idle", "SparkMonsterLeft.bmp", 0, 0, 0.1f, false);
@@ -58,26 +55,12 @@ void SparkMonster::Start()
 		MainRenderer->CreateAnimation("SparkMonsterRight_Walk", "SparkMonsterRight.bmp", 1, 5, 0.3f, true);
 		MainRenderer->CreateAnimation("SparkMonsterRight_HitReady", "SparkMonsterRight.bmp", 0, 0, 0.1f, false);
 		MainRenderer->CreateAnimation("SparkMonsterRight_Hit", "SparkMonsterRight.bmp", 0, 0, 0.1f, false);
-		MainRenderer->CreateAnimation("SparkMonsterRight_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
+		MainRenderer->CreateAnimation("SparkMonsterRight_Effect", "SparkMonsterRight.bmp", 0, 2, 0.1f, true);
 		MainRenderer->CreateAnimation("SparkMonsterRight_Damage", "SparkMonsterRight.bmp", 0, 0, 0.1f, false);
 		MainRenderer->CreateAnimation("SparkMonsterRight_AttackStart", "SparkMonsterRight.bmp", 6, 6, 0.1f, false);
 		MainRenderer->CreateAnimation("SparkMonsterRight_Attack1", "SparkMonsterRight.bmp", 7, 8, 0.1f, true);
 		MainRenderer->CreateAnimation("SparkMonsterRight_Attack2", "SparkMonsterRight.bmp", 7, 9, 0.1f, false);
 	}
-
-	{
-		LeftAttackRenderer->CreateAnimation("FireAttackLeft", "FireEffect1Left.bmp", 0, 6, 0.1f, true);
-		LeftAttack2Renderer->CreateAnimation("FireAttack2Left", "FireEffect2Left.bmp", 0, 6, 0.1f, true);
-
-		RightAttackRenderer->CreateAnimation("FireAttackRight", "FireEffect1Right.bmp", 0, 6, 0.1f, true);
-		RightAttack2Renderer->CreateAnimation("FireAttack2Right", "FireEffect2Right.bmp", 0, 6, 0.1f, true);
-	}
-
-	LeftAttackRenderer->ChangeAnimation("FireAttackLeft");
-	LeftAttack2Renderer->ChangeAnimation("FireAttack2Left");
-
-	RightAttackRenderer->ChangeAnimation("FireAttackRight");
-	RightAttack2Renderer->ChangeAnimation("FireAttack2Right");
 
 	{ // 충돌체 설정
 		BodyCollision = CreateCollision(CollisionOrder::MonsterBody);
@@ -91,28 +74,21 @@ void SparkMonster::Start()
 		DeathCollision->SetCollisionType(CollisionType::CirCle);
 		DeathCollision->Off();
 
-		AttackCollision = CreateCollision(CollisionOrder::MonsterFireAttack);
+		AttackCollision = CreateCollision(CollisionOrder::SparkAttack);
 		AttackCollision->SetCollisionScale(AttackCollisionScale);
 		AttackCollision->SetCollisionPos(AttackCollisionPos);
-		AttackCollision->SetCollisionType(CollisionType::Rect);
-		AttackCollision->Off();
+		AttackCollision->SetCollisionType(CollisionType::CirCle);
+		//AttackCollision->Off();
 	}
+
+	AttRenderer->SetTexture("Blank.bmp");
+	AttRenderer->CreateAnimation("SparkEffect", "SparkEffect.bmp", 0, 3, 0.1f, true);
+	AttRenderer->ChangeAnimation("SparkEffect");
+	AttRenderer->SetRenderPos(AttackCollisionPos);
+	AttRenderer->SetScaleRatio(3.0f);
+	//AttRenderer->Off();
+
 	MainRenderer->SetScaleRatio(4.0f);
-
-	RightAttackRenderer->SetRenderPos({ 100, -40 });
-	RightAttack2Renderer->SetRenderPos({ 100, -40 });
-
-	LeftAttackRenderer->SetRenderPos({ -100, -40 });
-	LeftAttack2Renderer->SetRenderPos({ -100, -40 });
-
-	LeftAttackRenderer->SetScaleRatio(3.0f);
-	LeftAttack2Renderer->SetScaleRatio(3.0f);
-	RightAttackRenderer->SetScaleRatio(3.0f);
-	RightAttack2Renderer->SetScaleRatio(3.0f);
-	LeftAttackRenderer->Off();
-	LeftAttack2Renderer->Off();
-	RightAttackRenderer->Off();
-	RightAttack2Renderer->Off();
 
 	SetOrder(UpdateOrder::Monster);
 	SetAbillity(Abillity::Spark);
@@ -151,10 +127,6 @@ void SparkMonster::Update(float _Delta)
 			{
 				Dir = SparkMonsterDir::Right;
 			}
-			LeftAttackRenderer->Off();
-			LeftAttack2Renderer->Off();
-			RightAttackRenderer->Off();
-			RightAttack2Renderer->Off();
 			ChangeState(SparkMonsterState::Damage);
 			return;
 		}
@@ -182,12 +154,6 @@ void SparkMonster::Update(float _Delta)
 			{
 				Dir = SparkMonsterDir::Right;
 			}
-			// 계속 흡수당하고있음.
-			// 흡수당하는건 한번만 해야함.
-			LeftAttackRenderer->Off();
-			LeftAttack2Renderer->Off();
-			RightAttackRenderer->Off();
-			RightAttack2Renderer->Off();
 			ChangeState(SparkMonsterState::HitReady);
 			return;
 		}
@@ -219,10 +185,6 @@ void SparkMonster::Update(float _Delta)
 			// 흡수당하는건 한번만 해야함.
 			Collison->Off();
 			BodyCollision->Off();
-			LeftAttackRenderer->Off();
-			LeftAttack2Renderer->Off();
-			RightAttackRenderer->Off();
-			RightAttack2Renderer->Off();
 			ChangeState(SparkMonsterState::Damage);
 			return;
 		}
@@ -253,10 +215,6 @@ void SparkMonster::Update(float _Delta)
 			// 계속 흡수당하고있음.
 			// 흡수당하는건 한번만 해야함.
 			BodyCollision->Off();
-			LeftAttackRenderer->Off();
-			LeftAttack2Renderer->Off();
-			RightAttackRenderer->Off();
-			RightAttack2Renderer->Off();
 			ChangeState(SparkMonsterState::Damage);
 			return;
 		}
@@ -281,10 +239,8 @@ void SparkMonster::StateUpdate(float _Delta)
 		return EffectUpdate(_Delta);
 	case SparkMonsterState::AttackStart:
 		return AttackStartUpdate(_Delta);
-	case SparkMonsterState::Attack1:
-		return Attack1Update(_Delta);
-	case SparkMonsterState::Attack2:
-		return Attack2Update(_Delta);
+	case SparkMonsterState::Attack:
+		return AttackUpdate(_Delta);
 	default:
 		break;
 	}
@@ -317,11 +273,8 @@ void SparkMonster::ChangeState(SparkMonsterState _State)
 		case SparkMonsterState::AttackStart:
 			AttackStartStart();
 			break;
-		case SparkMonsterState::Attack1:
-			Attack1Start();
-			break;
-		case SparkMonsterState::Attack2:
-			Attack2Start();
+		case SparkMonsterState::Attack:
+			AttackStart();
 			break;
 		default:
 			break;

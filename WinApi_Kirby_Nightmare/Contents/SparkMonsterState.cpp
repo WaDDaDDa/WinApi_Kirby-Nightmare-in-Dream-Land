@@ -189,97 +189,32 @@ void SparkMonster::AttackStartUpdate(float _Delta)
 {
 	if (0.5f <= GetLiveTime())
 	{
-		int Value = GameEngineRandom::MainRandom.RandomInt(0, 1);
-		float Posi = Kirby::GetMainPlayer()->GetPos().X - GetPos().X;
-		if (Posi <= 0 && SparkMonsterDir::Left != Dir)
-		{
-			ChangeState(SparkMonsterState::Attack1);
-			return;
-		}
-		if (Posi >= 0 && SparkMonsterDir::Right != Dir)
-		{
-			ChangeState(SparkMonsterState::Attack1);
-			return;
-		}
-
-		switch (Value)
-		{
-		case 0:
-			ChangeState(SparkMonsterState::Attack1);
-			break;
-		case 1:
-			ChangeState(SparkMonsterState::Attack2);
-			break;
-		default:
-			break;
-		}
+		ChangeState(SparkMonsterState::Attack);
 	}
 }
 
 // 불뿜기.
-void SparkMonster::Attack1Start()
+void SparkMonster::AttackStart()
 {
 	AttackCollision->On();
 	if (SparkMonsterDir::Left == GetDir())
 	{
-		LeftAttackRenderer->On();
-		LeftAttack2Renderer->On();
+
 	}
 	else if (SparkMonsterDir::Right == GetDir())
 	{
-		RightAttackRenderer->On();
-		RightAttack2Renderer->On();
+
 	}
 
 	ChangeAnimationState("Attack1");
 }
 
-void SparkMonster::Attack1Update(float _Delta)
+void SparkMonster::AttackUpdate(float _Delta)
 {
 	GroundCheck(_Delta);
 
 	if (GetLiveTime() >= 1.0f)
 	{
-		LeftAttackRenderer->Off();
-		LeftAttack2Renderer->Off();
-		RightAttackRenderer->Off();
-		RightAttack2Renderer->Off();
-		AttackCollision->Off();
-		ChangeState(SparkMonsterState::Walk);
-		return;
-	}
-
-	if (SparkMonsterDir::Left == Dir)
-	{
-		AttackCollision->SetCollisionPos({ -AttackCollisionPos.X , AttackCollisionPos.Y });
-	}
-	else if (SparkMonsterDir::Right == Dir)
-	{
-		AttackCollision->SetCollisionPos(AttackCollisionPos);
-	}
-}
-
-// 불 발사
-void SparkMonster::Attack2Start()
-{
-	//Bullet* StarAttack = GetLevel()->CreateActor<Bullet>();
-	//StarAttack->SetPos(GetPos() + float4{ 0,-40 });
-	//StarAttack->SetMaster(this);
-	//StarAttack->Init();
-
-	ChangeAnimationState("Attack2");
-}
-
-void SparkMonster::Attack2Update(float _Delta)
-{
-	GroundCheck(_Delta);
-
-	if (GetLiveTime() >= 0.5f)
-	{
-		LeftAttackRenderer->Off();
-		LeftAttack2Renderer->Off();
-		RightAttackRenderer->Off();
-		RightAttack2Renderer->Off();
 		AttackCollision->Off();
 		ChangeState(SparkMonsterState::Walk);
 		return;

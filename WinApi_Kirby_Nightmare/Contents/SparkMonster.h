@@ -15,8 +15,7 @@ enum class SparkMonsterState
     Fly,
     BreathIn,
     AttackStart,
-    Attack1,
-    Attack2,
+    Attack,
     HitReady,
     Hit,
     Damage,
@@ -42,13 +41,6 @@ public:
     SparkMonster& operator=(const SparkMonster& _Other) = delete;
     SparkMonster& operator=(SparkMonster&& _Other) noexcept = delete;
 
-    GameEngineRenderer* MainRenderer = nullptr;
-
-    GameEngineRenderer* LeftAttackRenderer = nullptr;
-    GameEngineRenderer* LeftAttack2Renderer = nullptr;
-
-    GameEngineRenderer* RightAttackRenderer = nullptr;
-    GameEngineRenderer* RightAttack2Renderer = nullptr;
 
     SparkMonsterState State = SparkMonsterState::Max;
     void StateUpdate(float _Delta);
@@ -66,10 +58,8 @@ public:
     void EffectUpdate(float _Delta);
     void AttackStartStart();
     void AttackStartUpdate(float _Delta);
-    void Attack1Start();
-    void Attack1Update(float _Delta);
-    void Attack2Start();
-    void Attack2Update(float _Delta);
+    void AttackStart();
+    void AttackUpdate(float _Delta);
 
     void ChangeState(SparkMonsterState _State);
 
@@ -102,13 +92,16 @@ private:
     GameEngineCollision* DeathCollision = nullptr;
     GameEngineCollision* AttackCollision = nullptr;
 
+    class GameEngineRenderer* AttRenderer = nullptr;
+    GameEngineRenderer* MainRenderer = nullptr;
+
     float4 CollisionPos = float4{ 0 , -40 };
     float4 CollisionScale = float4{ 80, 80 };
-    float4 DeathCollisionScale = float4{ 100, 100 };
 
-    float4 AttackCollisionPos = float4{ 100 , -40 };
-    float4 AttackCollisionScale = float4{ 80,80 };
+    float4 DeathCollisionScale = float4{ 100, 100 };
+    float4 AttackCollisionPos = float4{ 0 , -30 };
+    float4 AttackCollisionScale = float4{ 120,100 };
+
     GameEngineActor* Actor = nullptr;
-    // Abillity CurAbillity = Abillity::Normal;
 };
 

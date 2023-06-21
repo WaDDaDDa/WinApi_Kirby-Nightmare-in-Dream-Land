@@ -275,6 +275,35 @@ void Kirby::Update(float _Delta)
 			ChangeState(KirbyState::Damage);
 			return;
 		}
+	}	
+
+	if (true == BodyCollision->Collision(CollisionOrder::SparkAttack
+		, _Col
+		, CollisionType::CirCle // 나를 사각형으로 봐줘
+		, CollisionType::CirCle // 상대도 사각형으로 봐줘
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			GameEngineActor* Actor = Collison->GetActor();
+
+			if (State == KirbyState::FatFalling ||
+				State == KirbyState::FatFallingEnd ||
+				State == KirbyState::FatIdle ||
+				State == KirbyState::FatJump ||
+				State == KirbyState::FatJumpTurn ||
+				State == KirbyState::FatWalk)
+			{
+				ChangeState(KirbyState::FatDamage);
+				return;
+			}
+			RightChargeRenderer->Off();
+			LeftChargeRenderer->Off();
+			ChangeState(KirbyState::Damage);
+			return;
+		}
 	}
 
 	// 줌 인 아웃 기능
