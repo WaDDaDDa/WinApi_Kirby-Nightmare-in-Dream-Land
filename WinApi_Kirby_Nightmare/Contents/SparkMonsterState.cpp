@@ -15,7 +15,27 @@ void SparkMonster::IdleUpdate(float _Delta)
 	GroundCheck(_Delta);
 	if (GetLiveTime() >= 1.0f)
 	{
-		int Value = GameEngineRandom::MainRandom.RandomInt(0, 1);
+		float Posi = Kirby::GetMainPlayer()->GetPos().X - GetPos().X;
+		if (Posi <= 0 && SparkMonsterDir::Left == Dir)
+		{
+			if (Posi >= -AttRange)
+			{
+				ChangeState(SparkMonsterState::AttackStart);
+				return;
+			}
+		}
+		else if (Posi >= 0 && SparkMonsterDir::Right == Dir)
+		{
+			if (Posi <= AttRange)
+			{
+				ChangeState(SparkMonsterState::AttackStart);
+				return;
+			}
+		}
+		ChangeState(SparkMonsterState::Walk);
+		return;
+
+		/*int Value = GameEngineRandom::MainRandom.RandomInt(0, 1);
 		float Posi = Kirby::GetMainPlayer()->GetPos().X - GetPos().X;
 		if (Posi <= 0 && SparkMonsterDir::Left == Dir)
 		{
@@ -27,9 +47,8 @@ void SparkMonster::IdleUpdate(float _Delta)
 			ChangeState(SparkMonsterState::AttackStart);
 			return;
 		}
-
 		ChangeState(SparkMonsterState::Walk);
-		return;
+		return;*/
 	}
 }
 
@@ -87,6 +106,7 @@ void SparkMonster::HitReadyUpdate(float _Delta)
 void SparkMonster::HitStart()
 {
 	AttackCollision->Off();
+	AttRenderer->Off();
 	ChangeAnimationState("Hit");
 }
 
@@ -118,6 +138,7 @@ void SparkMonster::HitUpdate(float _Delta)
 void SparkMonster::DamageStart()
 {
 	AttackCollision->Off();
+	AttRenderer->Off();
 	ChangeAnimationState("Damage");
 }
 
@@ -197,35 +218,19 @@ void SparkMonster::AttackStartUpdate(float _Delta)
 void SparkMonster::AttackStart()
 {
 	AttackCollision->On();
-	if (SparkMonsterDir::Left == GetDir())
-	{
-
-	}
-	else if (SparkMonsterDir::Right == GetDir())
-	{
-
-	}
-
-	ChangeAnimationState("Attack1");
+	AttRenderer->On();
+	ChangeAnimationState("Attack");
 }
 
 void SparkMonster::AttackUpdate(float _Delta)
 {
 	GroundCheck(_Delta);
 
-	if (GetLiveTime() >= 1.0f)
+	if (GetLiveTime() >= 2.0f)
 	{
 		AttackCollision->Off();
+		AttRenderer->Off();
 		ChangeState(SparkMonsterState::Walk);
 		return;
-	}
-
-	if (SparkMonsterDir::Left == Dir)
-	{
-		AttackCollision->SetCollisionPos({ -AttackCollisionPos.X , AttackCollisionPos.Y });
-	}
-	else if (SparkMonsterDir::Right == Dir)
-	{
-		AttackCollision->SetCollisionPos(AttackCollisionPos);
 	}
 }

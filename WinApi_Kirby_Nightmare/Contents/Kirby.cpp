@@ -277,7 +277,7 @@ void Kirby::Update(float _Delta)
 		}
 	}	
 
-	if (true == BodyCollision->Collision(CollisionOrder::SparkAttack
+	if (true == BodyCollision->Collision(CollisionOrder::MonsterSparkAttack
 		, _Col
 		, CollisionType::CirCle // 나를 사각형으로 봐줘
 		, CollisionType::CirCle // 상대도 사각형으로 봐줘

@@ -43,23 +43,21 @@ void SparkMonster::Start()
 	{ // 애니메이션 설정
 		MainRenderer->CreateAnimation("SparkMonsterLeft_Idle", "SparkMonsterLeft.bmp", 0, 0, 0.1f, false);
 		MainRenderer->CreateAnimation("SparkMonsterLeft_Walk", "SparkMonsterLeft.bmp", 1, 5, 0.3f, true);
-		MainRenderer->CreateAnimation("SparkMonsterLeft_HitReady", "SparkMonsterLeft.bmp", 0, 0, 0.1f, false);
-		MainRenderer->CreateAnimation("SparkMonsterLeft_Hit", "SparkMonsterLeft.bmp", 0, 0, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkMonsterLeft_HitReady", "SparkMonsterLeft.bmp", 4, 4, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkMonsterLeft_Hit", "SparkMonsterLeft.bmp", 4, 4, 0.1f, false);
 		MainRenderer->CreateAnimation("SparkMonsterLeft_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
-		MainRenderer->CreateAnimation("SparkMonsterLeft_Damage", "SparkMonsterLeft.bmp", 0, 0, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkMonsterLeft_Damage", "SparkMonsterLeft.bmp", 4, 4, 0.1f, false);
 		MainRenderer->CreateAnimation("SparkMonsterLeft_AttackStart", "SparkMonsterLeft.bmp", 6, 6, 0.1f, false);
-		MainRenderer->CreateAnimation("SparkMonsterLeft_Attack1", "SparkMonsterLeft.bmp", 7, 8, 0.1f, true);
-		MainRenderer->CreateAnimation("SparkMonsterLeft_Attack2", "SparkMonsterLeft.bmp", 7, 9, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkMonsterLeft_Attack", "SparkMonsterLeft.bmp", 7, 8, 0.1f, true);
 
 		MainRenderer->CreateAnimation("SparkMonsterRight_Idle", "SparkMonsterRight.bmp", 0, 0, 0.1f, false);
 		MainRenderer->CreateAnimation("SparkMonsterRight_Walk", "SparkMonsterRight.bmp", 1, 5, 0.3f, true);
-		MainRenderer->CreateAnimation("SparkMonsterRight_HitReady", "SparkMonsterRight.bmp", 0, 0, 0.1f, false);
-		MainRenderer->CreateAnimation("SparkMonsterRight_Hit", "SparkMonsterRight.bmp", 0, 0, 0.1f, false);
-		MainRenderer->CreateAnimation("SparkMonsterRight_Effect", "SparkMonsterRight.bmp", 0, 2, 0.1f, true);
-		MainRenderer->CreateAnimation("SparkMonsterRight_Damage", "SparkMonsterRight.bmp", 0, 0, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkMonsterRight_HitReady", "SparkMonsterRight.bmp", 4, 4, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkMonsterRight_Hit", "SparkMonsterRight.bmp", 4, 4, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkMonsterRight_Effect", "DamageEffects.bmp", 0, 2, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkMonsterRight_Damage", "SparkMonsterRight.bmp", 4, 4, 0.1f, false);
 		MainRenderer->CreateAnimation("SparkMonsterRight_AttackStart", "SparkMonsterRight.bmp", 6, 6, 0.1f, false);
-		MainRenderer->CreateAnimation("SparkMonsterRight_Attack1", "SparkMonsterRight.bmp", 7, 8, 0.1f, true);
-		MainRenderer->CreateAnimation("SparkMonsterRight_Attack2", "SparkMonsterRight.bmp", 7, 9, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkMonsterRight_Attack", "SparkMonsterRight.bmp", 7, 8, 0.1f, true);
 	}
 
 	{ // 충돌체 설정
@@ -74,11 +72,11 @@ void SparkMonster::Start()
 		DeathCollision->SetCollisionType(CollisionType::CirCle);
 		DeathCollision->Off();
 
-		AttackCollision = CreateCollision(CollisionOrder::SparkAttack);
+		AttackCollision = CreateCollision(CollisionOrder::MonsterSparkAttack);
 		AttackCollision->SetCollisionScale(AttackCollisionScale);
 		AttackCollision->SetCollisionPos(AttackCollisionPos);
 		AttackCollision->SetCollisionType(CollisionType::CirCle);
-		//AttackCollision->Off();
+		AttackCollision->Off();
 	}
 
 	AttRenderer->SetTexture("Blank.bmp");
@@ -86,7 +84,7 @@ void SparkMonster::Start()
 	AttRenderer->ChangeAnimation("SparkEffect");
 	AttRenderer->SetRenderPos(AttackCollisionPos);
 	AttRenderer->SetScaleRatio(3.0f);
-	//AttRenderer->Off();
+	AttRenderer->Off();
 
 	MainRenderer->SetScaleRatio(4.0f);
 
@@ -154,6 +152,7 @@ void SparkMonster::Update(float _Delta)
 			{
 				Dir = SparkMonsterDir::Right;
 			}
+			AttRenderer->Off();
 			ChangeState(SparkMonsterState::HitReady);
 			return;
 		}
@@ -215,6 +214,8 @@ void SparkMonster::Update(float _Delta)
 			// 계속 흡수당하고있음.
 			// 흡수당하는건 한번만 해야함.
 			BodyCollision->Off();
+			AttRenderer->Off();
+			AttackCollision->Off();
 			ChangeState(SparkMonsterState::Damage);
 			return;
 		}

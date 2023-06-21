@@ -58,7 +58,7 @@ private:
 	float4 RightAttackPos = float4{ 40.0f, -40.0f };
 	float4 LeftAttackPos = float4{ -40.0f, -40.0f };
 	float4 Dir = float4::ZERO;
-	float Speed = 600.0f;
+	float Speed = 800.0f;
 	float4 DirVec = float4::ZERO;
 	BulletState State = BulletState::Max;
 

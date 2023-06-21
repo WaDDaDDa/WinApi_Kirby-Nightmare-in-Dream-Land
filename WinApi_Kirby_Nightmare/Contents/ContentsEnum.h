@@ -28,8 +28,9 @@ enum class CollisionOrder
 	VacumAttack,   // 커비의 흡수 공격
 	PlayerAttack,  // 별이나 Airatt같은거
 	BurningAttack, // 커비의 버닝어택
-	SparkAttack,
+	SparkAttack,    //커비의 전기공격
 	MonsterFireAttack, // 몬스터의 화염 공격
+	MonsterSparkAttack, // 몬스터의 전기 공격
 };
 
 enum class Abillity
