@@ -101,7 +101,7 @@ private:
 
     float4 DeathCollisionScale = float4{ 100, 100 };
     float4 AttackCollisionPos = float4{ 0 , -30 };
-    float4 AttackCollisionScale = float4{ 120,100 };
+    float4 AttackCollisionScale = float4{ 140,140 };
 
     GameEngineActor* Actor = nullptr;
 };

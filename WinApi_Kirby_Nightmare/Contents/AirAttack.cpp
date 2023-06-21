@@ -33,7 +33,7 @@ void AirAttack::Start()
 		}
 	}
 
-	Renderer = CreateRenderer(RenderOrder::Play);
+	Renderer = CreateRenderer(RenderOrder::Effect);
 	{ // LeftAnimation »ý¼º
 		Renderer->CreateAnimation("Left_AirAttack", "Left_AirAttackEffect.bmp", 0, 5, 0.2f, true);
 	}

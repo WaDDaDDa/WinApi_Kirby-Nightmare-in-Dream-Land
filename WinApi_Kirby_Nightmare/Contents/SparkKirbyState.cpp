@@ -15,7 +15,7 @@ void SparkKirby::DamageStart()
 void SparkKirby::AttackStartStart()
 {
 	AttackCollision->On();
-	BodyCollision->Off();
+	//BodyCollision->Off();
 	ChangeAnimationState("AttackStart");
 }
 
@@ -74,6 +74,7 @@ void SparkKirby::AttackUpdate(float _Delta)
 	{
 		AttackCollision->Off();
 		AttRenderer->Off();
+		BodyCollision->On();
 		ChangeState(KirbyState::Idle);
 		return;
 	}

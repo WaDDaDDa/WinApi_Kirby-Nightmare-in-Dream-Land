@@ -138,7 +138,7 @@ void WaddleDee::Update(float _Delta)
 			return;
 		}
 	}
-
+	// 공기나 별 과 충돌
 	if (true == BodyCollision->Collision(CollisionOrder::PlayerAttack
 		, _Col
 		, CollisionType::CirCle // 나의 충돌체 모양
@@ -169,7 +169,7 @@ void WaddleDee::Update(float _Delta)
 			return;
 		}
 	}
-
+	// 버닝공격과 충돌
 	if (true == BodyCollision->Collision(CollisionOrder::BurningAttack
 		, _Col
 		, CollisionType::CirCle // 나의 충돌체 모양
@@ -197,7 +197,7 @@ void WaddleDee::Update(float _Delta)
 			return;
 		}
 	}
-
+	// 전기공격과 충돌
 	if (true == BodyCollision->Collision(CollisionOrder::SparkAttack
 		, _Col
 		, CollisionType::CirCle // 나의 충돌체 모양

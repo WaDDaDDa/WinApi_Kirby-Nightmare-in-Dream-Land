@@ -202,6 +202,7 @@ void Kirby::Start()
 		AttackCollision->SetCollisionType(CollisionType::Rect);
 		AttackCollision->Off();
 	}
+	MainRenderer->SetTexture("Blank.bmp");
 	MainRenderer->SetScaleRatio(4.0f);
 
 	RightChargeRenderer->SetRenderPos({120, -40});

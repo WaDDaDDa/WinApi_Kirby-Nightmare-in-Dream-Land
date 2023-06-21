@@ -16,39 +16,37 @@ void SparkMonster::IdleUpdate(float _Delta)
 	if (GetLiveTime() >= 1.0f)
 	{
 		float Posi = Kirby::GetMainPlayer()->GetPos().X - GetPos().X;
-		if (Posi <= 0 && SparkMonsterDir::Left == Dir)
+
+		if (Posi >= -AttRange)
 		{
-			if (Posi >= -AttRange)
-			{
-				ChangeState(SparkMonsterState::AttackStart);
-				return;
-			}
+			ChangeState(SparkMonsterState::AttackStart);
+			return;
 		}
-		else if (Posi >= 0 && SparkMonsterDir::Right == Dir)
+
+		if (Posi <= AttRange)
 		{
-			if (Posi <= AttRange)
-			{
-				ChangeState(SparkMonsterState::AttackStart);
-				return;
-			}
+			ChangeState(SparkMonsterState::AttackStart);
+			return;
 		}
+
+		//if (Posi <= 0 && SparkMonsterDir::Left == Dir)
+		//{
+		//	if (Posi >= -AttRange)
+		//	{
+		//		ChangeState(SparkMonsterState::AttackStart);
+		//		return;
+		//	}
+		//}
+		//else if (Posi >= 0 && SparkMonsterDir::Right == Dir)
+		//{
+		//	if (Posi <= AttRange)
+		//	{
+		//		ChangeState(SparkMonsterState::AttackStart);
+		//		return;
+		//	}
+		//}
 		ChangeState(SparkMonsterState::Walk);
 		return;
-
-		/*int Value = GameEngineRandom::MainRandom.RandomInt(0, 1);
-		float Posi = Kirby::GetMainPlayer()->GetPos().X - GetPos().X;
-		if (Posi <= 0 && SparkMonsterDir::Left == Dir)
-		{
-			ChangeState(SparkMonsterState::AttackStart);
-			return;
-		}
-		if (Posi >= 0 && SparkMonsterDir::Right == Dir)
-		{
-			ChangeState(SparkMonsterState::AttackStart);
-			return;
-		}
-		ChangeState(SparkMonsterState::Walk);
-		return;*/
 	}
 }
 
@@ -88,19 +86,6 @@ void SparkMonster::HitReadyUpdate(float _Delta)
 		ChangeState(SparkMonsterState::Hit);
 		return;
 	}
-
-	static int Value = 1;
-	Value *= -1;
-
-	if (Value == 1)
-	{
-		//MainRenderer->Off();
-	}
-	else
-	{
-		//MainRenderer->On();
-	}
-
 }
 
 void SparkMonster::HitStart()
@@ -116,23 +101,6 @@ void SparkMonster::HitUpdate(float _Delta)
 	float4 MoveDir = Actor->GetPos() - GetPos();
 	MoveDir.Normalize();
 	AddPos(MoveDir * 800.0f * _Delta);
-
-	std::vector<GameEngineCollision*> _Col;
-	//플레이어 몸통과 충돌.
-	//if (true == DeathCollision->Collision(CollisionOrder::PlayerBody
-	//	, _Col
-	//	, CollisionType::CirCle // 나를 사각형으로 봐줘
-	//	, CollisionType::CirCle // 상대도 사각형으로 봐줘
-	//))
-	//{
-	//	for (size_t i = 0; i < _Col.size(); i++)
-	//	{
-	//		GameEngineCollision* Collison = _Col[i];
-
-	//		Actor = Collison->GetActor();
-	//		Death();
-	//	}
-	//}
 }
 
 void SparkMonster::DamageStart()
