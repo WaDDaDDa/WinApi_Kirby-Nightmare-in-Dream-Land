@@ -16,6 +16,7 @@
 #include <GameEngineCore/GameEngineCollision.h>
 #include "MainHubLevel.h"
 #include "BurningKirby.h"
+#include "SparkKirby.h"
 
 Kirby* Kirby::MainPlayer = nullptr;
 
@@ -580,6 +581,10 @@ void Kirby::ChangeKirby(Abillity _Kirby)
 		case Abillity::Burning:
 			Kirby::GetMainPlayer()->Death();
 			SetMainPlayer(Kirby::GetMainPlayer()->GetLevel()->CreateActor<BurningKirby>());
+			break;
+		case Abillity::Spark:
+			Kirby::GetMainPlayer()->Death();
+			SetMainPlayer(Kirby::GetMainPlayer()->GetLevel()->CreateActor<SparkKirby>());
 			break;
 		default:
 			break;

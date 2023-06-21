@@ -17,6 +17,7 @@
 #include "BurningKirby.h"
 #include "Portal.h"
 #include "FadeObject.h"
+#include "SparkKirby.h"
 
 // Kirby* MainHubLevel::LevelPlayer = nullptr;
 
@@ -101,7 +102,7 @@ void MainHubLevel::Update(float _Delta)
 	{
 		float4 PrevPos = Kirby::GetMainPlayer()->GetPos();
 		Kirby::GetMainPlayer()->Death();
-		Kirby::SetMainPlayer(CreateActor<BurningKirby>());
+		Kirby::SetMainPlayer(CreateActor<SparkKirby>());
 		Kirby::GetMainPlayer()->SetPos(PrevPos);
 		Kirby::GetMainPlayer()->SetGroundTexture("MainHupDebug.bmp");
 	}

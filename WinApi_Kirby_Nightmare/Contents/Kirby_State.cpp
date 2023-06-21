@@ -818,6 +818,10 @@ void Kirby::SwallowUpdate(float _Delta)
 		{
 			ChangeKirby(Abillity::Burning);
 		}
+		else if (Abillity::Spark == ChangeAbillity)
+		{
+			ChangeKirby(Abillity::Spark);
+		}
 		ChangeState(KirbyState::Idle);
 	}
 }

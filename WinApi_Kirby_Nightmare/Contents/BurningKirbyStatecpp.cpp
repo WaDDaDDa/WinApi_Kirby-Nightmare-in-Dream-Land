@@ -11,8 +11,8 @@ void BurningKirby::DamageStart()
 	//GetMainPlayer()->SetPos(PrevPos);
 	//GetMainPlayer()->SetGroundTexture(GetGroundTexture());
 	ChangeKirby(Abillity::Normal);
-	GetMainPlayer()->DirCheck();
-	GetMainPlayer()->ChangeState(KirbyState::Damage);
+	Kirby::GetMainPlayer()->DirCheck();
+	Kirby::GetMainPlayer()->GetMainPlayer()->ChangeState(KirbyState::Damage);
 	return;
 }
 

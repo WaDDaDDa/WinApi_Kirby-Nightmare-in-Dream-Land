@@ -41,6 +41,7 @@ class GameEngineRenderer;
 class Kirby : public GravityActor
 {
     friend class BurningKirby;
+    friend class SparkKirby;
 private:
     static Kirby* MainPlayer;
 

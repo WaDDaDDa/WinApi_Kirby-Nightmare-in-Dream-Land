@@ -5,9 +5,6 @@
     <ClInclude Include="MainHubLevel.h">
       <Filter>Level</Filter>
     </ClInclude>
-    <ClInclude Include="Kirby.h">
-      <Filter>Global</Filter>
-    </ClInclude>
     <ClInclude Include="ContentsEnum.h">
       <Filter>Global</Filter>
     </ClInclude>
@@ -61,14 +58,17 @@
     <ClInclude Include="FadeObject.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="Kirby.h">
+      <Filter>Kirby</Filter>
+    </ClInclude>
+    <ClInclude Include="SparkKirby.h">
+      <Filter>Kirby</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainHub.cpp" />
     <ClCompile Include="MainHubLevel.cpp">
       <Filter>Level</Filter>
-    </ClCompile>
-    <ClCompile Include="Kirby.cpp">
-      <Filter>Global</Filter>
     </ClCompile>
     <ClCompile Include="Stage.cpp">
       <Filter>Global</Filter>
@@ -81,9 +81,6 @@
     </ClCompile>
     <ClCompile Include="TitleLevel.cpp">
       <Filter>Level</Filter>
-    </ClCompile>
-    <ClCompile Include="Kirby_State.cpp">
-      <Filter>Global</Filter>
     </ClCompile>
     <ClCompile Include="GravityActor.cpp" />
     <ClCompile Include="Monster.cpp">
@@ -134,6 +131,18 @@
     </ClCompile>
     <ClCompile Include="FadeObject.cpp">
       <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="Kirby_State.cpp">
+      <Filter>Kirby</Filter>
+    </ClCompile>
+    <ClCompile Include="Kirby.cpp">
+      <Filter>Kirby</Filter>
+    </ClCompile>
+    <ClCompile Include="SparkKirby.cpp">
+      <Filter>Kirby</Filter>
+    </ClCompile>
+    <ClCompile Include="SparkKirbyState.cpp">
+      <Filter>Kirby</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
