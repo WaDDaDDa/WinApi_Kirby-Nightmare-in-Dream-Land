@@ -72,6 +72,9 @@ public:
 
 	void SetAngle(float _Angle);
 
+	void SetAlpha(unsigned char _Alpha);
+
+
 protected:
 	void Start() override;
 
@@ -98,6 +101,7 @@ private:
 	// 이미지 배율
 	float ScaleRatio = 1.0f;
 	float Angle = 0.0f;
+	unsigned char Alpha = 255;
 
 	void Render(float _DeltaTime);
 

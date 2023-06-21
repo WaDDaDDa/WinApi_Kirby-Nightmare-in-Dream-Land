@@ -16,6 +16,7 @@
 #include "WaddleDee.h"
 #include "BurningKirby.h"
 #include "Portal.h"
+#include "FadeObject.h"
 
 // Kirby* MainHubLevel::LevelPlayer = nullptr;
 
@@ -180,6 +181,9 @@ void MainHubLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	GetMainCamera()->SetPos(Kirby::GetMainPlayer()->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
 	Kirby::GetMainPlayer()->SetGroundTexture("MainHupDebug.bmp");
 	BGMPlayer = GameEngineSound::SoundPlay("04Vegetable_Valley.mp3");
+
+	FadeObject* FObject = CreateActor<FadeObject>();
+	FObject->FadeIn();
 }
 
 void MainHubLevel::LevelEnd(GameEngineLevel* _NextLevel)

@@ -58,6 +58,9 @@
     <ClInclude Include="SparkMonster.h">
       <Filter>Monster</Filter>
     </ClInclude>
+    <ClInclude Include="FadeObject.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainHub.cpp" />
@@ -128,6 +131,9 @@
     </ClCompile>
     <ClCompile Include="SparkMonsterState.cpp">
       <Filter>Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeObject.cpp">
+      <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

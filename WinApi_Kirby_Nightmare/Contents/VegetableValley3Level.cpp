@@ -18,6 +18,7 @@
 #include "Portal.h"
 #include "MainHubLevel.h"
 #include "BurningMonster.h"
+#include "FadeObject.h"
 
 VegetableValley3Level::VegetableValley3Level()
 {
@@ -133,6 +134,8 @@ void VegetableValley3Level::LevelStart(GameEngineLevel* _PrevLevel)
 
 	GetMainCamera()->SetPos(Kirby::GetMainPlayer()->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
 	BGMPlayer = GameEngineSound::SoundPlay("04Vegetable_Valley.mp3");
+	FadeObject* FObject = CreateActor<FadeObject>();
+	FObject->FadeIn();
 
 	// 몬스터 배치
 	{

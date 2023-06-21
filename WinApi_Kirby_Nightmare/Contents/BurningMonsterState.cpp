@@ -13,22 +13,22 @@ void BurningMonster::IdleStart()
 void BurningMonster::IdleUpdate(float _Delta)
 {
 	GroundCheck(_Delta);
-	if (GetLiveTime() >= 1.0f)
+	if (GetLiveTime() >= 2.0f)
 	{
-		int Value = GameEngineRandom::MainRandom.RandomInt(0, 1);
+		ChangeState(BurningMonsterState::Walk);
+	}
 
-		switch (Value)
-		{
-		case 0:
-			ChangeState(BurningMonsterState::Walk);
-			return;
-		case 1:
-			ChangeState(BurningMonsterState::AttackStart);
-			return;
-		default:
-			break;
-		}
-
+	int Value = GameEngineRandom::MainRandom.RandomInt(0, 1);
+	float Posi = Kirby::GetMainPlayer()->GetPos().X - GetPos().X;
+	if (Posi <= 0 && BurningMonsterDir::Left == Dir)
+	{
+		ChangeState(BurningMonsterState::AttackStart);
+		return;
+	}
+	if (Posi >= 0 && BurningMonsterDir::Right == Dir)
+	{
+		ChangeState(BurningMonsterState::AttackStart);
+		return;
 	}
 }
 
@@ -43,7 +43,7 @@ void BurningMonster::WalkUpdate(float _Delta)
 	GroundCheck(_Delta);
 	Movement(_Delta);
 
-	if (GetLiveTime() >= 1.0f)
+	if (GetLiveTime() >= 2.0f)
 	{
 		ChangeState(BurningMonsterState::Idle);
 		return;
@@ -187,25 +187,31 @@ void BurningMonster::AttackStartUpdate(float _Delta)
 {
 	if (0.5f <= GetLiveTime())
 	{
-		int Value = GameEngineRandom::MainRandom.RandomInt(0, 1);
+		int Value = 1;
 		float Posi = Kirby::GetMainPlayer()->GetPos().X - GetPos().X;
-		if (Posi <= 0 && BurningMonsterDir::Left != Dir)
+		if (Posi <= 0 && BurningMonsterDir::Left == Dir)
 		{
-			ChangeState(BurningMonsterState::Attack1);
-			return;
+			Value = 2;
+			if (Posi >= -AttRange)
+			{
+				Value = 1;
+			}
 		}
-		if (Posi >= 0 && BurningMonsterDir::Right != Dir)
+		else if (Posi >= 0 && BurningMonsterDir::Right == Dir)
 		{
-			ChangeState(BurningMonsterState::Attack1);
-			return;
+			Value = 2;
+			if (Posi <= AttRange)
+			{
+				Value = 1;
+			}
 		}
 
 		switch (Value)
 		{
-		case 0:
+		case 1:
 			ChangeState(BurningMonsterState::Attack1);
 			return;
-		case 1:
+		case 2:
 			ChangeState(BurningMonsterState::Attack2);
 			return;
 		default:

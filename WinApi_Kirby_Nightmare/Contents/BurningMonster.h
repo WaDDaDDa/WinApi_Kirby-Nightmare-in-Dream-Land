@@ -92,6 +92,7 @@ private:
     float4 MovePos = float4::ZERO;
     float4 CheckPos = float4::ZERO;
     float Speed = 200.0f;
+    float AttRange = 300.0f;
 
     void Start() override;
 
