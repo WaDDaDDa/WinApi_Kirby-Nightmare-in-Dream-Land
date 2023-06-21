@@ -20,7 +20,8 @@ void Star::Start()
 	Renderer = CreateRenderer(RenderOrder::Play);
 	{ // LeftAnimation 积己
 		Renderer->CreateAnimation("StarAttack", "Star.bmp", 0, 1, 0.2f, true);
-		Renderer->CreateAnimation("StarEffect", "StarEffects.bmp", 0, 3, 0.1f, true);
+		//Renderer->CreateAnimation("StarEffect", "StarEffects.bmp", 0, 3, 0.1f, true);
+		Renderer->CreateAnimation("StarEffect", "Effect1.bmp", 0, 6, 0.05f, true);
 	}
 	Renderer->SetTexture("Star.bmp");
 	Renderer->ChangeAnimation("StarAttack");
@@ -50,15 +51,68 @@ void Star::DirCheck()
 
 void Star::Update(float _Delta)
 {
+
 	if (0.0f == GameEngineTime::MainTimer.GetTimeScale(GetOrder()))
 	{
 		return;
 	}
 
+	StateUpdate(_Delta);
+}
+
+void Star::ChangeAnimationState(const std::string& _StateName)
+{
+	std::string AnimationName;
+
+	AnimationName += _StateName;
+
+	CurState = _StateName;
+
+	MainRenderer->ChangeAnimation(AnimationName);
+}
+
+void Star::ChangeState(StarState _State)
+{
+	if (_State != State)
+	{
+		switch (_State)
+		{
+		case StarState::Attack:
+			AttackStart();
+			break;
+		case StarState::Effect:
+			EffectStart();
+			break;
+		}
+	}
+}
+
+
+void Star::StateUpdate(float _Delta)
+{
+	switch (State)
+	{
+	case StarState::Attack:
+		return AttackUpdate(_Delta);
+	case StarState::Effect:
+		return EffectUpdate(_Delta);
+	default:
+		break;
+	}
+}
+
+
+void Star::AttackStart()
+{
+
+}
+
+void Star::AttackUpdate(float _Delta)
+{
 	AddPos(Dir * _Delta * Speed);
 
 	// 1檬第 单胶
-	if (1.0f < GetLiveTime())
+	if (2.0f < GetLiveTime())
 	{
 		if (nullptr != Renderer)
 		{
@@ -79,9 +133,24 @@ void Star::Update(float _Delta)
 			GameEngineCollision* Collison = _Col[i];
 
 			GameEngineActor* Actor = Collison->GetActor();
-			Renderer->ChangeAnimation("StarEffect");
+			ChangeState(StarState::Effect);
 			Dir = float4::ZERO;
 		}
 	}
+}
 
+void Star::EffectStart()
+{
+
+}
+
+void Star::EffectUpdate(float _Delta)
+{
+	if (0.5f < GetLiveTime())
+	{
+		if (nullptr != Renderer)
+		{
+			Death();
+		}
+	}
 }

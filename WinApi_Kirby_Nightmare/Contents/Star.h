@@ -1,6 +1,14 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
 #include "Kirby.h"
+#include <string>
+
+enum class StarState
+{
+	Attack,
+	Effect,
+	Max,
+};
 
 class Star : public GameEngineActor
 {
@@ -37,6 +45,16 @@ public:
 
 	void DirCheck();
 
+	void ChangeState(StarState _State);
+
+	void StateUpdate(float _Delta);
+
+	void AttackStart();
+	void AttackUpdate(float _Delta);
+
+	void EffectStart();
+	void EffectUpdate(float _Delta);
+
 protected:
 
 private:
@@ -48,6 +66,9 @@ private:
 	Kirby* MainKirby = nullptr;
 	float4 Dir = float4::ZERO;
 	float Speed = 600.0f;
+	std::string CurState = "";
+
+	StarState CurState = StarState::Max;
 
 	void Start() override;
 	void Update(float _Delta) override;
