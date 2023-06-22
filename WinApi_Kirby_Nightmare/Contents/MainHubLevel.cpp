@@ -124,8 +124,8 @@ void MainHubLevel::Update(float _Delta)
 				Kirby::GetMainPlayer()->SetGroundTexture("Level1_Debug.bmp");
 				// 포탈입장전 현재위치를 저장
 				Kirby::GetMainPlayer()->SetPrevPos(Kirby::GetMainPlayer()->GetPos());
-				// stage1의 시작위치
-				Kirby::GetMainPlayer()->SetPos(Stage1StartPos);
+				// stage1의 시작위치 이거하면 Fade순간에 위치가 변경되는것이 보여서 이상함.
+				// Kirby::GetMainPlayer()->SetPos(Stage1StartPos);
 				BGMPlayer.Stop();
 				return;
 			}

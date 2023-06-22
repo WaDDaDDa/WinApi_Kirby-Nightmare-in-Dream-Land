@@ -3,6 +3,7 @@
 #include <GameEngineCore/ResourcesManager.h>
 #include "ContentsEnum.h"
 #include <GameEngineCore/GameEngineLevel.h>
+#include <GameEnginePlatform/GameEngineWindowTexture.h>
 
 Star::Star()
 {
@@ -125,6 +126,28 @@ void Star::AttackUpdate(float _Delta)
 		if (nullptr != Renderer)
 		{
 			ChangeState(StarState::Effect);
+		}
+	}
+
+	if (Dir == float4::LEFT)
+	{
+		float4 CheckPos = float4{ -40.0f, 0.0f };
+		// º®ÆÇÁ¤
+		unsigned int WallColor = Kirby::GetMainPlayer()->GetGroundTexture()->GetColor(RGB(255, 255, 255), GetPos() + CheckPos);
+		if (WallColor != RGB(255, 255, 255))
+		{
+			ChangeState(StarState::Effect);
+			return;
+		}
+	}
+	else if (Dir == float4::RIGHT)
+	{
+		float4 CheckPos = float4{ 40.0f, 0.0f };
+		unsigned int WallColor = Kirby::GetMainPlayer()->GetGroundTexture()->GetColor(RGB(255, 255, 255), GetPos() + CheckPos);
+		if (WallColor != RGB(255, 255, 255))
+		{
+			ChangeState(StarState::Effect);
+			return;
 		}
 	}
 
