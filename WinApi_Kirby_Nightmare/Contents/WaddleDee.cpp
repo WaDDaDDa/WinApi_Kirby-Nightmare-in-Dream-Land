@@ -43,14 +43,16 @@ void WaddleDee::Start()
 		MainRenderer->CreateAnimation("WaddleDeeLeft_Walk", "WaddleDeeLeft.bmp", 1, 4, 0.3f, true);
 		MainRenderer->CreateAnimation("WaddleDeeLeft_HitReady", "WaddleDeeLeft.bmp", 5, 5, 0.1f, true);
 		MainRenderer->CreateAnimation("WaddleDeeLeft_Hit", "WaddleDeeLeft.bmp", 5, 5, 0.1f, true);
-		MainRenderer->CreateAnimation("WaddleDeeLeft_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
+		//MainRenderer->CreateAnimation("WaddleDeeLeft_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
+		MainRenderer->CreateAnimation("WaddleDeeLeft_Effect", "Effect1.bmp", 0, 6, 0.1f, true);
 		MainRenderer->CreateAnimation("WaddleDeeLeft_Damage", "WaddleDeeLeft.bmp", 5, 5, 0.1f, true);
 
 		MainRenderer->CreateAnimation("WaddleDeeRight_Idle", "WaddleDeeRight.bmp", 2, 2, 0.1f, true);
 		MainRenderer->CreateAnimation("WaddleDeeRight_Walk", "WaddleDeeRight.bmp", 1, 4, 0.3f, true);
 		MainRenderer->CreateAnimation("WaddleDeeRight_HitReady", "WaddleDeeRight.bmp", 5, 5, 0.1f, true);
 		MainRenderer->CreateAnimation("WaddleDeeRight_Hit", "WaddleDeeRight.bmp", 5, 5, 0.1f, true);
-		MainRenderer->CreateAnimation("WaddleDeeRight_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
+		//MainRenderer->CreateAnimation("WaddleDeeRight_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
+		MainRenderer->CreateAnimation("WaddleDeeRight_Effect", "Effect1.bmp", 0, 6, 0.1f, true);
 		MainRenderer->CreateAnimation("WaddleDeeRight_Damage", "WaddleDeeRight.bmp", 5, 5, 0.1f, true);
 	}
 

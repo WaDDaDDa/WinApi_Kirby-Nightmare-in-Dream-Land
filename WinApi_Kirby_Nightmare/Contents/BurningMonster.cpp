@@ -48,7 +48,8 @@ void BurningMonster::Start()
 		MainRenderer->CreateAnimation("BurningMonsterLeft_Walk", "BurningMonsterLeft.bmp", 1, 5, 0.3f, true);
 		MainRenderer->CreateAnimation("BurningMonsterLeft_HitReady", "BurningMonsterLeft.bmp", 0, 0, 0.1f, false);
 		MainRenderer->CreateAnimation("BurningMonsterLeft_Hit", "BurningMonsterLeft.bmp", 0, 0, 0.1f, false);
-		MainRenderer->CreateAnimation("BurningMonsterLeft_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
+		//MainRenderer->CreateAnimation("BurningMonsterLeft_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
+		MainRenderer->CreateAnimation("BurningMonsterLeft_Effect", "Effect1.bmp", 0, 6, 0.1f, true);
 		MainRenderer->CreateAnimation("BurningMonsterLeft_Damage", "BurningMonsterLeft.bmp", 0, 0, 0.1f, false);
 		MainRenderer->CreateAnimation("BurningMonsterLeft_AttackStart", "BurningMonsterLeft.bmp", 6, 6, 0.1f, false);
 		MainRenderer->CreateAnimation("BurningMonsterLeft_Attack1", "BurningMonsterLeft.bmp", 7, 8, 0.1f, true);
@@ -58,7 +59,8 @@ void BurningMonster::Start()
 		MainRenderer->CreateAnimation("BurningMonsterRight_Walk", "BurningMonsterRight.bmp", 1, 5, 0.3f, true);
 		MainRenderer->CreateAnimation("BurningMonsterRight_HitReady", "BurningMonsterRight.bmp", 0, 0, 0.1f, false);
 		MainRenderer->CreateAnimation("BurningMonsterRight_Hit", "BurningMonsterRight.bmp", 0, 0, 0.1f, false);
-		MainRenderer->CreateAnimation("BurningMonsterRight_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
+		//MainRenderer->CreateAnimation("BurningMonsterRight_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
+		MainRenderer->CreateAnimation("BurningMonsterRight_Effect", "Effect1.bmp", 0, 6, 0.1f, true);
 		MainRenderer->CreateAnimation("BurningMonsterRight_Damage", "BurningMonsterRight.bmp", 0, 0, 0.1f, false);
 		MainRenderer->CreateAnimation("BurningMonsterRight_AttackStart", "BurningMonsterRight.bmp", 6, 6, 0.1f, false);
 		MainRenderer->CreateAnimation("BurningMonsterRight_Attack1", "BurningMonsterRight.bmp", 7, 8, 0.1f, true);

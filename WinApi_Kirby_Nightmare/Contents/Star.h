@@ -33,15 +33,18 @@ public:
 		Speed = _Speed;
 	}
 
-	void SetKirby(Kirby* _Kirby)
-	{
-		MainKirby = _Kirby;
-	}
+	//void SetKirby(Kirby* _Kirby)
+	//{
+	//	MainKirby = _Kirby;
+	//}
 
-	Kirby* GetKirby()
-	{
-		return MainKirby;
-	}
+	//Kirby* GetKirby()
+	//{
+	//	return MainKirby;
+	//}
+
+
+	void ChangeAnimationState(const std::string& _StateName);
 
 	void DirCheck();
 
@@ -63,12 +66,12 @@ private:
 
 	float4 RightAttackPos = float4{ 40.0f, -40.0f };
 	float4 LeftAttackPos = float4{ -40.0f, -40.0f };
-	Kirby* MainKirby = nullptr;
+	//Kirby* MainKirby = nullptr;
 	float4 Dir = float4::ZERO;
 	float Speed = 600.0f;
 	std::string CurState = "";
 
-	StarState CurState = StarState::Max;
+	StarState State = StarState::Max;
 
 	void Start() override;
 	void Update(float _Delta) override;

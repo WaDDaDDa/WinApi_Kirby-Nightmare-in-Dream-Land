@@ -20,8 +20,8 @@ void Star::Start()
 	Renderer = CreateRenderer(RenderOrder::Play);
 	{ // LeftAnimation 积己
 		Renderer->CreateAnimation("StarAttack", "Star.bmp", 0, 1, 0.2f, true);
-		//Renderer->CreateAnimation("StarEffect", "StarEffects.bmp", 0, 3, 0.1f, true);
-		Renderer->CreateAnimation("StarEffect", "Effect1.bmp", 0, 6, 0.05f, true);
+		Renderer->CreateAnimation("StarEffect", "StarEffects.bmp", 0, 3, 0.1f, true);
+		//Renderer->CreateAnimation("StarEffect", "Effect1.bmp", 0, 6, 0.1f, true);
 	}
 	Renderer->SetTexture("Star.bmp");
 	Renderer->ChangeAnimation("StarAttack");
@@ -32,17 +32,21 @@ void Star::Start()
 	AttackCollision = CreateCollision(CollisionOrder::PlayerAttack);
 	AttackCollision->SetCollisionScale(AttackCollisionScale);
 	AttackCollision->SetCollisionType(CollisionType::CirCle);
+
+	SetPos(Kirby::GetMainPlayer()->GetPos());
+	DirCheck();
+	ChangeState(StarState::Attack);
 }
 
 
 void Star::DirCheck()
 {
-	if (KirbyDir::Left == MainKirby->GetDir())
+	if (KirbyDir::Left == Kirby::GetMainPlayer()->GetDir())
 	{
 		AddPos(LeftAttackPos);
 		Dir = float4::LEFT;
 	}
-	else if (KirbyDir::Right == MainKirby->GetDir())
+	else if (KirbyDir::Right == Kirby::GetMainPlayer()->GetDir())
 	{
 		AddPos(RightAttackPos);
 		Dir = float4::RIGHT;
@@ -68,7 +72,7 @@ void Star::ChangeAnimationState(const std::string& _StateName)
 
 	CurState = _StateName;
 
-	MainRenderer->ChangeAnimation(AnimationName);
+	Renderer->ChangeAnimation(AnimationName);
 }
 
 void Star::ChangeState(StarState _State)
@@ -85,6 +89,10 @@ void Star::ChangeState(StarState _State)
 			break;
 		}
 	}
+
+	ResetLiveTime();
+
+	State = _State;
 }
 
 
@@ -104,7 +112,7 @@ void Star::StateUpdate(float _Delta)
 
 void Star::AttackStart()
 {
-
+	ChangeAnimationState("StarAttack");
 }
 
 void Star::AttackUpdate(float _Delta)
@@ -112,11 +120,11 @@ void Star::AttackUpdate(float _Delta)
 	AddPos(Dir * _Delta * Speed);
 
 	// 1檬第 单胶
-	if (2.0f < GetLiveTime())
+	if (1.5f < GetLiveTime())
 	{
 		if (nullptr != Renderer)
 		{
-			Death();
+			ChangeState(StarState::Effect);
 		}
 	}
 
@@ -133,15 +141,15 @@ void Star::AttackUpdate(float _Delta)
 			GameEngineCollision* Collison = _Col[i];
 
 			GameEngineActor* Actor = Collison->GetActor();
+			// Dir = float4::ZERO;
 			ChangeState(StarState::Effect);
-			Dir = float4::ZERO;
 		}
 	}
 }
 
 void Star::EffectStart()
 {
-
+	ChangeAnimationState("StarEffect");
 }
 
 void Star::EffectUpdate(float _Delta)

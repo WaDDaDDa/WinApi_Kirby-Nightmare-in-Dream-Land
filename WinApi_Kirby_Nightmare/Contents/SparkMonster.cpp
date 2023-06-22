@@ -45,7 +45,8 @@ void SparkMonster::Start()
 		MainRenderer->CreateAnimation("SparkMonsterLeft_Walk", "SparkMonsterLeft.bmp", 1, 5, 0.3f, true);
 		MainRenderer->CreateAnimation("SparkMonsterLeft_HitReady", "SparkMonsterLeft.bmp", 4, 4, 0.1f, false);
 		MainRenderer->CreateAnimation("SparkMonsterLeft_Hit", "SparkMonsterLeft.bmp", 4, 4, 0.1f, false);
-		MainRenderer->CreateAnimation("SparkMonsterLeft_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
+		//MainRenderer->CreateAnimation("SparkMonsterLeft_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
+		MainRenderer->CreateAnimation("SparkMonsterLeft_Effect", "Effect1.bmp", 0, 6, 0.1f, true);
 		MainRenderer->CreateAnimation("SparkMonsterLeft_Damage", "SparkMonsterLeft.bmp", 4, 4, 0.1f, false);
 		MainRenderer->CreateAnimation("SparkMonsterLeft_AttackStart", "SparkMonsterLeft.bmp", 6, 6, 0.1f, false);
 		MainRenderer->CreateAnimation("SparkMonsterLeft_Attack", "SparkMonsterLeft.bmp", 7, 8, 0.1f, true);
@@ -54,7 +55,8 @@ void SparkMonster::Start()
 		MainRenderer->CreateAnimation("SparkMonsterRight_Walk", "SparkMonsterRight.bmp", 1, 5, 0.3f, true);
 		MainRenderer->CreateAnimation("SparkMonsterRight_HitReady", "SparkMonsterRight.bmp", 4, 4, 0.1f, false);
 		MainRenderer->CreateAnimation("SparkMonsterRight_Hit", "SparkMonsterRight.bmp", 4, 4, 0.1f, false);
-		MainRenderer->CreateAnimation("SparkMonsterRight_Effect", "DamageEffects.bmp", 0, 2, 0.1f, false);
+		//MainRenderer->CreateAnimation("SparkMonsterRight_Effect", "DamageEffects.bmp", 0, 2, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkMonsterRight_Effect", "Effect1.bmp", 0, 6, 0.1f, true);
 		MainRenderer->CreateAnimation("SparkMonsterRight_Damage", "SparkMonsterRight.bmp", 4, 4, 0.1f, false);
 		MainRenderer->CreateAnimation("SparkMonsterRight_AttackStart", "SparkMonsterRight.bmp", 6, 6, 0.1f, false);
 		MainRenderer->CreateAnimation("SparkMonsterRight_Attack", "SparkMonsterRight.bmp", 7, 8, 0.1f, true);

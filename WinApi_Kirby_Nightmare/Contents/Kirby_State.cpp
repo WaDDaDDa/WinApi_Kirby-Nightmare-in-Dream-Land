@@ -631,9 +631,6 @@ void Kirby::StarOutUpdate(float _Delta)
 	if (GetLiveTime() >= 0.25f)
 	{
 		Star* StarAttack = GetLevel()->CreateActor<Star>();
-		StarAttack->SetPos(GetPos());
-		StarAttack->SetKirby(this);
-		StarAttack->DirCheck();
 		ChangeState(KirbyState::Idle);
 		return;
 	}
