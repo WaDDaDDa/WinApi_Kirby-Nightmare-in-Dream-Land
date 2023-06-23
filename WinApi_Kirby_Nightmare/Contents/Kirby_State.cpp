@@ -345,6 +345,13 @@ void Kirby::JumpTurnUpdate(float _Delta)
 		return;
 	}
 
+	if (true == GameEngineInput::IsDown('X'))
+	{
+		GravityReset();
+		ChangeState(KirbyState::AttackStart);
+		return;
+	}
+
 	if (true == GameEngineInput::IsDown('F'))
 	{
 		ChangeState(KirbyState::BreathIn);
@@ -823,7 +830,7 @@ void Kirby::BreathOutUpdate(float _Delta)
 	DirCheck();
 	GroundCheck(_Delta);
 	Movement(_Delta);
-	if (GetLiveTime() >= 0.1f)
+	if (GetLiveTime() >= 0.2f)
 	{
 		ChangeState(KirbyState::Idle);
 		return;

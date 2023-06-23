@@ -18,6 +18,7 @@
 #include "Portal.h"
 #include "FadeObject.h"
 #include "SparkKirby.h"
+#include "SwordKirby.h"
 
 // Kirby* MainHubLevel::LevelPlayer = nullptr;
 
@@ -100,7 +101,7 @@ void MainHubLevel::Update(float _Delta)
 
 	if (true == GameEngineInput::IsDown('Q'))
 	{
-		Kirby::GetMainPlayer()->ChangeKirby(Abillity::Spark);
+		Kirby::GetMainPlayer()->ChangeKirby(Abillity::Sword);
 	}
 
 	// Æ÷Å» ÀÌµ¿

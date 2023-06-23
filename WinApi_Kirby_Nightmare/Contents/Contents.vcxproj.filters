@@ -64,6 +64,9 @@
     <ClInclude Include="SparkKirby.h">
       <Filter>Kirby</Filter>
     </ClInclude>
+    <ClInclude Include="SwordKirby.h">
+      <Filter>Kirby</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainHub.cpp" />
@@ -142,6 +145,12 @@
       <Filter>Kirby</Filter>
     </ClCompile>
     <ClCompile Include="SparkKirbyState.cpp">
+      <Filter>Kirby</Filter>
+    </ClCompile>
+    <ClCompile Include="SwordKirbyState.cpp">
+      <Filter>Kirby</Filter>
+    </ClCompile>
+    <ClCompile Include="SwordKirby.cpp">
       <Filter>Kirby</Filter>
     </ClCompile>
   </ItemGroup>

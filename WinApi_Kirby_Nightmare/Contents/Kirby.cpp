@@ -17,6 +17,7 @@
 #include "MainHubLevel.h"
 #include "BurningKirby.h"
 #include "SparkKirby.h"
+#include "SwordKirby.h"
 
 Kirby* Kirby::MainPlayer = nullptr;
 
@@ -632,6 +633,10 @@ void Kirby::ChangeKirby(Abillity _Kirby)
 		case Abillity::Spark:
 			Kirby::GetMainPlayer()->Death();
 			SetMainPlayer(Kirby::GetMainPlayer()->GetLevel()->CreateActor<SparkKirby>());
+			break;
+		case Abillity::Sword:
+			Kirby::GetMainPlayer()->Death();
+			SetMainPlayer(Kirby::GetMainPlayer()->GetLevel()->CreateActor<SwordKirby>());
 			break;
 		default:
 			break;
