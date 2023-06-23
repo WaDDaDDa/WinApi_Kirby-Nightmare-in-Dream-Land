@@ -16,6 +16,8 @@ enum class KirbyState
     BreathIn,
     AttackStart,
     Attack,
+    JumpAttackStart,
+    JumpAttack,
     Charge,
     StarIn,
     StarOut,
@@ -124,6 +126,8 @@ protected:
     void BreathInStart();
     virtual void AttackStartStart();
     virtual void AttackStart();
+    virtual void JumpAttackStartStart();
+    virtual void JumpAttackStart();
     void ChargeStart();
     void StarInStart();
     void StarOutStart();
@@ -151,6 +155,8 @@ protected:
     void BreathInUpdate(float _Delta);
     virtual void AttackStartUpdate(float _Delta);
     virtual void AttackUpdate(float _Delta);
+    virtual void JumpAttackStartUpdate(float _Delta);
+    virtual void JumpAttackUpdate(float _Delta);
     void ChargeUpdate(float _Delta);
     void StarInUpdate(float _Delta);
     void StarOutUpdate(float _Delta);
@@ -176,18 +182,24 @@ protected:
     virtual void ChangeAnimationState(const std::string& _StateName);
 
     GameEngineCollision* BodyCollision = nullptr;
+    GameEngineCollision* TackleCollision = nullptr;
+
+private:
     GameEngineCollision* EatCollision = nullptr;
     GameEngineCollision* AttackCollision = nullptr;
 
-private:
     float4 MovePos = float4::ZERO;
     float4 CheckPos = float4::ZERO;
     float4 LeftCheckPos = float4{ -30.0f, -40.0f };
     float4 RightCheckPos = float4{ 30.0f, -40.0f };
     float4 BodyCollisionPos = float4{ 0 , -40 };
     float4 BodyCollisionScale = float4{ 80, 80 };
+
     float4 AttackCollisionPos = float4{ 100 , -50 };
     float4 AttackCollisionScale = float4{ 100,80 };
+
+    float4 TackleCollisionPos = float4{ 50 , 0 };
+    float4 TackleCollisionScale = float4{ 80,40 };
 
     Abillity CurAbillity = Abillity::Normal;
     Abillity ChangeAbillity = Abillity::Normal;

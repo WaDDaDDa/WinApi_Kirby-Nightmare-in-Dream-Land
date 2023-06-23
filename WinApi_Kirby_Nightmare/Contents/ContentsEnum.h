@@ -33,6 +33,7 @@ enum class CollisionOrder
 	SparkAttack,    //커비의 전기공격
 	MonsterFireAttack, // 몬스터의 화염 공격
 	MonsterSparkAttack, // 몬스터의 전기 공격
+	SwordAttack,
 };
 
 enum class Abillity

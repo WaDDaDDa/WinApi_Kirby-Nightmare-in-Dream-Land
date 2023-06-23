@@ -105,6 +105,8 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Blank.bmp"), 4, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("SparkEffect.bmp"), 4, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Effect1.bmp"), 7, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("LeftSwordEffect.bmp"), 8, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("RightSwordEffect.bmp"), 8, 1);
 
 		}
 	}
@@ -112,6 +114,7 @@ void Kirby::Start()
 	MainRenderer = CreateRenderer(RenderOrder::Player); 
 	RightChargeRenderer = CreateRenderer(RenderOrder::Effect);
 	LeftChargeRenderer = CreateRenderer(RenderOrder::Effect);
+
 	{ // LeftAnimation 생성
 		MainRenderer->CreateAnimation("Left_Idle", "KirbyLeft_Idel.bmp", 0, 3, 0.2f, true);
 		MainRenderer->FindAnimation  ("Left_Idle")->Inters[2] = 1.0f;
@@ -130,6 +133,8 @@ void Kirby::Start()
 		MainRenderer->FindAnimation("Left_BreathIn")->Inters[4] = 0.1f;
 		MainRenderer->CreateAnimation("Left_AttackStart", "KirbyLeft_Attack.bmp", 0, 2, 0.1f, true);
 		MainRenderer->CreateAnimation("Left_Attack", "KirbyLeft_Attack.bmp", 3, 4, 0.05f, true);
+		MainRenderer->CreateAnimation("Left_JumpAttackStart", "KirbyLeft_Attack.bmp", 0, 2, 0.1f, true);
+		MainRenderer->CreateAnimation("Left_JumpAttack", "KirbyLeft_Attack.bmp", 3, 4, 0.05f, true);
 		MainRenderer->CreateAnimation("Left_Charge", "KirbyLeft_Attack.bmp", 3, 4, 0.05f, true);
 		MainRenderer->CreateAnimation("Left_StarIn", "KirbyLeft_StarIn.bmp", 0, 5, 0.05f, true);
 		MainRenderer->CreateAnimation("Left_StarOut", "KirbyLeft_StarOut.bmp", 0, 4, 0.05f, true);
@@ -164,6 +169,8 @@ void Kirby::Start()
 		MainRenderer->FindAnimation("Right_BreathIn")->Inters[4] = 0.1f;
 		MainRenderer->CreateAnimation("Right_AttackStart", "KirbyRight_Attack.bmp", 0, 2, 0.1f, true);
 		MainRenderer->CreateAnimation("Right_Attack", "KirbyRight_Attack.bmp", 3, 4, 0.05f, true);
+		MainRenderer->CreateAnimation("Right_JumpAttackStart", "KirbyRight_Attack.bmp", 0, 2, 0.1f, true);
+		MainRenderer->CreateAnimation("Right_JumpAttack", "KirbyRight_Attack.bmp", 3, 4, 0.05f, true);
 		MainRenderer->CreateAnimation("Right_Charge", "KirbyRight_Attack.bmp", 3, 4, 0.05f, true);
 		MainRenderer->CreateAnimation("Right_StarIn", "KirbyRight_StarIn.bmp", 0, 5, 0.05f, true);
 		MainRenderer->CreateAnimation("Right_StarOut", "KirbyRight_StarOut.bmp", 0, 4, 0.05f, true);
@@ -203,6 +210,12 @@ void Kirby::Start()
 		AttackCollision->SetCollisionPos(AttackCollisionPos);
 		AttackCollision->SetCollisionType(CollisionType::Rect);
 		AttackCollision->Off();
+
+		TackleCollision = CreateCollision(CollisionOrder::PlayerAttack);
+		TackleCollision->SetCollisionScale(TackleCollisionScale);
+		TackleCollision->SetCollisionPos(TackleCollisionPos);
+		TackleCollision->SetCollisionType(CollisionType::Rect);
+		TackleCollision->Off();
 	}
 	MainRenderer->SetTexture("Blank.bmp");
 	MainRenderer->SetScaleRatio(4.0f);
@@ -218,6 +231,11 @@ void Kirby::Start()
 	
 	// PlayerPos 는 static 멤버 변수 선언후 초기 위치를 선언하고 시작할수있을듯.
 	ChangeState(KirbyState::Idle);
+}
+
+void Kirby::LevelStart()
+{
+	Kirby::GetMainPlayer()->SetMainPlayer(this);
 }
 
 void Kirby::Update(float _Delta)
@@ -368,6 +386,10 @@ void Kirby::StateUpdate(float _Delta)
 		return AttackStartUpdate(_Delta);
 	case KirbyState::Attack:
 		return AttackUpdate(_Delta);
+	case KirbyState::JumpAttackStart:
+		return JumpAttackStartUpdate(_Delta);
+	case KirbyState::JumpAttack:
+		return JumpAttackUpdate(_Delta);
 	case KirbyState::Charge:
 		return ChargeUpdate(_Delta);
 	case KirbyState::StarIn:
@@ -443,6 +465,12 @@ void Kirby::ChangeState(KirbyState _State)
 			break;
 		case KirbyState::Attack:
 			AttackStart();
+			break;
+		case KirbyState::JumpAttackStart:
+			JumpAttackStartStart();
+			break;
+		case KirbyState::JumpAttack:
+			JumpAttackStart();
 			break;
 		case KirbyState::Charge:
 			ChargeStart();
@@ -606,11 +634,6 @@ void Kirby::CameraFocus(float _Delta)
 		}
 		GetLevel()->GetMainCamera()->AddPos(float4::DOWN * 2.0f);
 	}
-}
-
-void Kirby::LevelStart()
-{
-	Kirby::GetMainPlayer()->SetMainPlayer(this);
 }
 
 void Kirby::ChangeKirby(Abillity _Kirby)

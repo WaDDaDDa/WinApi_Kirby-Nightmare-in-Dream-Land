@@ -5,11 +5,6 @@
 
 void BurningKirby::DamageStart()
 {
-	//float4 PrevPos = GetMainPlayer()->GetPos();
-	//GetMainPlayer()->Death();
-	//SetMainPlayer(GetLevel()->CreateActor<Kirby>());
-	//GetMainPlayer()->SetPos(PrevPos);
-	//GetMainPlayer()->SetGroundTexture(GetGroundTexture());
 	ChangeKirby(Abillity::Normal);
 	Kirby::GetMainPlayer()->DirCheck();
 	Kirby::GetMainPlayer()->GetMainPlayer()->ChangeState(KirbyState::Damage);
@@ -63,6 +58,89 @@ void BurningKirby::AttackStartUpdate(float _Delta)
 }
 
 void BurningKirby::AttackUpdate(float _Delta)
+{
+
+	if (GetLiveTime() >= 1.0f)
+	{
+		AttackCollision->Off();
+		BodyCollision->On();
+		Speed /= 2;
+		ChangeState(KirbyState::Idle);
+		return;
+	}
+
+	float4 AttackSpeed = { Speed * _Delta , 0.0f };
+	if (KirbyDir::Left == Dir)
+	{
+		CheckPos = { -40.0f, -40.0f };
+		if (GetWallCheck() != RGB(255, 255, 255))
+		{
+			MovePos.X *= 0;
+			AddPos(MovePos);
+			return;
+		}
+		AddPos(-AttackSpeed);
+	}
+	else if (KirbyDir::Right == Dir)
+	{
+		CheckPos = { 40.0f, -40.0f };
+		if (GetWallCheck() != RGB(255, 255, 255))
+		{
+			MovePos.X *= 0;
+			AddPos(MovePos);
+			return;
+		}
+		AddPos(AttackSpeed);
+	}
+}
+
+void BurningKirby::JumpAttackStartStart()
+{
+	Speed *= 2;
+	AttackCollision->On();
+	BodyCollision->Off();
+	ChangeAnimationState("AttackStart");
+}
+
+void BurningKirby::JumpAttackStart()
+{
+	ChangeAnimationState("Attack");
+}
+
+void BurningKirby::JumpAttackStartUpdate(float _Delta)
+{
+	if (GetLiveTime() >= 0.1f)
+	{
+		ChangeState(KirbyState::Attack);
+		return;
+	}
+
+	float4 TackleSpeed = { 0.0f , 0.0f };
+	if (KirbyDir::Left == Dir)
+	{
+		CheckPos = { -40.0f, -40.0f };
+		if (GetWallCheck() != RGB(255, 255, 255))
+		{
+			MovePos.X *= 0;
+			AddPos(MovePos);
+			return;
+		}
+		AddPos(-TackleSpeed);
+	}
+	else if (KirbyDir::Right == Dir)
+	{
+		CheckPos = { 40.0f, -40.0f };
+		if (GetWallCheck() != RGB(255, 255, 255))
+		{
+			MovePos.X *= 0;
+			AddPos(MovePos);
+			return;
+		}
+		AddPos(TackleSpeed);
+	}
+}
+
+void BurningKirby::JumpAttackUpdate(float _Delta)
 {
 
 	if (GetLiveTime() >= 1.0f)

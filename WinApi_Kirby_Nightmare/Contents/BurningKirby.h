@@ -26,6 +26,12 @@ protected:
     void AttackStartUpdate(float _Delta) override;
     void AttackUpdate(float _Delta) override;
 
+    void JumpAttackStartStart() override;
+    void JumpAttackStart() override;
+  
+    void JumpAttackStartUpdate(float _Delta) override;
+    void JumpAttackUpdate(float _Delta) override;
+
     void DamageStart() override;
 
 private:

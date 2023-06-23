@@ -14,19 +14,7 @@ void SwordKirby::DamageStart()
 
 void SwordKirby::AttackStartStart()
 {
-	AttackCollision->On();
-	//BodyCollision->Off();
-	// 중력이 0이면 == 땅에 붙어있으면.  그외에는 공중이므로 공중공격.
-	if (float4::ZERO != Kirby::GetMainPlayer()->GetGravityVector())
-	{
-		ChangeAnimationState("AttackStart");
-		return;
-	}
-	else
-	{
-		ChangeAnimationState("JumpAttackStart");
-		return;
-	}
+	ChangeAnimationState("AttackStart");
 }
 
 void SwordKirby::AttackStartUpdate(float _Delta)
@@ -63,15 +51,18 @@ void SwordKirby::AttackStartUpdate(float _Delta)
 	}
 }
 
-void SwordKirby::JumpAttackUpdate(float _Delta)
-{
-	
-}
-
 void SwordKirby::AttackStart()
 {
-	AttackCollision->On();
-	AttRenderer->On();
+	if (KirbyDir::Left == Kirby::GetMainPlayer()->GetDir())
+	{
+		LeftAttackCollision->On();
+		LeftAttRenderer->ChangeAnimation("LeftSwordEffect");
+	}
+	else if (KirbyDir::Right == Kirby::GetMainPlayer()->GetDir())
+	{
+		RightAttackCollision->On();
+		RightAttRenderer->ChangeAnimation("RightSwordEffect");
+	}
 	ChangeAnimationState("Attack");
 }
 
@@ -79,13 +70,76 @@ void SwordKirby::AttackUpdate(float _Delta)
 {
 	GroundCheck(_Delta);
 
-	//if (true == GameEngineInput::IsUp('X'))
-	//{
-	//	AttackCollision->Off();
-	//	AttRenderer->Off();
-	//	BodyCollision->On();
-	//	ChangeState(KirbyState::Idle);
-	//	return;
-	//}
+	if (GetLiveTime() >= 0.3f)
+	{
+		RightAttackCollision->Off();
+		LeftAttackCollision->Off();
+		RightAttRenderer->ChangeAnimation("RightSwordBlank");
+		LeftAttRenderer->ChangeAnimation("LeftSwordBlank");
+		ChangeState(KirbyState::Idle);
+		return;
+	}
+}
 
+/////
+
+void SwordKirby::JumpAttackStartStart()
+{
+
+	ChangeAnimationState("JumpAttackStart");
+}
+
+void SwordKirby::JumpAttackStartUpdate(float _Delta)
+{
+	GroundCheck(_Delta);
+
+	if (Dir == KirbyDir::Left)
+	{
+		//CameraFocus();
+		CheckPos = { -40.0f, -40.0f };
+		// 벽판정
+		if (GetWallCheck() != RGB(255, 255, 255))
+		{
+			MovePos.X *= 0;
+		}
+		AddPos(MovePos);
+	}
+	else if (Dir == KirbyDir::Right)
+	{
+		//CameraFocus();
+		CheckPos = { 40.0f, -40.0f };
+
+		if (GetWallCheck() != RGB(255, 255, 255))
+		{
+			MovePos.X *= 0;
+		}
+		AddPos(MovePos);
+	}
+
+	if (GetLiveTime() >= 0.1f)
+	{
+		ChangeState(KirbyState::JumpAttack);
+		return;
+	}
+}
+
+void SwordKirby::JumpAttackStart()
+{
+	JumpAttackCollision->On();
+	BodyCollision->Off();
+
+	ChangeAnimationState("JumpAttack");
+}
+
+void SwordKirby::JumpAttackUpdate(float _Delta)
+{
+	GroundCheck(_Delta);
+
+	if (GetLiveTime() >= 0.5f)
+	{
+		JumpAttackCollision->Off();
+		BodyCollision->On();
+		ChangeState(KirbyState::Idle);
+		return;
+	}
 }

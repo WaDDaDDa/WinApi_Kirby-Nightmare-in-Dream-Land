@@ -223,8 +223,39 @@ void SparkMonster::Update(float _Delta)
 		}
 	}
 
-
 	if (true == BodyCollision->Collision(CollisionOrder::SparkAttack
+		, _Col
+		, CollisionType::CirCle // 나의 충돌체 모양
+		, CollisionType::CirCle // 상대의 충돌체 모양
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			Actor = Collison->GetActor();
+
+			float4 ActorPos = Actor->GetPos();
+
+			if (GetPos().X > ActorPos.X)
+			{
+				Dir = SparkMonsterDir::Left;
+			}
+			else
+			{
+				Dir = SparkMonsterDir::Right;
+			}
+			// 계속 흡수당하고있음.
+			// 흡수당하는건 한번만 해야함.
+			BodyCollision->Off();
+			AttRenderer->Off();
+			AttackCollision->Off();
+			ChangeState(SparkMonsterState::Damage);
+			return;
+		}
+	}
+
+	if (true == BodyCollision->Collision(CollisionOrder::SwordAttack
 		, _Col
 		, CollisionType::CirCle // 나의 충돌체 모양
 		, CollisionType::CirCle // 상대의 충돌체 모양

@@ -298,6 +298,40 @@ void BurningMonster::Update(float _Delta)
 			return;
 		}
 	}
+
+	if (true == BodyCollision->Collision(CollisionOrder::SwordAttack
+		, _Col
+		, CollisionType::CirCle // 나의 충돌체 모양
+		, CollisionType::CirCle // 상대의 충돌체 모양
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			Actor = Collison->GetActor();
+
+			float4 ActorPos = Actor->GetPos();
+
+			if (GetPos().X > ActorPos.X)
+			{
+				Dir = BurningMonsterDir::Left;
+			}
+			else
+			{
+				Dir = BurningMonsterDir::Right;
+			}
+			// 계속 흡수당하고있음.
+			// 흡수당하는건 한번만 해야함.
+			BodyCollision->Off();
+			LeftAttackRenderer->Off();
+			LeftAttack2Renderer->Off();
+			RightAttackRenderer->Off();
+			RightAttack2Renderer->Off();
+			ChangeState(BurningMonsterState::Damage);
+			return;
+		}
+	}
 }
 
 void BurningMonster::StateUpdate(float _Delta)

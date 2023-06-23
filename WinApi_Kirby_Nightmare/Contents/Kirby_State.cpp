@@ -23,6 +23,7 @@ void Kirby::DownIdleStart()
 
 void Kirby::TackleStart()
 {
+	TackleCollision->On();
 	Speed = TackleSpeed;
 	ChangeAnimationState("Tackle");
 }
@@ -41,6 +42,26 @@ void Kirby::JumpTurnStart()
 {
 	ChangeAnimationState("JumpTurn");
 }
+
+void Kirby::JumpAttackStartStart()
+{
+	ChangeAnimationState("JumpAttackStart");
+}
+
+void Kirby::JumpAttackStart()
+{
+	AttackCollision->On();
+	if (KirbyDir::Left == GetDir())
+	{
+		LeftChargeRenderer->On();
+	}
+	else if (KirbyDir::Right == GetDir())
+	{
+		RightChargeRenderer->On();
+	}
+	ChangeAnimationState("JumpAttack");
+}
+
 void Kirby::FallingStart()
 {
 	ChangeAnimationState("Falling");
@@ -221,10 +242,20 @@ void Kirby::DownIdleUpdate(float _Delta)
 void Kirby::TackleUpdate(float _Delta)
 {
 	GroundCheck(_Delta);
+
+	if (KirbyDir::Left == Dir)
+	{
+		TackleCollision->SetCollisionPos(-TackleCollisionPos);
+	}
+	else if (KirbyDir::Right == Dir)
+	{
+		TackleCollision->SetCollisionPos(TackleCollisionPos);
+	}
 	
 	if (GetLiveTime() >= 0.6f)
 	{
 		Speed = NormalSpeed;
+		TackleCollision->Off();
 		ChangeState(KirbyState::Idle);
 		return;
 	}
@@ -313,7 +344,7 @@ void Kirby::JumpUpdate(float _Delta)
 	if (true == GameEngineInput::IsDown('X'))
 	{
 		GravityReset();
-		ChangeState(KirbyState::AttackStart);
+		ChangeState(KirbyState::JumpAttackStart);
 		return;
 	}
 		// 애니메이션 출력 변경
@@ -329,6 +360,84 @@ void Kirby::JumpUpdate(float _Delta)
 	{
 		ChangeState(KirbyState::BreathIn);
 		return;
+	}
+}
+
+void Kirby::JumpAttackStartUpdate(float _Delta)
+{
+	GroundCheck(_Delta);
+
+	if (Dir == KirbyDir::Left)
+	{
+		//CameraFocus();
+		CheckPos = { -40.0f, -40.0f };
+		// 벽판정
+		if (GetWallCheck() != RGB(255, 255, 255))
+		{
+			MovePos.X *= 0;
+		}
+		AddPos(MovePos);
+	}
+	else if (Dir == KirbyDir::Right)
+	{
+		//CameraFocus();
+		CheckPos = { 40.0f, -40.0f };
+
+		if (GetWallCheck() != RGB(255, 255, 255))
+		{
+			MovePos.X *= 0;
+		}
+		AddPos(MovePos);
+	}
+
+	if (GetLiveTime() >= 0.3f)
+	{
+		ChangeState(KirbyState::Attack);
+		return;
+	}
+
+	if (true == GameEngineInput::IsUp('X'))
+	{
+		ChangeState(KirbyState::Idle);
+		return;
+	}
+}
+
+void Kirby::JumpAttackUpdate(float _Delta)
+{
+	GroundCheck(_Delta);
+
+	if (KirbyDir::Left == Dir)
+	{
+		AttackCollision->SetCollisionPos({ -AttackCollisionPos.X , AttackCollisionPos.Y });
+	}
+	else if (KirbyDir::Right == Dir)
+	{
+		AttackCollision->SetCollisionPos(AttackCollisionPos);
+	}
+
+	if (true == GameEngineInput::IsUp('X'))
+	{
+		AttackCollision->Off();
+		RightChargeRenderer->Off();
+		LeftChargeRenderer->Off();
+		ChangeState(KirbyState::Idle);
+		return;
+	}
+
+	std::vector<GameEngineCollision*> _Col;
+
+	if (true == AttackCollision->Collision(CollisionOrder::DeathBody
+		, _Col
+		, CollisionType::CirCle // 나
+		, CollisionType::CirCle // 상대
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			ChangeState(KirbyState::Charge);
+			return;
+		}
 	}
 }
 
@@ -348,7 +457,7 @@ void Kirby::JumpTurnUpdate(float _Delta)
 	if (true == GameEngineInput::IsDown('X'))
 	{
 		GravityReset();
-		ChangeState(KirbyState::AttackStart);
+		ChangeState(KirbyState::JumpAttackStart);
 		return;
 	}
 
@@ -376,7 +485,7 @@ void Kirby::FallingUpdate(float _Delta)
 	if (true == GameEngineInput::IsDown('X'))
 	{
 		MovePos = float4::ZERO;
-		ChangeState(KirbyState::AttackStart);
+		ChangeState(KirbyState::JumpAttackStart);
 		return;
 	}
 
