@@ -16,7 +16,17 @@ void SwordKirby::AttackStartStart()
 {
 	AttackCollision->On();
 	//BodyCollision->Off();
-	ChangeAnimationState("AttackStart");
+	// 중력이 0이면 == 땅에 붙어있으면.  그외에는 공중이므로 공중공격.
+	if (float4::ZERO != Kirby::GetMainPlayer()->GetGravityVector())
+	{
+		ChangeAnimationState("AttackStart");
+		return;
+	}
+	else
+	{
+		ChangeAnimationState("JumpAttackStart");
+		return;
+	}
 }
 
 void SwordKirby::AttackStartUpdate(float _Delta)
@@ -51,12 +61,11 @@ void SwordKirby::AttackStartUpdate(float _Delta)
 		ChangeState(KirbyState::Attack);
 		return;
 	}
+}
 
-	if (true == GameEngineInput::IsUp('X'))
-	{
-		ChangeState(KirbyState::Idle);
-		return;
-	}
+void SwordKirby::JumpAttackUpdate(float _Delta)
+{
+	
 }
 
 void SwordKirby::AttackStart()
@@ -70,13 +79,13 @@ void SwordKirby::AttackUpdate(float _Delta)
 {
 	GroundCheck(_Delta);
 
-	if (true == GameEngineInput::IsUp('X'))
-	{
-		AttackCollision->Off();
-		AttRenderer->Off();
-		BodyCollision->On();
-		ChangeState(KirbyState::Idle);
-		return;
-	}
+	//if (true == GameEngineInput::IsUp('X'))
+	//{
+	//	AttackCollision->Off();
+	//	AttRenderer->Off();
+	//	BodyCollision->On();
+	//	ChangeState(KirbyState::Idle);
+	//	return;
+	//}
 
 }

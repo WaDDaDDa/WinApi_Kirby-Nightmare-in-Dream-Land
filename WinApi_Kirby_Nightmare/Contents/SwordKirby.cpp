@@ -65,8 +65,10 @@ void SwordKirby::Start()
 		MainRenderer->CreateAnimation("SwordKirbyLeft_BreathIn", "SwordKirbyLeft.bmp", 56, 60, 0.05f, false);
 		MainRenderer->FindAnimation("SwordKirbyLeft_BreathIn")->Inters[3] = 0.1f;
 		MainRenderer->FindAnimation("SwordKirbyLeft_BreathIn")->Inters[4] = 0.1f;
-		MainRenderer->CreateAnimation("SwordKirbyLeft_AttackStart", "SwordKirbyLeft.bmp", 0, 0, 0.1f, false);
-		MainRenderer->CreateAnimation("SwordKirbyLeft_Attack", "SwordKirbyLeft.bmp", 4, 6, 0.1f, true);
+		MainRenderer->CreateAnimation("SwordKirbyLeft_AttackStart", "SwordKirbyLeft.bmp", 160, 162, 0.1f, false);
+		MainRenderer->CreateAnimation("SwordKirbyLeft_Attack", "SwordKirbyLeft.bmp", 165, 175, 0.1f, true);
+		MainRenderer->CreateAnimation("SwordKirbyLeft_JumpAttackStart", "SwordKirbyLeft.bmp", 163, 164, 0.1f, false);
+		MainRenderer->CreateAnimation("SwordKirbyLeft_JumpAttack", "SwordKirbyLeft.bmp", 177, 185, 0.1f, false);
 		MainRenderer->CreateAnimation("SwordKirbyLeft_BreathOut", "SwordKirbyLeft.bmp", 79, 80, 0.1f, false);
 	}
 
@@ -84,8 +86,10 @@ void SwordKirby::Start()
 		MainRenderer->CreateAnimation("SwordKirbyRight_BreathIn", "SwordKirbyRight.bmp", 56, 60, 0.05f, false);
 		MainRenderer->FindAnimation("SwordKirbyRight_BreathIn")->Inters[3] = 0.1f;
 		MainRenderer->FindAnimation("SwordKirbyRight_BreathIn")->Inters[4] = 0.1f;
-		//MainRenderer->CreateAnimation("SwordKirbyRight_AttackStart", "SwordKirbyRight_Attack.bmp", 0, 0, 0.1f, false);
-		//MainRenderer->CreateAnimation("SwordKirbyRight_Attack", "SwordKirbyRight_Attack.bmp", 4, 6, 0.1f, true);
+		MainRenderer->CreateAnimation("SwordKirbyRight_AttackStart", "SwordKirbyRight.bmp", 160, 162, 0.1f, false);
+		MainRenderer->CreateAnimation("SwordKirbyRight_Attack", "SwordKirbyRight.bmp", 165, 175, 0.1f, true);
+		MainRenderer->CreateAnimation("SwordKirbyRight_JumpAttackStart", "SwordKirbyRight.bmp", 163, 164, 0.1f, false);
+		MainRenderer->CreateAnimation("SwordKirbyRight_JumpAttack", "SwordKirbyRight.bmp", 177, 185, 0.1f, false);
 		MainRenderer->CreateAnimation("SwordKirbyRight_BreathOut", "SwordKirbyRight.bmp", 79, 80, 0.1f, false);
 	}
 
