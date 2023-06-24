@@ -38,5 +38,7 @@ protected:
 
 private:
 	GameEngineRenderer* IconUI = nullptr;
+	float4 IconPos = { 60, 600 };
+	float4 IconScale = { 180, 180 };
 };
 

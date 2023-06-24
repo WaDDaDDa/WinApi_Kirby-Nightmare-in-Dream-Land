@@ -33,8 +33,9 @@ void UIManager::Start()
 	IconUI->CreateAnimation("SwordKirbyIcon", "KirbyIcon.bmp", 22, 22, 0.1f, false);
 	IconUI->CreateAnimation("BurningKirbyIcon", "KirbyIcon.bmp", 23, 23, 0.1f, false);
 	IconUI->SetTexture("Blank.bmp");
-	IconUI->SetRenderPos({ 50, 600 });
-	IconUI->SetRenderScale({ 180, 180 });
+	IconUI->SetRenderPos(IconPos);
+	IconUI->SetScaleRatio(3.0f);
+	//IconUI->SetRenderScale(IconScale);
 	SetAbillity(Abillity::Normal);
 	IconUI->ChangeAnimation("NormalKirbyIcon");
 }
