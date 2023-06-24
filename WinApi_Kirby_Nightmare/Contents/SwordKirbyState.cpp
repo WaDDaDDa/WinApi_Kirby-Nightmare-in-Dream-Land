@@ -134,7 +134,7 @@ void SwordKirby::JumpAttackStart()
 void SwordKirby::JumpAttackUpdate(float _Delta)
 {
 	GroundCheck(_Delta);
-
+	Movement(_Delta);
 	if (GetLiveTime() >= 0.5f)
 	{
 		JumpAttackCollision->Off();

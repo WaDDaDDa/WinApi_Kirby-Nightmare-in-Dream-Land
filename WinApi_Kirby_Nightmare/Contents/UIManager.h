@@ -1,6 +1,12 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
 
+enum class UIType
+{
+	Icon,
+	HP,
+};
+
 // Ό³Έν :
 class GameEngineRenderer;
 class UIManager : public GameEngineActor
@@ -19,9 +25,9 @@ public:
 	UIManager& operator=(const UIManager& _Other) = delete;
 	UIManager& operator=(UIManager&& _Other) noexcept = delete;
 
-	GameEngineRenderer* GetUIRenderer()
+	GameEngineRenderer* GetUIRenderer(UIType _UIType)
 	{
-		return UIRenderer;
+		return IconUI;
 	}
 
 	void IconChange(Abillity _Kirby);
@@ -31,6 +37,6 @@ protected:
 	void Update(float _Delta) override;
 
 private:
-	GameEngineRenderer* UIRenderer = nullptr;
+	GameEngineRenderer* IconUI = nullptr;
 };
 
