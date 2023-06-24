@@ -1,4 +1,4 @@
-#include "WaddleDee.h"
+#include "SwordMan.h"
 #include <GameEngineBase/GameEngineDebug.h>
 #include <GameEngineBase/GameEnginePath.h>
 #include <GameEngineCore/ResourcesManager.h>
@@ -6,20 +6,19 @@
 #include <GameEngineCore/GameEngineLevel.h>
 #include "ContentsEnum.h"
 
-
-WaddleDee::WaddleDee()
+SwordMan::SwordMan()
 {
 
 }
 
-WaddleDee::~WaddleDee()
+SwordMan::~SwordMan()
 {
 
 }
 
-void WaddleDee::Start()
+void SwordMan::Start()
 {
-	bool IsResource = ResourcesManager::GetInst().IsLoadTexture("WaddleDeeLeft.bmp");
+	bool IsResource = ResourcesManager::GetInst().IsLoadTexture("SwordManLeft.bmp");
 	if (false == IsResource)
 	{
 		// 무조건 자동으로 현재 실행중인 위치가 된다.
@@ -28,34 +27,40 @@ void WaddleDee::Start()
 
 		{ // LeftAnimation 셋팅
 			FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Enemies\\Left\\");
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("WaddleDeeLeft.bmp"), 3, 3);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("SwordManLeft.bmp"), 5, 4);
 		}
 
 		{ // RinghtAnimation 셋팅
 			FilePath.MoveParentToExistsChild("Right");
 			FilePath.MoveChild("Right\\");
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("WaddleDeeRight.bmp"), 3, 3);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("SwordManRight.bmp"), 5, 4);
 		}
 	}
 
 	MainRenderer = CreateRenderer(RenderOrder::Play);
-	{ // 애니메이션 설정
-		MainRenderer->CreateAnimation("WaddleDeeLeft_Idle", "WaddleDeeLeft.bmp", 2, 2, 0.1f, true);
-		MainRenderer->CreateAnimation("WaddleDeeLeft_Walk", "WaddleDeeLeft.bmp", 1, 4, 0.3f, true);
-		MainRenderer->CreateAnimation("WaddleDeeLeft_HitReady", "WaddleDeeLeft.bmp", 5, 5, 0.1f, true);
-		MainRenderer->CreateAnimation("WaddleDeeLeft_Hit", "WaddleDeeLeft.bmp", 5, 5, 0.1f, true);
-		//MainRenderer->CreateAnimation("WaddleDeeLeft_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
-		MainRenderer->CreateAnimation("WaddleDeeLeft_Effect", "Effect1.bmp", 0, 6, 0.1f, true);
-		MainRenderer->CreateAnimation("WaddleDeeLeft_Damage", "WaddleDeeLeft.bmp", 5, 5, 0.1f, true);
 
-		MainRenderer->CreateAnimation("WaddleDeeRight_Idle", "WaddleDeeRight.bmp", 2, 2, 0.1f, true);
-		MainRenderer->CreateAnimation("WaddleDeeRight_Walk", "WaddleDeeRight.bmp", 1, 4, 0.3f, true);
-		MainRenderer->CreateAnimation("WaddleDeeRight_HitReady", "WaddleDeeRight.bmp", 5, 5, 0.1f, true);
-		MainRenderer->CreateAnimation("WaddleDeeRight_Hit", "WaddleDeeRight.bmp", 5, 5, 0.1f, true);
-		//MainRenderer->CreateAnimation("WaddleDeeRight_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
-		MainRenderer->CreateAnimation("WaddleDeeRight_Effect", "Effect1.bmp", 0, 6, 0.1f, true);
-		MainRenderer->CreateAnimation("WaddleDeeRight_Damage", "WaddleDeeRight.bmp", 5, 5, 0.1f, true);
+	{ // 애니메이션 설정
+		MainRenderer->CreateAnimation("SwordManLeft_Idle", "SwordManLeft.bmp", 3, 3, 0.1f, false);
+		MainRenderer->CreateAnimation("SwordManLeft_Walk", "SwordManLeft.bmp", 1, 4, 0.3f, true);
+		MainRenderer->CreateAnimation("SwordManLeft_HitReady", "SwordManLeft.bmp", 14, 14, 0.1f, false);
+		MainRenderer->CreateAnimation("SwordManLeft_Hit", "SwordManLeft.bmp", 14, 14, 0.1f, false);
+		//MainRenderer->CreateAnimation("SwordManLeft_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
+		MainRenderer->CreateAnimation("SwordManLeft_Effect", "Effect1.bmp", 0, 6, 0.1f, true);
+		MainRenderer->CreateAnimation("SwordManLeft_Damage", "SwordManLeft.bmp", 14, 14, 0.1f, false);
+		MainRenderer->CreateAnimation("SwordManLeft_AttackStart", "SwordManLeft.bmp", 5, 5, 0.1f, false);
+		MainRenderer->CreateAnimation("SwordManLeft_Attack", "SwordManLeft.bmp", 6, 11, 0.05f, false);
+
+		MainRenderer->CreateAnimation("SwordManRight_Idle", "SwordManRight.bmp", 3, 3, 0.1f, false);
+		MainRenderer->CreateAnimation("SwordManRight_Walk", "SwordManRight.bmp", 1, 4, 0.3f, true);
+		MainRenderer->CreateAnimation("SwordManRight_HitReady", "SwordManRight.bmp", 14, 14, 0.1f, false);
+		MainRenderer->CreateAnimation("SwordManRight_Hit", "SwordManRight.bmp", 14, 14, 0.1f, false);
+		//MainRenderer->CreateAnimation("SwordManRight_Effect", "DamageEffects.bmp", 0, 2, 0.1f, true);
+		MainRenderer->CreateAnimation("SwordManRight_Effect", "Effect1.bmp", 0, 6, 0.1f, true);
+		MainRenderer->CreateAnimation("SwordManRight_Damage", "SwordManRight.bmp", 14, 14, 0.1f, false);
+		MainRenderer->CreateAnimation("SwordManRight_AttackStart", "SwordManRight.bmp", 5, 5, 0.1f, false);
+		MainRenderer->CreateAnimation("SwordManRight_Attack", "SwordManRight.bmp", 6, 11, 0.05f, false);
 	}
+
 
 	{ // 충돌체 설정
 		BodyCollision = CreateCollision(CollisionOrder::MonsterBody);
@@ -68,15 +73,28 @@ void WaddleDee::Start()
 		DeathCollision->SetCollisionPos(CollisionPos);
 		DeathCollision->SetCollisionType(CollisionType::CirCle);
 		DeathCollision->Off();
+
+		RightAttackCollision = CreateCollision(CollisionOrder::MonsterSwordAttack);
+		RightAttackCollision->SetCollisionScale(RightAttackCollisionScale);
+		RightAttackCollision->SetCollisionPos(RightAttackCollisionPos);
+		RightAttackCollision->SetCollisionType(CollisionType::Rect);
+		RightAttackCollision->Off();
+
+		LeftAttackCollision = CreateCollision(CollisionOrder::MonsterSwordAttack);
+		LeftAttackCollision->SetCollisionScale(LeftAttackCollisionScale);
+		LeftAttackCollision->SetCollisionPos(LeftAttackCollisionPos);
+		LeftAttackCollision->SetCollisionType(CollisionType::Rect);
+		LeftAttackCollision->Off();
 	}
 	MainRenderer->SetScaleRatio(4.0f);
 
 	SetOrder(UpdateOrder::Monster);
-	SetAbillity(Abillity::Normal);
-	ChangeState(WaddleDeeState::Idle);
+
+	SetAbillity(Abillity::Sword);
+	ChangeState(SwordManState::Idle);
 }
 
-void WaddleDee::Update(float _Delta)
+void SwordMan::Update(float _Delta)
 {
 	if (0.0f == GameEngineTime::MainTimer.GetTimeScale(GetOrder()))
 	{
@@ -102,13 +120,13 @@ void WaddleDee::Update(float _Delta)
 
 			if (GetPos().X > ActorPos.X)
 			{
-				Dir = WaddleDeeDir::Left;
+				Dir = SwordManDir::Left;
 			}
 			else
 			{
-				Dir = WaddleDeeDir::Right;
+				Dir = SwordManDir::Right;
 			}
-			ChangeState(WaddleDeeState::Damage);
+			ChangeState(SwordManState::Damage);
 			return;
 		}
 	}
@@ -129,19 +147,20 @@ void WaddleDee::Update(float _Delta)
 
 			if (GetPos().X > ActorPos.X)
 			{
-				Dir = WaddleDeeDir::Left;
+				Dir = SwordManDir::Left;
 			}
 			else
 			{
-				Dir = WaddleDeeDir::Right;
+				Dir = SwordManDir::Right;
 			}
 			// 계속 흡수당하고있음.
 			// 흡수당하는건 한번만 해야함.
-			ChangeState(WaddleDeeState::HitReady);
+			// 흡수당하는 상태
+			ChangeState(SwordManState::HitReady);
 			return;
 		}
 	}
-	// 공기나 별 과 충돌
+	// 공기나 별 뱉기 공격과 충돌
 	if (true == BodyCollision->Collision(CollisionOrder::PlayerAttack
 		, _Col
 		, CollisionType::CirCle // 나의 충돌체 모양
@@ -158,21 +177,21 @@ void WaddleDee::Update(float _Delta)
 
 			if (GetPos().X > ActorPos.X)
 			{
-				Dir = WaddleDeeDir::Left;
+				Dir = SwordManDir::Left;
 			}
 			else
 			{
-				Dir = WaddleDeeDir::Right;
+				Dir = SwordManDir::Right;
 			}
 			// 계속 흡수당하고있음.
 			// 흡수당하는건 한번만 해야함.
 			Collison->Off();
 			BodyCollision->Off();
-			ChangeState(WaddleDeeState::Damage);
+			ChangeState(SwordManState::Damage);
 			return;
 		}
 	}
-	// 버닝공격과 충돌
+	// 버닝 공격과 충돌
 	if (true == BodyCollision->Collision(CollisionOrder::BurningAttack
 		, _Col
 		, CollisionType::CirCle // 나의 충돌체 모양
@@ -189,14 +208,16 @@ void WaddleDee::Update(float _Delta)
 
 			if (GetPos().X > ActorPos.X)
 			{
-				Dir = WaddleDeeDir::Left;
+				Dir = SwordManDir::Left;
 			}
 			else
 			{
-				Dir = WaddleDeeDir::Right;
+				Dir = SwordManDir::Right;
 			}
+			// 계속 흡수당하고있음.
+			// 흡수당하는건 한번만 해야함.
 			BodyCollision->Off();
-			ChangeState(WaddleDeeState::Damage);
+			ChangeState(SwordManState::Damage);
 			return;
 		}
 	}
@@ -217,19 +238,20 @@ void WaddleDee::Update(float _Delta)
 
 			if (GetPos().X > ActorPos.X)
 			{
-				Dir = WaddleDeeDir::Left;
+				Dir = SwordManDir::Left;
 			}
 			else
 			{
-				Dir = WaddleDeeDir::Right;
+				Dir = SwordManDir::Right;
 			}
+			// 계속 흡수당하고있음.
+			// 흡수당하는건 한번만 해야함.
 			BodyCollision->Off();
-			ChangeState(WaddleDeeState::Damage);
+			ChangeState(SwordManState::Damage);
 			return;
 		}
 	}
 
-	// 검기공격과 충돌
 	if (true == BodyCollision->Collision(CollisionOrder::SwordAttack
 		, _Col
 		, CollisionType::CirCle // 나의 충돌체 모양
@@ -246,64 +268,75 @@ void WaddleDee::Update(float _Delta)
 
 			if (GetPos().X > ActorPos.X)
 			{
-				Dir = WaddleDeeDir::Left;
+				Dir = SwordManDir::Left;
 			}
 			else
 			{
-				Dir = WaddleDeeDir::Right;
+				Dir = SwordManDir::Right;
 			}
+			// 계속 흡수당하고있음.
+			// 흡수당하는건 한번만 해야함.
 			BodyCollision->Off();
-			ChangeState(WaddleDeeState::Damage);
+			ChangeState(SwordManState::Damage);
 			return;
 		}
 	}
-
 }
 
-void WaddleDee::StateUpdate(float _Delta)
+void SwordMan::StateUpdate(float _Delta)
 {
 	switch (State)
 	{
-	case WaddleDeeState::Idle:
+	case SwordManState::Idle:
 		return IdleUpdate(_Delta);
-	case WaddleDeeState::Walk:
+	case SwordManState::Walk:
 		return WalkUpdate(_Delta);
-	case WaddleDeeState::HitReady:
+	case SwordManState::HitReady:
 		return HitReadyUpdate(_Delta);
-	case WaddleDeeState::Hit:
+	case SwordManState::Hit:
 		return HitUpdate(_Delta);
-	case WaddleDeeState::Damage:
+	case SwordManState::Damage:
 		return DamageUpdate(_Delta);
-	case WaddleDeeState::Effect:
+	case SwordManState::Effect:
 		return EffectUpdate(_Delta);
+	case SwordManState::AttackStart:
+		return AttackStartUpdate(_Delta);
+	case SwordManState::Attack:
+		return AttackUpdate(_Delta);
 	default:
 		break;
 	}
 }
 
-void WaddleDee::ChangeState(WaddleDeeState _State)
+void SwordMan::ChangeState(SwordManState _State)
 {
 	if (_State != State)
 	{
 		switch (_State)
 		{
-		case WaddleDeeState::Idle:
+		case SwordManState::Idle:
 			IdleStart();
 			break;
-		case WaddleDeeState::Walk:
+		case SwordManState::Walk:
 			WalkStart();
 			break;
-		case WaddleDeeState::HitReady:
+		case SwordManState::HitReady:
 			HitReadyStart();
 			break;
-		case WaddleDeeState::Hit:
+		case SwordManState::Hit:
 			HitStart();
 			break;
-		case WaddleDeeState::Damage:
+		case SwordManState::Damage:
 			DamageStart();
 			break;
-		case WaddleDeeState::Effect:
+		case SwordManState::Effect:
 			EffectStart();
+			break;
+		case SwordManState::AttackStart:
+			AttackStartStart();
+			break;
+		case SwordManState::Attack:
+			AttackStart();
 			break;
 		default:
 			break;
@@ -315,17 +348,17 @@ void WaddleDee::ChangeState(WaddleDeeState _State)
 }
 
 
-void WaddleDee::ChangeAnimationState(const std::string& _StateName)
+void SwordMan::ChangeAnimationState(const std::string& _StateName)
 {
 	std::string AnimationName;
 
 	switch (Dir)
 	{
-	case WaddleDeeDir::Right:
-		AnimationName = "WaddleDeeRight_";
+	case SwordManDir::Right:
+		AnimationName = "SwordManRight_";
 		break;
-	case WaddleDeeDir::Left:
-		AnimationName = "WaddleDeeLeft_";
+	case SwordManDir::Left:
+		AnimationName = "SwordManLeft_";
 		break;
 	default:
 		break;
@@ -338,15 +371,15 @@ void WaddleDee::ChangeAnimationState(const std::string& _StateName)
 	MainRenderer->ChangeAnimation(AnimationName);
 }
 
-unsigned int WaddleDee::GetWallCheck()
+unsigned int SwordMan::GetWallCheck()
 {
 	unsigned int WallColor = GetGroundColor(RGB(255, 255, 255), CheckPos);
 	return WallColor;
 }
 
-void WaddleDee::Movement(float _Delta)
+void SwordMan::Movement(float _Delta)
 {
-	if (Dir == WaddleDeeDir::Left)
+	if (Dir == SwordManDir::Left)
 	{
 		CheckPos = { -40.0f, -40.0f };
 		MovePos = { -Speed * _Delta, 0.0f };
@@ -355,13 +388,13 @@ void WaddleDee::Movement(float _Delta)
 		if (GetWallCheck() != RGB(255, 255, 255))
 		{
 			MovePos.X *= 0;
-			Dir = WaddleDeeDir::Right;
+			Dir = SwordManDir::Right;
 			ChangeAnimationState(CurState);
 			return;
 		}
 		AddPos(MovePos);
 	}
-	else if (Dir == WaddleDeeDir::Right)
+	else if (Dir == SwordManDir::Right)
 	{
 		CheckPos = { 40.0f, -40.0f };
 		MovePos = { Speed * _Delta, 0.0f };
@@ -369,7 +402,7 @@ void WaddleDee::Movement(float _Delta)
 		if (GetWallCheck() != RGB(255, 255, 255))
 		{
 			MovePos.X *= 0;
-			Dir = WaddleDeeDir::Left;
+			Dir = SwordManDir::Left;
 			ChangeAnimationState(CurState);
 			return;
 		}

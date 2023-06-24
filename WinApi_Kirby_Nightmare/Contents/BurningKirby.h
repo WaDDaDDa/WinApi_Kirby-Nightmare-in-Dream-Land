@@ -34,6 +34,8 @@ protected:
 
     void DamageStart() override;
 
+    void TackleStart() override;
+
 private:
 
     float4 MovePos = float4::ZERO;
@@ -42,9 +44,6 @@ private:
     float4 BodyCollisionScale = float4{ 80, 80 };
     float4 AttackCollisionPos = float4{ 0 , -40 };
     float4 AttackCollisionScale = float4{ 130,100 };
-
-    float Speed = 400.0f;
-    float JumpPower = 800.0f;
 
 };
 

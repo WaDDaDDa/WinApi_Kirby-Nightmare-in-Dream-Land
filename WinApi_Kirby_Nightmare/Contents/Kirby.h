@@ -115,7 +115,7 @@ protected:
 
     void IdleStart();
     void DownIdleStart();
-    void TackleStart();
+    virtual void TackleStart();
     void WalkStart();
     void JumpStart();
     void JumpTurnStart();
@@ -208,6 +208,7 @@ private:
     float TackleSpeed = 600.0f;
     float Speed = 400.0f;
     float JumpPower = 800.0f;
+
     bool ImmuneValue = false;
     float4 PrevPos = float4::ZERO;
 

@@ -21,6 +21,7 @@
 #include "BurningMonster.h"
 #include "SparkMonster.h"
 #include "FadeObject.h"
+#include "SwordMan.h"
 
 VegetableValleyLevel::VegetableValleyLevel()
 {
@@ -81,7 +82,7 @@ void VegetableValleyLevel::Update(float _Delta)
 
 	if (true == GameEngineInput::IsDown('M'))
 	{
-		SparkMonster* Waddle = CreateActor<SparkMonster>();
+		SwordMan* Waddle = CreateActor<SwordMan>();
 		Waddle->SetGroundTexture("Level1_Debug.bmp");
 		Waddle->SetPos(float4{ 500,360 });
 	}

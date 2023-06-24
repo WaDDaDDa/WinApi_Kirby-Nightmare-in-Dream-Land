@@ -109,6 +109,12 @@ void SparkKirby::Start()
 		AttackCollision->SetCollisionPos(AttackCollisionPos);
 		AttackCollision->SetCollisionType(CollisionType::CirCle);
 		AttackCollision->Off();
+
+		TackleCollision = CreateCollision(CollisionOrder::PlayerAttack);
+		TackleCollision->SetCollisionScale(TackleCollisionScale);
+		TackleCollision->SetCollisionPos(TackleCollisionPos);
+		TackleCollision->SetCollisionType(CollisionType::Rect);
+		TackleCollision->Off();
 	}
 	AttRenderer ->SetTexture("Blank.bmp");
 	AttRenderer->CreateAnimation("SparkEffect", "SparkEffect.bmp", 0, 3, 0.1f, true);

@@ -67,6 +67,9 @@
     <ClInclude Include="SwordKirby.h">
       <Filter>Kirby</Filter>
     </ClInclude>
+    <ClInclude Include="SwordMan.h">
+      <Filter>Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainHub.cpp" />
@@ -152,6 +155,12 @@
     </ClCompile>
     <ClCompile Include="SwordKirby.cpp">
       <Filter>Kirby</Filter>
+    </ClCompile>
+    <ClCompile Include="SwordMan.cpp">
+      <Filter>Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="SwordManState.cpp">
+      <Filter>Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

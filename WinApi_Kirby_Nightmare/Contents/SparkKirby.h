@@ -34,6 +34,8 @@ protected:
 
     void DamageStart() override;
 
+    void TackleStart() override;
+
 private:
     class GameEngineRenderer* AttRenderer = nullptr;
 
@@ -43,10 +45,5 @@ private:
     float4 BodyCollisionScale = float4{ 80, 80 };
     float4 AttackCollisionPos = float4{ -2.5f , -30 };
     float4 AttackCollisionScale = float4{ 150,150 };
-
-
-    float Speed = 400.0f;
-    float JumpPower = 800.0f;
-
 };
 

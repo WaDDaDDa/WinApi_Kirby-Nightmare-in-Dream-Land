@@ -99,11 +99,18 @@ void BurningKirby::Start()
 		BodyCollision->SetCollisionScale(BodyCollisionScale);
 		BodyCollision->SetCollisionPos(BodyCollisionPos);
 		BodyCollision->SetCollisionType(CollisionType::CirCle);
+
 		AttackCollision = CreateCollision(CollisionOrder::BurningAttack);
 		AttackCollision->SetCollisionScale(AttackCollisionScale);
 		AttackCollision->SetCollisionPos(AttackCollisionPos);
 		AttackCollision->SetCollisionType(CollisionType::Rect);
 		AttackCollision->Off();
+
+		TackleCollision = CreateCollision(CollisionOrder::PlayerAttack);
+		TackleCollision->SetCollisionScale(TackleCollisionScale);
+		TackleCollision->SetCollisionPos(TackleCollisionPos);
+		TackleCollision->SetCollisionType(CollisionType::Rect);
+		TackleCollision->Off();
 	}
 	MainRenderer->SetScaleRatio(4.0f);
 	MainRenderer->SetTexture("Blank.bmp");

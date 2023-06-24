@@ -165,6 +165,8 @@ void Kirby::SwallowStart()
 void Kirby::DamageStart()
 {
 	BodyCollision->Off();
+	AttackCollision->Off();
+	TackleCollision->Off();
 	ChangeAnimationState("Damage");
 }
 
@@ -959,6 +961,10 @@ void Kirby::SwallowUpdate(float _Delta)
 		else if (Abillity::Spark == ChangeAbillity)
 		{
 			ChangeKirby(Abillity::Spark);
+		}
+		else if (Abillity::Sword == ChangeAbillity)
+		{
+			ChangeKirby(Abillity::Sword);
 		}
 		ChangeState(KirbyState::Idle);
 	}

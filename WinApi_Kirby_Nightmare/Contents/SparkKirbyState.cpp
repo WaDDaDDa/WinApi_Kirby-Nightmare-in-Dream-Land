@@ -152,3 +152,10 @@ void SparkKirby::JumpAttackUpdate(float _Delta)
 	}
 
 }
+
+void SparkKirby::TackleStart()
+{
+	TackleCollision->On();
+	Kirby::GetMainPlayer()->Speed = TackleSpeed;
+	ChangeAnimationState("Tackle");
+}

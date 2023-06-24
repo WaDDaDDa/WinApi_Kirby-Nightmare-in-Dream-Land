@@ -176,3 +176,10 @@ void BurningKirby::JumpAttackUpdate(float _Delta)
 		AddPos(AttackSpeed);
 	}
 }
+
+void BurningKirby::TackleStart()
+{
+	TackleCollision->On();
+	Kirby::GetMainPlayer()->Speed = TackleSpeed;
+	ChangeAnimationState("Tackle");
+}

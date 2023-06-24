@@ -32,6 +32,8 @@ protected:
     void JumpAttackStartUpdate(float _Delta) override;
     void JumpAttackUpdate(float _Delta) override;
 
+    void TackleStart() override;
+
     void DamageStart() override;
 
 private:
@@ -55,9 +57,5 @@ private:
 
     float4 JumpAttackCollisionPos = float4{ 0.0f , -60 };
     float4 JumpAttackCollisionScale = float4{ 150,150 };
-
-    float Speed = 400.0f;
-    float JumpPower = 800.0f;
-
 };
 

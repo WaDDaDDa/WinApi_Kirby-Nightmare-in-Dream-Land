@@ -143,3 +143,10 @@ void SwordKirby::JumpAttackUpdate(float _Delta)
 		return;
 	}
 }
+
+void SwordKirby::TackleStart()
+{
+	TackleCollision->On();
+	Kirby::GetMainPlayer()->Speed = TackleSpeed;
+	ChangeAnimationState("Tackle");
+}
