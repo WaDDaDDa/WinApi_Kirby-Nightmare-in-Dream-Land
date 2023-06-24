@@ -18,6 +18,7 @@
 #include "BurningKirby.h"
 #include "SparkKirby.h"
 #include "SwordKirby.h"
+#include "UIManager.h"
 
 Kirby* Kirby::MainPlayer = nullptr;
 
@@ -664,7 +665,7 @@ void Kirby::ChangeKirby(Abillity _Kirby)
 		default:
 			break;
 		}
-
+		UIManager::UI->IconChange(_Kirby);
 		Kirby::GetMainPlayer()->SetPrevPos(CurPrevPos);
 		Kirby::GetMainPlayer()->SetPos(CurPos);
 		Kirby::GetMainPlayer()->SetGroundTexture(GetGroundTexture());

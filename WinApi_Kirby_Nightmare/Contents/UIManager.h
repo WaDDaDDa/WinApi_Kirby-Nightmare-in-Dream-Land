@@ -19,8 +19,16 @@ public:
 	UIManager& operator=(const UIManager& _Other) = delete;
 	UIManager& operator=(UIManager&& _Other) noexcept = delete;
 
+	GameEngineRenderer* GetUIRenderer()
+	{
+		return UIRenderer;
+	}
+
+	void IconChange(Abillity _Kirby);
+
 protected:
 	void Start() override;
+	void Update(float _Delta) override;
 
 private:
 	GameEngineRenderer* UIRenderer = nullptr;
