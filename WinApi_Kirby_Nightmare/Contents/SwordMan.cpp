@@ -38,6 +38,7 @@ void SwordMan::Start()
 	}
 
 	MainRenderer = CreateRenderer(RenderOrder::Play);
+	MainRenderer->SetTexture("Blank.bmp");
 
 	{ // 애니메이션 설정
 		MainRenderer->CreateAnimation("SwordManLeft_Idle", "SwordManLeft.bmp", 3, 3, 0.1f, false);

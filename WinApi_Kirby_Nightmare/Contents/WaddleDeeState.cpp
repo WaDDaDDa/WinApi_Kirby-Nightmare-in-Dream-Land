@@ -1,5 +1,6 @@
 #include "WaddleDee.h"
 #include <GameEngineCore/GameEngineRenderer.h>
+#include <GameEngineBase/GameEngineRandom.h>
 
 void WaddleDee::IdleStart()
 {
@@ -48,19 +49,6 @@ void WaddleDee::HitReadyUpdate(float _Delta)
 		ChangeState(WaddleDeeState::Hit);
 		return;
 	}
-
-	static int Value = 1;
-	Value *= -1;
-
-	if (Value == 1)
-	{
-		//MainRenderer->Off();
-	}
-	else
-	{
-		//MainRenderer->On();
-	}
-
 }
 
 void WaddleDee::HitStart()
@@ -95,12 +83,29 @@ void WaddleDee::HitUpdate(float _Delta)
 
 void WaddleDee::DamageStart()
 {
+	MainRenderer->SetScaleRatio(8.0f);
+	float XValue = 0.0f;
+	float YValue = 0.0f;
+	// 오른쪽일때
+	if (Dir == WaddleDeeDir::Right)
+	{
+		XValue = GameEngineRandom::MainRandom.RandomFloat(-250.0f, -50.0f);
+		YValue = GameEngineRandom::MainRandom.RandomFloat(-700.0f, -100.0f);
+
+	} // 왼쪽일때
+	else if (Dir == WaddleDeeDir::Left)
+	{
+		XValue = GameEngineRandom::MainRandom.RandomFloat(50.0f, 250.0f);
+		YValue = GameEngineRandom::MainRandom.RandomFloat(-700.0f, -100.0f);
+	}
 	ChangeAnimationState("Damage");
+	SetGravityVector(float4{ XValue, YValue });
 }
 
 void WaddleDee::DamageUpdate(float _Delta)
 {
-	GroundCheck(_Delta);
+	//GroundCheck(_Delta);
+	Gravity(_Delta);
 	float4 MoveDir = float4::ZERO;
 	if (WaddleDeeDir::Left == Dir)
 	{
@@ -149,7 +154,7 @@ void WaddleDee::EffectStart()
 
 void WaddleDee::EffectUpdate(float _Delta)
 {
-	GroundCheck(_Delta);
+	// GroundCheck(_Delta);
 	GravityOff();
 	if (0.5f <= GetLiveTime())
 	{

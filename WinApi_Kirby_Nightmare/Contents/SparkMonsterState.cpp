@@ -107,7 +107,22 @@ void SparkMonster::DamageStart()
 {
 	AttackCollision->Off();
 	AttRenderer->Off();
+	float XValue = 0.0f;
+	float YValue = 0.0f;
+	// 오른쪽일때
+	if (Dir == SparkMonsterDir::Right)
+	{
+		XValue = GameEngineRandom::MainRandom.RandomFloat(-250.0f, -50.0f);
+		YValue = GameEngineRandom::MainRandom.RandomFloat(-700.0f, -100.0f);
+
+	} // 왼쪽일때
+	else if (Dir == SparkMonsterDir::Left)
+	{
+		XValue = GameEngineRandom::MainRandom.RandomFloat(50.0f, 250.0f);
+		YValue = GameEngineRandom::MainRandom.RandomFloat(-700.0f, -100.0f);
+	}
 	ChangeAnimationState("Damage");
+	SetGravityVector(float4{ XValue, YValue });
 }
 
 void SparkMonster::DamageUpdate(float _Delta)

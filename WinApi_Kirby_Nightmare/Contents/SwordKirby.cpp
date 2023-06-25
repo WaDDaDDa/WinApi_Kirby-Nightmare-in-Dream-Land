@@ -97,8 +97,8 @@ void SwordKirby::Start()
 	}
 	// 공격 애니메이션
 	{
-		LeftAttRenderer->SetTexture("SwordKirbyLeft_Attack.bmp");
-		RightAttRenderer->SetTexture("SwordKirbyRight_Attack.bmp");
+		LeftAttRenderer->SetTexture("Blank.bmp");
+		RightAttRenderer->SetTexture("Blank.bmp");
 		LeftAttRenderer->CreateAnimation("LeftSwordBlank", "Blank.bmp", 0, 0, 0.1f, false);
 		LeftAttRenderer->CreateAnimation("LeftSwordEffect", "LeftSwordEffect.bmp", 0, 6, 0.05f, false);
 		RightAttRenderer->CreateAnimation("RightSwordBlank", "Blank.bmp", 0, 0, 0.1f, false);
