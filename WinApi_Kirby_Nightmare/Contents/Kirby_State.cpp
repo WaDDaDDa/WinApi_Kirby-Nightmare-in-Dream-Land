@@ -236,7 +236,7 @@ void Kirby::DownIdleUpdate(float _Delta)
 		return;
 	}
 
-	if (true == GameEngineInput::IsDown('F'))
+	if (true == GameEngineInput::IsDown('X'))
 	{
 		ChangeState(KirbyState::Tackle);
 		return;
@@ -306,10 +306,10 @@ void Kirby::TackleUpdate(float _Delta)
 			}
 			else if (GetDir() == KirbyDir::Right)
 			{
-				TackleEnd = float4::LEFT * float4::UP * 400.0f;
+				TackleEnd = float4::UP * 400.0f + float4::LEFT * 200.0f;
 			}
 			SetGravityVector(TackleEnd);
-
+			Speed = NormalSpeed;
 			ChangeState(KirbyState::Falling);
 			return;
 		}

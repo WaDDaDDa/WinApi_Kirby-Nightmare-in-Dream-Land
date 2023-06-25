@@ -62,10 +62,10 @@ void MainHubLevel::Start()
 	CreateActor<UIManager>();
 
 	Stage1Portal = CreateActor<Portal>();
-	Stage1Portal->SetPos(float4{ 440, 1100 });
+	Stage1Portal->SetPos(float4{ 448, 1040 });
 
 	Stage2Portal = CreateActor<Portal>();
-	Stage2Portal->SetPos(float4{ 960, 1220 });
+	Stage2Portal->SetPos(float4{ 960, 1170 });
 }
 
 

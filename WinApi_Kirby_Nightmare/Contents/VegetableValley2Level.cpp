@@ -51,7 +51,9 @@ void VegetableValley2Level::Start()
 
 	CreateActor<UIManager>();
 	MainPortal = CreateActor<Portal>();
-	MainPortal->SetPos(float4{ 4750, 360 });
+	MainPortal->Door->ChangeAnimation("BlackDoor");
+	MainPortal->Door->SetScaleRatio(1.0f);
+	MainPortal->SetPos(float4{ 4750, 320 });
 }
 
 
