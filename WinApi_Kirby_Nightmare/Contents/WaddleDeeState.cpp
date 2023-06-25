@@ -1,6 +1,7 @@
 #include "WaddleDee.h"
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineBase/GameEngineRandom.h>
+#include "Kirby.h"
 
 void WaddleDee::IdleStart()
 {
@@ -147,6 +148,7 @@ void WaddleDee::DamageUpdate(float _Delta)
 
 void WaddleDee::EffectStart()
 {
+	Kirby::GetMainPlayer()->AddScore();
 	AddPos(CollisionPos);
 	BodyCollision->Off();
 	ChangeAnimationState("Effect");

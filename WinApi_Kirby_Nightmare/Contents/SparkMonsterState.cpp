@@ -169,6 +169,7 @@ void SparkMonster::DamageUpdate(float _Delta)
 
 void SparkMonster::EffectStart()
 {
+	Kirby::GetMainPlayer()->AddScore();
 	AddPos(CollisionPos);
 	BodyCollision->Off();
 	ChangeAnimationState("Effect");

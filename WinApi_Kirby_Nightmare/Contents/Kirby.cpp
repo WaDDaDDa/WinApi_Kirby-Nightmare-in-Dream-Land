@@ -1,6 +1,7 @@
 #include "Kirby.h"
 #include <Windows.h>
 #include <GameEngineBase/GameEngineTime.h>
+#include <GameEngineBase/GameEngineRandom.h>
 #include <GameEngineBase/GameEnginePath.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEnginePlatform/GameEngineWindowTexture.h>
@@ -21,6 +22,8 @@
 #include "UIManager.h"
 
 Kirby* Kirby::MainPlayer = nullptr;
+int Kirby::HP = 6;
+unsigned int Kirby::Score = 0;
 
 Kirby::Kirby()
 {
@@ -308,6 +311,35 @@ void Kirby::Update(float _Delta)
 	}	
 
 	if (true == BodyCollision->Collision(CollisionOrder::MonsterSparkAttack
+		, _Col
+		, CollisionType::CirCle // 나를 사각형으로 봐줘
+		, CollisionType::CirCle // 상대도 사각형으로 봐줘
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			GameEngineActor* Actor = Collison->GetActor();
+
+			if (State == KirbyState::FatFalling ||
+				State == KirbyState::FatFallingEnd ||
+				State == KirbyState::FatIdle ||
+				State == KirbyState::FatJump ||
+				State == KirbyState::FatJumpTurn ||
+				State == KirbyState::FatWalk)
+			{
+				ChangeState(KirbyState::FatDamage);
+				return;
+			}
+			RightChargeRenderer->Off();
+			LeftChargeRenderer->Off();
+			ChangeState(KirbyState::Damage);
+			return;
+		}
+	}
+
+	if (true == BodyCollision->Collision(CollisionOrder::MonsterSwordAttack
 		, _Col
 		, CollisionType::CirCle // 나를 사각형으로 봐줘
 		, CollisionType::CirCle // 상대도 사각형으로 봐줘
@@ -836,4 +868,11 @@ void Kirby::RenderSwitch()
 		return;
 	}
 
+}
+
+void Kirby::AddScore()
+{
+	unsigned int Value = GameEngineRandom::MainRandom.RandomInt(100, 1400);
+
+	Score += Value;
 }

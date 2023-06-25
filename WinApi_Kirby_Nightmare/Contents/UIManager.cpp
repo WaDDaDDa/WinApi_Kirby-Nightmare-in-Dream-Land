@@ -145,7 +145,7 @@ void UIManager::Start()
 		HpBar6->SetTexture("Blank.bmp");
 		HpBar6->SetRenderPos(HpBarPos + (HpBarInter * 5));
 		HpBar6->SetScaleRatio(4.0f);
-		HpBar6->ChangeAnimation("HpBar6Off");
+		HpBar6->ChangeAnimation("HpBar6On");
 	}
 	// 점수
 	{
@@ -180,7 +180,7 @@ void UIManager::Start()
 		ScoreNum1->SetTexture("Blank.bmp");
 		ScoreNum1->SetRenderPos(ScoreNumPos + (ScoreNumInter * 1));
 		ScoreNum1->SetScaleRatio(4.0f);
-		ScoreNum1->ChangeAnimation("ScoreNum1_1");
+		ScoreNum1->ChangeAnimation("ScoreNum1_0");
 	}
 	{
 		ScoreNum2 = CreateUIRenderer(RenderOrder::PlayUI);
@@ -197,7 +197,7 @@ void UIManager::Start()
 		ScoreNum2->SetTexture("Blank.bmp");
 		ScoreNum2->SetRenderPos(ScoreNumPos + (ScoreNumInter * 2));
 		ScoreNum2->SetScaleRatio(4.0f);
-		ScoreNum2->ChangeAnimation("ScoreNum2_2");
+		ScoreNum2->ChangeAnimation("ScoreNum2_0");
 	}
 	{
 		ScoreNum3 = CreateUIRenderer(RenderOrder::PlayUI);
@@ -214,7 +214,7 @@ void UIManager::Start()
 		ScoreNum3->SetTexture("Blank.bmp");
 		ScoreNum3->SetRenderPos(ScoreNumPos + (ScoreNumInter * 3));
 		ScoreNum3->SetScaleRatio(4.0f);
-		ScoreNum3->ChangeAnimation("ScoreNum3_3");
+		ScoreNum3->ChangeAnimation("ScoreNum3_0");
 	}
 	{
 		ScoreNum4 = CreateUIRenderer(RenderOrder::PlayUI);
@@ -231,7 +231,7 @@ void UIManager::Start()
 		ScoreNum4->SetTexture("Blank.bmp");
 		ScoreNum4->SetRenderPos(ScoreNumPos + (ScoreNumInter * 4));
 		ScoreNum4->SetScaleRatio(4.0f);
-		ScoreNum4->ChangeAnimation("ScoreNum4_4");
+		ScoreNum4->ChangeAnimation("ScoreNum4_0");
 	}
 	{
 		ScoreNum5 = CreateUIRenderer(RenderOrder::PlayUI);
@@ -248,7 +248,7 @@ void UIManager::Start()
 		ScoreNum5->SetTexture("Blank.bmp");
 		ScoreNum5->SetRenderPos(ScoreNumPos + (ScoreNumInter * 5));
 		ScoreNum5->SetScaleRatio(4.0f);
-		ScoreNum5->ChangeAnimation("ScoreNum5_5");
+		ScoreNum5->ChangeAnimation("ScoreNum5_0");
 	}
 	{
 		ScoreNum6 = CreateUIRenderer(RenderOrder::PlayUI);
@@ -265,7 +265,7 @@ void UIManager::Start()
 		ScoreNum6->SetTexture("Blank.bmp");
 		ScoreNum6->SetRenderPos(ScoreNumPos + (ScoreNumInter * 6));
 		ScoreNum6->SetScaleRatio(4.0f);
-		ScoreNum6->ChangeAnimation("ScoreNum6_6");
+		ScoreNum6->ChangeAnimation("ScoreNum6_0");
 	}
 	{
 		ScoreNum7 = CreateUIRenderer(RenderOrder::PlayUI);
@@ -282,7 +282,7 @@ void UIManager::Start()
 		ScoreNum7->SetTexture("Blank.bmp");
 		ScoreNum7->SetRenderPos(ScoreNumPos + (ScoreNumInter * 7));
 		ScoreNum7->SetScaleRatio(4.0f);
-		ScoreNum7->ChangeAnimation("ScoreNum7_7");
+		ScoreNum7->ChangeAnimation("ScoreNum7_0");
 	}
 
 	SetAbillity(Abillity::Normal);
@@ -290,35 +290,395 @@ void UIManager::Start()
 
 void UIManager::Update(float _Delta)
 {
-	if (GetAbillity() != Kirby::GetMainPlayer()->GetAbillity())
+
+	IconChange(Kirby::GetMainPlayer()->GetAbillity());
+	HpCheck();
+
+	if (Kirby::GetMainPlayer()->GetScore() != CurScore)
 	{
-		IconChange(Kirby::GetMainPlayer()->GetAbillity());
+		CurScore = Kirby::GetMainPlayer()->GetScore();
+
+		// 천만점대 점수
+		unsigned int Score0 = CurScore / 10000000 ;
+
+		switch (Score0)
+		{
+		case 0:
+			ScoreNum0->ChangeAnimation("ScoreNum0_0");
+			break;
+		case 1:
+			ScoreNum0->ChangeAnimation("ScoreNum0_1");
+			break;
+		case 2:
+			ScoreNum0->ChangeAnimation("ScoreNum0_2");
+			break;
+		case 3:
+			ScoreNum0->ChangeAnimation("ScoreNum0_3");
+			break;
+		case 4:
+			ScoreNum0->ChangeAnimation("ScoreNum0_4");
+			break;
+		case 5:
+			ScoreNum0->ChangeAnimation("ScoreNum0_5");
+			break;
+		case 6:
+			ScoreNum0->ChangeAnimation("ScoreNum0_6");
+			break;
+		case 7:
+			ScoreNum0->ChangeAnimation("ScoreNum0_7");
+			break;
+		case 8:
+			ScoreNum0->ChangeAnimation("ScoreNum0_8");
+			break;
+		case 9:
+			ScoreNum0->ChangeAnimation("ScoreNum0_9");
+			break;
+		default:
+			break;
+		}
+
+		// 백만점대 점수
+		unsigned int Score1 = (CurScore - (Score0 * 10000000)) / 1000000 ;
+
+		switch (Score1)
+		{
+		case 0:
+			ScoreNum1->ChangeAnimation("ScoreNum1_0");
+			break;
+		case 1:
+			ScoreNum1->ChangeAnimation("ScoreNum1_1");
+			break;
+		case 2:
+			ScoreNum1->ChangeAnimation("ScoreNum1_2");
+			break;
+		case 3:
+			ScoreNum1->ChangeAnimation("ScoreNum1_3");
+			break;
+		case 4:
+			ScoreNum1->ChangeAnimation("ScoreNum1_4");
+			break;
+		case 5:
+			ScoreNum1->ChangeAnimation("ScoreNum1_5");
+			break;
+		case 6:
+			ScoreNum1->ChangeAnimation("ScoreNum1_6");
+			break;
+		case 7:
+			ScoreNum1->ChangeAnimation("ScoreNum1_7");
+			break;
+		case 8:
+			ScoreNum1->ChangeAnimation("ScoreNum1_8");
+			break;
+		case 9:
+			ScoreNum1->ChangeAnimation("ScoreNum1_9");
+			break;
+		default:
+			break;
+		}
+
+		// 십만점대 점수
+		unsigned int Score2 = (CurScore - (Score0 * 10000000) - (Score1 * 1000000)) / 100000;
+
+		switch (Score2)
+		{
+		case 0:
+			ScoreNum2->ChangeAnimation("ScoreNum2_0");
+			break;
+		case 1:
+			ScoreNum2->ChangeAnimation("ScoreNum2_1");
+			break;
+		case 2:
+			ScoreNum2->ChangeAnimation("ScoreNum2_2");
+			break;
+		case 3:
+			ScoreNum2->ChangeAnimation("ScoreNum2_3");
+			break;
+		case 4:
+			ScoreNum2->ChangeAnimation("ScoreNum2_4");
+			break;
+		case 5:
+			ScoreNum2->ChangeAnimation("ScoreNum2_5");
+			break;
+		case 6:
+			ScoreNum2->ChangeAnimation("ScoreNum2_6");
+			break;
+		case 7:
+			ScoreNum2->ChangeAnimation("ScoreNum2_7");
+			break;
+		case 8:
+			ScoreNum2->ChangeAnimation("ScoreNum2_8");
+			break;
+		case 9:
+			ScoreNum2->ChangeAnimation("ScoreNum2_9");
+			break;
+		default:
+			break;
+		}
+
+		// 만점대 점수
+		unsigned int Score3 = (CurScore - (Score0 * 10000000) - (Score1 * 1000000) - (Score2 * 100000)) / 10000;
+
+		switch (Score3)
+		{
+		case 0:
+			ScoreNum3->ChangeAnimation("ScoreNum3_0");
+			break;
+		case 1:
+			ScoreNum3->ChangeAnimation("ScoreNum3_1");
+			break;
+		case 2:
+			ScoreNum3->ChangeAnimation("ScoreNum3_2");
+			break;
+		case 3:
+			ScoreNum3->ChangeAnimation("ScoreNum3_3");
+			break;
+		case 4:
+			ScoreNum3->ChangeAnimation("ScoreNum3_4");
+			break;
+		case 5:
+			ScoreNum3->ChangeAnimation("ScoreNum3_5");
+			break;
+		case 6:
+			ScoreNum3->ChangeAnimation("ScoreNum3_6");
+			break;
+		case 7:
+			ScoreNum3->ChangeAnimation("ScoreNum3_7");
+			break;
+		case 8:
+			ScoreNum3->ChangeAnimation("ScoreNum3_8");
+			break;
+		case 9:
+			ScoreNum3->ChangeAnimation("ScoreNum3_9");
+			break;
+		default:
+			break;
+		}
+
+		// 천점대 점수
+		unsigned int Score4 = (CurScore - (Score0 * 10000000) - (Score1 * 1000000) - (Score2 * 100000) - (Score3 * 10000)) / 1000;
+
+		switch (Score4)
+		{
+		case 0:
+			ScoreNum4->ChangeAnimation("ScoreNum4_0");
+			break;
+		case 1:
+			ScoreNum4->ChangeAnimation("ScoreNum4_1");
+			break;
+		case 2:
+			ScoreNum4->ChangeAnimation("ScoreNum4_2");
+			break;
+		case 3:
+			ScoreNum4->ChangeAnimation("ScoreNum4_3");
+			break;
+		case 4:
+			ScoreNum4->ChangeAnimation("ScoreNum4_4");
+			break;
+		case 5:
+			ScoreNum4->ChangeAnimation("ScoreNum4_5");
+			break;
+		case 6:
+			ScoreNum4->ChangeAnimation("ScoreNum4_6");
+			break;
+		case 7:
+			ScoreNum4->ChangeAnimation("ScoreNum4_7");
+			break;
+		case 8:
+			ScoreNum4->ChangeAnimation("ScoreNum4_8");
+			break;
+		case 9:
+			ScoreNum4->ChangeAnimation("ScoreNum4_9");
+			break;
+		default:
+			break;
+		}
+
+		// 백점대 점수
+		unsigned int Score5 = (CurScore - (Score0 * 10000000) - (Score1 * 1000000) - (Score2 * 100000) - (Score3 * 10000) - (Score4 * 1000)) / 100;
+
+		switch (Score5)
+		{
+		case 0:
+			ScoreNum5->ChangeAnimation("ScoreNum5_0");
+			break;
+		case 1:
+			ScoreNum5->ChangeAnimation("ScoreNum5_1");
+			break;
+		case 2:
+			ScoreNum5->ChangeAnimation("ScoreNum5_2");
+			break;
+		case 3:
+			ScoreNum5->ChangeAnimation("ScoreNum5_3");
+			break;
+		case 4:
+			ScoreNum5->ChangeAnimation("ScoreNum5_4");
+			break;
+		case 5:
+			ScoreNum5->ChangeAnimation("ScoreNum5_5");
+			break;
+		case 6:
+			ScoreNum5->ChangeAnimation("ScoreNum5_6");
+			break;
+		case 7:
+			ScoreNum5->ChangeAnimation("ScoreNum5_7");
+			break;
+		case 8:
+			ScoreNum5->ChangeAnimation("ScoreNum5_8");
+			break;
+		case 9:
+			ScoreNum5->ChangeAnimation("ScoreNum5_9");
+			break;
+		default:
+			break;
+		}
+
+		// 십점대 점수
+		unsigned int Score6 = (CurScore - (Score0 * 10000000) - (Score1 * 1000000) - (Score2 * 100000) - (Score3 * 10000) - (Score4 * 1000) - (Score5 * 100)) / 10;
+
+		switch (Score6)
+		{
+		case 0:
+			ScoreNum6->ChangeAnimation("ScoreNum6_0");
+			break;
+		case 1:
+			ScoreNum6->ChangeAnimation("ScoreNum6_1");
+			break;
+		case 2:
+			ScoreNum6->ChangeAnimation("ScoreNum6_2");
+			break;
+		case 3:
+			ScoreNum6->ChangeAnimation("ScoreNum6_3");
+			break;
+		case 4:
+			ScoreNum6->ChangeAnimation("ScoreNum6_4");
+			break;
+		case 5:
+			ScoreNum6->ChangeAnimation("ScoreNum6_5");
+			break;
+		case 6:
+			ScoreNum6->ChangeAnimation("ScoreNum6_6");
+			break;
+		case 7:
+			ScoreNum6->ChangeAnimation("ScoreNum6_7");
+			break;
+		case 8:
+			ScoreNum6->ChangeAnimation("ScoreNum6_8");
+			break;
+		case 9:
+			ScoreNum6->ChangeAnimation("ScoreNum6_9");
+			break;
+		default:
+			break;
+		}
+
+		// 일점대 점수
+		unsigned int Score7 = (CurScore - (Score0 * 10000000) - (Score1 * 1000000) - (Score2 * 100000) - (Score3 * 10000) - (Score4 * 1000) - (Score5 * 100) - (Score6 * 10)) / 1;
+
+		switch (Score7)
+		{
+		case 0:
+			ScoreNum7->ChangeAnimation("ScoreNum7_0");
+			break;
+		case 1:
+			ScoreNum7->ChangeAnimation("ScoreNum7_1");
+			break;
+		case 2:
+			ScoreNum7->ChangeAnimation("ScoreNum7_2");
+			break;
+		case 3:
+			ScoreNum7->ChangeAnimation("ScoreNum7_3");
+			break;
+		case 4:
+			ScoreNum7->ChangeAnimation("ScoreNum7_4");
+			break;
+		case 5:
+			ScoreNum7->ChangeAnimation("ScoreNum7_5");
+			break;
+		case 6:
+			ScoreNum7->ChangeAnimation("ScoreNum7_6");
+			break;
+		case 7:
+			ScoreNum7->ChangeAnimation("ScoreNum7_7");
+			break;
+		case 8:
+			ScoreNum7->ChangeAnimation("ScoreNum7_8");
+			break;
+		case 9:
+			ScoreNum7->ChangeAnimation("ScoreNum7_9");
+			break;
+		default:
+			break;
+		}
+
 	}
+
 }
 
 void UIManager::IconChange(Abillity _Kirby)
 {
-	switch (_Kirby)
+	if (GetAbillity() != Kirby::GetMainPlayer()->GetAbillity())
 	{
-	case Abillity::Normal:
-		IconUI->ChangeAnimation("NormalKirbyIcon");
-		IconName->ChangeAnimation("NormalKirbyIconName");
-		break;
-	case Abillity::Burning:
-		IconUI->ChangeAnimation("BurningKirbyIcon");
-		IconName->ChangeAnimation("BurningKirbyIconName");
-		break;
-	case Abillity::Spark:
-		IconUI->ChangeAnimation("SparkKirbyIcon");
-		IconName->ChangeAnimation("SprkKirbyIconName");
-		break;
-	case Abillity::Sword:
-		IconUI->ChangeAnimation("SwordKirbyIcon");
-		IconName->ChangeAnimation("SwordKirbyIconName");
-		break;
-	default:
-		break;
-	}
+		switch (_Kirby)
+		{
+		case Abillity::Normal:
+			IconUI->ChangeAnimation("NormalKirbyIcon");
+			IconName->ChangeAnimation("NormalKirbyIconName");
+			break;
+		case Abillity::Burning:
+			IconUI->ChangeAnimation("BurningKirbyIcon");
+			IconName->ChangeAnimation("BurningKirbyIconName");
+			break;
+		case Abillity::Spark:
+			IconUI->ChangeAnimation("SparkKirbyIcon");
+			IconName->ChangeAnimation("SprkKirbyIconName");
+			break;
+		case Abillity::Sword:
+			IconUI->ChangeAnimation("SwordKirbyIcon");
+			IconName->ChangeAnimation("SwordKirbyIconName");
+			break;
+		default:
+			break;
+		}
 
-	SetAbillity(_Kirby);
+		SetAbillity(_Kirby);
+	}
+}
+ 
+void UIManager::HpCheck()
+{
+	if (Kirby::GetMainPlayer()->GetHP() != CurHP)
+	{
+		CurHP = Kirby::GetMainPlayer()->GetHP();
+		switch (CurHP)
+		{
+		case 0:
+			HpBar1->ChangeAnimation("HpBar1Off");
+			break;
+		case 1:
+			HpBar1->ChangeAnimation("HpBar1On");
+			HpBar2->ChangeAnimation("HpBar2Off");
+			break;
+		case 2:
+			HpBar2->ChangeAnimation("HpBar2On");
+			HpBar3->ChangeAnimation("HpBar3Off");
+			break;
+		case 3:
+			HpBar3->ChangeAnimation("HpBar3On");
+			HpBar4->ChangeAnimation("HpBar4Off");
+			break;
+		case 4:
+			HpBar4->ChangeAnimation("HpBar4On");
+			HpBar5->ChangeAnimation("HpBar5Off");
+			break;
+		case 5:
+			HpBar5->ChangeAnimation("HpBar5On");
+			HpBar6->ChangeAnimation("HpBar6Off");
+			break;
+		case 6:
+			HpBar6->ChangeAnimation("HpBar6On");
+			break;
+		default:
+			break;
+		}
+	}
 }

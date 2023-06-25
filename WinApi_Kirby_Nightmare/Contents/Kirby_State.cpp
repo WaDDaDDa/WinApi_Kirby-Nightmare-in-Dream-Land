@@ -164,6 +164,7 @@ void Kirby::SwallowStart()
 
 void Kirby::DamageStart()
 {
+	DamageHP();
 	BodyCollision->Off();
 	AttackCollision->Off();
 	TackleCollision->Off();
@@ -172,6 +173,7 @@ void Kirby::DamageStart()
 
 void Kirby::FatDamageStart()
 {
+	DamageHP();
 	BodyCollision->Off();
 	ChangeAnimationState("FatDamage");
 }

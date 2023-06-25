@@ -108,6 +108,23 @@ public:
         return Speed;
     }
 
+    int GetHP()
+    {
+        return HP;
+    }
+
+    void DamageHP()
+    {
+        HP -= 1;
+    }
+
+    int GetScore()
+    {
+        return Score;
+    }
+
+    void AddScore();
+
 protected:
     // 클래스로 만들어도 된다. 행동과 랜더.
     void ChangeState(KirbyState _State);
@@ -211,6 +228,9 @@ private:
 
     bool ImmuneValue = false;
     float4 PrevPos = float4::ZERO;
+
+    static int HP;
+    static unsigned int Score;
 
     void Start() override;
     void Update(float _Delta) override;

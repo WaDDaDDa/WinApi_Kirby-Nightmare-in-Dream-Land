@@ -200,6 +200,7 @@ void SwordMan::DamageUpdate(float _Delta)
 
 void SwordMan::EffectStart()
 {
+	Kirby::GetMainPlayer()->AddScore();
 	AddPos(CollisionPos);
 	BodyCollision->Off();
 	ChangeAnimationState("Effect");
