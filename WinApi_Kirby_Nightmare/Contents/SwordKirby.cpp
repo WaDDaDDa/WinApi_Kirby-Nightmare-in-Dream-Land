@@ -50,7 +50,7 @@ void SwordKirby::Start()
 		}
 	}
 
-	MainRenderer = CreateRenderer(RenderOrder::Play);
+	MainRenderer = CreateRenderer(RenderOrder::Player);
 	LeftAttRenderer = CreateRenderer(RenderOrder::Effect);
 	RightAttRenderer = CreateRenderer(RenderOrder::Effect);
 
@@ -143,7 +143,7 @@ void SwordKirby::Start()
 		TackleCollision = CreateCollision(CollisionOrder::PlayerAttack);
 		TackleCollision->SetCollisionScale(TackleCollisionScale);
 		TackleCollision->SetCollisionPos(TackleCollisionPos);
-		TackleCollision->SetCollisionType(CollisionType::Rect);
+		TackleCollision->SetCollisionType(CollisionType::CirCle);
 		TackleCollision->Off();
 	}
 

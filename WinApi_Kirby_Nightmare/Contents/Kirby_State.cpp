@@ -249,7 +249,7 @@ void Kirby::TackleUpdate(float _Delta)
 
 	if (KirbyDir::Left == Dir)
 	{
-		TackleCollision->SetCollisionPos(-TackleCollisionPos);
+		TackleCollision->SetCollisionPos(float4{ -TackleCollisionPos.X , TackleCollisionPos.Y});
 	}
 	else if (KirbyDir::Right == Dir)
 	{
@@ -286,6 +286,35 @@ void Kirby::TackleUpdate(float _Delta)
 		}
 		AddPos(MovePos1);
 	}
+
+	std::vector<GameEngineCollision*> _Col;
+	if (true == TackleCollision->Collision(CollisionOrder::MonsterBody
+		, _Col
+		, CollisionType::CirCle // ³ª¸¦ »ç°¢ÇüÀ¸·Î ºÁÁà
+		, CollisionType::CirCle // »ó´ëµµ »ç°¢ÇüÀ¸·Î ºÁÁà
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			GameEngineActor* Actor = Collison->GetActor();
+			float4 TackleEnd = float4::ZERO;
+			if (GetDir() == KirbyDir::Left)
+			{
+				TackleEnd = float4::UP * 400.0f + float4::RIGHT * 200.0f;
+			}
+			else if (GetDir() == KirbyDir::Right)
+			{
+				TackleEnd = float4::LEFT * float4::UP * 400.0f;
+			}
+			SetGravityVector(TackleEnd);
+
+			ChangeState(KirbyState::Falling);
+			return;
+		}
+	}
+
 }
 
 void Kirby::WalkUpdate(float _Delta)
@@ -475,7 +504,8 @@ void Kirby::JumpTurnUpdate(float _Delta)
 void Kirby::FallingUpdate(float _Delta)
 {
 	DirCheck();
-	GroundCheck(_Delta);
+	Gravity(_Delta);
+	//GroundCheck(_Delta);
 
 	Movement(_Delta);
 

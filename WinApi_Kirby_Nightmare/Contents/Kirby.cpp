@@ -218,7 +218,7 @@ void Kirby::Start()
 		TackleCollision = CreateCollision(CollisionOrder::PlayerAttack);
 		TackleCollision->SetCollisionScale(TackleCollisionScale);
 		TackleCollision->SetCollisionPos(TackleCollisionPos);
-		TackleCollision->SetCollisionType(CollisionType::Rect);
+		TackleCollision->SetCollisionType(CollisionType::CirCle);
 		TackleCollision->Off();
 	}
 	MainRenderer->SetTexture("Blank.bmp");

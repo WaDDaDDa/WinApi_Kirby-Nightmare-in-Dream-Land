@@ -215,8 +215,8 @@ private:
     float4 AttackCollisionPos = float4{ 100 , -50 };
     float4 AttackCollisionScale = float4{ 100,80 };
 
-    float4 TackleCollisionPos = float4{ 50 , 0 };
-    float4 TackleCollisionScale = float4{ 80,40 };
+    float4 TackleCollisionPos = float4{ 55 , -20 };
+    float4 TackleCollisionScale = float4{ 40,40 };
 
     Abillity CurAbillity = Abillity::Normal;
     Abillity ChangeAbillity = Abillity::Normal;

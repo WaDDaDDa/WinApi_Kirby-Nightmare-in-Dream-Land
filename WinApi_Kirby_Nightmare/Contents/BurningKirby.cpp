@@ -48,7 +48,7 @@ void BurningKirby::Start()
 		}
 	}
 
-	MainRenderer = CreateRenderer(RenderOrder::Play);
+	MainRenderer = CreateRenderer(RenderOrder::Player);
 	{ // LeftAnimation »ý¼º
 		MainRenderer->CreateAnimation("BurningKirbyLeft_Idle", "BurningKirbyLeft.bmp", 0, 6, 0.2f, true);
 		MainRenderer->FindAnimation("BurningKirbyLeft_Idle")->Inters[3] = 0.0f;
@@ -109,7 +109,7 @@ void BurningKirby::Start()
 		TackleCollision = CreateCollision(CollisionOrder::PlayerAttack);
 		TackleCollision->SetCollisionScale(TackleCollisionScale);
 		TackleCollision->SetCollisionPos(TackleCollisionPos);
-		TackleCollision->SetCollisionType(CollisionType::Rect);
+		TackleCollision->SetCollisionType(CollisionType::CirCle);
 		TackleCollision->Off();
 	}
 	MainRenderer->SetScaleRatio(4.0f);

@@ -50,7 +50,7 @@ void SparkKirby::Start()
 		}
 	}
 
-	MainRenderer = CreateRenderer(RenderOrder::Play);
+	MainRenderer = CreateRenderer(RenderOrder::Player);
 	AttRenderer = CreateRenderer(RenderOrder::BackEffect);
 
 	{ // LeftAnimation »ý¼º
@@ -113,7 +113,7 @@ void SparkKirby::Start()
 		TackleCollision = CreateCollision(CollisionOrder::PlayerAttack);
 		TackleCollision->SetCollisionScale(TackleCollisionScale);
 		TackleCollision->SetCollisionPos(TackleCollisionPos);
-		TackleCollision->SetCollisionType(CollisionType::Rect);
+		TackleCollision->SetCollisionType(CollisionType::CirCle);
 		TackleCollision->Off();
 	}
 	AttRenderer ->SetTexture("Blank.bmp");
