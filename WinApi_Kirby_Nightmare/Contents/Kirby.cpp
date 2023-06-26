@@ -91,28 +91,7 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_FatDamage.bmp"), 4, 1);
 
 		}
-		{
-			//ÀÌÆåÆ® ·Îµå
-			FilePath.MoveParentToExistsChild("Resource");
-			FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Etc\\");
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("DamageEffects.bmp"), 3, 1);
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Star.bmp"), 2, 1);
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("StarEffects.bmp"), 4, 1);
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("RightCharge.bmp"), 3, 1);
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("LeftCharge.bmp"), 3, 1);
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("BunringMonsterAttack.bmp"), 6, 2);
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("FireEffect1Left.bmp"), 7, 1);
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("FireEffect2Left.bmp"), 7, 1);
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("FireEffect1Right.bmp"), 7, 1);
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("FireEffect2Right.bmp"), 7, 1);
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("BunringMonsterAttack.bmp"), 6, 2);
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Blank.bmp"), 4, 1);
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("SparkEffect.bmp"), 4, 1);
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Effect1.bmp"), 7, 1);
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("LeftSwordEffect.bmp"), 8, 1);
-			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("RightSwordEffect.bmp"), 8, 1);
 
-		}
 	}
 
 	MainRenderer = CreateRenderer(RenderOrder::Player); 
@@ -673,7 +652,7 @@ void Kirby::ChangeKirby(Abillity _Kirby)
 	{
 		float4 CurPos = Kirby::GetMainPlayer()->GetPos();
 		float4 CurPrevPos = Kirby::GetMainPlayer()->GetPrevPos();
-		
+		int CurHp = HP;
 		switch (_Kirby)
 		{
 		case Abillity::Normal:
@@ -699,7 +678,7 @@ void Kirby::ChangeKirby(Abillity _Kirby)
 		Kirby::GetMainPlayer()->SetPrevPos(CurPrevPos);
 		Kirby::GetMainPlayer()->SetPos(CurPos);
 		Kirby::GetMainPlayer()->SetGroundTexture(GetGroundTexture());
-		Kirby::GetMainPlayer()->OverOn();
+		Kirby::HP = CurHp;
 	}
 
 	Kirby::GetMainPlayer()->SetAbillity(_Kirby);

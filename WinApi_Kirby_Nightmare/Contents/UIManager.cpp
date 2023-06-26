@@ -286,6 +286,7 @@ void UIManager::Start()
 	}
 
 	SetAbillity(Abillity::Normal);
+	OverOn();
 }
 
 void UIManager::Update(float _Delta)

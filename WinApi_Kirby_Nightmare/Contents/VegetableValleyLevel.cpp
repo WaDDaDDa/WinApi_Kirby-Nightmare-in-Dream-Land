@@ -52,7 +52,7 @@ void VegetableValleyLevel::Start()
 	StagePtr = CreateActor<Stage>();
 	StagePtr->Init("Level1.Bmp", "Level1_Debug.bmp");
 
-	CreateActor<UIManager>();
+	//CreateActor<UIManager>();
 	MainPortal = CreateActor<Portal>();
 	MainPortal->Door->Off();
 	MainPortal->SetPos(float4{ 3900, 290 });
@@ -63,22 +63,9 @@ void VegetableValleyLevel::Update(float _Delta)
 {
 	if (true == GameEngineInput::IsDown('P'))
 	{
-
 		GameEngineCore::ChangeLevel("MainHubLevel");
-		Kirby::GetMainPlayer()->SetGroundTexture("MainHupDebug.bmp");
-		float4 Ppos = Kirby::GetMainPlayer()->GetPos();
-		Kirby::GetMainPlayer()->SetPos(Kirby::GetMainPlayer()->GetPrevPos());
-		Kirby::GetMainPlayer()->SetPrevPos(Ppos);
 		BGMPlayer.Stop();
 		return;
-
-		//GameEngineCore::ChangeLevel("MainHubLevel");
-		//Kirby::GetMainPlayer()->SetGroundTexture("MainHupDebug.bmp");
-		//float4 Ppos = Kirby::GetMainPlayer()->GetPos();
-		//Kirby::GetMainPlayer()->SetPos(Kirby::GetMainPlayer()->GetPrevPos());
-		//Kirby::GetMainPlayer()->SetPrevPos(Ppos);
-		//BGMPlayer.Stop();
-		//return;
 	}
 
 	if (true == GameEngineInput::IsDown('M'))
@@ -129,10 +116,7 @@ void VegetableValleyLevel::Update(float _Delta)
 			if (true == GameEngineInput::IsDown('W'))
 			{
 				GameEngineCore::ChangeLevel("VegetableValley2Level");
-				Kirby::GetMainPlayer()->SetGroundTexture("Level2_Debug.bmp");
-				float4 Ppos = Kirby::GetMainPlayer()->GetPrevPos();
-				Kirby::GetMainPlayer()->SetPos(float4 { 300, 370 });
-				Kirby::GetMainPlayer()->SetPrevPos(Ppos);
+
 				BGMPlayer.Stop();
 				return;
 			}
@@ -156,7 +140,6 @@ void VegetableValleyLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
 	}
 
-	Kirby::GetMainPlayer()->SetGroundTexture("Level1_Debug.bmp");
 	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
 
 	GetMainCamera()->SetPos(Kirby::GetMainPlayer()->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
@@ -164,6 +147,13 @@ void VegetableValleyLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 	FadeObject* FObject = CreateActor<FadeObject>();
 	FObject->FadeIn();
+
+	Abillity CurAbillity = Kirby::GetMainPlayer()->GetAbillity();
+	Kirby::GetMainPlayer()->Death();
+	Kirby::SetMainPlayer(CreateActor<Kirby>());
+	Kirby::GetMainPlayer()->ChangeKirby(CurAbillity);
+	Kirby::GetMainPlayer()->SetGroundTexture("Level1_Debug.bmp");
+	Kirby::GetMainPlayer()->SetPos(StartPos);
 
 	// 몬스터 배치
 	{

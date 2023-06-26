@@ -55,9 +55,7 @@ void MainHubLevel::Start()
 	StagePtr = CreateActor<Stage>();
 	StagePtr->Init("MainHup.Bmp", "MainHupDebug.bmp");
 
-	Kirby::SetMainPlayer(CreateActor<Kirby>());
-	Kirby::GetMainPlayer()->OverOn();
-	Kirby::GetMainPlayer()->SetPos(StartPlayerPos);
+	//Kirby::SetMainPlayer(CreateActor<Kirby>());
 
 	CreateActor<UIManager>();
 
@@ -75,10 +73,6 @@ void MainHubLevel::Update(float _Delta)
 
 	if (true == GameEngineInput::IsDown('P'))
 	{
-		GameEngineCore::ChangeLevel("VegetableValley3Level");
-		Kirby::GetMainPlayer()->SetGroundTexture("Level3_Debug.bmp");
-		Kirby::GetMainPlayer()->SetPos(float4{ 2400,510 });
-		//Kirby::GetMainPlayer()->SetPos(Kirby::GetMainPlayer()->GetPrevPos());
 		BGMPlayer.Stop();
 	}
 
@@ -122,11 +116,6 @@ void MainHubLevel::Update(float _Delta)
 			if (true == GameEngineInput::IsDown('W'))
 			{
 				GameEngineCore::ChangeLevel("VegetableValleyLevel");
-				Kirby::GetMainPlayer()->SetGroundTexture("Level1_Debug.bmp");
-				// 포탈입장전 현재위치를 저장
-				Kirby::GetMainPlayer()->SetPrevPos(Kirby::GetMainPlayer()->GetPos());
-				// stage1의 시작위치 이거하면 Fade순간에 위치가 변경되는것이 보여서 이상함.
-				// Kirby::GetMainPlayer()->SetPos(Stage1StartPos);
 				BGMPlayer.Stop();
 				return;
 			}
@@ -149,11 +138,6 @@ void MainHubLevel::Update(float _Delta)
 			if (true == GameEngineInput::IsDown('W'))
 			{
 				GameEngineCore::ChangeLevel("VegetableValley2Level");
-				Kirby::GetMainPlayer()->SetGroundTexture("Level2_Debug.bmp");
-				// 포탈입장전 현재위치를 저장
-				Kirby::GetMainPlayer()->SetPrevPos(Kirby::GetMainPlayer()->GetPos());
-				// stage2의 시작위치
-				Kirby::GetMainPlayer()->SetPos(Stage2StartPos);
 				BGMPlayer.Stop();
 				return;
 			}
@@ -172,16 +156,33 @@ void MainHubLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	if (nullptr == Kirby::GetMainPlayer())
 	{
-		MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
+		// MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
+		float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
+		GetMainCamera()->SetPos(StartPlayerPos + float4{ -WindowScale.hX(), -WindowScale.hY() });
+	}
+	else
+	{
+		float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
+		//GetMainCamera()->SetPos(Kirby::GetMainPlayer()->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
 	}
 
-	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
-	GetMainCamera()->SetPos(Kirby::GetMainPlayer()->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
-	Kirby::GetMainPlayer()->SetGroundTexture("MainHupDebug.bmp");
+
 	BGMPlayer = GameEngineSound::SoundPlay("04Vegetable_Valley.mp3");
 
 	FadeObject* FObject = CreateActor<FadeObject>();
 	FObject->FadeIn();
+
+	Abillity CurAbillity = Abillity::Normal;
+	if (nullptr != Kirby::GetMainPlayer())
+	{
+		CurAbillity = Kirby::GetMainPlayer()->GetAbillity();
+		Kirby::GetMainPlayer()->Death();
+	}
+
+	Kirby::SetMainPlayer(CreateActor<Kirby>());
+	Kirby::GetMainPlayer()->ChangeKirby(CurAbillity);
+	Kirby::GetMainPlayer()->SetGroundTexture("MainHupDebug.bmp");
+	Kirby::GetMainPlayer()->SetPos(StartPlayerPos);
 }
 
 void MainHubLevel::LevelEnd(GameEngineLevel* _NextLevel)

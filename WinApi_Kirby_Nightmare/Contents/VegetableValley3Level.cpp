@@ -60,10 +60,6 @@ void VegetableValley3Level::Update(float _Delta)
 	if (true == GameEngineInput::IsDown('P'))
 	{
 		GameEngineCore::ChangeLevel("MainHubLevel");
-		Kirby::GetMainPlayer()->SetGroundTexture("MainHupDebug.bmp");
-		float4 Ppos = Kirby::GetMainPlayer()->GetPos();
-		Kirby::GetMainPlayer()->SetPos(Kirby::GetMainPlayer()->GetPrevPos());
-		Kirby::GetMainPlayer()->SetPrevPos(Ppos);
 		BGMPlayer.Stop();
 		return;
 	}
@@ -102,10 +98,6 @@ void VegetableValley3Level::Update(float _Delta)
 			if (true == GameEngineInput::IsDown('W'))
 			{
 				GameEngineCore::ChangeLevel("VegetableValleyLevel");
-				Kirby::GetMainPlayer()->SetGroundTexture("Level1_Debug.bmp");
-				float4 Ppos = Kirby::GetMainPlayer()->GetPos();
-				Kirby::GetMainPlayer()->SetPos(Kirby::GetMainPlayer()->GetPrevPos());
-				Kirby::GetMainPlayer()->SetPrevPos(Ppos);
 				BGMPlayer.Stop();
 				return;
 			}
@@ -128,14 +120,18 @@ void VegetableValley3Level::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
 	}
-
-	Kirby::GetMainPlayer()->SetGroundTexture("Level3_Debug.bmp");
-	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
-
-	GetMainCamera()->SetPos(Kirby::GetMainPlayer()->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
+	// BGM 및 페이드 인
 	BGMPlayer = GameEngineSound::SoundPlay("04Vegetable_Valley.mp3");
 	FadeObject* FObject = CreateActor<FadeObject>();
 	FObject->FadeIn();
+
+	// 커비 셋팅 . 이전능력 폼체인지
+	Abillity CurAbillity = Kirby::GetMainPlayer()->GetAbillity();
+	Kirby::GetMainPlayer()->Death();
+	Kirby::SetMainPlayer(CreateActor<Kirby>());
+	Kirby::GetMainPlayer()->ChangeKirby(CurAbillity);
+	Kirby::GetMainPlayer()->SetGroundTexture("Level3_Debug.bmp");
+	Kirby::GetMainPlayer()->SetPos(StartPos);
 
 	// 몬스터 배치
 	{
