@@ -365,7 +365,7 @@ void Kirby::JumpUpdate(float _Delta)
 	// 머리위 체크가 녹색이면 Falling,  빨간색이면 통과.  이런식으로 하면 통과하는 발판이 가능해질듯함.
 	float4 UpCheck = { 0 , -64 };
 	unsigned int ColorCheck = GetGroundColor(RGB(255, 255, 255), UpCheck);
-	if (ColorCheck != RGB(255, 255, 255))
+	if (ColorCheck == RGB(0, 255, 0))
 	{
 		// 체인지 폴링
 		SetGravityVector(float4::ZERO);

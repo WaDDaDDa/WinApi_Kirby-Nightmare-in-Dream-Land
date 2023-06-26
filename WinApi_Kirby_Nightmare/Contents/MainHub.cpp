@@ -5,6 +5,7 @@
 #include "VegetableValleyLevel.h"
 #include "VegetableValley2Level.h"
 #include "VegetableValley3Level.h"
+#include "DesertLevel.h"
 
 
 MainHub::MainHub()
@@ -27,6 +28,7 @@ void MainHub::Start()
 	GameEngineCore::CreateLevel<VegetableValleyLevel>("VegetableValleyLevel");
 	GameEngineCore::CreateLevel<VegetableValley2Level>("VegetableValley2Level");
 	GameEngineCore::CreateLevel<VegetableValley3Level>("VegetableValley3Level");
+	GameEngineCore::CreateLevel<DesertLevel>("DesertLevel");
 
 	// 이 레벨이 화면에 보여라.
 	GameEngineCore::ChangeLevel("TitleLevel");

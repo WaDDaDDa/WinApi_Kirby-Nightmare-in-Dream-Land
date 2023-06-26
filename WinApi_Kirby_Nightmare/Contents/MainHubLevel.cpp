@@ -58,12 +58,12 @@ void MainHubLevel::Start()
 	//Kirby::SetMainPlayer(CreateActor<Kirby>());
 
 	CreateActor<UIManager>();
-
+	
 	Stage1Portal = CreateActor<Portal>();
-	Stage1Portal->SetPos(float4{ 448, 1040 });
+	Stage1Portal->SetPos(Stage1PortalPos);
 
 	Stage2Portal = CreateActor<Portal>();
-	Stage2Portal->SetPos(float4{ 960, 1170 });
+	Stage2Portal->SetPos(Stage2PortalPos);
 }
 
 
@@ -115,7 +115,7 @@ void MainHubLevel::Update(float _Delta)
 
 			if (true == GameEngineInput::IsDown('W'))
 			{
-				GameEngineCore::ChangeLevel("VegetableValleyLevel");
+				GameEngineCore::ChangeLevel("DesertLevel");
 				BGMPlayer.Stop();
 				return;
 			}
@@ -183,6 +183,11 @@ void MainHubLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	Kirby::GetMainPlayer()->ChangeKirby(CurAbillity);
 	Kirby::GetMainPlayer()->SetGroundTexture("MainHupDebug.bmp");
 	Kirby::GetMainPlayer()->SetPos(StartPlayerPos);
+
+	if (true == GameEngineInput::IsPress('P'))
+	{
+		Kirby::GetMainPlayer()->SetPos(Stage1PortalPos);
+	}
 }
 
 void MainHubLevel::LevelEnd(GameEngineLevel* _NextLevel)

@@ -70,6 +70,9 @@
     <ClInclude Include="SwordMan.h">
       <Filter>Monster</Filter>
     </ClInclude>
+    <ClInclude Include="DesertLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainHub.cpp" />
@@ -161,6 +164,9 @@
     </ClCompile>
     <ClCompile Include="SwordManState.cpp">
       <Filter>Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="DesertLevel.cpp">
+      <Filter>Level</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
