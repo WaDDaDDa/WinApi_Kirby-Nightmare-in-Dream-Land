@@ -620,22 +620,6 @@ void Kirby::CameraFocus(float _Delta)
 	float ImageX = GetGroundTexture()->GetScale().X - 960.0f;
 	float ImageY = GetGroundTexture()->GetScale().Y - 600.0f;
 	
-	// 카메라가 맵의 왼쪽으로 못나가게.
-	if (0 >= GetLevel()->GetMainCamera()->GetPos().X)
-	{
-		GetLevel()->GetMainCamera()->SetPos({ 0.0f, GetLevel()->GetMainCamera()->GetPos().Y});
-	}
-	// 카메라가 맵의 오른쪽 최대치를 못나가게.
-	if (ImageX <= GetLevel()->GetMainCamera()->GetPos().X)
-	{
-		GetLevel()->GetMainCamera()->SetPos({ ImageX, GetLevel()->GetMainCamera()->GetPos().Y });
-	}
-
-	if (ImageY <= GetLevel()->GetMainCamera()->GetPos().Y)
-	{
-		GetLevel()->GetMainCamera()->SetPos({ GetLevel()->GetMainCamera()->GetPos().X, ImageY });
-	}
-	
 	// 카메라가 움직이는 X 범위 250 ~ 650 사이에캐릭터를 둔다.
 	// 카메라의 속도는 캐릭터의 속도로 한다.
 	if (650 < PlayerX - CameraRangeX)
@@ -654,7 +638,6 @@ void Kirby::CameraFocus(float _Delta)
 		if (GetGravityVector().iY() <= -1)
 		{
 			GetLevel()->GetMainCamera()->AddPos(GetGravityVector() * _Delta);
-			return;
 		}
 		GetLevel()->GetMainCamera()->AddPos(float4::UP);
 	}
@@ -663,9 +646,24 @@ void Kirby::CameraFocus(float _Delta)
 		if (GetGravityVector().iY() >= 1 )
 		{
 			GetLevel()->GetMainCamera()->AddPos(GetGravityVector() * _Delta);
-			return;
 		}
 		GetLevel()->GetMainCamera()->AddPos(float4::DOWN * 2.0f);
+	}
+
+	// 카메라가 맵의 왼쪽으로 못나가게.
+	if (0 >= GetLevel()->GetMainCamera()->GetPos().X)
+	{
+		GetLevel()->GetMainCamera()->SetPos({ 0.0f, GetLevel()->GetMainCamera()->GetPos().Y });
+	}
+	// 카메라가 맵의 오른쪽 최대치를 못나가게.
+	if (ImageX <= GetLevel()->GetMainCamera()->GetPos().X)
+	{
+		GetLevel()->GetMainCamera()->SetPos({ ImageX, GetLevel()->GetMainCamera()->GetPos().Y });
+	}
+
+	if (ImageY <= GetLevel()->GetMainCamera()->GetPos().Y)
+	{
+		GetLevel()->GetMainCamera()->SetPos({ GetLevel()->GetMainCamera()->GetPos().X, ImageY });
 	}
 }
 
@@ -872,7 +870,7 @@ void Kirby::RenderSwitch()
 
 void Kirby::AddScore()
 {
-	unsigned int Value = GameEngineRandom::MainRandom.RandomInt(100, 1400);
+	unsigned int Value = GameEngineRandom::MainRandom.RandomInt(100, 11400);
 
 	Score += Value;
 }
