@@ -47,8 +47,8 @@ void DesertLevel3::Start()
 	}
 	// 백그라운드 사막으로 변경.
 	CurBackGround = CreateActor<BackGround>();
-	CurBackGround->Init("TestBackGround.Bmp");
-	CurBackGround->SetScale("TestBackGround.Bmp", 4.0f);
+	CurBackGround->Init("DesertBackGround.Bmp");
+	CurBackGround->SetScale("DesertBackGround.Bmp", 4.0f);
 
 	StagePtr = CreateActor<Stage>();
 	StagePtr->Init("DesertLevel3.Bmp", "DesertLevel3_Debug.bmp");
