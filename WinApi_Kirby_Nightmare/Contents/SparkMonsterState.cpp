@@ -127,7 +127,8 @@ void SparkMonster::DamageStart()
 
 void SparkMonster::DamageUpdate(float _Delta)
 {
-	GroundCheck(_Delta);
+	//GroundCheck(_Delta);
+	Gravity(_Delta);
 	float4 MoveDir = float4::ZERO;
 	if (SparkMonsterDir::Left == Dir)
 	{
@@ -177,8 +178,7 @@ void SparkMonster::EffectStart()
 
 void SparkMonster::EffectUpdate(float _Delta)
 {
-	GroundCheck(_Delta);
-	GravityOff();
+
 	if (0.5f <= GetLiveTime())
 	{
 		Death();

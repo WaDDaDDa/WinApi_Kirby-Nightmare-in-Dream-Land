@@ -212,8 +212,8 @@ private:
     float4 BodyCollisionPos = float4{ 0 , -40 };
     float4 BodyCollisionScale = float4{ 80, 80 };
 
-    float4 AttackCollisionPos = float4{ 100 , -50 };
-    float4 AttackCollisionScale = float4{ 100,80 };
+    float4 AttackCollisionPos = float4{ 100 , -40 };
+    float4 AttackCollisionScale = float4{ 130,120 };
 
     float4 TackleCollisionPos = float4{ 55 , -20 };
     float4 TackleCollisionScale = float4{ 40,40 };

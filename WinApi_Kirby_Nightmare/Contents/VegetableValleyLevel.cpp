@@ -83,7 +83,7 @@ void VegetableValleyLevel::Update(float _Delta)
 
 	if (true == GameEngineInput::IsDown('M'))
 	{
-		SwordMan* Waddle = CreateActor<SwordMan>();
+		SparkMonster* Waddle = CreateActor<SparkMonster>();
 		Waddle->SetGroundTexture("Level1_Debug.bmp");
 		Waddle->SetPos(float4{ 500,360 });
 	}

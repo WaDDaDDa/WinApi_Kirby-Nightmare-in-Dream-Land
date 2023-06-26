@@ -31,7 +31,7 @@ void UIManager::Start()
 
 	IconUI = CreateUIRenderer(RenderOrder::PlayUI);
 	IconUI->CreateAnimation("NormalKirbyIcon", "KirbyIcon.bmp", 0, 0, 0.1f, false);
-	IconUI->CreateAnimation("SprkKirbyIcon", "KirbyIcon.bmp", 12, 12, 0.1f, false);
+	IconUI->CreateAnimation("SparkKirbyIcon", "KirbyIcon.bmp", 12, 12, 0.1f, false);
 	IconUI->CreateAnimation("SwordKirbyIcon", "KirbyIcon.bmp", 22, 22, 0.1f, false);
 	IconUI->CreateAnimation("BurningKirbyIcon", "KirbyIcon.bmp", 23, 23, 0.1f, false);
 	IconUI->SetTexture("Blank.bmp");
@@ -41,7 +41,7 @@ void UIManager::Start()
 
 	IconName = CreateUIRenderer(RenderOrder::PlayUI);
 	IconName->CreateAnimation("NormalKirbyIconName", "IConName.bmp", 0, 0, 0.1f, false);
-	IconName->CreateAnimation("SprkKirbyIconName", "IConName.bmp", 2, 2, 0.1f, false);
+	IconName->CreateAnimation("SparkKirbyIconName", "IConName.bmp", 2, 2, 0.1f, false);
 	IconName->CreateAnimation("SwordKirbyIconName", "IConName.bmp", 4, 4, 0.1f, false);
 	IconName->CreateAnimation("BurningKirbyIconName", "IConName.bmp", 5, 5, 0.1f, false);
 	IconName->SetTexture("Blank.bmp");
@@ -630,7 +630,7 @@ void UIManager::IconChange(Abillity _Kirby)
 			break;
 		case Abillity::Spark:
 			IconUI->ChangeAnimation("SparkKirbyIcon");
-			IconName->ChangeAnimation("SprkKirbyIconName");
+			IconName->ChangeAnimation("SparkKirbyIconName");
 			break;
 		case Abillity::Sword:
 			IconUI->ChangeAnimation("SwordKirbyIcon");
