@@ -185,10 +185,10 @@ void Kirby::IdleUpdate(float _Delta)
 	GroundCheck(_Delta);
 
 	unsigned int Color = GetGroundColor(RGB(255, 255, 255));
-	unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), LeftCheck);
-	unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), RightCheck);
+	//unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), LeftCheck);
+	//unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), RightCheck);
 
-	if ((RGB(255, 255, 255) == Color && LeftColor == RGB(255, 255, 255) && RightColor == RGB(255, 255, 255)))
+	if ((RGB(255, 255, 255) == Color/* && LeftColor == RGB(255, 255, 255) && RightColor == RGB(255, 255, 255)*/))
 	{
 		ChangeState(KirbyState::Falling);
 		return;
@@ -525,10 +525,10 @@ void Kirby::FallingUpdate(float _Delta)
 
 	// 땅에 닿으면 기본상태.
 	unsigned int Color = GetGroundColor(RGB(255, 255, 255));
-	unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), LeftCheck);
-	unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), RightCheck);
+	//unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), LeftCheck);
+	//unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), RightCheck);
 
-	if (RGB(255, 255, 255) != Color || LeftColor != RGB(255, 255, 255) || RightColor != RGB(255, 255, 255))
+	if (RGB(255, 255, 255) != Color/* || LeftColor != RGB(255, 255, 255) || RightColor != RGB(255, 255, 255)*/)
 	{
 		MovePos = float4::ZERO;
 		GravityReset();
@@ -578,12 +578,12 @@ void Kirby::FlyUpdate(float _Delta)
 	Gravity(_Delta);
 
 	unsigned int Color = GetGroundColor(RGB(255, 255, 255));
-	unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), LeftCheck);
-	unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), RightCheck);
+	//unsigned int LeftColor = GetGroundColor(RGB(255, 255, 255), LeftCheck);
+	//unsigned int RightColor = GetGroundColor(RGB(255, 255, 255), RightCheck);
 
 	// 플레이어 위치가 흰색이면 중력작용.
 	// 모두 흰색이면 공중이다.
-	if (RGB(255, 255, 255) == Color && LeftColor == RGB(255, 255, 255) && RightColor == RGB(255, 255, 255))
+	if (RGB(255, 255, 255) == Color /*&& LeftColor == RGB(255, 255, 255) && RightColor == RGB(255, 255, 255)*/)
 	{
 		//Gravity(_Delta);
 	}
