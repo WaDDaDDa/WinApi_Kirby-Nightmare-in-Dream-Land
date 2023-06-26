@@ -69,14 +69,18 @@ void BurningKirby::AttackUpdate(float _Delta)
 		return;
 	}
 
+	float4 AttackEnd = float4::ZERO;
 	float4 AttackSpeed = { Speed * _Delta , 0.0f };
+
 	if (KirbyDir::Left == Dir)
 	{
 		CheckPos = { -40.0f, -40.0f };
 		if (GetWallCheck() != RGB(255, 255, 255))
 		{
-			MovePos.X *= 0;
-			AddPos(MovePos);
+			AttackEnd = float4::UP * 400.0f + float4::RIGHT * 200.0f;
+			SetGravityVector(AttackEnd);
+			Speed = NormalSpeed;
+			ChangeState(KirbyState::Falling);
 			return;
 		}
 		AddPos(-AttackSpeed);
@@ -86,8 +90,10 @@ void BurningKirby::AttackUpdate(float _Delta)
 		CheckPos = { 40.0f, -40.0f };
 		if (GetWallCheck() != RGB(255, 255, 255))
 		{
-			MovePos.X *= 0;
-			AddPos(MovePos);
+			AttackEnd = float4::UP * 400.0f + float4::LEFT * 200.0f;
+			SetGravityVector(AttackEnd);
+			Speed = NormalSpeed;
+			ChangeState(KirbyState::Falling);
 			return;
 		}
 		AddPos(AttackSpeed);
