@@ -115,7 +115,7 @@ void MainHubLevel::Update(float _Delta)
 
 			if (true == GameEngineInput::IsDown('W'))
 			{
-				GameEngineCore::ChangeLevel("DesertLevel");
+				GameEngineCore::ChangeLevel("DesertLevel2");
 				BGMPlayer.Stop();
 				return;
 			}

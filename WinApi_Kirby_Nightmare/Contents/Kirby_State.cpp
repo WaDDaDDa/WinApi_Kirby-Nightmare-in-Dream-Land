@@ -364,8 +364,13 @@ void Kirby::JumpUpdate(float _Delta)
 	// 머리위 체크가 하얀색이 아니라면 Falling으로 상태전환. = 다른색상이 있다면 Falling
 	// 머리위 체크가 녹색이면 Falling,  빨간색이면 통과.  이런식으로 하면 통과하는 발판이 가능해질듯함.
 	float4 UpCheck = { 0 , -64 };
+	float4 RightUpCheck = { 26 , -64 };
+	float4 LeftUpCheck = { -26 , -64 };
+
 	unsigned int ColorCheck = GetGroundColor(RGB(255, 255, 255), UpCheck);
-	if (ColorCheck == RGB(0, 255, 0))
+	unsigned int RightColorCheck = GetGroundColor(RGB(255, 255, 255), RightUpCheck);
+	unsigned int LeftColorCheck = GetGroundColor(RGB(255, 255, 255), LeftUpCheck);
+	if (ColorCheck == RGB(0, 255, 0) || RightColorCheck == RGB(0, 255, 0) || LeftColorCheck == RGB(0, 255, 0))
 	{
 		// 체인지 폴링
 		SetGravityVector(float4::ZERO);
@@ -609,9 +614,15 @@ void Kirby::FlyUpdate(float _Delta)
 	unsigned int ColorCheck = GetGroundColor(RGB(255, 255, 255), UpCheck);
 	if (ColorCheck == RGB(0, 255, 0))
 	{
+		while (ColorCheck != RGB(255,255,255))
+		{
+			UpCheck = UpCheck + float4::DOWN;
+			ColorCheck = GetGroundColor(RGB(255, 255, 255), UpCheck);
+			AddPos(float4::DOWN);
+		}
 		//GravityReset();
-		SetGravityVector(-GetGravityVector());
-		return;
+		//SetGravityVector(-GetGravityVector());
+		//return;
 	}
 
 	if (true == GameEngineInput::IsDown('F') || GameEngineInput::GetPressTime('F') >= 0.4f)

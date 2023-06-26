@@ -73,6 +73,9 @@
     <ClInclude Include="DesertLevel.h">
       <Filter>Level</Filter>
     </ClInclude>
+    <ClInclude Include="DesertLevel2.h">
+      <Filter>Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainHub.cpp" />
@@ -166,6 +169,9 @@
       <Filter>Monster</Filter>
     </ClCompile>
     <ClCompile Include="DesertLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="DesertLevel2.cpp">
       <Filter>Level</Filter>
     </ClCompile>
   </ItemGroup>
