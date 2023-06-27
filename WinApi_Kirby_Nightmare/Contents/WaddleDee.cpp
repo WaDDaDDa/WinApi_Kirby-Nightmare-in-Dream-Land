@@ -39,6 +39,7 @@ void WaddleDee::Start()
 	}
 
 	MainRenderer = CreateRenderer(RenderOrder::Play);
+	MainRenderer->SetTexture("Blank.bmp");
 	{ // 애니메이션 설정
 		MainRenderer->CreateAnimation("WaddleDeeLeft_Idle", "WaddleDeeLeft.bmp", 2, 2, 0.1f, true);
 		MainRenderer->CreateAnimation("WaddleDeeLeft_Walk", "WaddleDeeLeft.bmp", 1, 4, 0.3f, true);

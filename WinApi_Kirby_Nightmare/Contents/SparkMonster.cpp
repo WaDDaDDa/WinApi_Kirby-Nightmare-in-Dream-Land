@@ -38,7 +38,9 @@ void SparkMonster::Start()
 	}
 
 	MainRenderer = CreateRenderer(RenderOrder::Play);
+	MainRenderer->SetTexture("Blank.bmp");
 	AttRenderer = CreateRenderer(RenderOrder::BackEffect);
+	AttRenderer->SetTexture("Blank.bmp");
 
 	{ // 애니메이션 설정
 		MainRenderer->CreateAnimation("SparkMonsterLeft_Idle", "SparkMonsterLeft.bmp", 0, 0, 0.1f, false);
@@ -81,7 +83,7 @@ void SparkMonster::Start()
 		AttackCollision->Off();
 	}
 
-	AttRenderer->SetTexture("Blank.bmp");
+
 	AttRenderer->CreateAnimation("SparkEffect", "SparkEffect.bmp", 0, 3, 0.1f, true);
 	AttRenderer->ChangeAnimation("SparkEffect");
 	AttRenderer->SetRenderPos(AttackCollisionPos);

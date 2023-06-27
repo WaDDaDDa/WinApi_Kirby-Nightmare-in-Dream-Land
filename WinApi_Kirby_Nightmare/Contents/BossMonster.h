@@ -21,6 +21,7 @@ enum class BossMonsterState
     Hit,
     Damage,
     Effect,
+    SpornApple,
     Max, // 일반적으로 사용하지 않는 값.
 };
 
@@ -56,6 +57,9 @@ public:
     void AttackStayStart();
     void AttackStayUpdate(float _Delta);
 
+    void SpornAppleStart();
+    void SpornAppleUpdate(float _Delta);
+
     void AttackStart();
     void AttackUpdate(float _Delta);
 
@@ -83,5 +87,8 @@ private:
     int BossHp = 100;
 
     int Count = 0;
+
+    float AttCoolTime = 10.0f;
+    float SpornAppleCoolTime = 15.0f;
 };
 

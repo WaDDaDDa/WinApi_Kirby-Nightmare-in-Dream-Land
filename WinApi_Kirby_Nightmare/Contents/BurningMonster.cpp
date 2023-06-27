@@ -38,10 +38,20 @@ void BurningMonster::Start()
 	}
 
 	MainRenderer = CreateRenderer(RenderOrder::Play);
+	MainRenderer->SetTexture("Blank.bmp");
+
 	LeftAttackRenderer = CreateRenderer(RenderOrder::Effect);
+	LeftAttackRenderer->SetTexture("Blank.bmp");
+
 	LeftAttack2Renderer = CreateRenderer(RenderOrder::Effect2);
+	LeftAttack2Renderer->SetTexture("Blank.bmp");
+
 	RightAttackRenderer = CreateRenderer(RenderOrder::Effect);
+	RightAttackRenderer->SetTexture("Blank.bmp");
+
 	RightAttack2Renderer = CreateRenderer(RenderOrder::Effect2);
+	RightAttack2Renderer->SetTexture("Blank.bmp");
+
 
 	{ // 애니메이션 설정
 		MainRenderer->CreateAnimation("BurningMonsterLeft_Idle", "BurningMonsterLeft.bmp", 3, 3, 0.1f, false);

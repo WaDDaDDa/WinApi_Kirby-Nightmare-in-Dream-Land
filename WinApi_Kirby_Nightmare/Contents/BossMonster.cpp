@@ -41,6 +41,7 @@ void BossMonster::Start()
 		MainRenderer->CreateAnimation("BossMonster_AttackStay", "Whispy Woods.bmp", 11, 13, 0.1f, false);
 		MainRenderer->CreateAnimation("BossMonster_Attack", "Whispy Woods.bmp", 11, 13, 0.1f, false);
 		MainRenderer->CreateAnimation("BossMonster_Over", "Whispy Woods.bmp", 6, 10, 0.5f, false);
+		MainRenderer->CreateAnimation("BossMonster_SpornApple", "Whispy Woods.bmp", 14, 14, 0.5f, false);
 	}
 
 	{ // 충돌체 설정
@@ -62,6 +63,9 @@ void BossMonster::Update(float _Delta)
 		return;
 	}
 
+	AttCoolTime -= _Delta;
+	SpornAppleCoolTime -= _Delta;
+
 	std::vector<GameEngineCollision*> _Col;
 
 	if (true == BodyCollision->Collision(CollisionOrder::BossAttack
@@ -79,6 +83,77 @@ void BossMonster::Update(float _Delta)
 			float4 ActorPos = Actor->GetPos();
 
 			Collison->Off();
+
+			BossHp -= 20;
+
+			ChangeState(BossMonsterState::Damage);
+			return;
+		}
+	}
+
+	if (true == BodyCollision->Collision(CollisionOrder::BurningAttack
+		, _Col
+		, CollisionType::Rect // 나의 충돌체 모양
+		, CollisionType::Rect // 상대의 충돌체 모양
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			Actor = Collison->GetActor();
+
+			float4 ActorPos = Actor->GetPos();
+
+			Collison->Off();
+
+			BossHp -= 5;
+
+			ChangeState(BossMonsterState::Damage);
+			return;
+		}
+	}
+
+	if (true == BodyCollision->Collision(CollisionOrder::SparkAttack
+		, _Col
+		, CollisionType::Rect // 나의 충돌체 모양
+		, CollisionType::Rect // 상대의 충돌체 모양
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			Actor = Collison->GetActor();
+
+			float4 ActorPos = Actor->GetPos();
+
+			Collison->Off();
+
+			BossHp -= 4;
+
+			ChangeState(BossMonsterState::Damage);
+			return;
+		}
+	}
+
+	if (true == BodyCollision->Collision(CollisionOrder::SwordAttack
+		, _Col
+		, CollisionType::Rect // 나의 충돌체 모양
+		, CollisionType::Rect // 상대의 충돌체 모양
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			Actor = Collison->GetActor();
+
+			float4 ActorPos = Actor->GetPos();
+
+			Collison->Off();
+
+			BossHp -= 5;
 
 			ChangeState(BossMonsterState::Damage);
 			return;
@@ -100,6 +175,8 @@ void BossMonster::StateUpdate(float _Delta)
 		return AttackUpdate(_Delta);
 	case BossMonsterState::Damage:
 		return DamageUpdate(_Delta);
+	case BossMonsterState::SpornApple:
+		return SpornAppleUpdate(_Delta);
 	default:
 		break;
 	}
@@ -122,6 +199,9 @@ void BossMonster::ChangeState(BossMonsterState _State)
 			break;
 		case BossMonsterState::Damage:
 			DamageStart();
+			break;
+		case BossMonsterState::SpornApple:
+			SpornAppleStart();
 			break;
 		default:
 			break;
