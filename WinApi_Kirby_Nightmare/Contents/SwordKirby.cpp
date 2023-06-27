@@ -158,7 +158,6 @@ void SwordKirby::Start()
 void SwordKirby::LevelStart()
 {
 	Kirby::GetMainPlayer()->SetMainPlayer(this);
-	Kirby::GetMainPlayer()->OverOn();
 }
 
 void SwordKirby::Update(float _Delta)

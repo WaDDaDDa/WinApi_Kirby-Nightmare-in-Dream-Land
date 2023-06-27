@@ -134,7 +134,6 @@ void SparkKirby::Start()
 void SparkKirby::LevelStart()
 {
 	Kirby::GetMainPlayer()->SetMainPlayer(this);
-	Kirby::GetMainPlayer()->OverOn();
 }
 
 void SparkKirby::Update(float _Delta)

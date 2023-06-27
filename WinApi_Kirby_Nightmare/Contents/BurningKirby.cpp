@@ -124,8 +124,6 @@ void BurningKirby::Start()
 void BurningKirby::LevelStart()
 {
 	Kirby::GetMainPlayer()->SetMainPlayer(this);
-	Kirby::GetMainPlayer()->OverOn();
-	//SetMainPlayer(this);
 }
 
 void BurningKirby::Update(float _Delta)
