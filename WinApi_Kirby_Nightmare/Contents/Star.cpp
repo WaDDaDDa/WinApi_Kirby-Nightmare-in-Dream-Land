@@ -34,6 +34,10 @@ void Star::Start()
 	AttackCollision->SetCollisionScale(AttackCollisionScale);
 	AttackCollision->SetCollisionType(CollisionType::CirCle);
 
+	BossAttackCollision = CreateCollision(CollisionOrder::BossAttack);
+	BossAttackCollision->SetCollisionScale(AttackCollisionScale);
+	BossAttackCollision->SetCollisionType(CollisionType::CirCle);
+
 	SetPos(Kirby::GetMainPlayer()->GetPos());
 	DirCheck();
 	ChangeState(StarState::Attack);
@@ -56,7 +60,6 @@ void Star::DirCheck()
 
 void Star::Update(float _Delta)
 {
-
 	if (0.0f == GameEngineTime::MainTimer.GetTimeScale(GetOrder()))
 	{
 		return;
@@ -157,6 +160,22 @@ void Star::AttackUpdate(float _Delta)
 		, _Col
 		, CollisionType::CirCle // 나를 사각형으로 봐줘
 		, CollisionType::CirCle // 상대도 사각형으로 봐줘
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			GameEngineActor* Actor = Collison->GetActor();
+			// Dir = float4::ZERO;
+			ChangeState(StarState::Effect);
+		}
+	}
+
+	if (true == BossAttackCollision->Collision(CollisionOrder::BossMonsterBody
+		, _Col
+		, CollisionType::CirCle // 나를 사각형으로 봐줘
+		, CollisionType::Rect // 상대도 사각형으로 봐줘
 	))
 	{
 		for (size_t i = 0; i < _Col.size(); i++)

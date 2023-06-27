@@ -115,7 +115,7 @@ void MainHubLevel::Update(float _Delta)
 
 			if (true == GameEngineInput::IsDown('W'))
 			{
-				GameEngineCore::ChangeLevel("VegetableValleyLevel");
+				GameEngineCore::ChangeLevel("BossLevel");
 				BGMPlayer.Stop();
 				return;
 			}
@@ -154,17 +154,17 @@ void MainHubLevel::Release()
 
 void MainHubLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	if (nullptr == Kirby::GetMainPlayer())
-	{
-		// MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
-		float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
-		GetMainCamera()->SetPos(StartPlayerPos + float4{ -WindowScale.hX(), -WindowScale.hY() });
-	}
-	else
-	{
-		float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
-		//GetMainCamera()->SetPos(Kirby::GetMainPlayer()->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
-	}
+	//if (nullptr == Kirby::GetMainPlayer())
+	//{
+	//	// MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
+	//	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
+	//	GetMainCamera()->SetPos(StartPlayerPos + float4{ -WindowScale.hX(), -WindowScale.hY() });
+	//}
+	//else
+	//{
+	//	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
+	//	//GetMainCamera()->SetPos(Kirby::GetMainPlayer()->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
+	//}
 
 
 	BGMPlayer = GameEngineSound::SoundPlay("04Vegetable_Valley.mp3");
@@ -179,10 +179,14 @@ void MainHubLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		Kirby::GetMainPlayer()->Death();
 	}
 
+
 	Kirby::SetMainPlayer(CreateActor<Kirby>());
 	Kirby::GetMainPlayer()->ChangeKirby(CurAbillity);
 	Kirby::GetMainPlayer()->SetGroundTexture("MainHupDebug.bmp");
 	Kirby::GetMainPlayer()->SetPos(StartPlayerPos);
+
+	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
+	GetMainCamera()->SetPos(Kirby::GetMainPlayer()->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
 
 	if (true == GameEngineInput::IsPress('P'))
 	{

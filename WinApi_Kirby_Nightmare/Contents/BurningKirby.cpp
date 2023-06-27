@@ -49,6 +49,7 @@ void BurningKirby::Start()
 	}
 
 	MainRenderer = CreateRenderer(RenderOrder::Player);
+	MainRenderer->SetTexture("Blank.bmp");
 	{ // LeftAnimation »ý¼º
 		MainRenderer->CreateAnimation("BurningKirbyLeft_Idle", "BurningKirbyLeft.bmp", 0, 6, 0.2f, true);
 		MainRenderer->FindAnimation("BurningKirbyLeft_Idle")->Inters[3] = 0.0f;
@@ -113,7 +114,6 @@ void BurningKirby::Start()
 		TackleCollision->Off();
 	}
 	MainRenderer->SetScaleRatio(4.0f);
-	MainRenderer->SetTexture("Blank.bmp");
 	//SetPos(float4{ 360,360 });
 	SetOrder(UpdateOrder::Player);
 	SetAbillity(Abillity::Burning);

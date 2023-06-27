@@ -26,7 +26,9 @@ enum class CollisionOrder
 	PlayerCore,
 	PlayerBody,
 	MonsterBody,
+	BossMonsterBody,
 	DeathBody,
+	BossAttack,
 	VacumAttack,   // 커비의 흡수 공격
 	PlayerAttack,  // 별이나 Airatt같은거
 	BurningAttack, // 커비의 버닝어택

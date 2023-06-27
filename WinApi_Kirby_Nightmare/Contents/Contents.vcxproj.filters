@@ -21,9 +21,6 @@
       <Filter>Global</Filter>
     </ClInclude>
     <ClInclude Include="GravityActor.h" />
-    <ClInclude Include="Monster.h">
-      <Filter>Global</Filter>
-    </ClInclude>
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="VegetableValleyLevel.h">
       <Filter>Level</Filter>
@@ -79,6 +76,21 @@
     <ClInclude Include="DesertLevel3.h">
       <Filter>Level</Filter>
     </ClInclude>
+    <ClInclude Include="BossLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="BossMonster.h">
+      <Filter>Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="BossAirAtt.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Apple.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainHub.cpp" />
@@ -98,9 +110,6 @@
       <Filter>Level</Filter>
     </ClCompile>
     <ClCompile Include="GravityActor.cpp" />
-    <ClCompile Include="Monster.cpp">
-      <Filter>Global</Filter>
-    </ClCompile>
     <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="VegetableValleyLevel.cpp">
       <Filter>Level</Filter>
@@ -179,6 +188,24 @@
     </ClCompile>
     <ClCompile Include="DesertLevel3.cpp">
       <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="BossLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="BossMonster.cpp">
+      <Filter>Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="BossMonsterState.cpp">
+      <Filter>Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="BossAirAtt.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="Apple.cpp">
+      <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

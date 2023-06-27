@@ -133,6 +133,10 @@ void VegetableValley3Level::LevelStart(GameEngineLevel* _PrevLevel)
 	Kirby::GetMainPlayer()->SetGroundTexture("Level3_Debug.bmp");
 	Kirby::GetMainPlayer()->SetPos(StartPos);
 
+	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
+	GetMainCamera()->SetPos(Kirby::GetMainPlayer()->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
+
+
 	// 몬스터 배치
 	{
 		WaddleDee* Waddle = CreateActor<WaddleDee>();

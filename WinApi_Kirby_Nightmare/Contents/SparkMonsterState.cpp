@@ -101,6 +101,12 @@ void SparkMonster::HitUpdate(float _Delta)
 	float4 MoveDir = Actor->GetPos() - GetPos();
 	MoveDir.Normalize();
 	AddPos(MoveDir * 800.0f * _Delta);
+
+	if (GetLiveTime() >= 0.2f)
+	{
+		Death();
+		return;
+	}
 }
 
 void SparkMonster::DamageStart()

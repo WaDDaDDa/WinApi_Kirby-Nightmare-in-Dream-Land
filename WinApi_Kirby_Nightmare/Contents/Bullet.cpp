@@ -17,11 +17,11 @@ void Bullet::Start()
 {
 
 	Renderer = CreateRenderer(RenderOrder::Effect);
+	Renderer->SetTexture("Blank.bmp");
 	{ // LeftAnimation »ý¼º
 		Renderer->CreateAnimation("FireAttack", "BunringMonsterAttack.bmp", 0, 0, 0.2f, false);
 		Renderer->CreateAnimation("FireEffect", "BunringMonsterAttack.bmp", 0, 3, 0.1f, false);
 	}
-	Renderer->SetTexture("BunringMonsterAttack.bmp");
 	Renderer->ChangeAnimation("FireAttack");
 	Renderer->SetScaleRatio(4.0f);
 

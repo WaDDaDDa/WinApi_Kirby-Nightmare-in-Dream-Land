@@ -124,8 +124,6 @@ void VegetableValley2Level::LevelStart(GameEngineLevel* _PrevLevel)
 		MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
 	}
 
-	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
-
 	BGMPlayer = GameEngineSound::SoundPlay("04Vegetable_Valley.mp3");
 	FadeObject* FObject = CreateActor<FadeObject>();
 	FObject->FadeIn();
@@ -137,6 +135,8 @@ void VegetableValley2Level::LevelStart(GameEngineLevel* _PrevLevel)
 	Kirby::GetMainPlayer()->SetGroundTexture("Level2_Debug.bmp");
 	Kirby::GetMainPlayer()->SetPos(StartPos);
 
+	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
+	GetMainCamera()->SetPos(Kirby::GetMainPlayer()->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
 
 	// 몬스터 배치
 	{

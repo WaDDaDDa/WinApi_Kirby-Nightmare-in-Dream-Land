@@ -142,7 +142,6 @@ void DesertLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
 
-	GetMainCamera()->SetPos(Kirby::GetMainPlayer()->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
 	BGMPlayer = GameEngineSound::SoundPlay("04Vegetable_Valley.mp3");
 
 	FadeObject* FObject = CreateActor<FadeObject>();
@@ -154,6 +153,7 @@ void DesertLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	Kirby::GetMainPlayer()->ChangeKirby(CurAbillity);
 	Kirby::GetMainPlayer()->SetGroundTexture("DesertLevel1_Debug.bmp");
 	Kirby::GetMainPlayer()->SetPos(StartPos);
+	GetMainCamera()->SetPos(Kirby::GetMainPlayer()->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
 
 	// 몬스터 배치
 	{

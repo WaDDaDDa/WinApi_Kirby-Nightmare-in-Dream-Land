@@ -159,7 +159,23 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Apple.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="BackGround.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="BossAirAtt.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="BossLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="BossMonster.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -273,10 +289,27 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Apple.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="BackGround.cpp">
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="BossAirAtt.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="BossLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="BossMonster.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="BossMonsterState.cpp" />
     <ClCompile Include="Bullet.cpp">
       <SubType>
       </SubType>

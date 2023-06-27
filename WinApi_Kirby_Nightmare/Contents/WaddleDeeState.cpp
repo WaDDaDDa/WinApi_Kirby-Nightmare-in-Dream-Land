@@ -64,22 +64,11 @@ void WaddleDee::HitUpdate(float _Delta)
 	MoveDir.Normalize();
 	AddPos(MoveDir * 800.0f* _Delta);
 
-	std::vector<GameEngineCollision*> _Col;
-	//플레이어 몸통과 충돌.
-	//if (true == DeathCollision->Collision(CollisionOrder::PlayerBody
-	//	, _Col
-	//	, CollisionType::CirCle // 나를 사각형으로 봐줘
-	//	, CollisionType::CirCle // 상대도 사각형으로 봐줘
-	//))
-	//{
-	//	for (size_t i = 0; i < _Col.size(); i++)
-	//	{
-	//		GameEngineCollision* Collison = _Col[i];
-
-	//		Actor = Collison->GetActor();
-	//		Death();
-	//	}
-	//}
+	if (GetLiveTime() >= 0.2f)
+	{
+		Death();
+		return;
+	}
 }
 
 void WaddleDee::DamageStart()

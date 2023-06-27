@@ -47,6 +47,7 @@ void TitleLevel::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Effect1.bmp"), 7, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("LeftSwordEffect.bmp"), 8, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("RightSwordEffect.bmp"), 8, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("WoodAtt.bmp"), 5, 4);
 
 		}
 	}

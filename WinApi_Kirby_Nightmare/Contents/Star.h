@@ -62,6 +62,7 @@ protected:
 
 private:
 	GameEngineCollision* AttackCollision = nullptr;
+	GameEngineCollision* BossAttackCollision = nullptr;
 	float4 AttackCollisionScale = float4{ 100,100 };
 
 	float4 RightAttackPos = float4{ 40.0f, -40.0f };
