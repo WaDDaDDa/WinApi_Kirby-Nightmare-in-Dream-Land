@@ -64,12 +64,30 @@ void MainHubLevel::Start()
 
 	Stage2Portal = CreateActor<Portal>();
 	Stage2Portal->SetPos(Stage2PortalPos);
+
+	Stage3Portal = CreateActor<Portal>();
+	Stage3Portal->SetPos(Stage3PortalPos);
+
+	Stage4Portal = CreateActor<Portal>();
+	Stage4Portal->SetPos(Stage4PortalPos);
+
+	Stage5Portal = CreateActor<Portal>();
+	Stage5Portal->SetPos(Stage5PortalPos);
+
+	Stage6Portal = CreateActor<Portal>();
+	Stage6Portal->SetPos(Stage6PortalPos);
+
+	Stage7Portal = CreateActor<Portal>();
+	Stage7Portal->SetPos(Stage7PortalPos);
+
+	Stage8Portal = CreateActor<Portal>();
+	Stage8Portal->SetPos(Stage8PortalPos);
 }
 
 
 void MainHubLevel::Update(float _Delta)
 {
-	CameraFocus();
+	//CameraFocus();
 
 	if (true == GameEngineInput::IsDown('P'))
 	{
@@ -115,7 +133,7 @@ void MainHubLevel::Update(float _Delta)
 
 			if (true == GameEngineInput::IsDown('W'))
 			{
-				GameEngineCore::ChangeLevel("BossLevel");
+				GameEngineCore::ChangeLevel("VegetableValleyLevel");
 				BGMPlayer.Stop();
 				return;
 			}
@@ -138,6 +156,121 @@ void MainHubLevel::Update(float _Delta)
 			if (true == GameEngineInput::IsDown('W'))
 			{
 				GameEngineCore::ChangeLevel("VegetableValley2Level");
+				BGMPlayer.Stop();
+				return;
+			}
+			return;
+		}
+	}
+
+
+	if (true == Stage3Portal->BodyCollision->Collision(CollisionOrder::PlayerBody
+		, _Col
+		, CollisionType::Rect // 나를 사각형으로 봐줘
+		, CollisionType::CirCle // 상대도 사각형으로 봐줘
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			GameEngineActor* Actor = Collison->GetActor();
+
+			if (true == GameEngineInput::IsDown('W'))
+			{
+				GameEngineCore::ChangeLevel("VegetableValley3Level");
+				BGMPlayer.Stop();
+				return;
+			}
+			return;
+		}
+	}
+
+
+	if (true == Stage4Portal->BodyCollision->Collision(CollisionOrder::PlayerBody
+		, _Col
+		, CollisionType::Rect // 나를 사각형으로 봐줘
+		, CollisionType::CirCle // 상대도 사각형으로 봐줘
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			GameEngineActor* Actor = Collison->GetActor();
+
+			if (true == GameEngineInput::IsDown('W'))
+			{
+				GameEngineCore::ChangeLevel("DesertLevel");
+				BGMPlayer.Stop();
+				return;
+			}
+			return;
+		}
+	}
+
+
+	if (true == Stage5Portal->BodyCollision->Collision(CollisionOrder::PlayerBody
+		, _Col
+		, CollisionType::Rect // 나를 사각형으로 봐줘
+		, CollisionType::CirCle // 상대도 사각형으로 봐줘
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			GameEngineActor* Actor = Collison->GetActor();
+
+			if (true == GameEngineInput::IsDown('W'))
+			{
+				GameEngineCore::ChangeLevel("DesertLevel2");
+				BGMPlayer.Stop();
+				return;
+			}
+			return;
+		}
+	}
+
+
+	if (true == Stage6Portal->BodyCollision->Collision(CollisionOrder::PlayerBody
+		, _Col
+		, CollisionType::Rect // 나를 사각형으로 봐줘
+		, CollisionType::CirCle // 상대도 사각형으로 봐줘
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			GameEngineActor* Actor = Collison->GetActor();
+
+			if (true == GameEngineInput::IsDown('W'))
+			{
+				GameEngineCore::ChangeLevel("DesertLevel3");
+				BGMPlayer.Stop();
+				return;
+			}
+			return;
+		}
+	}
+
+
+	if (true == Stage7Portal->BodyCollision->Collision(CollisionOrder::PlayerBody
+		, _Col
+		, CollisionType::Rect // 나를 사각형으로 봐줘
+		, CollisionType::CirCle // 상대도 사각형으로 봐줘
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			GameEngineActor* Actor = Collison->GetActor();
+
+			if (true == GameEngineInput::IsDown('W'))
+			{
+				GameEngineCore::ChangeLevel("BossLevel");
 				BGMPlayer.Stop();
 				return;
 			}
@@ -172,16 +305,16 @@ void MainHubLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	FadeObject* FObject = CreateActor<FadeObject>();
 	FObject->FadeIn();
 
-	Abillity CurAbillity = Abillity::Normal;
+	Abillity CurAbill = Abillity::Normal;
+
 	if (nullptr != Kirby::GetMainPlayer())
 	{
-		CurAbillity = Kirby::GetMainPlayer()->GetAbillity();
+		CurAbill = Kirby::GetMainPlayer()->GetAbillity();
 		Kirby::GetMainPlayer()->Death();
 	}
 
-
-	Kirby::SetMainPlayer(CreateActor<Kirby>());
-	Kirby::GetMainPlayer()->ChangeKirby(CurAbillity);
+	Kirby::GetMainPlayer()->SetMainPlayer(CreateActor<Kirby>());
+	Kirby::GetMainPlayer()->ChangeKirby(CurAbill);
 	Kirby::GetMainPlayer()->SetGroundTexture("MainHupDebug.bmp");
 	Kirby::GetMainPlayer()->SetPos(StartPlayerPos);
 

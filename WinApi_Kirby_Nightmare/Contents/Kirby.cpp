@@ -657,19 +657,19 @@ void Kirby::ChangeKirby(Abillity _Kirby)
 		{
 		case Abillity::Normal:
 			Kirby::GetMainPlayer()->Death();
-			SetMainPlayer(Kirby::GetMainPlayer()->GetLevel()->CreateActor<Kirby>());
+			Kirby::GetMainPlayer()->SetMainPlayer(Kirby::GetMainPlayer()->GetLevel()->CreateActor<Kirby>());
 			break;
 		case Abillity::Burning:
 			Kirby::GetMainPlayer()->Death();
-			SetMainPlayer(Kirby::GetMainPlayer()->GetLevel()->CreateActor<BurningKirby>());
+			Kirby::GetMainPlayer()->SetMainPlayer(Kirby::GetMainPlayer()->GetLevel()->CreateActor<BurningKirby>());
 			break;
 		case Abillity::Spark:
 			Kirby::GetMainPlayer()->Death();
-			SetMainPlayer(Kirby::GetMainPlayer()->GetLevel()->CreateActor<SparkKirby>());
+			Kirby::GetMainPlayer()->SetMainPlayer(Kirby::GetMainPlayer()->GetLevel()->CreateActor<SparkKirby>());
 			break;
 		case Abillity::Sword:
 			Kirby::GetMainPlayer()->Death();
-			SetMainPlayer(Kirby::GetMainPlayer()->GetLevel()->CreateActor<SwordKirby>());
+			Kirby::GetMainPlayer()->SetMainPlayer(Kirby::GetMainPlayer()->GetLevel()->CreateActor<SwordKirby>());
 			break;
 		default:
 			break;

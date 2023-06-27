@@ -35,4 +35,23 @@ private:
 
     Portal* Stage2Portal = nullptr;
     float4 Stage2PortalPos = float4{ 960, 1170 };
+
+
+    Portal* Stage3Portal = nullptr;
+    float4 Stage3PortalPos = float4{ 704, 850 };
+
+    Portal* Stage4Portal = nullptr;
+    float4 Stage4PortalPos = float4{ 960, 593 };
+
+    Portal* Stage5Portal = nullptr;
+    float4 Stage5PortalPos = float4{ 1282, 785 };
+
+    Portal* Stage6Portal = nullptr;
+    float4 Stage6PortalPos = float4{ 1603, 975 };
+
+    Portal* Stage7Portal = nullptr;
+    float4 Stage7PortalPos = float4{ 1793, 465 };
+
+    Portal* Stage8Portal = nullptr;
+    float4 Stage8PortalPos = float4{ 1794, 210 };
 };

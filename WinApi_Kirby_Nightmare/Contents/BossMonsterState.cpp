@@ -123,7 +123,7 @@ void BossMonster::SpornAppleStart()
 {
 	while (2 >= Count)
 	{
-		float RandValue = GameEngineRandom::MainRandom.RandomInt(0, 10);
+		int RandValue = GameEngineRandom::MainRandom.RandomInt(0, 10);
 		float RandX = GameEngineRandom::MainRandom.RandomFloat(80.0f, 600.0f);
 		float RandY = GameEngineRandom::MainRandom.RandomFloat(200.0f, 360.0f);
 

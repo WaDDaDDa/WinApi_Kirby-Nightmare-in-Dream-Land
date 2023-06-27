@@ -126,16 +126,15 @@ void VegetableValley3Level::LevelStart(GameEngineLevel* _PrevLevel)
 	FObject->FadeIn();
 
 	// 커비 셋팅 . 이전능력 폼체인지
-	Abillity CurAbillity = Kirby::GetMainPlayer()->GetAbillity();
+	Abillity CurAbill = Kirby::GetMainPlayer()->GetAbillity();
 	Kirby::GetMainPlayer()->Death();
-	Kirby::SetMainPlayer(CreateActor<Kirby>());
-	Kirby::GetMainPlayer()->ChangeKirby(CurAbillity);
+	Kirby::GetMainPlayer()->SetMainPlayer(CreateActor<Kirby>());
+	Kirby::GetMainPlayer()->ChangeKirby(CurAbill);
 	Kirby::GetMainPlayer()->SetGroundTexture("Level3_Debug.bmp");
 	Kirby::GetMainPlayer()->SetPos(StartPos);
 
 	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
 	GetMainCamera()->SetPos(Kirby::GetMainPlayer()->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
-
 
 	// 몬스터 배치
 	{

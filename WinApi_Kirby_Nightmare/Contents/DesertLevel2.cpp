@@ -147,10 +147,10 @@ void DesertLevel2::LevelStart(GameEngineLevel* _PrevLevel)
 	FadeObject* FObject = CreateActor<FadeObject>();
 	FObject->FadeIn();
 
-	Abillity CurAbillity = Kirby::GetMainPlayer()->GetAbillity();
+	Abillity CurAbill = Kirby::GetMainPlayer()->GetAbillity();
 	Kirby::GetMainPlayer()->Death();
-	Kirby::SetMainPlayer(CreateActor<Kirby>());
-	Kirby::GetMainPlayer()->ChangeKirby(CurAbillity);
+	Kirby::GetMainPlayer()->SetMainPlayer(CreateActor<Kirby>());
+	Kirby::GetMainPlayer()->ChangeKirby(CurAbill);
 	Kirby::GetMainPlayer()->SetGroundTexture("DesertLevel2_Debug.bmp");
 	Kirby::GetMainPlayer()->SetPos(StartPos);
 	GetMainCamera()->SetPos(Kirby::GetMainPlayer()->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });

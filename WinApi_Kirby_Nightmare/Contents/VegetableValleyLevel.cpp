@@ -145,10 +145,10 @@ void VegetableValleyLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	FadeObject* FObject = CreateActor<FadeObject>();
 	FObject->FadeIn();
 
-	Abillity CurAbillity = Kirby::GetMainPlayer()->GetAbillity();
+	Abillity CurAbill = Kirby::GetMainPlayer()->GetAbillity();
 	Kirby::GetMainPlayer()->Death();
-	Kirby::SetMainPlayer(CreateActor<Kirby>());
-	Kirby::GetMainPlayer()->ChangeKirby(CurAbillity);
+	Kirby::GetMainPlayer()->SetMainPlayer(CreateActor<Kirby>());
+	Kirby::GetMainPlayer()->ChangeKirby(CurAbill);
 	Kirby::GetMainPlayer()->SetGroundTexture("Level1_Debug.bmp");
 	Kirby::GetMainPlayer()->SetPos(StartPos);
 
