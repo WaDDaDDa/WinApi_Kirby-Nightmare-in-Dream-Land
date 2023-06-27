@@ -115,8 +115,7 @@ void VegetableValleyLevel::Update(float _Delta)
 
 			if (true == GameEngineInput::IsDown('W'))
 			{
-				GameEngineCore::ChangeLevel("VegetableValley2Level");
-
+				MainPortal->SetCurLevel("VegetableValley2Level");
 				BGMPlayer.Stop();
 				return;
 			}

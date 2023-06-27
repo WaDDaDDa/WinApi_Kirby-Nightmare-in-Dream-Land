@@ -50,9 +50,11 @@ void VegetableValley2Level::Start()
 	StagePtr->Init("Level2.Bmp", "Level2_Debug.bmp");
 
 	CreateActor<UIManager>();
+
 	MainPortal = CreateActor<Portal>();
-	MainPortal->Door->ChangeAnimation("BlackDoor");
-	MainPortal->Door->SetScaleRatio(1.0f);
+	MainPortal->Door->Off();
+	MainPortal->SubDoor->ChangeAnimation("BlackDoor");
+	MainPortal->SubDoor->SetScaleRatio(1.0f);
 	MainPortal->SetPos(float4{ 4750, 320 });
 }
 
@@ -99,8 +101,7 @@ void VegetableValley2Level::Update(float _Delta)
 
 			if (true == GameEngineInput::IsDown('W'))
 			{
-				GameEngineCore::ChangeLevel("VegetableValley3Level");
-
+				MainPortal->SetCurLevel("VegetableValley3Level");
 				BGMPlayer.Stop();
 				return;
 			}

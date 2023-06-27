@@ -133,11 +133,10 @@ void MainHubLevel::Update(float _Delta)
 
 			if (true == GameEngineInput::IsDown('W'))
 			{
-				GameEngineCore::ChangeLevel("VegetableValleyLevel");
+				Stage1Portal->SetCurLevel("VegetableValleyLevel");
 				BGMPlayer.Stop();
 				return;
 			}
-			return;
 		}
 	}
 
@@ -155,7 +154,7 @@ void MainHubLevel::Update(float _Delta)
 
 			if (true == GameEngineInput::IsDown('W'))
 			{
-				GameEngineCore::ChangeLevel("VegetableValley2Level");
+				Stage2Portal->SetCurLevel("VegetableValley2Level");
 				BGMPlayer.Stop();
 				return;
 			}
@@ -178,7 +177,7 @@ void MainHubLevel::Update(float _Delta)
 
 			if (true == GameEngineInput::IsDown('W'))
 			{
-				GameEngineCore::ChangeLevel("VegetableValley3Level");
+				Stage3Portal->SetCurLevel("VegetableValley3Level");
 				BGMPlayer.Stop();
 				return;
 			}
@@ -201,7 +200,7 @@ void MainHubLevel::Update(float _Delta)
 
 			if (true == GameEngineInput::IsDown('W'))
 			{
-				GameEngineCore::ChangeLevel("DesertLevel");
+				Stage4Portal->SetCurLevel("DesertLevel");
 				BGMPlayer.Stop();
 				return;
 			}
@@ -224,7 +223,7 @@ void MainHubLevel::Update(float _Delta)
 
 			if (true == GameEngineInput::IsDown('W'))
 			{
-				GameEngineCore::ChangeLevel("DesertLevel2");
+				Stage5Portal->SetCurLevel("DesertLevel2");
 				BGMPlayer.Stop();
 				return;
 			}
@@ -247,7 +246,7 @@ void MainHubLevel::Update(float _Delta)
 
 			if (true == GameEngineInput::IsDown('W'))
 			{
-				GameEngineCore::ChangeLevel("DesertLevel3");
+				Stage6Portal->SetCurLevel("DesertLevel3");
 				BGMPlayer.Stop();
 				return;
 			}
@@ -270,7 +269,7 @@ void MainHubLevel::Update(float _Delta)
 
 			if (true == GameEngineInput::IsDown('W'))
 			{
-				GameEngineCore::ChangeLevel("BossLevel");
+				Stage7Portal->SetCurLevel("BossLevel");
 				BGMPlayer.Stop();
 				return;
 			}

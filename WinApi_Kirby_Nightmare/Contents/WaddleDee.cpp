@@ -347,11 +347,12 @@ unsigned int WaddleDee::GetWallCheck()
 
 void WaddleDee::Movement(float _Delta)
 {
+	float4 MovePos1 = float4::ZERO;
+
 	if (Dir == WaddleDeeDir::Left)
 	{
 		CheckPos = { -40.0f, -40.0f };
 		MovePos = { -Speed * _Delta, 0.0f };
-
 		// 벽판정
 		if (GetWallCheck() != RGB(255, 255, 255))
 		{
@@ -376,4 +377,81 @@ void WaddleDee::Movement(float _Delta)
 		}
 		AddPos(MovePos);
 	}
+
+	{
+		unsigned int Color = GetGroundColor(RGB(255, 255, 255), CheckPos);
+
+		if (Color == RGB(255, 255, 255))
+		{
+			// MovePos를 바꿔버리는 방법이 있을것이고.
+
+			if (RGB(255, 255, 255) == GetGroundColor(RGB(255, 255, 255), MovePos1))
+			{
+				float4 XPos = float4::ZERO;
+				float4 Dir = MovePos1.X <= 0.0f ? float4::RIGHT : float4::LEFT;
+
+				while (RGB(0, 255, 0) != GetGroundColor(RGB(255, 255, 255), MovePos1 + XPos))
+				{
+					XPos += Dir;
+
+					if (abs(XPos.X) > 50.0f)
+					{
+						break;
+					}
+				}
+
+				float4 YPos = float4::ZERO;
+				while (RGB(0, 255, 0) != GetGroundColor(RGB(255, 255, 255), MovePos1 + YPos))
+				{
+					YPos.Y += 1;
+
+					if (YPos.Y > 60.0f)
+					{
+						break;
+					}
+				}
+
+				if (abs(XPos.X) >= YPos.Y)
+				{
+					while (RGB(0, 255, 0) != GetGroundColor(RGB(255, 255, 255), MovePos1))
+					{
+						MovePos1.Y += 1;
+					}
+				}
+
+			}
+
+			AddPos(MovePos1);
+		}
+	}
+
+	//if (Dir == WaddleDeeDir::Left)
+	//{
+	//	CheckPos = { -40.0f, -40.0f };
+	//	MovePos = { -Speed * _Delta, 0.0f };
+
+	//	// 벽판정
+	//	if (GetWallCheck() != RGB(255, 255, 255))
+	//	{
+	//		MovePos.X *= 0;
+	//		Dir = WaddleDeeDir::Right;
+	//		ChangeAnimationState(CurState);
+	//		return;
+	//	}
+	//	AddPos(MovePos);
+	//}
+	//else if (Dir == WaddleDeeDir::Right)
+	//{
+	//	CheckPos = { 40.0f, -40.0f };
+	//	MovePos = { Speed * _Delta, 0.0f };
+
+	//	if (GetWallCheck() != RGB(255, 255, 255))
+	//	{
+	//		MovePos.X *= 0;
+	//		Dir = WaddleDeeDir::Left;
+	//		ChangeAnimationState(CurState);
+	//		return;
+	//	}
+	//	AddPos(MovePos);
+	//}
 }

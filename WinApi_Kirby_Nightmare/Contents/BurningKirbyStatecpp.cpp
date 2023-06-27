@@ -80,6 +80,8 @@ void BurningKirby::AttackUpdate(float _Delta)
 			AttackEnd = float4::UP * 400.0f + float4::RIGHT * 200.0f;
 			SetGravityVector(AttackEnd);
 			Speed = NormalSpeed;
+			AttackCollision->Off();
+			BodyCollision->On();
 			ChangeState(KirbyState::Falling);
 			return;
 		}
@@ -93,6 +95,8 @@ void BurningKirby::AttackUpdate(float _Delta)
 			AttackEnd = float4::UP * 400.0f + float4::LEFT * 200.0f;
 			SetGravityVector(AttackEnd);
 			Speed = NormalSpeed;
+			AttackCollision->Off();
+			BodyCollision->On();
 			ChangeState(KirbyState::Falling);
 			return;
 		}

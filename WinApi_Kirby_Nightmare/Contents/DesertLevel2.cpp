@@ -55,7 +55,9 @@ void DesertLevel2::Start()
 
 	MainPortal = CreateActor<Portal>();
 	MainPortal->Door->Off();
-	MainPortal->SetPos(float4{ 3900, 290 });
+	MainPortal->SubDoor->ChangeAnimation("BlackDoor");
+	MainPortal->SubDoor->SetScaleRatio(1.0f);
+	MainPortal->SetPos(PortalPos);
 }
 
 
@@ -115,8 +117,7 @@ void DesertLevel2::Update(float _Delta)
 
 			if (true == GameEngineInput::IsDown('W'))
 			{
-				GameEngineCore::ChangeLevel("VegetableValley2Level");
-
+				MainPortal->SetCurLevel("DesertLevel3");
 				BGMPlayer.Stop();
 				return;
 			}

@@ -78,7 +78,6 @@ void BossLevel::Update(float _Delta)
 
 }
 
-
 void BossLevel::Release()
 {
 

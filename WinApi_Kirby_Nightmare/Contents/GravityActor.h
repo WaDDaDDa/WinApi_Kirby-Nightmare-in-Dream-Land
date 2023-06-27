@@ -46,7 +46,6 @@ public:
 
     void GroundCheck(float _Delta);
 
-
     void SetGravityVector(float4 _GravityVector)
     {
         GravityVector = _GravityVector;
