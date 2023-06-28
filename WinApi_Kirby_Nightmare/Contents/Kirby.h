@@ -35,6 +35,7 @@ enum class KirbyState
     DieReady,
     Die,
     Over,
+    Dance,
     Max, // 일반적으로 사용하지 않는 값.
 };
 

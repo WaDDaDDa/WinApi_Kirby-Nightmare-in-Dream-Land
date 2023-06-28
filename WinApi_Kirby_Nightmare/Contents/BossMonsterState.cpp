@@ -60,6 +60,11 @@ void BossMonster::DamageStart()
 
 void BossMonster::DamageUpdate(float _Delta)
 {
+	if (0 >= BossHp)
+	{
+		ChangeState(BossMonsterState::Die);
+	}
+
 	if (1.0f <= GetLiveTime())
 	{
 		if (AttCoolTime <= 0.0f)
@@ -172,4 +177,28 @@ void BossMonster::SpornAppleUpdate(float _Delta)
 		ChangeState(BossMonsterState::Idle);
 		return;
 	}
+}
+
+void BossMonster::DieStart()
+{
+	BodyCollision->Off();
+	EffectRenderer1->ChangeAnimation("BossEndingEffect1");
+	ChangeAnimationState("BossMonster_Die");
+}
+
+void BossMonster::DieUpdate(float _Delta)
+{
+	if (0.5f <= GetLiveTime())
+	{
+		EffectRenderer2->ChangeAnimation("BossEndingEffect2");
+	}
+	if (1.0f <= GetLiveTime())
+	{
+		EffectRenderer3->ChangeAnimation("BossEndingEffect3");
+	}
+	if (1.5f <= GetLiveTime())
+	{
+		EffectRenderer4->ChangeAnimation("BossEndingEffect4");
+	}
+
 }

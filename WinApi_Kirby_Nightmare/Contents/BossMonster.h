@@ -22,6 +22,7 @@ enum class BossMonsterState
     Damage,
     Effect,
     SpornApple,
+    Die,
     Max, // 일반적으로 사용하지 않는 값.
 };
 
@@ -44,6 +45,15 @@ public:
     BossMonster& operator=(BossMonster&& _Other) noexcept = delete;
 
     GameEngineRenderer* MainRenderer = nullptr;
+    GameEngineRenderer* EffectRenderer1 = nullptr;
+    GameEngineRenderer* EffectRenderer2 = nullptr;
+    GameEngineRenderer* EffectRenderer3 = nullptr;
+    GameEngineRenderer* EffectRenderer4 = nullptr;
+
+    float4 EffectPos1 = float4{ -80.0f, 300.0f };
+    float4 EffectPos2 = float4{ 100.0f, -100.0f };
+    float4 EffectPos3 = float4{ 80.0f, 280.0f };
+    float4 EffectPos4 = float4{ 50.0f, 120.0f };
 
     BossMonsterState State = BossMonsterState::Max;
     void StateUpdate(float _Delta);
@@ -62,6 +72,9 @@ public:
 
     void AttackStart();
     void AttackUpdate(float _Delta);
+
+    void DieStart();
+    void DieUpdate(float _Delta);
 
     void ChangeState(BossMonsterState _State);
 
