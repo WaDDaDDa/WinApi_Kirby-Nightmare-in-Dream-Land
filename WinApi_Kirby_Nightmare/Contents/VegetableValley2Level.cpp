@@ -55,7 +55,7 @@ void VegetableValley2Level::Start()
 	MainPortal->Door->Off();
 	MainPortal->SubDoor->ChangeAnimation("BlackDoor");
 	MainPortal->SubDoor->SetScaleRatio(1.0f);
-	MainPortal->SetPos(float4{ 4750, 320 });
+	MainPortal->SetPos(PortalPos);
 }
 
 

@@ -70,6 +70,7 @@ void BurningKirby::Start()
 		MainRenderer->CreateAnimation("BurningKirbyLeft_AttackStart", "BurningKirbyLeft.bmp", 298, 300, 0.05f, false);
 		MainRenderer->CreateAnimation("BurningKirbyLeft_Attack", "BurningKirbyLeft.bmp", 301, 320, 0.05f, false);
 		MainRenderer->CreateAnimation("BurningKirbyLeft_BreathOut", "BurningKirbyLeft.bmp", 164, 165, 0.1f, false);
+		MainRenderer->CreateAnimation("BurningKirbyLeft_OpenDoor", "BurningKirbyLeft.bmp", 262, 266, 0.2f, false);
 	}
 
 	{ // RightAnimation 생성
@@ -93,6 +94,7 @@ void BurningKirby::Start()
 		MainRenderer->CreateAnimation("BurningKirbyRight_AttackStart", "BurningKirbyRight.bmp", 298, 300, 0.05f, false);
 		MainRenderer->CreateAnimation("BurningKirbyRight_Attack", "BurningKirbyRight.bmp", 301, 320, 0.05f, false);
 		MainRenderer->CreateAnimation("BurningKirbyRight_BreathOut", "BurningKirbyRight.bmp", 164, 165, 0.1f, false);
+		MainRenderer->CreateAnimation("BurningKirbyRight_OpenDoor", "BurningKirbyRight.bmp", 262, 266, 0.2f, false);
 	}
 
 	{ // 충돌체 설정
@@ -184,6 +186,26 @@ void BurningKirby::Update(float _Delta)
 
 			ChangeState(KirbyState::Damage);
 			return;
+		}
+	}
+
+	if (true == BodyCollision->Collision(CollisionOrder::Portal
+		, _Col
+		, CollisionType::CirCle // 나를 사각형으로 봐줘
+		, CollisionType::Rect // 상대도 사각형으로 봐줘
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			GameEngineActor* Actor = Collison->GetActor();
+
+			if (true == GameEngineInput::IsDown('W'))
+			{
+				ChangeState(KirbyState::OpenDoor);
+				return;
+			}
 		}
 	}
 

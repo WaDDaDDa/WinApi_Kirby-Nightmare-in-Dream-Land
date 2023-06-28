@@ -55,7 +55,7 @@ void VegetableValleyLevel::Start()
 	//CreateActor<UIManager>();
 	MainPortal = CreateActor<Portal>();
 	MainPortal->Door->Off();
-	MainPortal->SetPos(float4{ 3900, 290 });
+	MainPortal->SetPos(PortalPos);
 }
 
 

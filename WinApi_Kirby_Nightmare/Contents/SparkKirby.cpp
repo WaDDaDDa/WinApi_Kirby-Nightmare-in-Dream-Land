@@ -73,6 +73,7 @@ void SparkKirby::Start()
 		MainRenderer->CreateAnimation("SparkKirbyLeft_AttackStart", "SparkKirbyLeft_Attack.bmp", 0, 0, 0.1f, false);
 		MainRenderer->CreateAnimation("SparkKirbyLeft_Attack", "SparkKirbyLeft_Attack.bmp", 4, 6, 0.1f, true);
 		MainRenderer->CreateAnimation("SparkKirbyLeft_BreathOut", "SparkKirbyLeft.bmp", 164, 165, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkKirbyLeft_OpenDoor", "SparkKirbyLeft.bmp", 204, 208, 0.2f, false);
 	}
 
 	{ // RightAnimation 생성
@@ -96,6 +97,8 @@ void SparkKirby::Start()
 		MainRenderer->CreateAnimation("SparkKirbyRight_AttackStart", "SparkKirbyRight_Attack.bmp", 0, 0, 0.1f, false);
 		MainRenderer->CreateAnimation("SparkKirbyRight_Attack", "SparkKirbyRight_Attack.bmp", 4, 6, 0.1f, true);
 		MainRenderer->CreateAnimation("SparkKirbyRight_BreathOut", "SparkKirbyRight.bmp", 164, 165, 0.1f, false);
+		MainRenderer->CreateAnimation("SparkKirbyRight_OpenDoor", "SparkKirbyRight.bmp", 204, 208, 0.2f, false);
+
 	}
 
 	{ // 충돌체 설정
@@ -194,6 +197,26 @@ void SparkKirby::Update(float _Delta)
 
 			ChangeState(KirbyState::Damage);
 			return;
+		}
+	}
+
+	if (true == BodyCollision->Collision(CollisionOrder::Portal
+		, _Col
+		, CollisionType::CirCle // 나를 사각형으로 봐줘
+		, CollisionType::Rect // 상대도 사각형으로 봐줘
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			GameEngineActor* Actor = Collison->GetActor();
+
+			if (true == GameEngineInput::IsDown('W'))
+			{
+				ChangeState(KirbyState::OpenDoor);
+				return;
+			}
 		}
 	}
 

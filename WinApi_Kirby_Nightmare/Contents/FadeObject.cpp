@@ -65,7 +65,7 @@ void FadeObject::FadeOutUpdate(float _Delta)
 {
 	if (FadeDir)
 	{
-		Value += _Delta * 100;
+		Value += _Delta * 255.0f;
 		if (255.0f <= Value)
 		{
 			Death();
@@ -85,7 +85,7 @@ void FadeObject::FadeInUpdate(float _Delta)
 {
 	if (FadeDir)
 	{
-		Value -= _Delta * 100;
+		Value -= _Delta * 255.0f;
 		if (0.0f >= Value)
 		{
 			Death();

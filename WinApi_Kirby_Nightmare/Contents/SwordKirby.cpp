@@ -73,6 +73,7 @@ void SwordKirby::Start()
 		MainRenderer->CreateAnimation("SwordKirbyLeft_JumpAttackStart", "SwordKirbyLeft_Attack.bmp", 3, 4, 0.05f, false);
 		MainRenderer->CreateAnimation("SwordKirbyLeft_JumpAttack", "SwordKirbyLeft_Attack.bmp", 17, 25, 0.05f, false);
 		MainRenderer->CreateAnimation("SwordKirbyLeft_BreathOut", "SwordKirbyLeft.bmp", 79, 80, 0.1f, false);
+		MainRenderer->CreateAnimation("SwordKirbyLeft_OpenDoor", "SwordKirbyLeft.bmp", 130, 133, 0.2f, false);
 	}
 
 	{ // RightAnimation 생성
@@ -94,6 +95,8 @@ void SwordKirby::Start()
 		MainRenderer->CreateAnimation("SwordKirbyRight_JumpAttackStart", "SwordKirbyRight_Attack.bmp", 3, 4, 0.05f, false);
 		MainRenderer->CreateAnimation("SwordKirbyRight_JumpAttack", "SwordKirbyRight_Attack.bmp", 17, 25, 0.05f, false);
 		MainRenderer->CreateAnimation("SwordKirbyRight_BreathOut", "SwordKirbyRight.bmp", 79, 80, 0.1f, false);
+		MainRenderer->CreateAnimation("SwordKirbyRight_OpenDoor", "SwordKirbyRight.bmp", 130, 133, 0.2f, false);
+
 	}
 	// 공격 애니메이션
 	{
@@ -218,6 +221,26 @@ void SwordKirby::Update(float _Delta)
 
 			ChangeState(KirbyState::Damage);
 			return;
+		}
+	}
+
+	if (true == BodyCollision->Collision(CollisionOrder::Portal
+		, _Col
+		, CollisionType::CirCle // 나를 사각형으로 봐줘
+		, CollisionType::Rect // 상대도 사각형으로 봐줘
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			GameEngineActor* Actor = Collison->GetActor();
+
+			if (true == GameEngineInput::IsDown('W'))
+			{
+				ChangeState(KirbyState::OpenDoor);
+				return;
+			}
 		}
 	}
 

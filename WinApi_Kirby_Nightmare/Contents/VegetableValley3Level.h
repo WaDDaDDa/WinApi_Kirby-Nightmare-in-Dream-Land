@@ -28,5 +28,7 @@ private:
     class Stage* StagePtr = nullptr;
     class Portal* MainPortal = nullptr;
     float4 StartPos = float4{ 330, 640 };
+    float4 PortalPos = float4{ 3940, 450 };
+
 };
 

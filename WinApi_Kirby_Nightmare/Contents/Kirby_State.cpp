@@ -178,6 +178,12 @@ void Kirby::FatDamageStart()
 	ChangeAnimationState("FatDamage");
 }
 
+void Kirby::OpenDoorStart()
+{
+	BodyCollision->Off();
+	ChangeAnimationState("OpenDoor");
+}
+
 // IsDown으로 키를 받아서 State를 체인지하게 되면 
 // 업데이트는 실제 행동을 행하는 단계.
 void Kirby::IdleUpdate(float _Delta)
@@ -1075,6 +1081,15 @@ void Kirby::FatDamageUpdate(float _Delta)
 	{
 		ImmuneValue = true;
 		ChangeState(KirbyState::FatIdle);
+		return;
+	}
+}
+
+void Kirby::OpenDoorUpdate(float _Delta)
+{
+	if (GetLiveTime() >= 1.0f)
+	{
+		ChangeState(KirbyState::Idle);
 		return;
 	}
 }

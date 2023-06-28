@@ -29,5 +29,6 @@ private:
     class Portal* MainPortal = nullptr;
 
     float4 StartPos = float4{ 360 , 350 };
+    float4 PortalPos = float4{ 3900, 290 };
 };
 

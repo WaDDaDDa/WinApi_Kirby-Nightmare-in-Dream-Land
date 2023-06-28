@@ -31,6 +31,7 @@ enum class KirbyState
     Swallow,
     Damage,
     FatDamage,
+    OpenDoor,
     Max, // 일반적으로 사용하지 않는 값.
 };
 
@@ -158,6 +159,7 @@ protected:
     void SwallowStart();
     virtual void DamageStart();
     void FatDamageStart();
+    void OpenDoorStart();
 
     void IdleUpdate(float _Delta);
     void DownIdleUpdate(float _Delta);
@@ -187,6 +189,7 @@ protected:
     void SwallowUpdate(float _Delta);
     void DamageUpdate(float _Delta);
     void FatDamageUpdate(float _Delta);
+    void OpenDoorUpdate(float _Delta);
 
 
     KirbyState State = KirbyState::Max;

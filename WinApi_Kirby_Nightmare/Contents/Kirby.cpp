@@ -89,6 +89,7 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Swallow.bmp"), 3, 3);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Damage.bmp"), 3, 3);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_FatDamage.bmp"), 4, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_OpenDoor.bmp"), 4, 1);
 
 		}
 
@@ -132,6 +133,7 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Left_Swallow", "KirbyLeft_Swallow.bmp", 0, 7, 0.05f, false);
 		MainRenderer->CreateAnimation("Left_Damage", "KirbyLeft_Damage.bmp", 0, 8, 0.05f, false);
 		MainRenderer->CreateAnimation("Left_FatDamage", "KirbyLeft_FatDamage.bmp", 0, 3, 0.1f, false);
+		MainRenderer->CreateAnimation("Left_OpenDoor", "KirbyRight_OpenDoor.bmp", 0, 3, 0.2f, false);
 	}
 
 	{ // RightAnimation ª˝º∫
@@ -168,6 +170,7 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Right_Swallow", "KirbyRight_Swallow.bmp", 0, 7, 0.05f, false);
 		MainRenderer->CreateAnimation("Right_Damage", "KirbyRight_Damage.bmp", 0, 8, 0.05f, false);
 		MainRenderer->CreateAnimation("Right_FatDamage", "KirbyRight_FatDamage.bmp", 0, 3, 0.1f, false);
+		MainRenderer->CreateAnimation("Right_OpenDoor", "KirbyRight_OpenDoor.bmp", 0, 3, 0.2f, false);
 	}
 
 	{
@@ -347,6 +350,29 @@ void Kirby::Update(float _Delta)
 		}
 	}
 
+
+	if (true == BodyCollision->Collision(CollisionOrder::Portal
+		, _Col
+		, CollisionType::CirCle // ≥™∏¶ ªÁ∞¢«¸¿∏∑Œ ∫¡¡‡
+		, CollisionType::Rect // ªÛ¥Îµµ ªÁ∞¢«¸¿∏∑Œ ∫¡¡‡
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
+
+			GameEngineActor* Actor = Collison->GetActor();
+
+			if (true == GameEngineInput::IsDown('W'))
+			{
+				RightChargeRenderer->Off();
+				LeftChargeRenderer->Off();
+				ChangeState(KirbyState::OpenDoor);
+				return;
+			}
+		}
+	}
+
 	// ¡‹ ¿Œ æ∆øÙ ±‚¥…
 	if (true == GameEngineInput::IsPress('L'))
 	{
@@ -428,6 +454,8 @@ void Kirby::StateUpdate(float _Delta)
 		return DamageUpdate(_Delta);
 	case KirbyState::FatDamage:
 		return FatDamageUpdate(_Delta);
+	case KirbyState::OpenDoor:
+		return OpenDoorUpdate(_Delta);
 	default:
 		break;
 	}
@@ -522,6 +550,9 @@ void Kirby::ChangeState(KirbyState _State)
 			break;
 		case KirbyState::FatDamage:
 			FatDamageStart();
+			break;
+		case KirbyState::OpenDoor:
+			OpenDoorStart();
 			break;
 		default:
 			break;

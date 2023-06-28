@@ -150,9 +150,10 @@ void Portal::OpeningStart()
 }
 void Portal::OpeningUpdate(float _Delta)
 {
-	if (2.0f < GetLiveTime())
+	if (0.7f < GetLiveTime())
 	{
 		ChangeState(PortalState::Open);
+		return;
 	}
 }
 
@@ -163,7 +164,7 @@ void Portal::OpenStart()
 
 void Portal::OpenUpdate(float _Delta)
 {
-	if (0.3f < GetLiveTime())
+	if (0.2f < GetLiveTime())
 	{
 		ChangeState(PortalState::Close);
 		GameEngineCore::ChangeLevel(CurLevel);
