@@ -52,7 +52,6 @@ void VegetableValleyLevel::Start()
 	StagePtr = CreateActor<Stage>();
 	StagePtr->Init("Level1.Bmp", "Level1_Debug.bmp");
 
-	//CreateActor<UIManager>();
 	MainPortal = CreateActor<Portal>();
 	MainPortal->Door->Off();
 	MainPortal->SetPos(PortalPos);

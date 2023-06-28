@@ -206,7 +206,6 @@ void Kirby::OverStart()
 	ChangeAnimationState("Over");
 }
 
-
 // IsDown으로 키를 받아서 State를 체인지하게 되면 
 // 업데이트는 실제 행동을 행하는 단계.
 void Kirby::IdleUpdate(float _Delta)

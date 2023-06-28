@@ -177,6 +177,7 @@ protected:
     void DieReadyStart();
     void DieStart();
     void OverStart();
+    //void DanceStart();
 
     void IdleUpdate(float _Delta);
     void DownIdleUpdate(float _Delta);
@@ -210,6 +211,7 @@ protected:
     void DieReadyUpdate(float _Delta);
     void DieUpdate(float _Delta);
     void OverUpdate(float _Delta);
+    //void DanceUpdate(float _Delta);
 
 
     KirbyState State = KirbyState::Max;

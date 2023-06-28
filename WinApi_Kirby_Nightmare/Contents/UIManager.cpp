@@ -28,6 +28,7 @@ void UIManager::Start()
 	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyIcon.bmp"), 4, 7);
 	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("IConName.bmp"), 4, 7);
 	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("HpBar.bmp"), 5, 3);
+	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("BossHpBar.bmp"), 11, 1);
 
 	IconUI = CreateUIRenderer(RenderOrder::PlayUI);
 	IconUI->CreateAnimation("NormalKirbyIcon", "KirbyIcon.bmp", 0, 0, 0.1f, false);
@@ -283,6 +284,25 @@ void UIManager::Start()
 		ScoreNum7->SetRenderPos(ScoreNumPos + (ScoreNumInter * 7));
 		ScoreNum7->SetScaleRatio(4.0f);
 		ScoreNum7->ChangeAnimation("ScoreNum7_0");
+	}
+
+	{
+		BossHpBar = CreateUIRenderer(RenderOrder::PlayUI);
+		BossHpBar->CreateAnimation("BossHp100", "BossHpBar.bmp", 0, 0, 0.1f, false);
+		BossHpBar->CreateAnimation("BossHp90", "BossHpBar.bmp", 0, 0, 0.1f, false);
+		BossHpBar->CreateAnimation("BossHp80", "BossHpBar.bmp", 0, 0, 0.1f, false);
+		BossHpBar->CreateAnimation("BossHp70", "BossHpBar.bmp", 0, 0, 0.1f, false);
+		BossHpBar->CreateAnimation("BossHp60", "BossHpBar.bmp", 0, 0, 0.1f, false);
+		BossHpBar->CreateAnimation("BossHp50", "BossHpBar.bmp", 0, 0, 0.1f, false);
+		BossHpBar->CreateAnimation("BossHp40", "BossHpBar.bmp", 0, 0, 0.1f, false);
+		BossHpBar->CreateAnimation("BossHp30", "BossHpBar.bmp", 0, 0, 0.1f, false);
+		BossHpBar->CreateAnimation("BossHp20", "BossHpBar.bmp", 0, 0, 0.1f, false);
+		BossHpBar->CreateAnimation("BossHp10", "BossHpBar.bmp", 0, 0, 0.1f, false);
+		BossHpBar->CreateAnimation("BossHp0", "BossHpBar.bmp", 0, 0, 0.1f, false);
+		BossHpBar->SetTexture("Blank.bmp");
+		BossHpBar->SetRenderPos(BossHpPos);
+		BossHpBar->SetScaleRatio(4.0f);
+		BossHpBar->ChangeAnimation("BossHp100");
 	}
 
 	SetAbillity(Abillity::Normal);

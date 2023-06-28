@@ -87,6 +87,9 @@ private:
 	float4 ScoreNumPos = { 720, 560 };
 	float4 ScoreNumInter = { 30, 0 };
 
+	GameEngineRenderer* BossHpBar = nullptr;
+	float4 BossHpPos = { 780, 500 };
+
 	int CurLife = 2;
 	int CurHP = 6;
 	unsigned int CurScore = 0;
