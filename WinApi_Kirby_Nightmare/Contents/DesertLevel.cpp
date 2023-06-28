@@ -155,11 +155,15 @@ void DesertLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	FObject->FadeIn();
 
 	Abillity CurAbill = Kirby::GetMainPlayer()->GetAbillity();
+	int KirbyLife = Kirby::GetMainPlayer()->GetLife();
+
 	Kirby::GetMainPlayer()->Death();
 	Kirby::GetMainPlayer()->SetMainPlayer(CreateActor<Kirby>());
 	Kirby::GetMainPlayer()->ChangeKirby(CurAbill);
 	Kirby::GetMainPlayer()->SetGroundTexture("DesertLevel1_Debug.bmp");
 	Kirby::GetMainPlayer()->SetPos(StartPos);
+	Kirby::GetMainPlayer()->SetLife(KirbyLife);
+
 	GetMainCamera()->SetPos(Kirby::GetMainPlayer()->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
 
 	// 몬스터 배치

@@ -53,7 +53,6 @@ void BossLevel::Start()
 
 	StagePtr = CreateActor<Stage>();
 	StagePtr->Init("BossLevel.Bmp", "BossLevel_Debug.bmp");
-
 }
 
 
@@ -107,11 +106,15 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	FObject->FadeIn();
 
 	Abillity CurAbill = Kirby::GetMainPlayer()->GetAbillity();
+	int KirbyLife = Kirby::GetMainPlayer()->GetLife();
+
 	Kirby::GetMainPlayer()->Death();
 	Kirby::GetMainPlayer()->SetMainPlayer(CreateActor<Kirby>());
 	Kirby::GetMainPlayer()->ChangeKirby(CurAbill);
 	Kirby::GetMainPlayer()->SetGroundTexture("BossLevel_Debug.bmp");
 	Kirby::GetMainPlayer()->SetPos(StartPos);
+	Kirby::GetMainPlayer()->SetLife(KirbyLife);
+
 	GetMainCamera()->SetPos(Kirby::GetMainPlayer()->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
 
 	WhispyWoods = CreateActor<BossMonster>();

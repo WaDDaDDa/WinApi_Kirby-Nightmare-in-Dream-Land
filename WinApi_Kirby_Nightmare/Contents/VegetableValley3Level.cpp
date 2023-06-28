@@ -49,7 +49,6 @@ void VegetableValley3Level::Start()
 	StagePtr = CreateActor<Stage>();
 	StagePtr->Init("Level3.Bmp", "Level3_Debug.bmp");
 
-	CreateActor<UIManager>();
 	MainPortal = CreateActor<Portal>();
 	MainPortal->Door->Off();
 	MainPortal->SetPos(PortalPos);
@@ -136,11 +135,14 @@ void VegetableValley3Level::LevelStart(GameEngineLevel* _PrevLevel)
 
 	// 커비 셋팅 . 이전능력 폼체인지
 	Abillity CurAbill = Kirby::GetMainPlayer()->GetAbillity();
+	int KirbyLife = Kirby::GetMainPlayer()->GetLife();
+
 	Kirby::GetMainPlayer()->Death();
 	Kirby::GetMainPlayer()->SetMainPlayer(CreateActor<Kirby>());
 	Kirby::GetMainPlayer()->ChangeKirby(CurAbill);
 	Kirby::GetMainPlayer()->SetGroundTexture("Level3_Debug.bmp");
 	Kirby::GetMainPlayer()->SetPos(StartPos);
+	Kirby::GetMainPlayer()->SetLife(KirbyLife);
 
 	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
 	GetMainCamera()->SetPos(Kirby::GetMainPlayer()->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });

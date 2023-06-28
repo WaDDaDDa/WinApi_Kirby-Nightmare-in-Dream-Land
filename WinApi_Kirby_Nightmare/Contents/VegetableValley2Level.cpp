@@ -49,8 +49,6 @@ void VegetableValley2Level::Start()
 	StagePtr = CreateActor<Stage>();
 	StagePtr->Init("Level2.Bmp", "Level2_Debug.bmp");
 
-	CreateActor<UIManager>();
-
 	MainPortal = CreateActor<Portal>();
 	MainPortal->Door->Off();
 	MainPortal->SubDoor->ChangeAnimation("BlackDoor");
@@ -138,11 +136,14 @@ void VegetableValley2Level::LevelStart(GameEngineLevel* _PrevLevel)
 	FObject->FadeIn();
 
 	Abillity CurAbill = Kirby::GetMainPlayer()->GetAbillity();
+	int KirbyLife = Kirby::GetMainPlayer()->GetLife();
+
 	Kirby::GetMainPlayer()->Death();
 	Kirby::GetMainPlayer()->SetMainPlayer(CreateActor<Kirby>());
 	Kirby::GetMainPlayer()->ChangeKirby(CurAbill);
 	Kirby::GetMainPlayer()->SetGroundTexture("Level2_Debug.bmp");
 	Kirby::GetMainPlayer()->SetPos(StartPos);
+	Kirby::GetMainPlayer()->SetLife(KirbyLife);
 
 	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
 	GetMainCamera()->SetPos(Kirby::GetMainPlayer()->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });

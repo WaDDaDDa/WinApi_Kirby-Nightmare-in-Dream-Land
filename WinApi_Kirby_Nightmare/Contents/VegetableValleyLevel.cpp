@@ -127,7 +127,6 @@ void VegetableValleyLevel::Update(float _Delta)
 	{
 		GameEngineTime::MainTimer.SetAllTimeScale(1.0f);
 		LevelStart(this);
-		UIManager::UI->SetCurLife(Kirby::GetMainPlayer()->GetLife());
 		return;
 	}
 }
@@ -153,11 +152,14 @@ void VegetableValleyLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	FObject->FadeIn();
 
 	Abillity CurAbill = Kirby::GetMainPlayer()->GetAbillity();
+	int KirbyLife = Kirby::GetMainPlayer()->GetLife();
+
 	Kirby::GetMainPlayer()->Death();
 	Kirby::GetMainPlayer()->SetMainPlayer(CreateActor<Kirby>());
 	Kirby::GetMainPlayer()->ChangeKirby(CurAbill);
 	Kirby::GetMainPlayer()->SetGroundTexture("Level1_Debug.bmp");
 	Kirby::GetMainPlayer()->SetPos(StartPos);
+	Kirby::GetMainPlayer()->SetLife(KirbyLife);
 
 	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
 	GetMainCamera()->SetPos(Kirby::GetMainPlayer()->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
