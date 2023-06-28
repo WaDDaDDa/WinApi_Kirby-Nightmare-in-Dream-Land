@@ -23,6 +23,7 @@
 
 Kirby* Kirby::MainPlayer = nullptr;
 int Kirby::HP = 6;
+int Kirby::Life = 3;
 unsigned int Kirby::Score = 0;
 
 Kirby::Kirby()
@@ -90,6 +91,7 @@ void Kirby::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Damage.bmp"), 3, 3);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_FatDamage.bmp"), 4, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_OpenDoor.bmp"), 4, 1);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("KirbyRight_Die.bmp"), 5, 4);
 
 		}
 
@@ -134,6 +136,9 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Left_Damage", "KirbyLeft_Damage.bmp", 0, 8, 0.05f, false);
 		MainRenderer->CreateAnimation("Left_FatDamage", "KirbyLeft_FatDamage.bmp", 0, 3, 0.1f, false);
 		MainRenderer->CreateAnimation("Left_OpenDoor", "KirbyRight_OpenDoor.bmp", 0, 3, 0.2f, false);
+		MainRenderer->CreateAnimation("Left_DieReady", "KirbyRight_Die.bmp", 0, 0, 0.2f, false);
+		MainRenderer->CreateAnimation("Left_Die", "KirbyRight_Die.bmp", 0, 15, 0.05f, true);
+		MainRenderer->CreateAnimation("Left_Over", "KirbyRight_Die.bmp", 0, 15, 0.05f, true);
 	}
 
 	{ // RightAnimation »ý¼º
@@ -171,6 +176,9 @@ void Kirby::Start()
 		MainRenderer->CreateAnimation("Right_Damage", "KirbyRight_Damage.bmp", 0, 8, 0.05f, false);
 		MainRenderer->CreateAnimation("Right_FatDamage", "KirbyRight_FatDamage.bmp", 0, 3, 0.1f, false);
 		MainRenderer->CreateAnimation("Right_OpenDoor", "KirbyRight_OpenDoor.bmp", 0, 3, 0.2f, false);
+		MainRenderer->CreateAnimation("Right_DieReady", "KirbyRight_Die.bmp", 0, 0, 0.2f, false);
+		MainRenderer->CreateAnimation("Right_Die", "KirbyRight_Die.bmp", 0, 15, 0.05f, true);
+		MainRenderer->CreateAnimation("Right_Over", "KirbyRight_Die.bmp", 0, 15, 0.05f, true);
 	}
 
 	{
@@ -456,6 +464,12 @@ void Kirby::StateUpdate(float _Delta)
 		return FatDamageUpdate(_Delta);
 	case KirbyState::OpenDoor:
 		return OpenDoorUpdate(_Delta);
+	case KirbyState::DieReady:
+		return DieReadyUpdate(_Delta);
+	case KirbyState::Die:
+		return DieUpdate(_Delta);
+	case KirbyState::Over:
+		return OverUpdate(_Delta);
 	default:
 		break;
 	}
@@ -554,6 +568,15 @@ void Kirby::ChangeState(KirbyState _State)
 		case KirbyState::OpenDoor:
 			OpenDoorStart();
 			break;
+		case KirbyState::DieReady:
+			DieReadyStart();
+			break;
+		case KirbyState::Die:
+			DieStart();
+			break;
+		case KirbyState::Over:
+			OverStart();
+			break;
 		default:
 			break;
 		}
@@ -619,6 +642,11 @@ void Kirby::ChangeAnimationState(const std::string& _StateName)
 
 void Kirby::CameraFocus(float _Delta)
 {
+	if (CameraValue == false)
+	{
+		return;
+	}
+
 	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
 
 	int CameraRangeX = GetLevel()->GetMainCamera()->GetPos().iX();
@@ -683,7 +711,7 @@ void Kirby::ChangeKirby(Abillity _Kirby)
 	{
 		float4 CurPos = Kirby::GetMainPlayer()->GetPos();
 		float4 CurPrevPos = Kirby::GetMainPlayer()->GetPrevPos();
-		int CurHp = HP;
+		//int CurHp = HP;
 		switch (_Kirby)
 		{
 		case Abillity::Normal:
@@ -709,7 +737,7 @@ void Kirby::ChangeKirby(Abillity _Kirby)
 		Kirby::GetMainPlayer()->SetPrevPos(CurPrevPos);
 		Kirby::GetMainPlayer()->SetPos(CurPos);
 		Kirby::GetMainPlayer()->SetGroundTexture(GetGroundTexture());
-		Kirby::HP = CurHp;
+		//Kirby::HP = CurHp;
 	}
 
 	Kirby::GetMainPlayer()->SetAbillity(_Kirby);

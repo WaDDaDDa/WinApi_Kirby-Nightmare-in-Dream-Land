@@ -32,6 +32,9 @@ enum class KirbyState
     Damage,
     FatDamage,
     OpenDoor,
+    DieReady,
+    Die,
+    Over,
     Max, // 일반적으로 사용하지 않는 값.
 };
 
@@ -126,6 +129,11 @@ public:
 
     void AddScore();
 
+    int GetLife()
+    {
+        return Life;
+    }
+
 protected:
     // 클래스로 만들어도 된다. 행동과 랜더.
     void ChangeState(KirbyState _State);
@@ -160,6 +168,9 @@ protected:
     virtual void DamageStart();
     void FatDamageStart();
     void OpenDoorStart();
+    void DieReadyStart();
+    void DieStart();
+    void OverStart();
 
     void IdleUpdate(float _Delta);
     void DownIdleUpdate(float _Delta);
@@ -190,6 +201,9 @@ protected:
     void DamageUpdate(float _Delta);
     void FatDamageUpdate(float _Delta);
     void OpenDoorUpdate(float _Delta);
+    void DieReadyUpdate(float _Delta);
+    void DieUpdate(float _Delta);
+    void OverUpdate(float _Delta);
 
 
     KirbyState State = KirbyState::Max;
@@ -233,7 +247,9 @@ private:
     float4 PrevPos = float4::ZERO;
 
     static int HP;
+    static int Life;
     static unsigned int Score;
+    bool CameraValue = true;
 
     void Start() override;
     void Update(float _Delta) override;

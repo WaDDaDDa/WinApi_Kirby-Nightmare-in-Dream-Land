@@ -184,6 +184,29 @@ void Kirby::OpenDoorStart()
 	ChangeAnimationState("OpenDoor");
 }
 
+void Kirby::DieReadyStart()
+{
+	GameEngineTime::MainTimer.SetTimeScale(UpdateOrder::Monster, 0.0f);
+	GameEngineTime::MainTimer.SetTimeScale(RenderOrder::Play, 0.0f);
+
+	ChangeAnimationState("DieReady");
+}
+
+void Kirby::DieStart()
+{
+	CameraValue = false;
+	SetGravityVector(float4::UP * 1000.0f);
+	ChangeAnimationState("Die");
+}
+
+void Kirby::OverStart()
+{
+	Life -= 1;
+	HP = 6;
+	ChangeAnimationState("Over");
+}
+
+
 // IsDown으로 키를 받아서 State를 체인지하게 되면 
 // 업데이트는 실제 행동을 행하는 단계.
 void Kirby::IdleUpdate(float _Delta)
@@ -1021,6 +1044,11 @@ void Kirby::SwallowUpdate(float _Delta)
 
 void Kirby::DamageUpdate(float _Delta)
 {
+	if (0 == HP)
+	{
+		ChangeState(KirbyState::DieReady);
+		return;
+	}
 	GroundCheck(_Delta);
 	float4 MoveDir = float4::ZERO;
 	if (KirbyDir::Left == Dir)
@@ -1090,6 +1118,34 @@ void Kirby::OpenDoorUpdate(float _Delta)
 	if (GetLiveTime() >= 1.0f)
 	{
 		ChangeState(KirbyState::Idle);
+		return;
+	}
+}
+
+void Kirby::DieReadyUpdate(float _Delta)
+{
+	if (GetLiveTime() >= 1.0f)
+	{
+		ChangeState(KirbyState::Die);
+		return;
+	}
+}
+
+void Kirby::DieUpdate(float _Delta)
+{
+	Gravity(_Delta);
+	if (GetLiveTime() >= 2.0f)
+	{
+		ChangeState(KirbyState::Over);
+		return;
+	}
+}
+
+void Kirby::OverUpdate(float _Delta)
+{
+	Gravity(_Delta);
+	if (GetLiveTime() >= 2.0f)
+	{
 		return;
 	}
 }

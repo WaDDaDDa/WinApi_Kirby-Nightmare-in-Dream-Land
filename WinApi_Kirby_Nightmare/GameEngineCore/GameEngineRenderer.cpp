@@ -114,6 +114,11 @@ void GameEngineRenderer::TextRender(float _DeltaTime)
 
 void GameEngineRenderer::Update(float _Delta)
 {
+	if (0.0f == GameEngineTime::MainTimer.GetTimeScale(GetOrder()))
+	{
+		return;
+	}
+
 	if (nullptr != CurAnimation)
 	{
 		if (true == CurAnimation->Loop)

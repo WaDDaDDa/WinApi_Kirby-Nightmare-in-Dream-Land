@@ -32,6 +32,18 @@ public:
 
 	void IconChange(Abillity _Kirby);
 	void HpCheck();
+	void ScoreCheck();
+	void LifeCheck();
+
+	int GetCurLife()
+	{
+		return CurLife;
+	}
+	
+	void SetCurLife(int _CurLife)
+	{
+		CurLife = _CurLife;
+	}
 
 protected:
 	void Start() override;
@@ -75,6 +87,7 @@ private:
 	float4 ScoreNumPos = { 720, 560 };
 	float4 ScoreNumInter = { 30, 0 };
 
+	int CurLife = 2;
 	int CurHP = 6;
 	unsigned int CurScore = 0;
 };

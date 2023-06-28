@@ -108,6 +108,14 @@ void VegetableValley2Level::Update(float _Delta)
 			return;
 		}
 	}
+
+	if (Kirby::GetMainPlayer()->GetLife() != UIManager::UI->GetCurLife())
+	{
+		GameEngineTime::MainTimer.SetAllTimeScale(1.0f);
+		LevelStart(this);
+		UIManager::UI->SetCurLife(Kirby::GetMainPlayer()->GetLife());
+		return;
+	}
 }
 
 

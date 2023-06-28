@@ -293,14 +293,188 @@ void UIManager::Update(float _Delta)
 {
 
 	IconChange(Kirby::GetMainPlayer()->GetAbillity());
+	LifeCheck();
 	HpCheck();
+	ScoreCheck();
+}
 
+void UIManager::LifeCheck()
+{
+	if (Kirby::GetMainPlayer()->GetLife() != CurLife)
+	{
+		CurLife = Kirby::GetMainPlayer()->GetLife();
+
+		// 천만점대 점수
+		unsigned int Life0 = CurLife / 10;
+
+		switch (Life0)
+		{
+		case 0:
+			LifeNum0->ChangeAnimation("KirbyLifeNum0_0");
+			break;
+		case 1:
+			LifeNum0->ChangeAnimation("KirbyLifeNum0_1");
+			break;
+		case 2:
+			LifeNum0->ChangeAnimation("KirbyLifeNum0_2");
+			break;
+		case 3:
+			LifeNum0->ChangeAnimation("KirbyLifeNum0_3");
+			break;
+		case 4:
+			LifeNum0->ChangeAnimation("KirbyLifeNum0_4");
+			break;
+		case 5:
+			LifeNum0->ChangeAnimation("KirbyLifeNum0_5");
+			break;
+		case 6:
+			LifeNum0->ChangeAnimation("KirbyLifeNum0_6");
+			break;
+		case 7:
+			LifeNum0->ChangeAnimation("KirbyLifeNum0_7");
+			break;
+		case 8:
+			LifeNum0->ChangeAnimation("KirbyLifeNum0_8");
+			break;
+		case 9:
+			LifeNum0->ChangeAnimation("KirbyLifeNum0_9");
+			break;
+		default:
+			break;
+		}
+
+		// 백만점대 점수
+		unsigned int Life1 = (CurLife - (Life0 * 10)) / 1;
+		switch (Life1)
+		{
+		case 0:
+			LifeNum->ChangeAnimation("KirbyLifeNum_0");
+			break;
+		case 1:
+			LifeNum->ChangeAnimation("KirbyLifeNum_1");
+			break;
+		case 2:
+			LifeNum->ChangeAnimation("KirbyLifeNum_2");
+			break;
+		case 3:
+			LifeNum->ChangeAnimation("KirbyLifeNum_3");
+			break;
+		case 4:
+			LifeNum->ChangeAnimation("KirbyLifeNum_4");
+			break;
+		case 5:
+			LifeNum->ChangeAnimation("KirbyLifeNum_5");
+			break;
+		case 6:
+			LifeNum->ChangeAnimation("KirbyLifeNum_6");
+			break;
+		case 7:
+			LifeNum->ChangeAnimation("KirbyLifeNum_7");
+			break;
+		case 8:
+			LifeNum->ChangeAnimation("KirbyLifeNum_8");
+			break;
+		case 9:
+			LifeNum->ChangeAnimation("KirbyLifeNum_9");
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+void UIManager::IconChange(Abillity _Kirby)
+{
+	if (GetAbillity() != Kirby::GetMainPlayer()->GetAbillity())
+	{
+		switch (_Kirby)
+		{
+		case Abillity::Normal:
+			IconUI->ChangeAnimation("NormalKirbyIcon");
+			IconName->ChangeAnimation("NormalKirbyIconName");
+			break;
+		case Abillity::Burning:
+			IconUI->ChangeAnimation("BurningKirbyIcon");
+			IconName->ChangeAnimation("BurningKirbyIconName");
+			break;
+		case Abillity::Spark:
+			IconUI->ChangeAnimation("SparkKirbyIcon");
+			IconName->ChangeAnimation("SparkKirbyIconName");
+			break;
+		case Abillity::Sword:
+			IconUI->ChangeAnimation("SwordKirbyIcon");
+			IconName->ChangeAnimation("SwordKirbyIconName");
+			break;
+		default:
+			break;
+		}
+
+		SetAbillity(_Kirby);
+	}
+}
+ 
+void UIManager::HpCheck()
+{
+	if (Kirby::GetMainPlayer()->GetHP() != CurHP)
+	{
+		CurHP = Kirby::GetMainPlayer()->GetHP();
+		switch (CurHP)
+		{
+		case 0:
+			HpBar1->ChangeAnimation("HpBar1Off");
+			break;
+		case 1:
+			HpBar1->ChangeAnimation("HpBar1On");
+			HpBar2->ChangeAnimation("HpBar2Off");
+			break;
+		case 2:
+			HpBar1->ChangeAnimation("HpBar1On");
+			HpBar2->ChangeAnimation("HpBar2On");
+			HpBar3->ChangeAnimation("HpBar3Off");
+			break;
+		case 3:
+			HpBar1->ChangeAnimation("HpBar1On");
+			HpBar2->ChangeAnimation("HpBar2On");
+			HpBar3->ChangeAnimation("HpBar3On");
+			HpBar4->ChangeAnimation("HpBar4Off");
+			break;
+		case 4:
+			HpBar1->ChangeAnimation("HpBar1On");
+			HpBar2->ChangeAnimation("HpBar2On");
+			HpBar3->ChangeAnimation("HpBar3On");
+			HpBar4->ChangeAnimation("HpBar4On");
+			HpBar5->ChangeAnimation("HpBar5Off");
+			break;
+		case 5:
+			HpBar1->ChangeAnimation("HpBar1On");
+			HpBar2->ChangeAnimation("HpBar2On");
+			HpBar3->ChangeAnimation("HpBar3On");
+			HpBar4->ChangeAnimation("HpBar4On");
+			HpBar5->ChangeAnimation("HpBar5On");
+			HpBar6->ChangeAnimation("HpBar6Off");
+			break;
+		case 6:
+			HpBar1->ChangeAnimation("HpBar1On");
+			HpBar2->ChangeAnimation("HpBar2On");
+			HpBar3->ChangeAnimation("HpBar3On");
+			HpBar4->ChangeAnimation("HpBar4On");
+			HpBar5->ChangeAnimation("HpBar5On");
+			HpBar6->ChangeAnimation("HpBar6On");
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+void UIManager::ScoreCheck()
+{
 	if (Kirby::GetMainPlayer()->GetScore() != CurScore)
 	{
 		CurScore = Kirby::GetMainPlayer()->GetScore();
 
 		// 천만점대 점수
-		unsigned int Score0 = CurScore / 10000000 ;
+		unsigned int Score0 = CurScore / 10000000;
 
 		switch (Score0)
 		{
@@ -339,7 +513,7 @@ void UIManager::Update(float _Delta)
 		}
 
 		// 백만점대 점수
-		unsigned int Score1 = (CurScore - (Score0 * 10000000)) / 1000000 ;
+		unsigned int Score1 = (CurScore - (Score0 * 10000000)) / 1000000;
 
 		switch (Score1)
 		{
@@ -606,77 +780,6 @@ void UIManager::Update(float _Delta)
 			break;
 		case 9:
 			ScoreNum7->ChangeAnimation("ScoreNum7_9");
-			break;
-		default:
-			break;
-		}
-
-	}
-
-}
-
-void UIManager::IconChange(Abillity _Kirby)
-{
-	if (GetAbillity() != Kirby::GetMainPlayer()->GetAbillity())
-	{
-		switch (_Kirby)
-		{
-		case Abillity::Normal:
-			IconUI->ChangeAnimation("NormalKirbyIcon");
-			IconName->ChangeAnimation("NormalKirbyIconName");
-			break;
-		case Abillity::Burning:
-			IconUI->ChangeAnimation("BurningKirbyIcon");
-			IconName->ChangeAnimation("BurningKirbyIconName");
-			break;
-		case Abillity::Spark:
-			IconUI->ChangeAnimation("SparkKirbyIcon");
-			IconName->ChangeAnimation("SparkKirbyIconName");
-			break;
-		case Abillity::Sword:
-			IconUI->ChangeAnimation("SwordKirbyIcon");
-			IconName->ChangeAnimation("SwordKirbyIconName");
-			break;
-		default:
-			break;
-		}
-
-		SetAbillity(_Kirby);
-	}
-}
- 
-void UIManager::HpCheck()
-{
-	if (Kirby::GetMainPlayer()->GetHP() != CurHP)
-	{
-		CurHP = Kirby::GetMainPlayer()->GetHP();
-		switch (CurHP)
-		{
-		case 0:
-			HpBar1->ChangeAnimation("HpBar1Off");
-			break;
-		case 1:
-			HpBar1->ChangeAnimation("HpBar1On");
-			HpBar2->ChangeAnimation("HpBar2Off");
-			break;
-		case 2:
-			HpBar2->ChangeAnimation("HpBar2On");
-			HpBar3->ChangeAnimation("HpBar3Off");
-			break;
-		case 3:
-			HpBar3->ChangeAnimation("HpBar3On");
-			HpBar4->ChangeAnimation("HpBar4Off");
-			break;
-		case 4:
-			HpBar4->ChangeAnimation("HpBar4On");
-			HpBar5->ChangeAnimation("HpBar5Off");
-			break;
-		case 5:
-			HpBar5->ChangeAnimation("HpBar5On");
-			HpBar6->ChangeAnimation("HpBar6Off");
-			break;
-		case 6:
-			HpBar6->ChangeAnimation("HpBar6On");
 			break;
 		default:
 			break;
