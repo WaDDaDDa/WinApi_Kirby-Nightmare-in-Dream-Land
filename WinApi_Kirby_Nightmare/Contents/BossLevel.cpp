@@ -24,6 +24,7 @@
 #include "SwordMan.h"
 #include "BossMonster.h"
 #include "BossUIManager.h"
+#include "BGMPlayer.h"
 
 BossLevel::BossLevel()
 {
@@ -37,16 +38,6 @@ BossLevel::~BossLevel()
 
 void BossLevel::Start()
 {
-	if (nullptr == GameEngineSound::FindSound("04Vegetable_Valley.mp3"))
-	{
-		GameEnginePath FilePath;
-		FilePath.SetCurrentPath();
-		FilePath.MoveParentToExistsChild("Resource");
-		FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Sounds\\");
-
-		// BGM 로드 사막으로 변경.
-		GameEngineSound::SoundLoad(FilePath.PlusFilePath("04Vegetable_Valley.mp3"));
-	}
 	// 백그라운드 사막으로 변경.
 	CurBackGround = CreateActor<BackGround>();
 	CurBackGround->Init("BossBackGround.Bmp");
@@ -108,10 +99,10 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
 
-	BGMPlayer = GameEngineSound::SoundPlay("04Vegetable_Valley.mp3");
-
 	FadeObject* FObject = CreateActor<FadeObject>();
 	FObject->FadeIn();
+
+	BGMPlayer::ChangeBGM("20 Boss Battle.mp3");
 
 	Abillity CurAbill = Kirby::GetMainPlayer()->GetAbillity();
 	int KirbyLife = Kirby::GetMainPlayer()->GetLife();

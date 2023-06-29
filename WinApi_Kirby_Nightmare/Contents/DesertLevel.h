@@ -22,7 +22,6 @@ private:
     void Update(float _Delta) override;
     void Release() override;
 
-    GameEngineSoundPlayer BGMPlayer;
     class BackGround* CurBackGround = nullptr;
 
     class Stage* StagePtr = nullptr;

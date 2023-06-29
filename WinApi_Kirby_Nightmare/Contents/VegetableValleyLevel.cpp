@@ -22,6 +22,7 @@
 #include "SparkMonster.h"
 #include "FadeObject.h"
 #include "SwordMan.h"
+#include "BGMPlayer.h"
 
 VegetableValleyLevel::VegetableValleyLevel()
 {
@@ -35,16 +36,6 @@ VegetableValleyLevel::~VegetableValleyLevel()
 
 void VegetableValleyLevel::Start()
 {
-	if (nullptr == GameEngineSound::FindSound("04Vegetable_Valley.mp3"))
-	{
-		GameEnginePath FilePath;
-		FilePath.SetCurrentPath();
-		FilePath.MoveParentToExistsChild("Resource");
-		FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Sounds\\");
-
-		GameEngineSound::SoundLoad(FilePath.PlusFilePath("04Vegetable_Valley.mp3"));
-	}
-
 	CurBackGround = CreateActor<BackGround>();
 	CurBackGround->Init("TestBackGround.Bmp");
 	CurBackGround->SetScale("TestBackGround.Bmp", 4.0f);
@@ -63,7 +54,6 @@ void VegetableValleyLevel::Update(float _Delta)
 	if (true == GameEngineInput::IsDown('P'))
 	{
 		GameEngineCore::ChangeLevel("MainHubLevel");
-		BGMPlayer.Stop();
 		return;
 	}
 
@@ -106,7 +96,6 @@ void VegetableValleyLevel::Update(float _Delta)
 			if (true == GameEngineInput::IsDown('W'))
 			{
 				MainPortal->SetCurLevel("VegetableValley2Level");
-				BGMPlayer.Stop();
 				return;
 			}
 			return;
@@ -136,7 +125,7 @@ void VegetableValleyLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
 	}
 
-	BGMPlayer = GameEngineSound::SoundPlay("04Vegetable_Valley.mp3");
+	BGMPlayer::ChangeBGM("04Vegetable_Valley.mp3");
 
 	FadeObject* FObject = CreateActor<FadeObject>();
 	FObject->FadeIn();

@@ -26,7 +26,7 @@ private:
     class Stage* StagePtr = nullptr;
     class BackGround* CurBackGround = nullptr;
 
-    GameEngineSoundPlayer BGMPlayer;
+    //GameEngineSoundPlayer BGMPlayer;
 
     float4 StartPlayerPos = float4{ 700 , 900 };
 

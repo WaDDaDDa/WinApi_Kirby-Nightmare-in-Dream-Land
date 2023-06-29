@@ -22,6 +22,7 @@
 #include "SparkMonster.h"
 #include "FadeObject.h"
 #include "SwordMan.h"
+#include "BGMPlayer.h"
 
 DesertLevel::DesertLevel()
 {
@@ -35,16 +36,6 @@ DesertLevel::~DesertLevel()
 
 void DesertLevel::Start()
 {
-	if (nullptr == GameEngineSound::FindSound("04Vegetable_Valley.mp3"))
-	{
-		GameEnginePath FilePath;
-		FilePath.SetCurrentPath();
-		FilePath.MoveParentToExistsChild("Resource");
-		FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Sounds\\");
-
-		// BGM 로드 사막으로 변경.
-		GameEngineSound::SoundLoad(FilePath.PlusFilePath("04Vegetable_Valley.mp3"));
-	}
 	// 백그라운드 사막으로 변경.
 	CurBackGround = CreateActor<BackGround>();
 	CurBackGround->Init("DesertBackGround.Bmp");
@@ -64,7 +55,6 @@ void DesertLevel::Update(float _Delta)
 	if (true == GameEngineInput::IsDown('P'))
 	{
 		GameEngineCore::ChangeLevel("MainHubLevel");
-		BGMPlayer.Stop();
 		return;
 	}
 
@@ -116,7 +106,6 @@ void DesertLevel::Update(float _Delta)
 			if (true == GameEngineInput::IsDown('W'))
 			{
 				MainPortal->SetCurLevel("DesertLevel2");
-				BGMPlayer.Stop();
 				return;
 			}
 			return;
@@ -148,10 +137,10 @@ void DesertLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
 
-	BGMPlayer = GameEngineSound::SoundPlay("04Vegetable_Valley.mp3");
-
 	FadeObject* FObject = CreateActor<FadeObject>();
 	FObject->FadeIn();
+	
+	BGMPlayer::ChangeBGM("06 Ice Cream Island.mp3");
 
 	Abillity CurAbill = Kirby::GetMainPlayer()->GetAbillity();
 	int KirbyLife = Kirby::GetMainPlayer()->GetLife();

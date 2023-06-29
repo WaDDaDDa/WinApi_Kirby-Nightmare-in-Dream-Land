@@ -4,7 +4,7 @@
 #include "BackGround.h"
 #include <GameEngineCore/ResourcesManager.h>
 #include <GameEngineCore/GameEngineRenderer.h>
-
+#include "BGMPlayer.h"
 
 TitleLevel::TitleLevel()
 {
@@ -61,6 +61,10 @@ void TitleLevel::Start()
 		FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Sounds\\");
 
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("01Main_Title.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("04Vegetable_Valley.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("06 Ice Cream Island.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("20 Boss Battle.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song105.wav"));
 	}
 
 	CurBackGround = CreateActor<BackGround>();
@@ -69,7 +73,7 @@ void TitleLevel::Start()
 
 	CurBackGround->SetPos({480,300});
 
-	BGMPlayer = GameEngineSound::SoundPlay("01Main_Title.mp3");
+	BGMPlayer::SetBGM("01Main_Title.mp3");
 }
 
 void TitleLevel::Update(float _DeltaTime)
@@ -100,7 +104,6 @@ void TitleLevel::Update(float _DeltaTime)
 		true == GameEngineInput::IsDown('N') ||
 		true == GameEngineInput::IsDown('M'))
 	{
-		BGMPlayer.Stop();
 		GameEngineCore::ChangeLevel("MainHubLevel");
 	}
 }

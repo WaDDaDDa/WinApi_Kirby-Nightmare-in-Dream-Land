@@ -19,8 +19,8 @@
 #include "FadeObject.h"
 #include "SparkKirby.h"
 #include "SwordKirby.h"
+#include "BGMPlayer.h"
 
-// Kirby* MainHubLevel::LevelPlayer = nullptr;
 
 MainHubLevel::MainHubLevel()
 {
@@ -84,10 +84,10 @@ void MainHubLevel::Start()
 
 void MainHubLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	BGMPlayer = GameEngineSound::SoundPlay("03Map_Vegetable_Valley.mp3");
-
 	FadeObject* FObject = CreateActor<FadeObject>();
 	FObject->FadeIn();
+
+	BGMPlayer::ChangeBGM("03Map_Vegetable_Valley.mp3");
 
 	Abillity CurAbill = Abillity::Normal;
 
@@ -118,7 +118,7 @@ void MainHubLevel::Update(float _Delta)
 
 	if (true == GameEngineInput::IsDown('P'))
 	{
-		BGMPlayer.Stop();
+		
 	}
 
 	if (true == GameEngineInput::IsDown('M'))
@@ -161,7 +161,6 @@ void MainHubLevel::Update(float _Delta)
 			if (true == GameEngineInput::IsDown('W'))
 			{
 				Stage1Portal->SetCurLevel("VegetableValleyLevel");
-				BGMPlayer.Stop();
 				return;
 			}
 		}
@@ -182,7 +181,6 @@ void MainHubLevel::Update(float _Delta)
 			if (true == GameEngineInput::IsDown('W'))
 			{
 				Stage2Portal->SetCurLevel("VegetableValley2Level");
-				BGMPlayer.Stop();
 				return;
 			}
 			return;
@@ -205,7 +203,6 @@ void MainHubLevel::Update(float _Delta)
 			if (true == GameEngineInput::IsDown('W'))
 			{
 				Stage3Portal->SetCurLevel("VegetableValley3Level");
-				BGMPlayer.Stop();
 				return;
 			}
 			return;
@@ -228,7 +225,6 @@ void MainHubLevel::Update(float _Delta)
 			if (true == GameEngineInput::IsDown('W'))
 			{
 				Stage4Portal->SetCurLevel("DesertLevel");
-				BGMPlayer.Stop();
 				return;
 			}
 			return;
@@ -251,7 +247,6 @@ void MainHubLevel::Update(float _Delta)
 			if (true == GameEngineInput::IsDown('W'))
 			{
 				Stage5Portal->SetCurLevel("DesertLevel2");
-				BGMPlayer.Stop();
 				return;
 			}
 			return;
@@ -274,7 +269,6 @@ void MainHubLevel::Update(float _Delta)
 			if (true == GameEngineInput::IsDown('W'))
 			{
 				Stage6Portal->SetCurLevel("DesertLevel3");
-				BGMPlayer.Stop();
 				return;
 			}
 			return;
@@ -297,7 +291,6 @@ void MainHubLevel::Update(float _Delta)
 			if (true == GameEngineInput::IsDown('W'))
 			{
 				Stage7Portal->SetCurLevel("BossLevel");
-				BGMPlayer.Stop();
 				return;
 			}
 			return;

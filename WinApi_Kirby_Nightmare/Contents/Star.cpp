@@ -41,8 +41,9 @@ void Star::Start()
 	SetPos(Kirby::GetMainPlayer()->GetPos());
 	DirCheck();
 	ChangeState(StarState::Attack);
-}
+	SoundEffect = GameEngineSound::SoundPlay("song105.wav");
 
+}
 
 void Star::DirCheck()
 {

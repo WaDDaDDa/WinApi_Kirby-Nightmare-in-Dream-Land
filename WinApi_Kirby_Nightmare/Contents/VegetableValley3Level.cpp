@@ -19,6 +19,7 @@
 #include "MainHubLevel.h"
 #include "BurningMonster.h"
 #include "FadeObject.h"
+#include "BGMPlayer.h"
 
 VegetableValley3Level::VegetableValley3Level()
 {
@@ -32,16 +33,6 @@ VegetableValley3Level::~VegetableValley3Level()
 
 void VegetableValley3Level::Start()
 {
-	if (nullptr == GameEngineSound::FindSound("04Vegetable_Valley.mp3"))
-	{
-		GameEnginePath FilePath;
-		FilePath.SetCurrentPath();
-		FilePath.MoveParentToExistsChild("Resource");
-		FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Sounds\\");
-
-		GameEngineSound::SoundLoad(FilePath.PlusFilePath("04Vegetable_Valley.mp3"));
-	}
-
 	CurBackGround = CreateActor<BackGround>();
 	CurBackGround->Init("TestBackGround.Bmp");
 	CurBackGround->SetScale("TestBackGround.Bmp", 4.0f);
@@ -60,7 +51,6 @@ void VegetableValley3Level::Update(float _Delta)
 	if (true == GameEngineInput::IsDown('P'))
 	{
 		GameEngineCore::ChangeLevel("MainHubLevel");
-		BGMPlayer.Stop();
 		return;
 	}
 
@@ -98,7 +88,6 @@ void VegetableValley3Level::Update(float _Delta)
 			if (true == GameEngineInput::IsDown('W'))
 			{
 				MainPortal->SetCurLevel("DesertLevel");
-				BGMPlayer.Stop();
 				return;
 			}
 			return;
@@ -128,9 +117,10 @@ void VegetableValley3Level::LevelStart(GameEngineLevel* _PrevLevel)
 		MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
 	}
 	// BGM 및 페이드 인
-	BGMPlayer = GameEngineSound::SoundPlay("04Vegetable_Valley.mp3");
 	FadeObject* FObject = CreateActor<FadeObject>();
 	FObject->FadeIn();
+
+	BGMPlayer::ChangeBGM("04Vegetable_Valley.mp3");
 
 	// 커비 셋팅 . 이전능력 폼체인지
 	Abillity CurAbill = Kirby::GetMainPlayer()->GetAbillity();

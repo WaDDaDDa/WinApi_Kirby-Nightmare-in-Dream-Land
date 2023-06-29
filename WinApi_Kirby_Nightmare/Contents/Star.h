@@ -2,6 +2,7 @@
 #include <GameEngineCore/GameEngineActor.h>
 #include "Kirby.h"
 #include <string>
+#include <GameEnginePlatform/GameEngineSound.h>
 
 enum class StarState
 {
@@ -73,6 +74,8 @@ private:
 	std::string CurState = "";
 
 	StarState State = StarState::Max;
+
+	class GameEngineSoundPlayer SoundEffect;
 
 	void Start() override;
 	void Update(float _Delta) override;
