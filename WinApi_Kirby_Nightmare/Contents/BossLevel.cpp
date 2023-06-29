@@ -23,6 +23,7 @@
 #include "FadeObject.h"
 #include "SwordMan.h"
 #include "BossMonster.h"
+#include "BossUIManager.h"
 
 BossLevel::BossLevel()
 {
@@ -58,6 +59,14 @@ void BossLevel::Start()
 
 void BossLevel::Update(float _Delta)
 {
+	static bool Once = false;
+
+	if (Kirby::GetMainPlayer()->GetPos().Y >= 300.0f && Once == false)
+	{
+		Once = true;
+		CreateActor<BossUIManager>();
+	}
+
 	if (true == GameEngineInput::IsDown('J'))
 	{
 		StagePtr->SwitchRender();

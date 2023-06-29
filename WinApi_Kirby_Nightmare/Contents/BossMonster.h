@@ -82,6 +82,11 @@ public:
 
     void ChangeAnimationState(const std::string& _StateName);
 
+    static int GetBossHp() 
+    {
+        return BossHp;
+    }
+
 protected:
 
 private:
@@ -97,7 +102,7 @@ private:
     float4 BodyCollisionScale = float4{ 150, 550 };
 
     GameEngineActor* Actor = nullptr;
-    int BossHp = 100;
+    static int BossHp;
 
     int Count = 0;
 

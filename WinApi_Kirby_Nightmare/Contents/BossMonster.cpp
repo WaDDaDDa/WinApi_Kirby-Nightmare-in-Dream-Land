@@ -6,6 +6,7 @@
 #include <GameEngineCore/GameEngineLevel.h>
 #include "ContentsEnum.h"
 
+int BossMonster::BossHp = 100;
 
 BossMonster::BossMonster()
 {
