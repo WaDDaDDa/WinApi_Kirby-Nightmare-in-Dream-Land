@@ -76,15 +76,6 @@ void VegetableValleyLevel::Update(float _Delta)
 
 	if (true == GameEngineInput::IsDown('N'))
 	{
-		if (0.0f != GameEngineTime::MainTimer.GetTimeScale(UpdateOrder::Player))
-		{
-			GameEngineTime::MainTimer.SetTimeScale(UpdateOrder::Player, 0.0f);
-		}
-		else
-		{
-			GameEngineTime::MainTimer.SetTimeScale(UpdateOrder::Player, 1.0f);
-		}
-
 		StagePtr->SwitchRender();
 	}
 

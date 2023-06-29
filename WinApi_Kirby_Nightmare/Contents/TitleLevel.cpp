@@ -5,6 +5,7 @@
 #include <GameEngineCore/ResourcesManager.h>
 #include <GameEngineCore/GameEngineRenderer.h>
 
+
 TitleLevel::TitleLevel()
 {
 }
@@ -51,12 +52,24 @@ void TitleLevel::Start()
 
 		}
 	}
+	// 사운드 로드
+	if (nullptr == GameEngineSound::FindSound("01Main_Title.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("Resource");
+		FilePath.MoveChild("Resource\\Kirby_Nightmare_in_Dream_Land\\Sounds\\");
+
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("01Main_Title.mp3"));
+	}
 
 	CurBackGround = CreateActor<BackGround>();
 	CurBackGround->Init("Untitled.Bmp");
 	CurBackGround->SetAnimation("Title", "Untitled.Bmp", 0, 1, 0.2f, true);
 
 	CurBackGround->SetPos({480,300});
+
+	BGMPlayer = GameEngineSound::SoundPlay("01Main_Title.mp3");
 }
 
 void TitleLevel::Update(float _DeltaTime)
@@ -87,6 +100,7 @@ void TitleLevel::Update(float _DeltaTime)
 		true == GameEngineInput::IsDown('N') ||
 		true == GameEngineInput::IsDown('M'))
 	{
+		BGMPlayer.Stop();
 		GameEngineCore::ChangeLevel("MainHubLevel");
 	}
 }

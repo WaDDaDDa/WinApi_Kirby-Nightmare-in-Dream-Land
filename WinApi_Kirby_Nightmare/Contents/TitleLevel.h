@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineLevel.h>
+#include <GameEnginePlatform/GameEngineSound.h>
 
 // Ό³Έν :
 class TitleLevel : public GameEngineLevel
@@ -17,8 +18,8 @@ public:
 
 protected:
 
-
 private:
+	class GameEngineSoundPlayer BGMPlayer;
 	class BackGround* CurBackGround = nullptr;
 	void Update(float _DeltaTime) override;
 	void Start() override;
