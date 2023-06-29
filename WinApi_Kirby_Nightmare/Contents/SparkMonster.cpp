@@ -284,6 +284,7 @@ void SparkMonster::Update(float _Delta)
 			BodyCollision->Off();
 			AttRenderer->Off();
 			AttackCollision->Off();
+			GameEngineSound::SoundPlay("song145.wav");
 			ChangeState(SparkMonsterState::Damage);
 			return;
 		}

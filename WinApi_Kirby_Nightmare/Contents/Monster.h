@@ -1,5 +1,7 @@
 #pragma once
 #include "GravityActor.h"
+#include <GameEnginePlatform/GameEngineSound.h>
+
 class Kirby;
 class Monster : public GravityActor
 {

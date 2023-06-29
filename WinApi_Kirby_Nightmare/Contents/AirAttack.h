@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
+#include <GameEnginePlatform/GameEngineSound.h>
 #include "Kirby.h"
 
 class AirAttack : public GameEngineActor
@@ -40,6 +41,8 @@ public:
 protected:
 
 private:
+	GameEngineSound SoundEffect;
+
 	GameEngineCollision* AttackCollision = nullptr;
 	float4 AttackCollisionScale = float4{ 40,40 };
 

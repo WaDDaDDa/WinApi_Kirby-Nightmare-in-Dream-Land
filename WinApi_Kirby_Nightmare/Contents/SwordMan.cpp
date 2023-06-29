@@ -278,6 +278,7 @@ void SwordMan::Update(float _Delta)
 			// 계속 흡수당하고있음.
 			// 흡수당하는건 한번만 해야함.
 			BodyCollision->Off();
+			GameEngineSound::SoundPlay("song145.wav");
 			ChangeState(SwordManState::Damage);
 			return;
 		}

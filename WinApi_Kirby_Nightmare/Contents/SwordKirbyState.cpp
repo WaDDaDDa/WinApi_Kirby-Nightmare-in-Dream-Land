@@ -53,6 +53,8 @@ void SwordKirby::AttackStartUpdate(float _Delta)
 
 void SwordKirby::AttackStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song147.wav");
+
 	if (KirbyDir::Left == Kirby::GetMainPlayer()->GetDir())
 	{
 		LeftAttackCollision->On();
@@ -146,6 +148,7 @@ void SwordKirby::JumpAttackUpdate(float _Delta)
 
 void SwordKirby::TackleStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song173.wav");
 	TackleCollision->On();
 	Kirby::GetMainPlayer()->Speed = TackleSpeed;
 	ChangeAnimationState("Tackle");

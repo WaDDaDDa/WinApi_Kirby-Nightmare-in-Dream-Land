@@ -30,7 +30,7 @@ public:
             return;
         }
         BGM.Stop();
-        BGM = GameEngineSound::SoundPlay(_Name);
+        BGM = GameEngineSound::SoundPlay(_Name, 200);
         BGMName = _Name;
     }
 

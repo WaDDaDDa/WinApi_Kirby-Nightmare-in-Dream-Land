@@ -155,6 +155,7 @@ void SparkKirby::JumpAttackUpdate(float _Delta)
 
 void SparkKirby::TackleStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song173.wav");
 	TackleCollision->On();
 	Kirby::GetMainPlayer()->Speed = TackleSpeed;
 	ChangeAnimationState("Tackle");

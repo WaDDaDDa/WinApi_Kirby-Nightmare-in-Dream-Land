@@ -21,6 +21,7 @@ void BurningKirby::AttackStartStart()
 
 void BurningKirby::AttackStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song137.wav");
 	ChangeAnimationState("Attack");
 }
 
@@ -65,6 +66,8 @@ void BurningKirby::AttackUpdate(float _Delta)
 		AttackCollision->Off();
 		BodyCollision->On();
 		Speed /= 2;
+		SoundEffect.Stop();
+		SoundEffect = GameEngineSound::SoundPlay("song111.wav");
 		ChangeState(KirbyState::Idle);
 		return;
 	}
@@ -82,6 +85,8 @@ void BurningKirby::AttackUpdate(float _Delta)
 			Speed = NormalSpeed;
 			AttackCollision->Off();
 			BodyCollision->On();
+			SoundEffect.Stop();
+			SoundEffect = GameEngineSound::SoundPlay("song111.wav");
 			ChangeState(KirbyState::Falling);
 			return;
 		}
@@ -97,6 +102,8 @@ void BurningKirby::AttackUpdate(float _Delta)
 			Speed = NormalSpeed;
 			AttackCollision->Off();
 			BodyCollision->On();
+			SoundEffect.Stop();
+			SoundEffect = GameEngineSound::SoundPlay("song111.wav");
 			ChangeState(KirbyState::Falling);
 			return;
 		}
@@ -189,6 +196,7 @@ void BurningKirby::JumpAttackUpdate(float _Delta)
 
 void BurningKirby::TackleStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song173.wav");
 	TackleCollision->On();
 	Kirby::GetMainPlayer()->Speed = TackleSpeed;
 	ChangeAnimationState("Tackle");

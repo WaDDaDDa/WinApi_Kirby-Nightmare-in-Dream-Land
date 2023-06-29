@@ -1,5 +1,6 @@
 #pragma once
 #include "GravityActor.h"
+#include <GameEnginePlatform/GameEngineSound.h>
 
 enum class KirbyState
 {
@@ -264,5 +265,7 @@ private:
     void Render(float _Delta) override;
 
     void LevelStart() override;
+
+    class GameEngineSoundPlayer SoundEffect;
 };
 

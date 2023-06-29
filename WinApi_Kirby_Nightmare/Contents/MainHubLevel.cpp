@@ -114,7 +114,7 @@ void MainHubLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 void MainHubLevel::Update(float _Delta)
 {
-	//CameraFocus();
+	CameraFocus();
 
 	if (true == GameEngineInput::IsDown('P'))
 	{

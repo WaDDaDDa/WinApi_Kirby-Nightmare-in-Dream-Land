@@ -1,6 +1,7 @@
 #pragma once
 #include "Kirby.h"
 
+
 class SwordKirby : public Kirby
 {
 public:
@@ -57,5 +58,7 @@ private:
 
     float4 JumpAttackCollisionPos = float4{ 0.0f , -60 };
     float4 JumpAttackCollisionScale = float4{ 150,150 };
+
+    class GameEngineSoundPlayer SoundEffect;
 };
 

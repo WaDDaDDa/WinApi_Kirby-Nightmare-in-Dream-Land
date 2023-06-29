@@ -1,5 +1,6 @@
 #pragma once
 #include "Monster.h"
+#include <GameEnginePlatform/GameEngineSound.h>
 
 enum class WaddleDeeState
 {
@@ -87,5 +88,7 @@ private:
     float4 DeathCollisionScale = float4{ 100, 100 };
 
     GameEngineActor* Actor = nullptr;
+
+    class GameEngineSoundPlayer SoundEffect;
 };
 

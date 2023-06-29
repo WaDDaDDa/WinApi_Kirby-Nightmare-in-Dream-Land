@@ -64,7 +64,33 @@ void TitleLevel::Start()
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("04Vegetable_Valley.mp3"));
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("06 Ice Cream Island.mp3"));
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("20 Boss Battle.mp3"));
-		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song105.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song105.wav")); // »ßÀ¯¿õ ³¯¶ó°¡´Â ´À³¦
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song111.wav")); // ÇªÇ× Æø¹ß´À³¦
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song114.wav")); // Æ÷È« °ø±â ¹ñ±â
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song115.wav")); // ÂÀÇÁ »ç¿îµå
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song116.wav")); // »ÑÀÌ Æ¨±â´Â´À³¦
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song120.wav")); // »Ç¿Ë fly
+
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song128.wav")); // Çª¾Æ¾Æ¾Ó ºÒ»Õ±â
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song137.wav")); // Çª¾Æ¾Æ¾Ó ´õ ½ëºÒ»Õ±â
+
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song145.wav")); // ÇªÀÍ Ä® Âî¸£±â(ÇÇ°Ý)
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song147.wav")); // ÇªÀÍ Ä® Âî¸£±â(Çã°ø)
+
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song154.wav")); // ½ºÆÄÅ© °ø°Ý Âî¸®¸®
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song173.wav")); // ÅÂÅ¬°ø°Ý
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song181.wav")); // ¶ì·Î·Õ ¾ÆÀÌÅÛ ¸Ô±â
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song215.wav")); // —s º°ÅÍÁú¶§
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song220.wav")); // ¸ñ¼û+1
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song222.wav")); // ¹®¿­±â
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song223.wav")); // ¹®´Ý±â
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song227.wav")); // º¸½ºÁ×À»¶§
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song260.wav")); // bosshit
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song528.wav")); // ¶¥¿¡´êÀ»¶§
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song539.wav")); // Ä¿ºñ Èí¼ö°ø°Ý 1
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song540.wav")); // Ä¿ºñ Âî±×·¯Áü
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song545.wav")); // Á¡ÇÁÂÐ ½ºÆÄÅ© ¸ó½ºÅÍ
+
 	}
 
 	CurBackGround = CreateActor<BackGround>();

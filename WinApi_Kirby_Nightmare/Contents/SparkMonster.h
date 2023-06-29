@@ -104,5 +104,6 @@ private:
     float4 AttackCollisionScale = float4{ 140,140 };
 
     GameEngineActor* Actor = nullptr;
+    class GameEngineSoundPlayer SoundEffect;
 };
 

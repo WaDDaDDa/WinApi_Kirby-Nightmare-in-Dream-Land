@@ -338,6 +338,7 @@ void BurningMonster::Update(float _Delta)
 			LeftAttack2Renderer->Off();
 			RightAttackRenderer->Off();
 			RightAttack2Renderer->Off();
+			GameEngineSound::SoundPlay("song145.wav");
 			ChangeState(BurningMonsterState::Damage);
 			return;
 		}

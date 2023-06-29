@@ -149,7 +149,7 @@ void BossMonster::Update(float _Delta)
 
 			Collison->Off();
 
-			BossHp -= 5;
+			BossHp -= 10;
 
 			ChangeState(BossMonsterState::Damage);
 			return;
@@ -172,7 +172,7 @@ void BossMonster::Update(float _Delta)
 
 			Collison->Off();
 
-			BossHp -= 4;
+			BossHp -= 5;
 
 			ChangeState(BossMonsterState::Damage);
 			return;
@@ -195,8 +195,9 @@ void BossMonster::Update(float _Delta)
 
 			Collison->Off();
 
-			BossHp -= 50;
+			BossHp -= 10;
 
+			GameEngineSound::SoundPlay("song145.wav");
 			ChangeState(BossMonsterState::Damage);
 			return;
 		}

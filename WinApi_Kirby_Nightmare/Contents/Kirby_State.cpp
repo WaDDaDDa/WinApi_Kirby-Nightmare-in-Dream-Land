@@ -3,6 +3,7 @@
 #include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineCamera.h>
+#include <GameEnginePlatform/GameEngineSound.h>
 #include "AirAttack.h"
 #include "BurningKirby.h"
 #include "Star.h"
@@ -23,6 +24,7 @@ void Kirby::DownIdleStart()
 
 void Kirby::TackleStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song173.wav");
 	TackleCollision->On();
 	Speed = TackleSpeed;
 	ChangeAnimationState("Tackle");
@@ -35,6 +37,7 @@ void Kirby::WalkStart()
 
 void Kirby::JumpStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song115.wav");
 	SetGravityVector(float4::UP * JumpPower);
 	ChangeAnimationState("Jump");
 }
@@ -164,6 +167,7 @@ void Kirby::SwallowStart()
 
 void Kirby::DamageStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song111.wav");
 	DamageHP();
 	BodyCollision->Off();
 	AttackCollision->Off();
@@ -568,7 +572,6 @@ void Kirby::FallingUpdate(float _Delta)
 		ChangeState(KirbyState::FallingEnd);
 		return;
 	}
-
 }
 
 void Kirby::FallingEndUpdate(float _Delta)
@@ -655,6 +658,7 @@ void Kirby::FlyUpdate(float _Delta)
 
 	if (true == GameEngineInput::IsDown('F') || GameEngineInput::GetPressTime('F') >= 0.4f)
 	{
+		SoundEffect = GameEngineSound::SoundPlay("song120.wav");
 		GameEngineInput::ResetPressTime('F');
 		SetGravityVector(float4::UP * JumpPower * 0.5f);
 	}
@@ -1048,6 +1052,7 @@ void Kirby::DamageUpdate(float _Delta)
 		ChangeState(KirbyState::DieReady);
 		return;
 	}
+
 	GroundCheck(_Delta);
 	float4 MoveDir = float4::ZERO;
 	if (KirbyDir::Left == Dir)

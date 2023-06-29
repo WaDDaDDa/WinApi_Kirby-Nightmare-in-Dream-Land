@@ -47,6 +47,8 @@ void AirAttack::Start()
 
 	SetOrder(UpdateOrder::Player);
 
+	SoundEffect.SoundPlay("song114.wav");
+
 	AttackCollision = CreateCollision(CollisionOrder::PlayerAttack);
 	AttackCollision->SetCollisionScale(AttackCollisionScale);
 	AttackCollision->SetCollisionType(CollisionType::CirCle);

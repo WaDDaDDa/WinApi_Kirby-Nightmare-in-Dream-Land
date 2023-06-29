@@ -254,6 +254,7 @@ void WaddleDee::Update(float _Delta)
 				Dir = WaddleDeeDir::Right;
 			}
 			BodyCollision->Off();
+			GameEngineSound::SoundPlay("song145.wav");
 			ChangeState(WaddleDeeState::Damage);
 			return;
 		}

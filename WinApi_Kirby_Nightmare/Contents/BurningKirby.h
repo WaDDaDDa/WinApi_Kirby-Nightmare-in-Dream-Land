@@ -1,5 +1,6 @@
 #pragma once
 #include "Kirby.h"
+#include <GameEnginePlatform/GameEngineSound.h>
 
 class BurningKirby : public Kirby
 {
@@ -45,5 +46,6 @@ private:
     float4 AttackCollisionPos = float4{ 0 , -40 };
     float4 AttackCollisionScale = float4{ 130,100 };
 
+    GameEngineSoundPlayer SoundEffect;
 };
 

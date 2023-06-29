@@ -1,6 +1,7 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
 #include "BurningMonster.h"
+#include <GameEnginePlatform/GameEngineSound.h>
 
 enum class BulletState
 {
@@ -51,6 +52,8 @@ protected:
 	void BombUpdate(float _Delta);
 
 private:
+	class GameEngineSoundPlayer SoundEffect;
+
 	BurningMonster* Master = nullptr;
 	GameEngineCollision* AttackCollision = nullptr;
 	float4 AttackCollisionScale = float4{ 100,100 };
