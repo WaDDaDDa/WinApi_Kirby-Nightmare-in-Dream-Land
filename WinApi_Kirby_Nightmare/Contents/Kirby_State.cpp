@@ -71,6 +71,7 @@ void Kirby::FallingStart()
 }
 void Kirby::FallingEndStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song528.wav");
 	ChangeAnimationState("FallingEnd");
 }
 void Kirby::RunStart()
@@ -97,6 +98,7 @@ void Kirby::AttackStartStart()
 
 void Kirby::AttackStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song103.wav", 500);
 	AttackCollision->On();
 	if (KirbyDir::Left == GetDir())
 	{
@@ -136,6 +138,7 @@ void Kirby::FatWalkStart()
 
 void Kirby::FatJumpStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song115.wav");
 	SetGravityVector(float4::UP * JumpPower * 0.8f);
 	ChangeAnimationState("FatJump");
 }
@@ -152,6 +155,7 @@ void Kirby::FatFallingStart()
 
 void Kirby::FatFallingEndStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song528.wav");
 	ChangeAnimationState("FatFallingEnd");
 }
 
@@ -167,6 +171,7 @@ void Kirby::SwallowStart()
 
 void Kirby::DamageStart()
 {
+	SoundEffect.Stop();
 	SoundEffect = GameEngineSound::SoundPlay("song111.wav");
 	DamageHP();
 	BodyCollision->Off();
@@ -177,6 +182,7 @@ void Kirby::DamageStart()
 
 void Kirby::FatDamageStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song111.wav");
 	DamageHP();
 	BodyCollision->Off();
 	ChangeAnimationState("FatDamage");
@@ -184,6 +190,7 @@ void Kirby::FatDamageStart()
 
 void Kirby::OpenDoorStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song222.wav");
 	BodyCollision->Off();
 	ChangeAnimationState("OpenDoor");
 }
@@ -758,6 +765,7 @@ void Kirby::AttackUpdate(float _Delta)
 
 	if (true == GameEngineInput::IsUp('X'))
 	{
+		SoundEffect.Stop();
 		AttackCollision->Off();
 		RightChargeRenderer->Off();
 		LeftChargeRenderer->Off();
@@ -804,6 +812,7 @@ void Kirby::ChargeUpdate(float _Delta)
 			AttackCollision->Off();
 			RightChargeRenderer->Off();
 			LeftChargeRenderer->Off();
+			SoundEffect.Stop();
 			ChangeState(KirbyState::StarIn);
 			return;
 		}

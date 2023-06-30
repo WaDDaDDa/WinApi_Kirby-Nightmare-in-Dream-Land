@@ -108,5 +108,7 @@ private:
 
     float AttCoolTime = 10.0f;
     float SpornAppleCoolTime = 15.0f;
+
+    class GameEngineSoundPlayer SoundEffect;
 };
 

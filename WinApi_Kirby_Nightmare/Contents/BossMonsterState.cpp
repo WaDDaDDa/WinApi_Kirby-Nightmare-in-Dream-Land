@@ -55,6 +55,7 @@ void BossMonster::IdleUpdate(float _Delta)
 void BossMonster::DamageStart()
 {
 	Count = 0;
+	SoundEffect = GameEngineSound::SoundPlay("song260.wav");
 	ChangeAnimationState("BossMonster_Damage");
 }
 
@@ -181,6 +182,7 @@ void BossMonster::SpornAppleUpdate(float _Delta)
 
 void BossMonster::DieStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song227.wav");
 	BodyCollision->Off();
 	EffectRenderer1->ChangeAnimation("BossEndingEffect1");
 	ChangeAnimationState("BossMonster_Die");

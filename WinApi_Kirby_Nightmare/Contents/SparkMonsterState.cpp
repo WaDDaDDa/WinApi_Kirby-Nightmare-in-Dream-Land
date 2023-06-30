@@ -52,6 +52,7 @@ void SparkMonster::IdleUpdate(float _Delta)
 
 void SparkMonster::WalkStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song545.wav");
 	AttackCollision->Off();
 	SetGravityVector(float4::UP * JumpPower);
 	ChangeAnimationState("Walk");
@@ -71,6 +72,7 @@ void SparkMonster::WalkUpdate(float _Delta)
 
 void SparkMonster::HitReadyStart()
 {
+	SoundEffect.Stop();
 	AttackCollision->Off();
 	BodyCollision->Off();
 	DeathCollision->On();
@@ -111,6 +113,7 @@ void SparkMonster::HitUpdate(float _Delta)
 
 void SparkMonster::DamageStart()
 {
+	SoundEffect.Stop();
 	AttackCollision->Off();
 	AttRenderer->Off();
 	float XValue = 0.0f;
@@ -207,6 +210,7 @@ void SparkMonster::AttackStartUpdate(float _Delta)
 // ºÒ»Õ±â.
 void SparkMonster::AttackStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song154.wav", 400);
 	AttackCollision->On();
 	AttRenderer->On();
 	ChangeAnimationState("Attack");
@@ -220,6 +224,7 @@ void SparkMonster::AttackUpdate(float _Delta)
 	{
 		AttackCollision->Off();
 		AttRenderer->Off();
+		SoundEffect.Stop();
 		ChangeState(SparkMonsterState::Walk);
 		return;
 	}

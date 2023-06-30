@@ -192,6 +192,7 @@ void Star::AttackUpdate(float _Delta)
 
 void Star::EffectStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song215.wav");
 	ChangeAnimationState("StarEffect");
 }
 

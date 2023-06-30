@@ -76,7 +76,6 @@ void TitleLevel::Start()
 
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song145.wav")); // 푸익 칼 찌르기(피격)
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song147.wav")); // 푸익 칼 찌르기(허공)
-
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song154.wav")); // 스파크 공격 찌리리
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song173.wav")); // 태클공격
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song181.wav")); // 띠로롱 아이템 먹기
@@ -87,7 +86,10 @@ void TitleLevel::Start()
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song227.wav")); // 보스죽을때
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song260.wav")); // bosshit
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song528.wav")); // 땅에닿을때
+
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song539.wav")); // 커비 흡수공격 1
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song103.wav")); // 커비 흡수공격 2
+
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song540.wav")); // 커비 찌그러짐
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song545.wav")); // 점프쫑 스파크 몬스터
 

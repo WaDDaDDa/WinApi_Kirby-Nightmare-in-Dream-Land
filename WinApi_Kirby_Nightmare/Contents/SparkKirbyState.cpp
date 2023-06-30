@@ -6,6 +6,7 @@
 
 void SparkKirby::DamageStart()
 {
+	SoundEffect.Stop();
 	ChangeKirby(Abillity::Normal);
 	Kirby::GetMainPlayer()->DirCheck();
 	Kirby::GetMainPlayer()->ChangeState(KirbyState::Damage);
@@ -61,6 +62,7 @@ void SparkKirby::AttackStartUpdate(float _Delta)
 
 void SparkKirby::AttackStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song154.wav", 400);
 	AttackCollision->On();
 	AttRenderer->On();
 	ChangeAnimationState("Attack");
@@ -75,6 +77,7 @@ void SparkKirby::AttackUpdate(float _Delta)
 		AttackCollision->Off();
 		AttRenderer->Off();
 		BodyCollision->On();
+		SoundEffect.Stop();
 		ChangeState(KirbyState::Idle);
 		return;
 	}
