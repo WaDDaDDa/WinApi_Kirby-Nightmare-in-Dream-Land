@@ -740,6 +740,7 @@ void Kirby::AttackStartUpdate(float _Delta)
 	if (GetLiveTime() >= 0.3f)
 	{
 		ChangeState(KirbyState::Attack);
+		
 		return;
 	}
 
