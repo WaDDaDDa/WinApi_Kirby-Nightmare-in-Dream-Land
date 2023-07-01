@@ -745,6 +745,7 @@ void Kirby::AttackStartUpdate(float _Delta)
 
 	if (true == GameEngineInput::IsUp('X'))
 	{
+		SoundEffect.Stop();
 		ChangeState(KirbyState::Idle);
 		return;
 	}
