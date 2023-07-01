@@ -127,6 +127,7 @@ void SwordKirby::JumpAttackStartUpdate(float _Delta)
 
 void SwordKirby::JumpAttackStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song147.wav");
 	JumpAttackCollision->On();
 	BodyCollision->Off();
 
@@ -137,6 +138,15 @@ void SwordKirby::JumpAttackUpdate(float _Delta)
 {
 	GroundCheck(_Delta);
 	Movement(_Delta);
+
+	if (GetGravityVector() == float4::ZERO)
+	{
+		JumpAttackCollision->Off();
+		BodyCollision->On();
+		ChangeState(KirbyState::Idle);
+		return;
+	}
+
 	if (GetLiveTime() >= 0.5f)
 	{
 		JumpAttackCollision->Off();

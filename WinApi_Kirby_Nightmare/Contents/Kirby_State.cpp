@@ -93,12 +93,13 @@ void Kirby::BreathInStart()
 
 void Kirby::AttackStartStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song579.wav");
 	ChangeAnimationState("AttackStart");
 }
 
 void Kirby::AttackStart()
 {
-	SoundEffect = GameEngineSound::SoundPlay("song103.wav", 500);
+	SoundEffect = GameEngineSound::SoundPlay("song580.wav", 500);
 	AttackCollision->On();
 	if (KirbyDir::Left == GetDir())
 	{

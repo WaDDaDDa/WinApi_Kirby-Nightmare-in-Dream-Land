@@ -4,6 +4,7 @@
 #include "BackGround.h"
 #include <GameEngineCore/ResourcesManager.h>
 #include <GameEngineCore/GameEngineRenderer.h>
+#include <GameEnginePlatform/GameEngineSound.h>
 #include "BGMPlayer.h"
 
 TitleLevel::TitleLevel()
@@ -92,6 +93,8 @@ void TitleLevel::Start()
 
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song540.wav")); // 커비 찌그러짐
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song545.wav")); // 점프쫑 스파크 몬스터
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song579.wav")); // 흡수시작
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song580.wav")); // 흡수 루프
 
 	}
 
