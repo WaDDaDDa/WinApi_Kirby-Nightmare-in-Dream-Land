@@ -146,7 +146,13 @@ void VegetableValleyLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 	// 몬스터 배치
 	{
-		BurningMonster* Waddle = CreateActor<BurningMonster>();
+		WaddleDee* Waddle = CreateActor<WaddleDee>();
+		Waddle->SetGroundTexture("Level1_Debug.bmp");
+		Waddle->SetPos(float4{ 1200,350 });
+		Waddle->Dir = WaddleDeeDir::Left;
+	}
+	{
+		WaddleDee* Waddle = CreateActor<WaddleDee>();
 		Waddle->SetGroundTexture("Level1_Debug.bmp");
 		Waddle->SetPos(float4{ 1500,350 });
 	}

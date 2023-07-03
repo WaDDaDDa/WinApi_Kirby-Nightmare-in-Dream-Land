@@ -40,6 +40,7 @@ void SwordMan::IdleUpdate(float _Delta)
 			return;
 		default:
 			ChangeState(SwordManState::Walk);
+			return;
 			break;
 		}
 	}

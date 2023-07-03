@@ -13,40 +13,36 @@ void SparkMonster::IdleStart()
 void SparkMonster::IdleUpdate(float _Delta)
 {
 	GroundCheck(_Delta);
-	if (GetLiveTime() >= 1.0f)
+
+	if (2.0f <= GetLiveTime())
 	{
+		int Value = 0;
 		float Posi = Kirby::GetMainPlayer()->GetPos().X - GetPos().X;
-
-		if (Posi >= -AttRange)
+		if (Posi <= 0 && SparkMonsterDir::Left == Dir)
 		{
-			ChangeState(SparkMonsterState::AttackStart);
-			return;
+			if (Posi >= -AttRange)
+			{
+				Value = 1;
+			}
+		}
+		else if (Posi >= 0 && SparkMonsterDir::Right == Dir)
+		{
+			if (Posi <= AttRange)
+			{
+				Value = 1;
+			}
 		}
 
-		if (Posi <= AttRange)
+		switch (Value)
 		{
+		case 1:
 			ChangeState(SparkMonsterState::AttackStart);
 			return;
+		default:
+			ChangeState(SparkMonsterState::Walk);
+			return;
+			break;
 		}
-
-		//if (Posi <= 0 && SparkMonsterDir::Left == Dir)
-		//{
-		//	if (Posi >= -AttRange)
-		//	{
-		//		ChangeState(SparkMonsterState::AttackStart);
-		//		return;
-		//	}
-		//}
-		//else if (Posi >= 0 && SparkMonsterDir::Right == Dir)
-		//{
-		//	if (Posi <= AttRange)
-		//	{
-		//		ChangeState(SparkMonsterState::AttackStart);
-		//		return;
-		//	}
-		//}
-		ChangeState(SparkMonsterState::Walk);
-		return;
 	}
 }
 
@@ -187,7 +183,6 @@ void SparkMonster::EffectStart()
 
 void SparkMonster::EffectUpdate(float _Delta)
 {
-
 	if (0.5f <= GetLiveTime())
 	{
 		Death();

@@ -168,6 +168,7 @@ void BurningMonster::Update(float _Delta)
 			LeftAttack2Renderer->Off();
 			RightAttackRenderer->Off();
 			RightAttack2Renderer->Off();
+			GameEngineSound::SoundPlay("42 何碟洒绰家府.wav");
 			ChangeState(BurningMonsterState::Damage);
 			return;
 		}
@@ -236,6 +237,7 @@ void BurningMonster::Update(float _Delta)
 			LeftAttack2Renderer->Off();
 			RightAttackRenderer->Off();
 			RightAttack2Renderer->Off();
+			GameEngineSound::SoundPlay("42 何碟洒绰家府.wav");
 			ChangeState(BurningMonsterState::Damage);
 			return;
 		}
@@ -270,6 +272,7 @@ void BurningMonster::Update(float _Delta)
 			LeftAttack2Renderer->Off();
 			RightAttackRenderer->Off();
 			RightAttack2Renderer->Off();
+			GameEngineSound::SoundPlay("42 何碟洒绰家府.wav");
 			ChangeState(BurningMonsterState::Damage);
 			return;
 		}
@@ -304,6 +307,7 @@ void BurningMonster::Update(float _Delta)
 			LeftAttack2Renderer->Off();
 			RightAttackRenderer->Off();
 			RightAttack2Renderer->Off();
+			GameEngineSound::SoundPlay("42 何碟洒绰家府.wav");
 			ChangeState(BurningMonsterState::Damage);
 			return;
 		}

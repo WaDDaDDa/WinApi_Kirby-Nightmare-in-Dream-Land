@@ -83,7 +83,7 @@ private:
     float4 CheckPos = float4::ZERO;
     float Speed = 400.0f;
     float JumpPower = 800.0f;
-    float AttRange = 300.0f;
+    float AttRange = 200.0f;
 
     void Start() override;
 

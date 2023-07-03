@@ -105,6 +105,7 @@ void AirAttack::Update(float _Delta)
 
 			GameEngineActor* Actor = Collison->GetActor();
 			Renderer->SetRenderScale(float4{300,300});
+			GameEngineSound::SoundPlay("song102.wav");
 			Renderer->ChangeAnimation("AirAttackCollision");
 		}
 	}

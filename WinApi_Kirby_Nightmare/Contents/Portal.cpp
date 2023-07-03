@@ -159,6 +159,7 @@ void Portal::OpeningUpdate(float _Delta)
 
 void Portal::OpenStart()
 {
+	GameEngineSound::SoundPlay("09 스테이지 넘어갈때.wav");
 	ChangeAnimationState("OpenDoor");
 }
 

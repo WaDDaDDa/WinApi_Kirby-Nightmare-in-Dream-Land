@@ -20,6 +20,7 @@
 #include "BurningMonster.h"
 #include "FadeObject.h"
 #include "BGMPlayer.h"
+#include "SparkMonster.h"
 
 VegetableValley2Level::VegetableValley2Level()
 {
@@ -139,6 +140,11 @@ void VegetableValley2Level::LevelStart(GameEngineLevel* _PrevLevel)
 
 	// 몬스터 배치
 	{
+		BurningMonster* Waddle = CreateActor<BurningMonster>();
+		Waddle->SetGroundTexture("Level2_Debug.bmp");
+		Waddle->SetPos(float4{ 800,350 });
+	}
+	{
 		WaddleDee* Waddle = CreateActor<WaddleDee>();
 		Waddle->SetGroundTexture("Level2_Debug.bmp");
 		Waddle->SetPos(float4{ 1500,350 });
@@ -146,12 +152,37 @@ void VegetableValley2Level::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		WaddleDee* Waddle = CreateActor<WaddleDee>();
 		Waddle->SetGroundTexture("Level2_Debug.bmp");
-		Waddle->SetPos(float4{ 2600,350 });
+		Waddle->SetPos(float4{ 1520,350 });
 	}
 	{
-		BurningMonster* Waddle = CreateActor<BurningMonster>();
+		WaddleDee* Waddle = CreateActor<WaddleDee>();
 		Waddle->SetGroundTexture("Level2_Debug.bmp");
-		Waddle->SetPos(float4{ 800,350 });
+		Waddle->SetPos(float4{ 1540,350 });
+	}
+	{
+		WaddleDee* Waddle = CreateActor<WaddleDee>();
+		Waddle->SetGroundTexture("Level2_Debug.bmp");
+		Waddle->SetPos(float4{ 1560,350 });
+	}
+	{
+		WaddleDee* Waddle = CreateActor<WaddleDee>();
+		Waddle->SetGroundTexture("Level2_Debug.bmp");
+		Waddle->SetPos(float4{ 1580,350 });
+	}
+	{
+		WaddleDee* Waddle = CreateActor<WaddleDee>();
+		Waddle->SetGroundTexture("Level2_Debug.bmp");
+		Waddle->SetPos(float4{ 1600,350 });
+	}
+	{
+		WaddleDee* Waddle = CreateActor<WaddleDee>();
+		Waddle->SetGroundTexture("Level2_Debug.bmp");
+		Waddle->SetPos(float4{ 1480,350 });
+	}
+	{
+		WaddleDee* Waddle = CreateActor<WaddleDee>();
+		Waddle->SetGroundTexture("Level2_Debug.bmp");
+		Waddle->SetPos(float4{ 2600,350 });
 	}
 	{
 		BurningMonster* Waddle = CreateActor<BurningMonster>();

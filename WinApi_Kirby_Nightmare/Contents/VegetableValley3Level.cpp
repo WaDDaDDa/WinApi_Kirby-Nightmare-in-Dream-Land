@@ -20,6 +20,7 @@
 #include "BurningMonster.h"
 #include "FadeObject.h"
 #include "BGMPlayer.h"
+#include "SparkMonster.h"
 
 VegetableValley3Level::VegetableValley3Level()
 {
@@ -138,12 +139,13 @@ void VegetableValley3Level::LevelStart(GameEngineLevel* _PrevLevel)
 
 	// 몬스터 배치
 	{
-		WaddleDee* Waddle = CreateActor<WaddleDee>();
+		SparkMonster* Waddle = CreateActor<SparkMonster>();
 		Waddle->SetGroundTexture("Level3_Debug.bmp");
 		Waddle->SetPos(float4{ 1500,350 });
+		Waddle->Dir = SparkMonsterDir::Left;
 	}
 	{
-		BurningMonster* Waddle = CreateActor<BurningMonster>();
+		SparkMonster* Waddle = CreateActor<SparkMonster>();
 		Waddle->SetGroundTexture("Level3_Debug.bmp");
 		Waddle->SetPos(float4{ 2600,350 });
 	}

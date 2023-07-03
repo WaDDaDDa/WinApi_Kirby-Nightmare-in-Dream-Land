@@ -109,6 +109,7 @@ void WaddleDee::Update(float _Delta)
 			{
 				Dir = WaddleDeeDir::Right;
 			}
+			GameEngineSound::SoundPlay("42 부딪히는소리.wav");
 			ChangeState(WaddleDeeState::Damage);
 			return;
 		}
@@ -169,6 +170,7 @@ void WaddleDee::Update(float _Delta)
 			// 흡수당하는건 한번만 해야함.
 			Collison->Off();
 			BodyCollision->Off();
+			GameEngineSound::SoundPlay("42 부딪히는소리.wav");
 			ChangeState(WaddleDeeState::Damage);
 			return;
 		}
@@ -197,6 +199,7 @@ void WaddleDee::Update(float _Delta)
 				Dir = WaddleDeeDir::Right;
 			}
 			BodyCollision->Off();
+			GameEngineSound::SoundPlay("42 부딪히는소리.wav");
 			ChangeState(WaddleDeeState::Damage);
 			return;
 		}
@@ -225,6 +228,7 @@ void WaddleDee::Update(float _Delta)
 				Dir = WaddleDeeDir::Right;
 			}
 			BodyCollision->Off();
+			GameEngineSound::SoundPlay("42 부딪히는소리.wav");
 			ChangeState(WaddleDeeState::Damage);
 			return;
 		}

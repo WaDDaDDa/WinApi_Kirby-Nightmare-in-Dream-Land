@@ -8,6 +8,7 @@
 #include "BurningKirby.h"
 #include "Star.h"
 #include "MainHubLevel.h"
+#include "FormChangeEffect.h"
 
 // 랜더할 이미지를 먼저 설정해주고 이미지는 그에 맞게 랜더되고 있으면서 update가 일어난다.
 
@@ -48,6 +49,7 @@ void Kirby::JumpTurnStart()
 
 void Kirby::JumpAttackStartStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song579.wav");
 	ChangeAnimationState("JumpAttackStart");
 }
 
@@ -476,6 +478,7 @@ void Kirby::JumpAttackStartUpdate(float _Delta)
 
 	if (true == GameEngineInput::IsUp('X'))
 	{
+		SoundEffect.Stop();
 		ChangeState(KirbyState::Idle);
 		return;
 	}
@@ -1043,14 +1046,20 @@ void Kirby::SwallowUpdate(float _Delta)
 		// 버닝으로 폼체인지
 		if (Abillity::Burning == ChangeAbillity)
 		{
+			SoundEffect = GameEngineSound::SoundPlay("2A  변신.wav");
+			FormChangeEffect* ChangeEffect = GetLevel()->CreateActor<FormChangeEffect>();
 			ChangeKirby(Abillity::Burning);
 		}
 		else if (Abillity::Spark == ChangeAbillity)
 		{
+			SoundEffect = GameEngineSound::SoundPlay("2A  변신.wav");
+			FormChangeEffect* ChangeEffect = GetLevel()->CreateActor<FormChangeEffect>();
 			ChangeKirby(Abillity::Spark);
 		}
 		else if (Abillity::Sword == ChangeAbillity)
 		{
+			SoundEffect = GameEngineSound::SoundPlay("2A  변신.wav");
+			FormChangeEffect* ChangeEffect = GetLevel()->CreateActor<FormChangeEffect>();
 			ChangeKirby(Abillity::Sword);
 		}
 		ChangeState(KirbyState::Idle);

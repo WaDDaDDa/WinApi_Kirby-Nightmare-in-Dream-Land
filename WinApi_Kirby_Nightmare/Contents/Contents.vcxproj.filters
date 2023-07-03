@@ -93,6 +93,9 @@
     </ClInclude>
     <ClInclude Include="BossUIManager.h" />
     <ClInclude Include="BGMPlayer.h" />
+    <ClInclude Include="FormChangeEffect.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainHub.cpp" />
@@ -211,6 +214,9 @@
     </ClCompile>
     <ClCompile Include="BossUIManager.cpp" />
     <ClCompile Include="BGMPlayer.cpp" />
+    <ClCompile Include="FormChangeEffect.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">

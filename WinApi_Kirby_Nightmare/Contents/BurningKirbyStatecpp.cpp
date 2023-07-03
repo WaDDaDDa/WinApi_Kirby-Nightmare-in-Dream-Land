@@ -67,7 +67,6 @@ void BurningKirby::AttackUpdate(float _Delta)
 		BodyCollision->On();
 		Speed /= 2;
 		SoundEffect.Stop();
-		SoundEffect = GameEngineSound::SoundPlay("song111.wav");
 		ChangeState(KirbyState::Idle);
 		return;
 	}
@@ -86,7 +85,7 @@ void BurningKirby::AttackUpdate(float _Delta)
 			AttackCollision->Off();
 			BodyCollision->On();
 			SoundEffect.Stop();
-			SoundEffect = GameEngineSound::SoundPlay("song111.wav");
+			SoundEffect = GameEngineSound::SoundPlay("30 ∫“ Ω√¿€¥¿≥¶.wav");
 			ChangeState(KirbyState::Falling);
 			return;
 		}
@@ -103,7 +102,7 @@ void BurningKirby::AttackUpdate(float _Delta)
 			AttackCollision->Off();
 			BodyCollision->On();
 			SoundEffect.Stop();
-			SoundEffect = GameEngineSound::SoundPlay("song111.wav");
+			SoundEffect = GameEngineSound::SoundPlay("30 ∫“ Ω√¿€¥¿≥¶.wav");
 			ChangeState(KirbyState::Falling);
 			return;
 		}

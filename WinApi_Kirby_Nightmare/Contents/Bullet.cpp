@@ -136,7 +136,7 @@ void Bullet::NormalUpdate(float _Delta)
 
 void Bullet::BombStart()
 {
-	SoundEffect = GameEngineSound::SoundPlay("song111.wav");
+	SoundEffect = GameEngineSound::SoundPlay("4A ¹Ì»çÀÏ Æã.wav");
 	Renderer->ChangeAnimation("FireEffect");
 }
 

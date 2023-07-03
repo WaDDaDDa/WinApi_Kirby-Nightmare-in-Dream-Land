@@ -127,6 +127,7 @@ void SwordMan::Update(float _Delta)
 			{
 				Dir = SwordManDir::Right;
 			}
+			GameEngineSound::SoundPlay("42 부딪히는소리.wav");
 			ChangeState(SwordManState::Damage);
 			return;
 		}
@@ -188,6 +189,7 @@ void SwordMan::Update(float _Delta)
 			// 흡수당하는건 한번만 해야함.
 			Collison->Off();
 			BodyCollision->Off();
+			GameEngineSound::SoundPlay("42 부딪히는소리.wav");
 			ChangeState(SwordManState::Damage);
 			return;
 		}
@@ -218,6 +220,7 @@ void SwordMan::Update(float _Delta)
 			// 계속 흡수당하고있음.
 			// 흡수당하는건 한번만 해야함.
 			BodyCollision->Off();
+			GameEngineSound::SoundPlay("42 부딪히는소리.wav");
 			ChangeState(SwordManState::Damage);
 			return;
 		}
@@ -248,6 +251,7 @@ void SwordMan::Update(float _Delta)
 			// 계속 흡수당하고있음.
 			// 흡수당하는건 한번만 해야함.
 			BodyCollision->Off();
+			GameEngineSound::SoundPlay("42 부딪히는소리.wav");
 			ChangeState(SwordManState::Damage);
 			return;
 		}

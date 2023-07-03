@@ -17,6 +17,8 @@ TitleLevel::~TitleLevel()
 
 void TitleLevel::Start()
 {
+	GameEngineSound::SetGlobalVolume(0.8f);
+
 	bool IsResource = ResourcesManager::GetInst().IsLoadTexture("Untitled.bmp");
 	if (false == IsResource)
 	{
@@ -50,6 +52,7 @@ void TitleLevel::Start()
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("LeftSwordEffect.bmp"), 8, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("RightSwordEffect.bmp"), 8, 1);
 			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("WoodAtt.bmp"), 5, 4);
+			ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("FormChange.bmp"), 5, 1);
 
 		}
 	}
@@ -90,11 +93,23 @@ void TitleLevel::Start()
 
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song539.wav")); // 커비 흡수공격 1
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song103.wav")); // 커비 흡수공격 2
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song102.wav")); // 커비 흡수공격 2
 
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song540.wav")); // 커비 찌그러짐
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song545.wav")); // 점프쫑 스파크 몬스터
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song579.wav")); // 흡수시작
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song580.wav")); // 흡수 루프
+
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("42 부딪히는소리.wav")); // 흡수 루프
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("4A 미사일 펑.wav")); // 흡수 루프
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("4F 몬스터 피격.wav")); // 흡수 루프
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("21 걷는느낌.wav")); // 흡수 루프
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("23 레이저발싸.wav")); // 흡수 루프
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("30 불 시작느낌.wav")); // 흡수 루프
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("32 불 날라가는.wav")); // 흡수 루프
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("37 급정거.wav")); // 흡수 루프
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("2A  변신.wav")); // 흡수 루프
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("09 스테이지 넘어갈때.wav")); // 흡수 루프
 
 	}
 
