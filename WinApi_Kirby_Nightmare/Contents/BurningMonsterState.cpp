@@ -214,6 +214,7 @@ void BurningMonster::AttackStartUpdate(float _Delta)
 // ºÒ»Õ±â.
 void BurningMonster::Attack1Start()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song128.wav");
 	AttackCollision->On();
 	if (BurningMonsterDir::Left == GetDir())
 	{
@@ -233,13 +234,14 @@ void BurningMonster::Attack1Update(float _Delta)
 {
 	GroundCheck(_Delta);
 
-	if (GetLiveTime() >= 1.0f)
+	if (GetLiveTime() >= 2.0f)
 	{
 		LeftAttackRenderer->Off();
 		LeftAttack2Renderer->Off();
 		RightAttackRenderer->Off();
 		RightAttack2Renderer->Off();
 		AttackCollision->Off();
+		SoundEffect.Stop();
 		ChangeState(BurningMonsterState::Walk);
 		return;
 	}

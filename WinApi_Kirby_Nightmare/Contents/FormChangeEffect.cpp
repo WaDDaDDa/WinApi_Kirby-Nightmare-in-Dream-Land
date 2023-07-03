@@ -12,8 +12,6 @@ FormChangeEffect::~FormChangeEffect()
 
 }
 
-
-
 void FormChangeEffect::Start()
 {
 	Renderer = CreateRenderer(RenderOrder::Effect);

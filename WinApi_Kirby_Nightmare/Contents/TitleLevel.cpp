@@ -110,6 +110,8 @@ void TitleLevel::Start()
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("37 급정거.wav")); // 흡수 루프
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("2A  변신.wav")); // 흡수 루프
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("09 스테이지 넘어갈때.wav")); // 흡수 루프
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song113.wav")); // 흡수 루프
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song270.wav")); // 흡수 루프
 
 	}
 

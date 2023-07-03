@@ -110,6 +110,7 @@ private:
     float4 AttackCollisionScale = float4{ 80,80 };
 
     GameEngineActor* Actor = nullptr;
-    // Abillity CurAbillity = Abillity::Normal;
+    class GameEngineSoundPlayer SoundEffect;
+
 };
 

@@ -169,6 +169,7 @@ void Kirby::BreathOutStart()
 
 void Kirby::SwallowStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song113.wav");
 	ChangeAnimationState("Swallow");
 }
 
@@ -208,6 +209,7 @@ void Kirby::DieReadyStart()
 
 void Kirby::DieStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("song270.wav");
 	CameraValue = false;
 	SetGravityVector(float4::UP * 1000.0f);
 	ChangeAnimationState("Die");
@@ -1159,7 +1161,7 @@ void Kirby::DieReadyUpdate(float _Delta)
 void Kirby::DieUpdate(float _Delta)
 {
 	Gravity(_Delta);
-	if (GetLiveTime() >= 2.0f)
+	if (GetLiveTime() >= 3.0f)
 	{
 		ChangeState(KirbyState::Over);
 		return;
