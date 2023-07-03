@@ -45,4 +45,5 @@ enum class Abillity
 	Burning,
 	Spark,
 	Sword,
+	Wheel,
 };

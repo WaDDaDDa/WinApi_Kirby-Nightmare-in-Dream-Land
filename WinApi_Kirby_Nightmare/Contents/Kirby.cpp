@@ -19,6 +19,7 @@
 #include "BurningKirby.h"
 #include "SparkKirby.h"
 #include "SwordKirby.h"
+#include "WheelKirby.h"
 #include "UIManager.h"
 
 Kirby* Kirby::MainPlayer = nullptr;
@@ -711,7 +712,6 @@ void Kirby::ChangeKirby(Abillity _Kirby)
 	{
 		float4 CurPos = Kirby::GetMainPlayer()->GetPos();
 		float4 CurPrevPos = Kirby::GetMainPlayer()->GetPrevPos();
-		//int CurHp = HP;
 		switch (_Kirby)
 		{
 		case Abillity::Normal:
@@ -730,6 +730,10 @@ void Kirby::ChangeKirby(Abillity _Kirby)
 			Kirby::GetMainPlayer()->Death();
 			Kirby::GetMainPlayer()->SetMainPlayer(Kirby::GetMainPlayer()->GetLevel()->CreateActor<SwordKirby>());
 			break;
+		case Abillity::Wheel:
+			Kirby::GetMainPlayer()->Death();
+			Kirby::GetMainPlayer()->SetMainPlayer(Kirby::GetMainPlayer()->GetLevel()->CreateActor<WheelKirby>());
+			break;
 		default:
 			break;
 		}
@@ -737,7 +741,6 @@ void Kirby::ChangeKirby(Abillity _Kirby)
 		Kirby::GetMainPlayer()->SetPrevPos(CurPrevPos);
 		Kirby::GetMainPlayer()->SetPos(CurPos);
 		Kirby::GetMainPlayer()->SetGroundTexture(GetGroundTexture());
-		//Kirby::HP = CurHp;
 	}
 
 	Kirby::GetMainPlayer()->SetAbillity(_Kirby);

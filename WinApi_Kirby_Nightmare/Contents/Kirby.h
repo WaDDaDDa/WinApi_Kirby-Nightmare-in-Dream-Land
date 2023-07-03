@@ -52,6 +52,7 @@ class Kirby : public GravityActor
     friend class BurningKirby;
     friend class SparkKirby;
     friend class SwordKirby;
+    friend class WheelKirby;
 
 private:
     static Kirby* MainPlayer;

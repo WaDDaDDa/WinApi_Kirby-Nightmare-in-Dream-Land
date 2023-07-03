@@ -19,6 +19,7 @@
 #include "FadeObject.h"
 #include "SparkKirby.h"
 #include "SwordKirby.h"
+#include "WheelKirby.h"
 #include "BGMPlayer.h"
 
 
@@ -140,7 +141,7 @@ void MainHubLevel::Update(float _Delta)
 
 	if (true == GameEngineInput::IsDown('Q'))
 	{
-		Kirby::GetMainPlayer()->ChangeKirby(Abillity::Sword);
+		Kirby::GetMainPlayer()->ChangeKirby(Abillity::Wheel);
 	}
 
 	// Æ÷Å» ÀÌµ¿

@@ -96,6 +96,9 @@
     <ClInclude Include="FormChangeEffect.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="WheelKirby.h">
+      <Filter>Kirby</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainHub.cpp" />
@@ -216,6 +219,12 @@
     <ClCompile Include="BGMPlayer.cpp" />
     <ClCompile Include="FormChangeEffect.cpp">
       <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="WheelKirby.cpp">
+      <Filter>Kirby</Filter>
+    </ClCompile>
+    <ClCompile Include="WheelKirbyState.cpp">
+      <Filter>Kirby</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
