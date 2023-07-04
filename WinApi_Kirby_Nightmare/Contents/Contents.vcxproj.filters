@@ -99,6 +99,9 @@
     <ClInclude Include="WheelKirby.h">
       <Filter>Kirby</Filter>
     </ClInclude>
+    <ClInclude Include="WheelMonster.h">
+      <Filter>Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainHub.cpp" />
@@ -225,6 +228,12 @@
     </ClCompile>
     <ClCompile Include="WheelKirbyState.cpp">
       <Filter>Kirby</Filter>
+    </ClCompile>
+    <ClCompile Include="WheelMonster.cpp">
+      <Filter>Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="WheelMonsterState.cpp">
+      <Filter>Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

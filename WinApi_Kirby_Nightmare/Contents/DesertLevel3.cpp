@@ -22,6 +22,7 @@
 #include "SparkMonster.h"
 #include "FadeObject.h"
 #include "SwordMan.h"
+#include "WheelMonster.h"
 #include "BGMPlayer.h"
 
 DesertLevel3::DesertLevel3()
@@ -155,6 +156,12 @@ void DesertLevel3::LevelStart(GameEngineLevel* _PrevLevel)
 	GetMainCamera()->SetPos(Kirby::GetMainPlayer()->GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });
 
 	// 몬스터 배치
+	{
+		WheelMonster* Waddle = CreateActor<WheelMonster>();
+		Waddle->SetGroundTexture("DesertLevel3_Debug.bmp");
+		Waddle->SetPos(float4{ 1200,350 });
+		Waddle->Dir = WheelMonsterDir::Left;
+	}
 	{
 		BurningMonster* Waddle = CreateActor<BurningMonster>();
 		Waddle->SetGroundTexture("DesertLevel3_Debug.bmp");

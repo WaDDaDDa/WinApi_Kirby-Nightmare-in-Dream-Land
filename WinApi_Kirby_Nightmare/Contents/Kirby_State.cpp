@@ -1064,6 +1064,12 @@ void Kirby::SwallowUpdate(float _Delta)
 			FormChangeEffect* ChangeEffect = GetLevel()->CreateActor<FormChangeEffect>();
 			ChangeKirby(Abillity::Sword);
 		}
+		else if (Abillity::Wheel == ChangeAbillity)
+		{
+			SoundEffect = GameEngineSound::SoundPlay("2A  º¯½Å.wav");
+			FormChangeEffect* ChangeEffect = GetLevel()->CreateActor<FormChangeEffect>();
+			ChangeKirby(Abillity::Wheel);
+		}
 		ChangeState(KirbyState::Idle);
 	}
 }

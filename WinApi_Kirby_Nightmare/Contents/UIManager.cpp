@@ -34,6 +34,7 @@ void UIManager::Start()
 	IconUI->CreateAnimation("SparkKirbyIcon", "KirbyIcon.bmp", 12, 12, 0.1f, false);
 	IconUI->CreateAnimation("SwordKirbyIcon", "KirbyIcon.bmp", 22, 22, 0.1f, false);
 	IconUI->CreateAnimation("BurningKirbyIcon", "KirbyIcon.bmp", 23, 23, 0.1f, false);
+	IconUI->CreateAnimation("WheelKirbyIcon", "KirbyIcon.bmp", 26, 26, 0.1f, false);
 	IconUI->SetTexture("Blank.bmp");
 	IconUI->SetRenderPos(IconPos);
 	IconUI->SetScaleRatio(3.0f);
@@ -44,6 +45,7 @@ void UIManager::Start()
 	IconName->CreateAnimation("SparkKirbyIconName", "IConName.bmp", 2, 2, 0.1f, false);
 	IconName->CreateAnimation("SwordKirbyIconName", "IConName.bmp", 4, 4, 0.1f, false);
 	IconName->CreateAnimation("BurningKirbyIconName", "IConName.bmp", 5, 5, 0.1f, false);
+	IconName->CreateAnimation("WheelKirbyIconName", "IConName.bmp", 8, 8, 0.1f, false);
 	IconName->SetTexture("Blank.bmp");
 	IconName->SetRenderPos(IconNamePos);
 	IconName->SetScaleRatio(3.0f);
@@ -404,6 +406,10 @@ void UIManager::IconChange(Abillity _Kirby)
 		case Abillity::Sword:
 			IconUI->ChangeAnimation("SwordKirbyIcon");
 			IconName->ChangeAnimation("SwordKirbyIconName");
+			break;
+		case Abillity::Wheel:
+			IconUI->ChangeAnimation("WheelKirbyIcon");
+			IconName->ChangeAnimation("WheelKirbyIconName");
 			break;
 		default:
 			break;
