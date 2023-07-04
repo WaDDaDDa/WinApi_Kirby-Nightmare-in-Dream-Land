@@ -37,6 +37,7 @@ enum class KirbyState
     Die,
     Over,
     Dance,
+    DirChange,
     Max, // 일반적으로 사용하지 않는 값.
 };
 
@@ -180,6 +181,10 @@ protected:
     void DieStart();
     void OverStart();
     //void DanceStart();
+    virtual void DirChangeStart()
+    {
+
+    }
 
     void IdleUpdate(float _Delta);
     void DownIdleUpdate(float _Delta);
@@ -214,7 +219,10 @@ protected:
     void DieUpdate(float _Delta);
     void OverUpdate(float _Delta);
     //void DanceUpdate(float _Delta);
+    virtual void DirChangeUpdate(float _Delta)
+    {
 
+    }
 
     KirbyState State = KirbyState::Max;
 

@@ -1120,6 +1120,13 @@ void Kirby::DamageUpdate(float _Delta)
 
 void Kirby::FatDamageUpdate(float _Delta)
 {
+	if (0 == HP)
+	{
+		ChangeState(KirbyState::DieReady);
+		return;
+	}
+
+	GroundCheck(_Delta);
 	float4 MoveDir = float4::ZERO;
 	if (KirbyDir::Left == Dir)
 	{

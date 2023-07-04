@@ -471,6 +471,8 @@ void Kirby::StateUpdate(float _Delta)
 		return DieUpdate(_Delta);
 	case KirbyState::Over:
 		return OverUpdate(_Delta);
+	case KirbyState::DirChange:
+		return DirChangeUpdate(_Delta);
 	default:
 		break;
 	}
@@ -577,6 +579,9 @@ void Kirby::ChangeState(KirbyState _State)
 			break;
 		case KirbyState::Over:
 			OverStart();
+			break;
+		case KirbyState::DirChange:
+			DirChangeStart();
 			break;
 		default:
 			break;

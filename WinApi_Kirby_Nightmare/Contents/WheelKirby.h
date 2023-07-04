@@ -35,19 +35,21 @@ protected:
 
     void DamageStart() override;
 
-private:
-    class GameEngineRenderer* LeftAttRenderer = nullptr;
-    GameEngineRenderer* RightAttRenderer = nullptr;
+    void DirChangeStart() override;
+    void DirChangeUpdate(float _Delta) override;
 
-    GameEngineCollision* LeftAttackCollision = nullptr;
-    GameEngineCollision* RightAttackCollision = nullptr;
-    GameEngineCollision* JumpAttackCollision = nullptr;
+private:
+    GameEngineCollision* AttCollision = nullptr;
 
     float4 MovePos = float4::ZERO;
     float4 CheckPos = float4::ZERO;
     float4 BodyCollisionPos = float4{ 0 , -40 };
     float4 BodyCollisionScale = float4{ 80, 80 };
 
+    float4 AttCollisionScale = float4{ 120, 120 };
+    float4 AttCollisionPos = float4{ 0 , -40 };
+
     class GameEngineSoundPlayer SoundEffect;
+    KirbyDir CurDir;
 };
 
