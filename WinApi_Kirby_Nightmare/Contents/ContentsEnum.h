@@ -12,6 +12,7 @@ enum class RenderOrder
 	BackGround,
 	Stage,
 	BackEffect,
+	BackEffect2,
 	Play,
 	Player,
 	Effect,

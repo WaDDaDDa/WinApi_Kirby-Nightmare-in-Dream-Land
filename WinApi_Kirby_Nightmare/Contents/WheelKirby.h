@@ -1,7 +1,6 @@
 #pragma once
 #include "Kirby.h"
 
-
 class WheelKirby : public Kirby
 {
 public:
@@ -51,5 +50,6 @@ private:
 
     class GameEngineSoundPlayer SoundEffect;
     KirbyDir CurDir;
+    class WheelEffect* WhEffect = nullptr;
 };
 

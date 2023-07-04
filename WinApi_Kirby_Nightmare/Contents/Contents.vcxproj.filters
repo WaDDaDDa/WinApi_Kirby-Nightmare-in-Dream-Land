@@ -102,6 +102,9 @@
     <ClInclude Include="WheelMonster.h">
       <Filter>Monster</Filter>
     </ClInclude>
+    <ClInclude Include="WheelEffect.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainHub.cpp" />
@@ -234,6 +237,9 @@
     </ClCompile>
     <ClCompile Include="WheelMonsterState.cpp">
       <Filter>Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="WheelEffect.cpp">
+      <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

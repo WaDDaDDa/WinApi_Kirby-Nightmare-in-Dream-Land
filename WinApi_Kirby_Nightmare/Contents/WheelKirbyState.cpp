@@ -3,6 +3,7 @@
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineRenderer.h>
 #include "MainHubLevel.h"
+#include "WheelEffect.h"
 
 void WheelKirby::DamageStart()
 {
@@ -35,6 +36,7 @@ void WheelKirby::AttackStart()
 	AttCollision->On();
 	CurDir = Dir;
 	Speed *= 2;
+	WhEffect = GetLevel()->CreateActor<WheelEffect>();
 	ChangeAnimationState("Attack");
 }
 
@@ -43,6 +45,7 @@ void WheelKirby::AttackUpdate(float _Delta)
 	if (Dir != CurDir)
 	{
 		Speed *= 0.5;
+		WhEffect->Death();
 		ChangeState(KirbyState::DirChange);
 		return;
 	}
@@ -55,6 +58,7 @@ void WheelKirby::AttackUpdate(float _Delta)
 		BodyCollision->On();
 		AttCollision->Off();
 		Speed *= 0.5;
+		WhEffect->Death();
 		ChangeState(KirbyState::Idle);
 		return;
 	}
@@ -74,6 +78,7 @@ void WheelKirby::AttackUpdate(float _Delta)
 			BodyCollision->On();
 			SoundEffect.Stop();
 			SoundEffect = GameEngineSound::SoundPlay("30 ºÒ ½ÃÀÛ´À³¦.wav");
+			WhEffect->Death();
 			ChangeState(KirbyState::Falling);
 			return;
 		}
@@ -91,6 +96,7 @@ void WheelKirby::AttackUpdate(float _Delta)
 			BodyCollision->On();
 			SoundEffect.Stop();
 			SoundEffect = GameEngineSound::SoundPlay("30 ºÒ ½ÃÀÛ´À³¦.wav");
+			WhEffect->Death();
 			ChangeState(KirbyState::Falling);
 			return;
 		}
