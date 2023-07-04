@@ -161,6 +161,11 @@ void VegetableValleyLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		Waddle->SetGroundTexture("Level1_Debug.bmp");
 		Waddle->SetPos(float4{ 2600,350 });
 	}
+	{
+		WaddleDee* Waddle = CreateActor<WaddleDee>();
+		Waddle->SetGroundTexture("Level1_Debug.bmp");
+		Waddle->SetPos(float4{ 3600,350 });
+	}
 
 }
 

@@ -98,7 +98,7 @@ void BossUIManager::BossHpCheck()
 			BossHpBar->ChangeAnimation("BossHp10");
 			break;
 		case 0:
-			if (CurBossHP == 0)
+			if (CurBossHP <= 0)
 			{
 				BossHpBar->ChangeAnimation("BossHp0");
 			}

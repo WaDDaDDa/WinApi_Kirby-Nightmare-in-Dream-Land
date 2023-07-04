@@ -9,6 +9,7 @@
 #include "BurningMonster.h"
 #include "SwordMan.h"
 #include "SparkMonster.h"
+#include "BGMPlayer.h"
 
 void BossMonster::IdleStart()
 {
@@ -201,6 +202,10 @@ void BossMonster::DieUpdate(float _Delta)
 	if (1.5f <= GetLiveTime())
 	{
 		EffectRenderer4->ChangeAnimation("BossEndingEffect4");
+	}
+	if (2.5f <= GetLiveTime())
+	{
+		BGMPlayer::ChangeBGM("song013 Å¬¸®¾î ·Õ.wav", 0);
 	}
 
 }

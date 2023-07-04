@@ -50,12 +50,10 @@ void BossLevel::Start()
 
 void BossLevel::Update(float _Delta)
 {
-	static bool Once = false;
-
 	if (Kirby::GetMainPlayer()->GetPos().Y >= 300.0f && Once == false)
 	{
 		Once = true;
-		CreateActor<BossUIManager>();
+		BUI = CreateActor<BossUIManager>();
 	}
 
 	if (true == GameEngineInput::IsDown('J'))
@@ -81,6 +79,12 @@ void BossLevel::Update(float _Delta)
 		LevelStart(this);
 		return;
 	}
+	
+	if (true == GameEngineInput::IsDown('Q'))
+	{
+		Kirby::GetMainPlayer()->ChangeKirby(Abillity::Sword);
+	}
+
 }
 
 void BossLevel::Release()
@@ -95,6 +99,13 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == Kirby::GetMainPlayer())
 	{
 		MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
+	}
+
+	if (nullptr != BUI)
+	{
+		BossMonster::ResetBossHp();
+		Once = false;
+		BUI->Death();
 	}
 
 	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();

@@ -167,6 +167,21 @@ void DesertLevel2::LevelStart(GameEngineLevel* _PrevLevel)
 		Waddle->SetGroundTexture("DesertLevel2_Debug.bmp");
 		Waddle->SetPos(float4{ 2600,350 });
 	}
+	{
+		SparkMonster* Waddle = CreateActor<SparkMonster>();
+		Waddle->SetGroundTexture("DesertLevel2_Debug.bmp");
+		Waddle->SetPos(float4{ 823,450 });
+	}
+	{
+		SwordMan* Waddle = CreateActor<SwordMan>();
+		Waddle->SetGroundTexture("DesertLevel2_Debug.bmp");
+		Waddle->SetPos(float4{ 823,450 });
+	}
+	//{
+	//	BurningMonster* Waddle = CreateActor<BurningMonster>();
+	//	Waddle->SetGroundTexture("DesertLevel2_Debug.bmp");
+	//	Waddle->SetPos(float4{ 1640,1344 });
+	//}
 
 }
 

@@ -223,7 +223,7 @@ void Kirby::Start()
 	LeftChargeRenderer->Off();
 
 	SetOrder(UpdateOrder::Player);
-	
+	Dir = KirbyDir::Right;
 	// PlayerPos 는 static 멤버 변수 선언후 초기 위치를 선언하고 시작할수있을듯.
 	ChangeState(KirbyState::Idle);
 }

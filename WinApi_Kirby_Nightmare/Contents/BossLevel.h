@@ -29,5 +29,9 @@ private:
     float4 StartPos = float4{ 100 , 60 };
 
     class BossMonster* WhispyWoods = nullptr;
+
+    class BossUIManager* BUI = nullptr;
+
+    bool Once = false;
 };
 

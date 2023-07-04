@@ -87,6 +87,11 @@ public:
         return BossHp;
     }
 
+    static void ResetBossHp()
+    {
+        BossHp = 100;
+    }
+
 protected:
 
 private:

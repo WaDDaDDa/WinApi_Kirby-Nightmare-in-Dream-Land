@@ -194,6 +194,7 @@ void WheelKirby::JumpAttackUpdate(float _Delta)
 
 void WheelKirby::DirChangeStart()
 {
+	SoundEffect = GameEngineSound::SoundPlay("37 ±ÞÁ¤°Å.wav");
 	ChangeAnimationState("DirChange");
 }
 

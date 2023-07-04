@@ -100,10 +100,10 @@ private:
     float4 DeathCollisionScale = float4{ 100, 100 };
 
     float4 LeftAttackCollisionPos = float4{ -100.0f , -40 };
-    float4 LeftAttackCollisionScale = float4{ 150,100 };
+    float4 LeftAttackCollisionScale = float4{ 120,100 };
 
     float4 RightAttackCollisionPos = float4{ 100.0f , -40 };
-    float4 RightAttackCollisionScale = float4{ 150,100 };
+    float4 RightAttackCollisionScale = float4{ 120,100 };
 
     GameEngineActor* Actor = nullptr;
     // Abillity CurAbillity = Abillity::Normal;

@@ -143,7 +143,7 @@ void SwordKirby::Start()
 		JumpAttackCollision->SetCollisionType(CollisionType::CirCle);
 		JumpAttackCollision->Off();
 
-		TackleCollision = CreateCollision(CollisionOrder::PlayerAttack);
+		TackleCollision = CreateCollision(CollisionOrder::SwordAttack);
 		TackleCollision->SetCollisionScale(TackleCollisionScale);
 		TackleCollision->SetCollisionPos(TackleCollisionPos);
 		TackleCollision->SetCollisionType(CollisionType::CirCle);

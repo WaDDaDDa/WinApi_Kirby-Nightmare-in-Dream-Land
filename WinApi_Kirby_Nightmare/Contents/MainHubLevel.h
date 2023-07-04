@@ -28,7 +28,7 @@ private:
 
     //GameEngineSoundPlayer BGMPlayer;
 
-    float4 StartPlayerPos = float4{ 700 , 900 };
+    float4 StartPlayerPos = float4{ 980 , 960 };
 
     class Portal* Stage1Portal = nullptr;
     float4 Stage1PortalPos = float4{ 448, 1040 };

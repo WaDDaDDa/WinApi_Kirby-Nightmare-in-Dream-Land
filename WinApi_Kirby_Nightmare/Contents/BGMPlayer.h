@@ -23,14 +23,14 @@ public:
         BGM.Stop();
     }
 
-    static void ChangeBGM(const std::string& _Name)
+    static void ChangeBGM(const std::string& _Name, int _Loop = 200)
     {
         if (BGMName == _Name)
         {
             return;
         }
         BGM.Stop();
-        BGM = GameEngineSound::SoundPlay(_Name, 200);
+        BGM = GameEngineSound::SoundPlay(_Name, _Loop);
         BGMName = _Name;
     }
 

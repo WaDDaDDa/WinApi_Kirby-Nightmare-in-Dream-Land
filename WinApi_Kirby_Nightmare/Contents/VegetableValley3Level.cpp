@@ -57,7 +57,7 @@ void VegetableValley3Level::Update(float _Delta)
 
 	if (true == GameEngineInput::IsDown('M'))
 	{
-		WaddleDee* Waddle = CreateActor<WaddleDee>();
+		SparkMonster* Waddle = CreateActor<SparkMonster>();
 		Waddle->SetGroundTexture("Level3_Debug.bmp");
 		Waddle->SetPos(float4{ 500,360 });
 	}
@@ -145,9 +145,19 @@ void VegetableValley3Level::LevelStart(GameEngineLevel* _PrevLevel)
 		Waddle->Dir = SparkMonsterDir::Left;
 	}
 	{
-		SparkMonster* Waddle = CreateActor<SparkMonster>();
+		WaddleDee* Waddle = CreateActor<WaddleDee>();
 		Waddle->SetGroundTexture("Level3_Debug.bmp");
 		Waddle->SetPos(float4{ 2600,350 });
+	}
+	{
+		WaddleDee* Waddle = CreateActor<WaddleDee>();
+		Waddle->SetGroundTexture("Level3_Debug.bmp");
+		Waddle->SetPos(float4{ 3750,350 });
+	}
+	{
+		WaddleDee* Waddle = CreateActor<WaddleDee>();
+		Waddle->SetGroundTexture("Level3_Debug.bmp");
+		Waddle->SetPos(float4{ 4000,350 });
 	}
 
 }

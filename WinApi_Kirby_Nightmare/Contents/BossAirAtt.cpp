@@ -35,7 +35,7 @@ void BossAirAtt::Start()
 
 void BossAirAtt::Init()
 {
-	DirVec = Kirby::GetMainPlayer()->GetPos() - Master->GetPos();
+	DirVec = Kirby::GetMainPlayer()->GetPos() - Master->GetPos() + float4::UP * 50.0f;
 	DirVec.Normalize();
 }
 
