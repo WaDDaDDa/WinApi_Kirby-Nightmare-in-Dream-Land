@@ -69,7 +69,7 @@ void Portal::Update(float _Delta)
 
 			GameEngineActor* Actor = Collison->GetActor();
 
-			if (true == GameEngineInput::IsPress('W'))
+			if (true == GameEngineInput::IsPress(VK_UP))
 			{
 				ChangeState(PortalState::Opening);
 				return;

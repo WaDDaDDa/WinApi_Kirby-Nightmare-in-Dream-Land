@@ -372,7 +372,7 @@ void Kirby::Update(float _Delta)
 
 			GameEngineActor* Actor = Collison->GetActor();
 
-			if (true == GameEngineInput::IsDown('W'))
+			if (true == GameEngineInput::IsDown(VK_UP))
 			{
 				RightChargeRenderer->Off();
 				LeftChargeRenderer->Off();
@@ -382,20 +382,15 @@ void Kirby::Update(float _Delta)
 		}
 	}
 
-	// 줌 인 아웃 기능
+	// 바디콜리젼 온오프
 	if (true == GameEngineInput::IsPress('L'))
 	{
-
 		BodyCollision->Off();
-		//GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(1.0f * _Delta);
-
-		// Monster::AllMonsterDeath();
 	}
 
 	if (true == GameEngineInput::IsPress('Y'))
 	{
-		//GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(-1.0f * _Delta);
-		// GameEngineLevel::CollisionDebugRenderSwitch();
+
 	}
 	CameraFocus(_Delta);
 	StateUpdate(_Delta);
@@ -601,13 +596,13 @@ void Kirby::DirCheck()
 	// A를 누른상태로 D를 눌렀을때에는 A의 처리가 먼저 이루어져서 방향전환이 되지않기때문에 문제가 발생했다.
 
 	// 방향을 결정하는 키들이 모두 프리라면 그상태 그대로 유지. 아래의 D가 프리일때 Left가 되는 것을 방지.
-	if (true == GameEngineInput::IsFree('A') && true == GameEngineInput::IsFree('D'))
+	if (true == GameEngineInput::IsFree(VK_LEFT) && true == GameEngineInput::IsFree(VK_RIGHT))
 	{
 		return;
 	}
 	
 	// A가 눌렸거나 D가 프리이라면 Left로 방향전환 인데 가만히있어도 Left를 바라보는 현상이 생김.
-	if (true == GameEngineInput::IsDown('A') || true == GameEngineInput::IsFree('D'))
+	if (true == GameEngineInput::IsDown(VK_LEFT) || true == GameEngineInput::IsFree(VK_RIGHT))
 	{
 		Dir = KirbyDir::Left;
 		ChangeAnimationState(CurState);
@@ -615,7 +610,7 @@ void Kirby::DirCheck()
 	}
 
 	// D가 눌렸거나 A가 프리이면 Right로 방향 전환.
-	if (true == GameEngineInput::IsDown('D') || true == GameEngineInput::IsFree('A'))
+	if (true == GameEngineInput::IsDown(VK_RIGHT) || true == GameEngineInput::IsFree(VK_LEFT))
 	{
 		Dir = KirbyDir::Right;
 		ChangeAnimationState(CurState);
@@ -759,7 +754,7 @@ unsigned int Kirby::GetWallCheck()
 
 void Kirby::Movement(float _Delta)
 {
-	if (true == GameEngineInput::IsPress('A') && Dir == KirbyDir::Left)
+	if (true == GameEngineInput::IsPress(VK_LEFT) && Dir == KirbyDir::Left)
 	{
 		//CameraFocus();
 		CheckPos = { -40.0f, -40.0f };
@@ -774,7 +769,7 @@ void Kirby::Movement(float _Delta)
 		}
 		AddPos(MovePos);
 	}
-	else if (true == GameEngineInput::IsPress('D') && Dir == KirbyDir::Right)
+	else if (true == GameEngineInput::IsPress(VK_RIGHT) && Dir == KirbyDir::Right)
 	{
 		//CameraFocus();
 		CheckPos = { 40.0f, -40.0f };
@@ -795,12 +790,12 @@ void Kirby::Movement2(float _Delta)
 	
 	float4 MovePos1 = float4::ZERO;
 
-	if (true == GameEngineInput::IsPress('A') && Dir == KirbyDir::Left)
+	if (true == GameEngineInput::IsPress(VK_LEFT) && Dir == KirbyDir::Left)
 	{
 		CheckPos = LeftCheckPos;
 		MovePos1 = { -Speed * _Delta, 0.0f };
 	}
-	else if (true == GameEngineInput::IsPress('D') && Dir == KirbyDir::Right)
+	else if (true == GameEngineInput::IsPress(VK_RIGHT) && Dir == KirbyDir::Right)
 	{
 		CheckPos = RightCheckPos;
 		MovePos1 = { Speed * _Delta, 0.0f };

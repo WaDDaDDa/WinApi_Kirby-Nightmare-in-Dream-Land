@@ -204,6 +204,7 @@ void SwordMan::EffectStart()
 	Kirby::GetMainPlayer()->AddScore();
 	AddPos(CollisionPos);
 	BodyCollision->Off();
+	GameEngineSound::SoundPlay("song102.wav");
 	ChangeAnimationState("Effect");
 }
 

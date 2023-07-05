@@ -104,7 +104,7 @@ void DesertLevel3::Update(float _Delta)
 
 			GameEngineActor* Actor = Collison->GetActor();
 
-			if (true == GameEngineInput::IsDown('W'))
+			if (true == GameEngineInput::IsDown(VK_UP))
 			{
 				MainPortal->SetCurLevel("BossLevel");
 				return;
@@ -167,7 +167,7 @@ void DesertLevel3::LevelStart(GameEngineLevel* _PrevLevel)
 		{
 			WheelMonster* Waddle = CreateActor<WheelMonster>();
 			Waddle->SetGroundTexture("DesertLevel3_Debug.bmp");
-			Waddle->SetPos(float4{ 1000.0f + (i * 20) ,350 });
+			Waddle->SetPos(float4{ 1000.0f + (i * 40) ,350 });
 		}
 	}
 	{
@@ -180,41 +180,27 @@ void DesertLevel3::LevelStart(GameEngineLevel* _PrevLevel)
 		{
 			BurningMonster* Waddle = CreateActor<BurningMonster>();
 			Waddle->SetGroundTexture("DesertLevel3_Debug.bmp");
-			Waddle->SetPos(float4{ 1000.0f + (i * 20) ,350 });
+			Waddle->SetPos(float4{ 1000.0f + (i * 40) ,350 });
 		}
 	}
 	{
 		WaddleDee* Waddle = CreateActor<WaddleDee>();
 		Waddle->SetGroundTexture("DesertLevel3_Debug.bmp");
-		Waddle->SetPos(float4{ 2400,350 });
+		Waddle->SetPos(float4{ 2200,350 });
 	}
 	{
-		for (size_t i = 1; i < 20; i++)
+		for (size_t i = 1; i < 10; i++)
 		{
 			WaddleDee* Waddle = CreateActor<WaddleDee>();
 			Waddle->SetGroundTexture("DesertLevel3_Debug.bmp");
-			Waddle->SetPos(float4{ 2400.0f +( i * 20 ) ,350 });
+			Waddle->SetPos(float4{ 2200.0f +( i * 100 ) ,350 });
 		}
 	}
 
 	{
 		SwordMan* Waddle = CreateActor<SwordMan>();
 		Waddle->SetGroundTexture("DesertLevel3_Debug.bmp");
-		Waddle->SetPos(float4{ 3000,350 });
-	}
-	{
-		for (size_t i = 1; i < 20; i++)
-		{
-			SwordMan* Waddle = CreateActor<SwordMan>();
-			Waddle->SetGroundTexture("DesertLevel3_Debug.bmp");
-			Waddle->SetPos(float4{ 3000.0f + (i * 20) ,350 });
-		}
-	}
-
-	{
-		SwordMan* Waddle = CreateActor<SwordMan>();
-		Waddle->SetGroundTexture("DesertLevel3_Debug.bmp");
-		Waddle->SetPos(float4{ 4000,350 });
+		Waddle->SetPos(float4{ 4822,1220 });
 		Waddle->Dir = SwordManDir::Left;
 	}
 	{
@@ -222,11 +208,11 @@ void DesertLevel3::LevelStart(GameEngineLevel* _PrevLevel)
 		{
 			SwordMan* Waddle = CreateActor<SwordMan>();
 			Waddle->SetGroundTexture("DesertLevel3_Debug.bmp");
-			Waddle->SetPos(float4{ 4000.0f - (i * 20) ,350 });
+			Waddle->SetPos(float4{ 4822.0f - (i * 100) ,1220 });
 			Waddle->Dir = SwordManDir::Left;
-
 		}
 	}
+
 	{
 		WheelMonster* Waddle = CreateActor<WheelMonster>();
 		Waddle->SetGroundTexture("DesertLevel3_Debug.bmp");
@@ -238,7 +224,7 @@ void DesertLevel3::LevelStart(GameEngineLevel* _PrevLevel)
 		{
 			WheelMonster* Waddle = CreateActor<WheelMonster>();
 			Waddle->SetGroundTexture("DesertLevel3_Debug.bmp");
-			Waddle->SetPos(float4{ 4000.0f - (i * 20) ,350 });
+			Waddle->SetPos(float4{ 4000.0f - (i * 100) ,350 });
 			Waddle->Dir = WheelMonsterDir::Left;
 		}
 	}

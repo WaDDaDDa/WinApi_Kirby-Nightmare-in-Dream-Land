@@ -93,7 +93,7 @@ void VegetableValleyLevel::Update(float _Delta)
 
 			GameEngineActor* Actor = Collison->GetActor();
 
-			if (true == GameEngineInput::IsDown('W'))
+			if (true == GameEngineInput::IsDown(VK_UP))
 			{
 				MainPortal->SetCurLevel("VegetableValley2Level");
 				return;

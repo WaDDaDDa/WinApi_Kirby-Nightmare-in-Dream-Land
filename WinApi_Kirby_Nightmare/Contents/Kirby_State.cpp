@@ -249,20 +249,20 @@ void Kirby::IdleUpdate(float _Delta)
 		return;
 	}
 
-	if (true == GameEngineInput::IsPress('A')
-		|| true == GameEngineInput::IsPress('D'))
+	if (true == GameEngineInput::IsPress(VK_LEFT)
+		|| true == GameEngineInput::IsPress(VK_RIGHT))
 	{
 		ChangeState(KirbyState::Walk);
 		return;
 	}
 
-	if (true == GameEngineInput::IsPress('S'))
+	if (true == GameEngineInput::IsPress(VK_DOWN))
 	{
 		ChangeState(KirbyState::DownIdle);
 		return;
 	}
 
-	if (true == GameEngineInput::IsDown('F'))
+	if (true == GameEngineInput::IsDown('C'))
 	{
 		ChangeState(KirbyState::Jump);
 		return;
@@ -278,14 +278,14 @@ void Kirby::IdleUpdate(float _Delta)
 
 void Kirby::DownIdleUpdate(float _Delta)
 {
-	if (true == GameEngineInput::IsPress('A')
-		|| true == GameEngineInput::IsPress('D'))
+	if (true == GameEngineInput::IsPress(VK_LEFT)
+		|| true == GameEngineInput::IsPress(VK_RIGHT))
 	{
 		ChangeState(KirbyState::Walk);
 		return;
 	}
 
-	if (true == GameEngineInput::IsUp('S'))
+	if (true == GameEngineInput::IsUp(VK_DOWN))
 	{
 		ChangeState(KirbyState::Idle);
 		return;
@@ -379,7 +379,7 @@ void Kirby::WalkUpdate(float _Delta)
 	GroundCheck(_Delta);
 	Movement2(_Delta);
 	// 점프
-	if (true == GameEngineInput::IsDown('F'))
+	if (true == GameEngineInput::IsDown('C'))
 	{
 		MovePos = float4::ZERO;
 		ChangeState(KirbyState::Jump);
@@ -394,7 +394,7 @@ void Kirby::WalkUpdate(float _Delta)
 	}
 
 	// 대기
-	if (true == GameEngineInput::IsFree('A') && true == GameEngineInput::IsFree('D'))
+	if (true == GameEngineInput::IsFree(VK_LEFT) && true == GameEngineInput::IsFree(VK_RIGHT))
 	{
 		ChangeState(KirbyState::Idle);
 	}
@@ -449,7 +449,7 @@ void Kirby::JumpUpdate(float _Delta)
 	// 점프중 이동
 	Movement(_Delta);
 
-	if (true == GameEngineInput::IsDown('F'))
+	if (true == GameEngineInput::IsDown('C'))
 	{
 		ChangeState(KirbyState::BreathIn);
 		return;
@@ -555,7 +555,7 @@ void Kirby::JumpTurnUpdate(float _Delta)
 		return;
 	}
 
-	if (true == GameEngineInput::IsDown('F'))
+	if (true == GameEngineInput::IsDown('C'))
 	{
 		ChangeState(KirbyState::BreathIn);
 		return;
@@ -570,7 +570,7 @@ void Kirby::FallingUpdate(float _Delta)
 
 	Movement(_Delta);
 
-	if (true == GameEngineInput::IsDown('F'))
+	if (true == GameEngineInput::IsDown('C'))
 	{
 		ChangeState(KirbyState::BreathIn);
 		return;
@@ -606,15 +606,15 @@ void Kirby::FallingEndUpdate(float _Delta)
 		return;
 	}
 
-	if (true == GameEngineInput::IsPress('A')
-		|| true == GameEngineInput::IsPress('S')
-		|| true == GameEngineInput::IsPress('D'))
+	if (true == GameEngineInput::IsPress(VK_LEFT)
+		|| true == GameEngineInput::IsPress(VK_DOWN)
+		|| true == GameEngineInput::IsPress(VK_RIGHT))
 	{
 		ChangeState(KirbyState::Idle);
 		return;
 	}
 
-	if (true == GameEngineInput::IsDown('F'))
+	if (true == GameEngineInput::IsDown('C'))
 	{
 		MovePos = float4::ZERO;
 		ChangeState(KirbyState::Jump);
@@ -680,10 +680,10 @@ void Kirby::FlyUpdate(float _Delta)
 		//return;
 	}
 
-	if (true == GameEngineInput::IsDown('F') || GameEngineInput::GetPressTime('F') >= 0.4f)
+	if (true == GameEngineInput::IsDown('C') || GameEngineInput::GetPressTime('C') >= 0.4f)
 	{
 		SoundEffect = GameEngineSound::SoundPlay("song120.wav");
-		GameEngineInput::ResetPressTime('F');
+		GameEngineInput::ResetPressTime('C');
 		SetGravityVector(float4::UP * JumpPower * 0.5f);
 	}
 
@@ -871,20 +871,20 @@ void Kirby::FatIdleUpdate(float _Delta)
 		return;
 	}
 	// 이동
-	if (true == GameEngineInput::IsPress('A')
-		|| true == GameEngineInput::IsPress('D'))
+	if (true == GameEngineInput::IsPress(VK_LEFT)
+		|| true == GameEngineInput::IsPress(VK_RIGHT))
 	{
 		ChangeState(KirbyState::FatWalk);
 		return;
 	}
 	// 삼키기
-	if (true == GameEngineInput::IsPress('S'))
+	if (true == GameEngineInput::IsPress(VK_DOWN))
 	{
 		ChangeState(KirbyState::Swallow);
 		return;
 	}
 	// 점프
-	if (true == GameEngineInput::IsDown('F'))
+	if (true == GameEngineInput::IsDown('C'))
 	{
 		ChangeState(KirbyState::FatJump);
 		return;
@@ -905,7 +905,7 @@ void Kirby::FatWalkUpdate(float _Delta)
 	GroundCheck(_Delta);
 	Movement(_Delta);
 	// 점프
-	if (true == GameEngineInput::IsDown('F'))
+	if (true == GameEngineInput::IsDown('C'))
 	{
 		MovePos = float4::ZERO;
 		ChangeState(KirbyState::FatJump);
@@ -919,14 +919,14 @@ void Kirby::FatWalkUpdate(float _Delta)
 		return;
 	}
 	// 삼키기
-	if (true == GameEngineInput::IsPress('S'))
+	if (true == GameEngineInput::IsPress(VK_DOWN))
 	{
 		ChangeState(KirbyState::Swallow);
 		return;
 	}
 
 	// 대기
-	if (true == GameEngineInput::IsFree('A') && true == GameEngineInput::IsFree('D'))
+	if (true == GameEngineInput::IsFree(VK_LEFT) && true == GameEngineInput::IsFree(VK_RIGHT))
 	{
 		ChangeState(KirbyState::FatIdle);
 	}
@@ -1023,15 +1023,15 @@ void Kirby::FatFallingEndUpdate(float _Delta)
 		return;
 	}
 
-	if (true == GameEngineInput::IsPress('A')
-		|| true == GameEngineInput::IsPress('S')
-		|| true == GameEngineInput::IsPress('D'))
+	if (true == GameEngineInput::IsPress(VK_LEFT)
+		|| true == GameEngineInput::IsPress(VK_RIGHT)
+		|| true == GameEngineInput::IsPress(VK_DOWN))
 	{
 		ChangeState(KirbyState::FatIdle);
 		return;
 	}
 
-	if (true == GameEngineInput::IsDown('F'))
+	if (true == GameEngineInput::IsDown('C'))
 	{
 		MovePos = float4::ZERO;
 		ChangeState(KirbyState::FatJump);

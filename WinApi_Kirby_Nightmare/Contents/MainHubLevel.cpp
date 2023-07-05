@@ -108,7 +108,7 @@ void MainHubLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 	if (true == GameEngineInput::IsPress('P'))
 	{
-		Kirby::GetMainPlayer()->SetPos(Stage1PortalPos);
+		Kirby::GetMainPlayer()->SetPos(StartPlayerPos);
 	}
 }
 
@@ -116,11 +116,6 @@ void MainHubLevel::LevelStart(GameEngineLevel* _PrevLevel)
 void MainHubLevel::Update(float _Delta)
 {
 	CameraFocus();
-
-	if (true == GameEngineInput::IsDown('P'))
-	{
-		
-	}
 
 	if (true == GameEngineInput::IsDown('M'))
 	{
@@ -159,7 +154,7 @@ void MainHubLevel::Update(float _Delta)
 
 			GameEngineActor* Actor = Collison->GetActor();
 
-			if (true == GameEngineInput::IsDown('W'))
+			if (true == GameEngineInput::IsDown(VK_UP))
 			{
 				Stage1Portal->SetCurLevel("VegetableValleyLevel");
 				return;
@@ -179,7 +174,7 @@ void MainHubLevel::Update(float _Delta)
 
 			GameEngineActor* Actor = Collison->GetActor();
 
-			if (true == GameEngineInput::IsDown('W'))
+			if (true == GameEngineInput::IsDown(VK_UP))
 			{
 				Stage2Portal->SetCurLevel("VegetableValley2Level");
 				return;
@@ -201,7 +196,7 @@ void MainHubLevel::Update(float _Delta)
 
 			GameEngineActor* Actor = Collison->GetActor();
 
-			if (true == GameEngineInput::IsDown('W'))
+			if (true == GameEngineInput::IsDown(VK_UP))
 			{
 				Stage3Portal->SetCurLevel("VegetableValley3Level");
 				return;
@@ -223,7 +218,7 @@ void MainHubLevel::Update(float _Delta)
 
 			GameEngineActor* Actor = Collison->GetActor();
 
-			if (true == GameEngineInput::IsDown('W'))
+			if (true == GameEngineInput::IsDown(VK_UP))
 			{
 				Stage4Portal->SetCurLevel("DesertLevel");
 				return;
@@ -245,7 +240,7 @@ void MainHubLevel::Update(float _Delta)
 
 			GameEngineActor* Actor = Collison->GetActor();
 
-			if (true == GameEngineInput::IsDown('W'))
+			if (true == GameEngineInput::IsDown(VK_UP))
 			{
 				Stage5Portal->SetCurLevel("DesertLevel2");
 				return;
@@ -267,7 +262,7 @@ void MainHubLevel::Update(float _Delta)
 
 			GameEngineActor* Actor = Collison->GetActor();
 
-			if (true == GameEngineInput::IsDown('W'))
+			if (true == GameEngineInput::IsDown(VK_UP))
 			{
 				Stage6Portal->SetCurLevel("DesertLevel3");
 				return;
@@ -289,7 +284,7 @@ void MainHubLevel::Update(float _Delta)
 
 			GameEngineActor* Actor = Collison->GetActor();
 
-			if (true == GameEngineInput::IsDown('W'))
+			if (true == GameEngineInput::IsDown(VK_UP))
 			{
 				Stage7Portal->SetCurLevel("BossLevel");
 				return;

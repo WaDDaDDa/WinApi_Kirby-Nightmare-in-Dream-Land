@@ -212,7 +212,7 @@ void SparkKirby::Update(float _Delta)
 
 			GameEngineActor* Actor = Collison->GetActor();
 
-			if (true == GameEngineInput::IsDown('W'))
+			if (true == GameEngineInput::IsDown(VK_UP))
 			{
 				ChangeState(KirbyState::OpenDoor);
 				return;

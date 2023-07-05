@@ -140,6 +140,7 @@ void WheelMonster::EffectStart()
 	Kirby::GetMainPlayer()->AddScore();
 	AddPos(CollisionPos);
 	BodyCollision->Off();
+	SoundEffect = GameEngineSound::SoundPlay("song102.wav");
 	ChangeAnimationState("Effect");
 }
 
