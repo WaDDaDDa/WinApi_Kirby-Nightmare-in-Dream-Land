@@ -10,6 +10,7 @@
 #include "SwordMan.h"
 #include "SparkMonster.h"
 #include "BGMPlayer.h"
+#include <GameEngineCore/GameEngineCore.h>
 
 void BossMonster::IdleStart()
 {
@@ -206,6 +207,10 @@ void BossMonster::DieUpdate(float _Delta)
 	if (2.5f <= GetLiveTime())
 	{
 		BGMPlayer::ChangeBGM("song013 Å¬¸®¾î ·Õ.wav", 0);
+	}
+	if (9.0f <= GetLiveTime())
+	{
+		GameEngineCore::ChangeLevel("EndingLevel");
 	}
 
 }

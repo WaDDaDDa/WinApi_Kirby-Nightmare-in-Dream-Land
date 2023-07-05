@@ -68,6 +68,7 @@ void TitleLevel::Start()
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("04Vegetable_Valley.mp3"));
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("06 Ice Cream Island.mp3"));
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("20 Boss Battle.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("28 Ending.mp3"));
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song105.wav")); // »ßÀ¯¿õ ³¯¶ó°¡´Â ´À³¦
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song111.wav")); // ÇªÇ× Æø¹ß´À³¦
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song114.wav")); // Æ÷È« °ø±â ¹ñ±â
@@ -113,7 +114,6 @@ void TitleLevel::Start()
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song113.wav")); // Èí¼ö ·çÇÁ
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song270.wav")); // Èí¼ö ·çÇÁ
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("song013 Å¬¸®¾î ·Õ.wav")); // Èí¼ö ·çÇÁ
-		GameEngineSound::SoundLoad(FilePath.PlusFilePath("37 ±ÞÁ¤°Å.wav")); // Èí¼ö ·çÇÁ
 
 	}
 

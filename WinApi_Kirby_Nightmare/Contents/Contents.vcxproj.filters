@@ -105,6 +105,10 @@
     <ClInclude Include="WheelEffect.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="EndingLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="EndingCredit.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainHub.cpp" />
@@ -241,6 +245,10 @@
     <ClCompile Include="WheelEffect.cpp">
       <Filter>Global</Filter>
     </ClCompile>
+    <ClCompile Include="EndingLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="EndingCredit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">

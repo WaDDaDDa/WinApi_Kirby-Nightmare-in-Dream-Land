@@ -17,6 +17,7 @@ UIManager::UIManager()
 
 UIManager::~UIManager()
 {
+
 }
 
 void UIManager::Start()

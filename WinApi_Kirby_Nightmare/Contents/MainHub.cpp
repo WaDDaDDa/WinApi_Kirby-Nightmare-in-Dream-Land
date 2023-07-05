@@ -9,6 +9,7 @@
 #include "DesertLevel2.h"
 #include "DesertLevel3.h"
 #include "BossLevel.h"
+#include "EndingLevel.h"
 
 
 MainHub::MainHub()
@@ -35,6 +36,7 @@ void MainHub::Start()
 	GameEngineCore::CreateLevel<DesertLevel2>("DesertLevel2");
 	GameEngineCore::CreateLevel<DesertLevel3>("DesertLevel3");
 	GameEngineCore::CreateLevel<BossLevel>("BossLevel");
+	GameEngineCore::CreateLevel<EndingLevel>("EndingLevel");
 
 	// 이 레벨이 화면에 보여라.
 	GameEngineCore::ChangeLevel("TitleLevel");
