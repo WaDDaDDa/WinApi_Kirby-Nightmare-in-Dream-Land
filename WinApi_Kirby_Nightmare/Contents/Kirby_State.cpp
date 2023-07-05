@@ -9,6 +9,7 @@
 #include "Star.h"
 #include "MainHubLevel.h"
 #include "FormChangeEffect.h"
+#include "BGMPlayer.h"
 
 // 랜더할 이미지를 먼저 설정해주고 이미지는 그에 맞게 랜더되고 있으면서 update가 일어난다.
 
@@ -209,7 +210,7 @@ void Kirby::DieReadyStart()
 
 void Kirby::DieStart()
 {
-	SoundEffect = GameEngineSound::SoundPlay("song270.wav");
+	BGMPlayer::ChangeBGM("song270.wav", 0);
 	CameraValue = false;
 	SetGravityVector(float4::UP * 1000.0f);
 	ChangeAnimationState("Die");
@@ -226,6 +227,16 @@ void Kirby::OverStart()
 // 업데이트는 실제 행동을 행하는 단계.
 void Kirby::IdleUpdate(float _Delta)
 {
+
+	if (true == GameEngineInput::IsDown('Z'))
+	{
+		if (Abillity::Normal != GetAbillity())
+		{
+			ChangeKirby(Abillity::Normal);
+			Kirby::GetMainPlayer()->DirCheck();
+		}
+	}
+
 	GroundCheck(_Delta);
 
 	unsigned int Color = GetGroundColor(RGB(255, 255, 255));
